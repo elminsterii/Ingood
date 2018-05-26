@@ -41,16 +41,13 @@ public class RegisterInterestPageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_interest_page);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     protected void initView(){
         super.initView();
-        mButton_Done = (Button)findViewById(R.id.btn_next);
-        mInterestsListView = (ListView) findViewById(R.id.interest_list);
-
-
+        mButton_Done = findViewById(R.id.btn_next);
+        mInterestsListView = findViewById(R.id.interest_list);
     }
 
     @Override
@@ -74,14 +71,15 @@ public class RegisterInterestPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                ArrayList<Boolean> radioStateList = new ArrayList<Boolean>();
+                ArrayList<Boolean> radioStateList;
                 radioStateList = mRadioListAdapter.getRadioStateList();
-                ArrayList<String> interestsTagList = new ArrayList<String>();
+                ArrayList<String> interestsTagList = new ArrayList<>();
                 for(int i = 0; i < radioStateList.size(); i++){
                     if(radioStateList.get(i)){
                         interestsTagList.add(interests_item[i]);
                     }
                 }
+
                 mRegisterList.put(PersonAttributes.ATTRIBUTES_PERSON_INTERESTS, ParserUtils.listStringToString(interestsTagList, ','));
                 mRegisterList.put(API_REQUEST_TAG, "5454");
 
@@ -100,20 +98,15 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
 
                                 }
-
                             }
                         });
                 task.execute(mRegisterList);
             }
         });
-
-
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
     }
 }

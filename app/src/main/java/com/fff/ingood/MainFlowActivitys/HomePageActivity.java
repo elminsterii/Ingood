@@ -14,14 +14,13 @@ public class HomePageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_homepage);
         super.onCreate(savedInstanceState);
-
     }
-
 
     @Override
     protected void initView(){
         //bind view content
     }
+
     @Override
     protected void initData(){
 

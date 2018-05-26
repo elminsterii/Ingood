@@ -26,29 +26,24 @@ public class SignInPageActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_signin_page);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     protected void initView(){
         super.initView();
-        mEditText_Account = (EditText) findViewById(R.id.edit_account);
-        mEditText_Password = (EditText) findViewById(R.id.edit_pwd);
-        mButton_SignIn = (Button)findViewById(R.id.btn_signin);
-        mButton_Register = (Button)findViewById(R.id.btn_register);
-
+        mEditText_Account = findViewById(R.id.edit_account);
+        mEditText_Password = findViewById(R.id.edit_pwd);
+        mButton_SignIn = findViewById(R.id.btn_signin);
+        mButton_Register = findViewById(R.id.btn_register);
     }
 
     @Override
     protected void initData(){
         super.initData();
-
     }
 
     @Override
     protected void initListner(){
-
-
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +60,5 @@ public class SignInPageActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
-
     }
-
-
-
 }

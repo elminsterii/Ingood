@@ -29,15 +29,13 @@ public class RegisterLocationPageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_location_page);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     protected void initView(){
         super.initView();
-        mButton_Next = (Button)findViewById(R.id.btn_next);
-        mSpinner_Location = (Spinner)findViewById(R.id.spinner_location);
-
+        mButton_Next = findViewById(R.id.btn_next);
+        mSpinner_Location = findViewById(R.id.spinner_location);
     }
 
     @Override
@@ -66,15 +64,12 @@ public class RegisterLocationPageActivity extends BaseActivity {
                 else{
                     Toast.makeText(RegisterLocationPageActivity.this, "Please choose Your Location!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-
     }
 }

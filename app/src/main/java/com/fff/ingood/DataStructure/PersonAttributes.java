@@ -5,7 +5,6 @@ import org.json.JSONArray;
 
 public class PersonAttributes {
 
-
     public static final String ATTRIBUTES_PERSON_ACCOUNT = "email";
     public static final String ATTRIBUTES_PERSON_PASSWORD = "userpassword";
     public static final String ATTRIBUTES_PERSON_NAME = "displayname";

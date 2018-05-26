@@ -32,7 +32,7 @@ public class RadioListAdapter extends BaseAdapter {
     private String[] interests;
     private viewHolder holder;
     private ArrayList<Boolean> radioStateList;
-    // 标记用户当前选择的那一个作家
+
     private int index = -1;
     private Context mContext;
 
@@ -51,7 +51,6 @@ public class RadioListAdapter extends BaseAdapter {
 
     @Override
     public Boolean getItem(int position) {
-
         return radioStateList.get(position);
     }
 
@@ -73,7 +72,6 @@ public class RadioListAdapter extends BaseAdapter {
             holder.selectBtn = (RadioButton) convertView
                     .findViewById(R.id.radio);
             holder.index = position;
-
 
             switch (position){
                 case 0:{
@@ -118,11 +116,7 @@ public class RadioListAdapter extends BaseAdapter {
                 }
 
             }
-
-
 //            convertView.setTag(holder.index, holder);
-
-
         } else {
             switch (position){
                 case 0:{
@@ -165,7 +159,6 @@ public class RadioListAdapter extends BaseAdapter {
                     holder = (viewHolder) convertView.getTag(R.id.tag_9);
                     break;
                 }
-
             }
             //holder = (viewHolder) convertView.getTag(position);
         }
@@ -218,9 +211,9 @@ public class RadioListAdapter extends BaseAdapter {
                     convertView.setTag(R.id.tag_9, holder);
                     break;
                 }
-
             }
         }
+
         holder.nameTxt.setText(interests[position]);
         final View cView = convertView;
         holder.selectBtn.setOnClickListener(new View.OnClickListener() {
@@ -267,9 +260,7 @@ public class RadioListAdapter extends BaseAdapter {
                         holder = (viewHolder) cView.getTag(R.id.tag_9);
                         break;
                     }
-
                 }
-
                     if(radioStateList.get(position) != holder.selectBtn.isChecked()){
                         radioStateList.set(position, holder.selectBtn.isChecked());
                     }
@@ -278,9 +269,6 @@ public class RadioListAdapter extends BaseAdapter {
                         holder.selectBtn.setChecked(!holder.selectBtn.isChecked());
                     }
                     notifyDataSetChanged();
-
-
-
             }
         });
 

@@ -13,6 +13,4 @@ public class JsonUtils {
                 String string = gson.toJson(value);
                 return string;
      }
-
-
 }

@@ -28,15 +28,12 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     public static final String API_RESPONSE_TAG = "status_code";
     public static final String API_REQUEST_TAG = "verifycode";
 
-
     private EditText mEditText_Account;
     private EditText mEditText_Password;
     private EditText mEditText_Name;
     private Spinner mSpinner_Age;
     private Spinner mSpinner_Gender;
     private Button mButton_Next;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +46,12 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     protected void initView(){
         super.initView();
 
-        mEditText_Account = (EditText) findViewById(R.id.edit_account);
-        mEditText_Password = (EditText) findViewById(R.id.edit_pwd);
-        mEditText_Name = (EditText) findViewById(R.id.edit_name);
-        mSpinner_Age = (Spinner) findViewById(R.id.spinner_age);
-        mSpinner_Gender = (Spinner) findViewById(R.id.spinner_gender);
-        mButton_Next = (Button)findViewById(R.id.btn_done);
-
+        mEditText_Account = findViewById(R.id.edit_account);
+        mEditText_Password = findViewById(R.id.edit_pwd);
+        mEditText_Name = findViewById(R.id.edit_name);
+        mSpinner_Age = findViewById(R.id.spinner_age);
+        mSpinner_Gender = findViewById(R.id.spinner_gender);
+        mButton_Next = findViewById(R.id.btn_done);
     }
 
     @Override
@@ -65,8 +61,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
     @Override
     protected void initListner(){
-
-
         mSpinner_Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -74,11 +68,8 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
-
 
         mSpinner_Age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -111,16 +102,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                     bundle.putSerializable("mapList", hashMapList);
                     intent.putExtras(bundle);
                     startActivity(intent);
-
-
-
                 }
-
-
-
-
-
-
 
                 /*   DO Person Register Test
                 Map<String, Object> jsonMap1 = new HashMap<String, Object>();
@@ -179,9 +161,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                         });
                 task.execute(jsonMap1);
                 */
-
             }
-
         });
     }
 
@@ -209,17 +189,8 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             Toast.makeText(mActivity, "please choose your age", Toast.LENGTH_SHORT).show();
             isValid = false;
         }
-
-
         return isValid;
-
-
     }
-
-
-
-
-
 }
 
 

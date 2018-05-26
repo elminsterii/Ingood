@@ -21,22 +21,21 @@ public class HttpProxy {
     public interface AsyncResponse {
         boolean processFinish(boolean output);
     }
-    public static final String HTTP_POST_API_REGISTER =   "https://hangouttw.appspot.com/register";
-    public static final String HTTP_POST_API_UNREGISTER = "https://hangouttw.appspot.com/unregister";
-    public static final String HTTP_POST_API_LOGIN = "https://hangouttw.appspot.com/login";
-    public static final String HTTP_POST_API_LOGOUT = "https://hangouttw.appspot.com/logout";
-    public static final String HTTP_POST_API_PERSON_QUERY_ = "https://hangouttw.appspot.com/queryperson";
-    public static final String HTTP_POST_API_PERSON_UPDATE = "https://hangouttw.appspot.com/updateperson";
-    public static final String HTTP_POST_API_ACTIVITY_CREATE = "https://hangouttw.appspot.com/createactivity";
-    public static final String HTTP_POST_API_ACTIVITY_DELETE = "https://hangouttw.appspot.com/deleteactivity";
-    public static final String HTTP_POST_API_ACTIVITY_QUERY = "https://hangouttw.appspot.com/queryactivity";
-    public static final String HTTP_POST_API_ACTIVITY_UPDATE = "https://hangouttw.appspot.com/updateactivity";
+    public static final String SERVER_URL = "https://hangouttw.appspot.com";
 
-
+    public static final String HTTP_POST_API_REGISTER = SERVER_URL + "/register";
+    public static final String HTTP_POST_API_UNREGISTER = SERVER_URL + "/unregister";
+    public static final String HTTP_POST_API_LOGIN = SERVER_URL + "/login";
+    public static final String HTTP_POST_API_LOGOUT = SERVER_URL + "/logout";
+    public static final String HTTP_POST_API_PERSON_QUERY_ = SERVER_URL + "/queryperson";
+    public static final String HTTP_POST_API_PERSON_UPDATE = SERVER_URL + "/updateperson";
+    public static final String HTTP_POST_API_ACTIVITY_CREATE = SERVER_URL + "/createactivity";
+    public static final String HTTP_POST_API_ACTIVITY_DELETE = SERVER_URL + "/deleteactivity";
+    public static final String HTTP_POST_API_ACTIVITY_QUERY = SERVER_URL + "/queryactivity";
+    public static final String HTTP_POST_API_ACTIVITY_UPDATE = SERVER_URL + "/updateactivity";
 
     public static final int HTTP_POST_TIMEOUT = 10;
     public static final int HTTP_GET_TIMEOUT = 15;
-
 
     private static final String LOG_TAG = "HttpProxy";
 
@@ -58,7 +57,7 @@ public class HttpProxy {
         @Override
         public String doInBackground(String... arg0) {
 
-            URL url = null;
+            URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
 
@@ -109,7 +108,6 @@ public class HttpProxy {
                     }
                 }
             }
-
             return null;
         }
 
@@ -122,10 +120,7 @@ public class HttpProxy {
         }
     }
 
-
     public static class HttpPostTask extends AsyncTask<Object,Void,String> {
-
-
         public AsyncResponse delegate = null;
 
         public HttpPostTask(AsyncResponse delegate){
@@ -139,7 +134,7 @@ public class HttpProxy {
         @Override
         public String doInBackground(Object... arg0) {
             boolean result = false;
-            URL url = null;
+            URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString = JsonUtils.createJsonString(arg0[0]);
@@ -180,7 +175,6 @@ public class HttpProxy {
                 writer.close();
                 os.close();
 
-
                 //response body
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 stringBuilder = new StringBuilder();
@@ -212,7 +206,6 @@ public class HttpProxy {
                     }
                 }
             }
-
             return null;
         }
 
@@ -223,9 +216,6 @@ public class HttpProxy {
                 delegate.processFinish(true);
             else
                 delegate.processFinish(false);
-
-
-
         }
     }
 }

@@ -31,9 +31,4 @@ public class BaseActivity extends AppCompatActivity {
     protected void initListner(){
         //bind listner
     }
-
-
-
-
-
 }

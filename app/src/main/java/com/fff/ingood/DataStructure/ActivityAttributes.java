@@ -63,7 +63,6 @@ public class ActivityAttributes {
         m_dateend = dEnd;
         m_largeactivity = bLarge;
         m_earlybird = bEarly;
-
     }
 
     public  ActivityAttributes(){
@@ -187,5 +186,4 @@ public class ActivityAttributes {
     public void setAttendees(JSONArray aAttendees){
         m_attendees  = aAttendees;
     }
-
 }

@@ -23,7 +23,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
     protected String access(Activity activity, Object info) {
         {
             boolean result = false;
-            URL url = null;
+            URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString = JsonUtils.createJsonString(info);
@@ -63,7 +63,6 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                 writer.close();
                 os.close();
 
-
                 //response body
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 stringBuilder = new StringBuilder();
@@ -95,10 +94,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                     }
                 }
             }
-
             return  null;
-
         }
-
     }
 }

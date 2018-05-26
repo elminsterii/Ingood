@@ -24,7 +24,7 @@ public class BitmapAndStringUtils {
     }
 
     public static Bitmap convertStringToIcon(String str) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
             byte[] bytes= Base64.decode(str, Base64.DEFAULT);
             bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
