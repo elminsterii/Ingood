@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">別宅</string>
+    <string name="action_settings">Post</string>
+    <string name="sign_in">登入</string>
+    <string name="sign_up">註冊</string>
+    <string name="user_data_email">電子郵件</string>
+    <string name="user_data_pwd">密碼</string>
+    <string name="user_data_pwd_confirm">密碼確認</string>
+    <string name="user_data_name">顯示暱稱</string>
+    <string name="done">完成</string>
+    <string name="next">下一步</string>
+    <string name="home_page">首頁</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="user_age_list">
+        <item>年齡</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="user_gender_list">
+        <item>性別</item>
+        <item>男性</item>
+        <item>女性</item>
+    </string-array>
+
+    <string-array name="user_location_list">
+        <item>地點</item>
+        <item>臺北市</item>
+        <item>新北市</item>
+        <item>臺中市</item>
+        <item>高雄市</item>
+        <item>桃園市</item>
+        <item>臺南市</item>
+        <item>新竹市</item>
+        <item>嘉義市</item>
+        <item>基隆市</item>
+        <item>彰化縣</item>
+        <item>屏東縣</item>
+        <item>雲林縣</item>
+        <item>新竹縣</item>
+        <item>苗栗縣</item>
+        <item>嘉義縣</item>
+        <item>南投縣</item>
+        <item>宜蘭縣</item>
+        <item>花蓮縣</item>
+        <item>臺東縣</item>
+        <item>金門縣</item>
+        <item>澎湖縣</item>
+        <item>連江縣</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+</resources>

@@ -1,0 +1,143 @@
+<resources>
+    <string name="app_name">HangOutApp</string>
+    <string name="action_settings">Post</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Register</string>
+    <string name="user_data_email">E-mail</string>
+    <string name="user_data_pwd">Password</string>
+    <string name="user_data_pwd_confirm">Password Again</string>
+    <string name="user_data_name">Display Name</string>
+    <string name="done">Done</string>
+    <string name="next">Next</string>
+    <string name="home_page">Home Page</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="user_age_list">
+        <item>Age</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="user_gender_list">
+        <item>Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="user_location_list">
+        <item>Locations</item>
+        <item>Taipei City</item>
+        <item>New Taipei City</item>
+        <item>Taichung City </item>
+        <item>Kaohsiung City </item>
+        <item>Taoyuan City </item>
+        <item>Tainan City </item>
+        <item>Chiayi City </item>
+        <item>Hsinchu City</item>
+        <item>Keelung City</item>
+        <item>Changhua County </item>
+        <item>Pingtung County</item>
+        <item>Yunlin County </item>
+        <item>Hsinchu County </item>
+        <item>Miaoli County </item>
+        <item>Chiayi County </item>
+        <item>Nantou County </item>
+        <item>Yilan County </item>
+        <item>Hualien County </item>
+        <item>Taitung County </item>
+        <item>Kinmen County </item>
+        <item>Wuhu County </item>
+        <item>Lianjiang County </item>
+    </string-array>
+
+
+    <item type="id" name="tag_0"></item>
+    <item type="id" name="tag_1"></item>
+    <item type="id" name="tag_2"></item>
+    <item type="id" name="tag_3"></item>
+    <item type="id" name="tag_4"></item>
+    <item type="id" name="tag_5"></item>
+    <item type="id" name="tag_6"></item>
+    <item type="id" name="tag_7"></item>
+    <item type="id" name="tag_8"></item>
+    <item type="id" name="tag_9"></item>
+    <item type="id" name="tag_10"></item>
+</resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
