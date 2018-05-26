@@ -15,12 +15,24 @@ import java.util.Iterator;
 
 public class ParserUtils {
 
-    public static String getValueByTag(String tag, String Body){
+    public static String getStringByTag(String tag, String Body){
         String result = null;
 
         try {
             final JSONObject obj = new JSONObject(Body);
             result =  obj.getString(tag);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static int getIntByTag(String tag, String Body){
+        int result = -1;
+
+        try {
+            final JSONObject obj = new JSONObject(Body);
+            result =  obj.getInt(tag);
         } catch (JSONException e) {
             e.printStackTrace();
         }

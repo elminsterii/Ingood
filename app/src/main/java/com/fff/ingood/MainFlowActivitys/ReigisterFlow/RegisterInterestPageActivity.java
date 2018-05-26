@@ -11,6 +11,7 @@ import com.fff.ingood.Adapter.RadioListAdapter;
 import com.fff.ingood.DataStructure.BaseActivity;
 import com.fff.ingood.DataStructure.PersonAttributes;
 import com.fff.ingood.HttpConnect.Task.Abstract.AsyncResponder;
+import com.fff.ingood.HttpConnect.Task.Implement.DoPersonLogInTask;
 import com.fff.ingood.HttpConnect.Task.Implement.DoPersonRegisterTask;
 import com.fff.ingood.MainFlowActivitys.HomePageActivity;
 import com.fff.ingood.R;
@@ -87,12 +88,26 @@ public class RegisterInterestPageActivity extends BaseActivity {
                         new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
-                                Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-
-                                if (ParserUtils.getValueByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, HomePageActivity.class);
-                                    startActivity(intent);
+                                    HashMap<String, Object> registerList = new HashMap<String, Object>();
+                                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT, mRegisterList.get(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT));
+                                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD, mRegisterList.get(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD));
+
+                                    DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
+                                            new AsyncResponder<String>() {
+                                                @Override
+                                                public void onSuccess(String strResponse) {
+
+                                                    Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(mActivity, HomePageActivity.class);
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("personData", strResponse);
+                                                    intent.putExtras(bundle);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                    task.execute(registerList);
                                 }
                                 else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();

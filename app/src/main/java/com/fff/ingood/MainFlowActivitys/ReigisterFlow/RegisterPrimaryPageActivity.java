@@ -93,8 +93,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                     registerList.put(PersonAttributes.ATTRIBUTES_PERSON_AGE, mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1);
                     registerList.put(PersonAttributes.ATTRIBUTES_PERSON_GENDER, mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
 
-                    //String jString = JsonUtils.createJsonString(registerList);
-
                     Intent intent = new Intent(mActivity, RegisterLocationPageActivity.class);
                     SerializableHashMap hashMapList = new SerializableHashMap();
                     hashMapList.setObjectItems(registerList);
@@ -104,63 +102,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                     startActivity(intent);
                 }
 
-                /*   DO Person Register Test
-                Map<String, Object> jsonMap1 = new HashMap<String, Object>();
-                jsonMap1.put(ATTRIBUTES_PERSON_ACCOUNT, "yoie1@gmail.com");
-                jsonMap1.put(ATTRIBUTES_PERSON_PASSWORD, "12345678");
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_NAME, "yyyyy");
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_GENDER, "M");
-
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_LOCATION, "12345ggg");
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_AGE, 54);
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_INTERESTS, "ball");
-                jsonMap1.put(REGISTER_ATTRIBUTES_PERSON_NEW_PASSWORD, "wqwqwqdddddddwqw");
-
-
-                DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
-                        new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-                                Toast.makeText(RegisterPrimaryPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-
-                                boolean result = false;
-                                if (JsonUtils.getValueByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
-                                    result = true;
-                                    Toast.makeText(RegisterPrimaryPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-                                }
-                                else
-                                result =  false;
-
-
-                            }
-                        });
-                task.execute(jsonMap1);
-                */
-
-                //   DO Person Query Test
-
-                /*Map<String, Object> jsonMap1 = new HashMap<String, Object>();
-                jsonMap1.put(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT, "yoie1@gmail.com");
-
-                DoPersonQueryTask task = new DoPersonQueryTask(mActivity,
-                        new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-                                Toast.makeText(RegisterPrimaryPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-                                PersonAttributes person = JsonUtils.getPersonAttr(strResponse);
-                                boolean result = false;
-                                if (JsonUtils.getValueByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
-                                    result = true;
-                                    Toast.makeText(RegisterPrimaryPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-                                }
-                                else
-                                result =  false;
-
-
-                            }
-                        });
-                task.execute(jsonMap1);
-                */
             }
         });
     }

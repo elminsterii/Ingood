@@ -1,6 +1,7 @@
 package com.fff.ingood.MainFlowActivitys;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.fff.ingood.DataStructure.BaseActivity;
 import com.fff.ingood.R;
@@ -10,6 +11,7 @@ import com.fff.ingood.R;
  */
 
 public class HomePageActivity extends BaseActivity {
+    private TextView mTextViewDisplay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_homepage);
@@ -18,14 +20,23 @@ public class HomePageActivity extends BaseActivity {
 
     @Override
     protected void initView(){
+        super.initView();
+        mTextViewDisplay = findViewById(R.id.text_display);
+
+
         //bind view content
     }
 
     @Override
     protected void initData(){
+        super.initData();
+        Bundle bundle = getIntent().getExtras();
+        String strResponse = bundle.getString("personData");
+        mTextViewDisplay.setText(strResponse);
 
     }
     @Override
     protected void initListner(){
+        super.initListner();
     }
 }
