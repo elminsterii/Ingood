@@ -48,6 +48,19 @@
             android:label="@string/home_page"
             android:screenOrientation="portrait" >
         </activity>
+
+        <activity
+            android:name=".MainFlowActivitys.LogOutPageActivity"
+            android:label="Log Out"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".MainFlowActivitys.UpdatePageActivity"
+            android:label="Update"
+            android:screenOrientation="portrait" >
+        </activity>
+
     </application>
 
 </manifest>

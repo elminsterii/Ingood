@@ -7,9 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fff.ingood.DataStructure.BaseActivity;
+import com.fff.ingood.DataStructure.PersonAttributes;
 import com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterInterestPageActivity;
 import com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterPrimaryPageActivity;
 import com.fff.ingood.R;
+import com.fff.ingood.Tool.ParserUtils;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -43,13 +45,12 @@ public class SignInPageActivity extends BaseActivity{
     }
 
     @Override
-    protected void initListner(){
+    protected void initListner() {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, RegisterInterestPageActivity.class);
                 startActivity(intent);
-
             }
         });
 
