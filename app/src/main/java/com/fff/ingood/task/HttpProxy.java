@@ -1,9 +1,9 @@
-package com.fff.ingood.HttpConnect;
+package com.fff.ingood.task;
 
 
 import android.os.AsyncTask;
 
-import com.fff.ingood.Tool.JsonUtils;
+import com.fff.ingood.tools.JsonUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

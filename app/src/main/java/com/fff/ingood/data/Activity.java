@@ -1,8 +1,8 @@
-package com.fff.ingood.DataStructure;
+package com.fff.ingood.data;
 
 import org.json.JSONArray;
 
-public class ActivityAttributes {
+public class Activity {
 
     public static final String ATTRIBUTES_ACTIVITY_ID = "id";
     public static final String ATTRIBUTES_ACTIVITY_IDS = "ids";
@@ -45,15 +45,15 @@ public class ActivityAttributes {
     private JSONArray m_tags;			            //活動屬性 (第一個是要地區，例如 ”新北,認養,貓”)
     private JSONArray m_attendees;				    //參與人(person.emails)
 
-    public  ActivityAttributes(String sEmail,
-                               String sName,
-                               String sLocation,
-                               Long pBegin,
-                               Long pEnd,
-                               Long dBegin,
-                               Long dEnd,
-                               boolean bLarge,
-                               boolean bEarly){
+    public Activity(String sEmail,
+                    String sName,
+                    String sLocation,
+                    Long pBegin,
+                    Long pEnd,
+                    Long dBegin,
+                    Long dEnd,
+                    boolean bLarge,
+                    boolean bEarly){
         m_publisheremail = sEmail;
         m_displayname = sName;
         m_location= sLocation;
@@ -65,7 +65,7 @@ public class ActivityAttributes {
         m_earlybird = bEarly;
     }
 
-    public  ActivityAttributes(){
+    public Activity(){
     }
 
     public String getPublisherEmail(){

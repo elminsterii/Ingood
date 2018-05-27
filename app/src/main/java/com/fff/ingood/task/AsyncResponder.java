@@ -1,4 +1,4 @@
-package com.fff.ingood.HttpConnect.Task.Abstract;
+package com.fff.ingood.task;
 
 /**
  * Created by yoie7 on 2018/5/16.

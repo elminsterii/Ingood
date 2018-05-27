@@ -1,4 +1,4 @@
-package com.fff.ingood;
+package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.fff.ingood.MainFlowActivitys.SignInPageActivity;
+import com.fff.ingood.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
     super.onResume();
-        Intent intent = new Intent(this, SignInPageActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
     @Override

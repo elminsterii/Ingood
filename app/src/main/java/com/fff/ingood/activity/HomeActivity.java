@@ -1,16 +1,15 @@
-package com.fff.ingood.MainFlowActivitys;
+package com.fff.ingood.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.fff.ingood.DataStructure.BaseActivity;
 import com.fff.ingood.R;
 
 /**
  * Created by yoie7 on 2018/5/24.
  */
 
-public class HomePageActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity {
     private TextView mTextViewDisplay;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.fff.ingood.HttpConnect.Task.Abstract;
+package com.fff.ingood.task;
 
 import android.app.Activity;
 import android.os.AsyncTask;

@@ -1,7 +1,7 @@
-package com.fff.ingood.Tool;
+package com.fff.ingood.tools;
 
-import com.fff.ingood.DataStructure.ActivityAttributes;
-import com.fff.ingood.DataStructure.PersonAttributes;
+import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.Person;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,41 +39,41 @@ public class ParserUtils {
         return result;
     }
 
-    public static PersonAttributes getPersonAttr(String Body){
-        PersonAttributes result = new PersonAttributes();
+    public static Person getPersonAttr(String Body){
+        Person result = new Person();
 
         try {
             final JSONObject obj = new JSONObject(Body);
             Iterator x = obj.keys();
             while (x.hasNext()){
                 String key = (String) x.next();
-                if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT))
+                if(key.contains(Person.ATTRIBUTES_PERSON_ACCOUNT))
                     result.setEmail(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_PASSWORD))
                     result.setPassword(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_NAME))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_NAME))
                     result.setName(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_DESCRIPTION))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_DESCRIPTION))
                     result.setDescription(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_GENDER))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_GENDER))
                     result.setGender(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_LOCATION))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_LOCATION))
                     result.setLocation(obj.getString(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_AGE))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_AGE))
                     result.setAge(obj.getInt(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_GOOD_LEADER))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_GOOD_LEADER))
                     result.setGoodLeader(obj.getInt(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_GOOD_MEMBER))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_GOOD_MEMBER))
                     result.setGoodMember(obj.getInt(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_ONLINE))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_ONLINE))
                     result.setOnLine(obj.getInt(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_INTERESTS))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_INTERESTS))
                     result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_JOIN_ACTIVITY))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY))
                     result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_HOLD_ACTIVITY))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY))
                     result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(PersonAttributes.ATTRIBUTES_PERSON_SAVE_ACTIVITY))
+                else if(key.contains(Person.ATTRIBUTES_PERSON_SAVE_ACTIVITY))
                     result.setInterests(obj.getJSONArray(key));
 
 
@@ -84,47 +84,47 @@ public class ParserUtils {
         return result;
     }
 
-    public static ActivityAttributes getACtivityAttr(String Body){
-        ActivityAttributes result = new ActivityAttributes();
+    public static Activity getACtivityAttr(String Body){
+        Activity result = new Activity();
 
         try {
             final JSONObject obj = new JSONObject(Body);
             Iterator x = obj.keys();
             while (x.hasNext()){
                 String key = (String) x.next();
-                if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_PUBLISHER_EMAIL))
+                if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISHER_EMAIL))
                     result.setPublisherEmail(obj.getString(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_PUBLISHER_PASSWORD))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISHER_PASSWORD))
                     result.setPublisherPwd(obj.getString(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_DISPLAYNAME))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DISPLAYNAME))
                     result.setName(obj.getString(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_LOCATION))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_LOCATION))
                     result.setLocation(obj.getString(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_DESCRIPTION))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DESCRIPTION))
                     result.setDescription(obj.getString(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_PUBLISH_BEGIN))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISH_BEGIN))
                     result.setPublisBegin(obj.getLong(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_PUBLISH_END))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISH_END))
                     result.setPublisEnd(obj.getLong(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_DATE_BEGIN))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DATE_BEGIN))
                     result.setDateBegin(obj.getLong(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_DATE_END))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DATE_END))
                     result.setDateEnd(obj.getLong(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_LARGE_ACTIVITY))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_LARGE_ACTIVITY))
                     result.setLargeActivity(obj.getBoolean(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_EARLY_BIRD))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_EARLY_BIRD))
                     result.setEarlyBird(obj.getBoolean(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_ATTENDEES))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ATTENDEES))
                     result.setAttendees(obj.getJSONArray(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_ATTENTION))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ATTENTION))
                     result.setAttention(obj.getInt(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_GOOD_ACTIVITY))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_GOOD_ACTIVITY))
                     result.setGoodActivity(obj.getInt(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_TAGS))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_TAGS))
                     result.setTags(obj.getJSONArray(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_ID))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ID))
                     result.setId(obj.getInt(key));
-                else if(key.contains(ActivityAttributes.ATTRIBUTES_ACTIVITY_STATUS))
+                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_STATUS))
                     result.setStatus(obj.getString(key));
 
 

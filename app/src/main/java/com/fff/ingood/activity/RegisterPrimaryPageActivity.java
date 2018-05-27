@@ -1,4 +1,4 @@
-package com.fff.ingood.MainFlowActivitys.ReigisterFlow;
+package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.fff.ingood.DataStructure.BaseActivity;
-import com.fff.ingood.DataStructure.PersonAttributes;
 import com.fff.ingood.R;
-import com.fff.ingood.Tool.SerializableHashMap;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.tools.SerializableHashMap;
 
 import java.util.HashMap;
 
@@ -87,11 +86,11 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             public void onClick(View v) {
                 if(isDataValid()){
                     HashMap<String, Object> registerList = new HashMap<String, Object>();
-                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
-                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
-                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_NAME, mEditText_Name.getText().toString());
-                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_AGE, mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1);
-                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_GENDER, mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
+                    registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
+                    registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
+                    registerList.put(Person.ATTRIBUTES_PERSON_NAME, mEditText_Name.getText().toString());
+                    registerList.put(Person.ATTRIBUTES_PERSON_AGE, mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1);
+                    registerList.put(Person.ATTRIBUTES_PERSON_GENDER, mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
 
                     Intent intent = new Intent(mActivity, RegisterLocationPageActivity.class);
                     SerializableHashMap hashMapList = new SerializableHashMap();

@@ -1,4 +1,4 @@
-package com.fff.ingood.MainFlowActivitys.ReigisterFlow;
+package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,21 +8,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fff.ingood.Adapter.RadioListAdapter;
-import com.fff.ingood.DataStructure.BaseActivity;
-import com.fff.ingood.DataStructure.PersonAttributes;
-import com.fff.ingood.HttpConnect.Task.Abstract.AsyncResponder;
-import com.fff.ingood.HttpConnect.Task.Implement.DoPersonLogInTask;
-import com.fff.ingood.HttpConnect.Task.Implement.DoPersonRegisterTask;
-import com.fff.ingood.MainFlowActivitys.HomePageActivity;
 import com.fff.ingood.R;
-import com.fff.ingood.Tool.ParserUtils;
-import com.fff.ingood.Tool.SerializableHashMap;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.DoPersonLogInTask;
+import com.fff.ingood.task.DoPersonRegisterTask;
+import com.fff.ingood.tools.ParserUtils;
+import com.fff.ingood.tools.SerializableHashMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterPrimaryPageActivity.API_REQUEST_TAG;
-import static com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
+import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_REQUEST_TAG;
+import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
  * Created by yoie7 on 2018/5/21.
@@ -81,7 +79,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     }
                 }
 
-                mRegisterList.put(PersonAttributes.ATTRIBUTES_PERSON_INTERESTS, ParserUtils.listStringToString(interestsTagList, ','));
+                mRegisterList.put(Person.ATTRIBUTES_PERSON_INTERESTS, ParserUtils.listStringToString(interestsTagList, ','));
                 mRegisterList.put(API_REQUEST_TAG, "5454");
 
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
@@ -91,8 +89,8 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
                                     HashMap<String, Object> registerList = new HashMap<String, Object>();
-                                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT, mRegisterList.get(PersonAttributes.ATTRIBUTES_PERSON_ACCOUNT));
-                                    registerList.put(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD, mRegisterList.get(PersonAttributes.ATTRIBUTES_PERSON_PASSWORD));
+                                    registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mRegisterList.get(Person.ATTRIBUTES_PERSON_ACCOUNT));
+                                    registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mRegisterList.get(Person.ATTRIBUTES_PERSON_PASSWORD));
 
                                     DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                                             new AsyncResponder<String>() {
@@ -100,7 +98,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                 public void onSuccess(String strResponse) {
 
                                                     Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(mActivity, HomePageActivity.class);
+                                                    Intent intent = new Intent(mActivity, HomeActivity.class);
                                                     Bundle bundle = new Bundle();
                                                     bundle.putString("personData", strResponse);
                                                     intent.putExtras(bundle);
