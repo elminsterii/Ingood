@@ -96,13 +96,14 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                             new AsyncResponder<String>() {
                                                 @Override
                                                 public void onSuccess(String strResponse) {
-
-                                                    Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(mActivity, HomeActivity.class);
-                                                    Bundle bundle = new Bundle();
-                                                    bundle.putString("personData", strResponse);
-                                                    intent.putExtras(bundle);
-                                                    startActivity(intent);
+                                                    if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
+                                                        Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
+                                                        Intent intent = new Intent(mActivity, HomeActivity.class);
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("personData", strResponse);
+                                                        intent.putExtras(bundle);
+                                                        startActivity(intent);
+                                                    }
                                                 }
                                             });
                                     task.execute(registerList);

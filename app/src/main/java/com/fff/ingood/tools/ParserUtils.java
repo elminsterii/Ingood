@@ -2,12 +2,16 @@ package com.fff.ingood.tools;
 
 import com.fff.ingood.data.Activity;
 import com.fff.ingood.data.Person;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Created by yoie7 on 2018/5/16.
@@ -15,15 +19,21 @@ import java.util.Iterator;
 
 public class ParserUtils {
 
-    public static String getStringByTag(String tag, String Body){
-        String result = null;
+    private static Logger m_logger = Logger.getLogger(ParserUtils.class.getName());
 
-        try {
-            final JSONObject obj = new JSONObject(Body);
-            result =  obj.getString(tag);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public static String getStringByTag(String tag, String Body){
+        String result;
+
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+
+        if(jsonElement.isJsonArray()) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            result = jsonArray.get(0).getAsJsonObject().get(tag).getAsString();
+        } else {
+            result = jsonElement.getAsJsonObject().get(tag).getAsString();
         }
+
         return result;
     }
 
