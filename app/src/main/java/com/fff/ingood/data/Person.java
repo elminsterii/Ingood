@@ -1,9 +1,9 @@
-package com.fff.ingood.DataStructure;
+package com.fff.ingood.data;
 
 
 import org.json.JSONArray;
 
-public class PersonAttributes {
+public class Person {
 
     public static final String ATTRIBUTES_PERSON_ACCOUNT = "email";
     public static final String ATTRIBUTES_PERSON_PASSWORD = "userpassword";
@@ -38,7 +38,7 @@ public class PersonAttributes {
     int m_goodleader;				        //好團長指數
     int m_online;			                //是否上線(1 = online)(預設0)
 
-    public  PersonAttributes(String sEmail, String sPwd, String sGender, String sName, int iAge){
+    public Person(String sEmail, String sPwd, String sGender, String sName, int iAge){
         m_email = sEmail;
         m_userpassword = sPwd;
         m_displayname = sName;
@@ -46,7 +46,7 @@ public class PersonAttributes {
         m_age = iAge;
     }
 
-    public  PersonAttributes(){
+    public Person(){
     }
 
     public String getEmail(){

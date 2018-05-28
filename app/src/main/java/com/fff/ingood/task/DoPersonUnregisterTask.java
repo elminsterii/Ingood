@@ -1,11 +1,8 @@
-package com.fff.ingood.HttpConnect.Task.Implement;
+package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.HttpConnect.HttpProxy;
-import com.fff.ingood.HttpConnect.Task.Abstract.AsyncResponder;
-import com.fff.ingood.HttpConnect.Task.Abstract.HttpPostAbstractTask;
-import com.fff.ingood.Tool.JsonUtils;
+import com.fff.ingood.tools.JsonUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,12 +12,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by yoie7 on 2018/5/16.
- */
-
-public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonQueryTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonUnregisterTask<Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonUnregisterTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
@@ -35,7 +28,7 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY_));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_UNREGISTER));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線

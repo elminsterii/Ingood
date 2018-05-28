@@ -1,11 +1,8 @@
-package com.fff.ingood.HttpConnect.Task.Implement;
+package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.HttpConnect.HttpProxy;
-import com.fff.ingood.HttpConnect.Task.Abstract.AsyncResponder;
-import com.fff.ingood.HttpConnect.Task.Abstract.HttpPostAbstractTask;
-import com.fff.ingood.Tool.JsonUtils;
+import com.fff.ingood.tools.JsonUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

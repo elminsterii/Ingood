@@ -1,4 +1,4 @@
-package com.fff.ingood.Tool;
+package com.fff.ingood.tools;
 
 import java.io.Serializable;
 import java.util.HashMap;

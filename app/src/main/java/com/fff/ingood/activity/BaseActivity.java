@@ -1,4 +1,4 @@
-package com.fff.ingood.DataStructure;
+package com.fff.ingood.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

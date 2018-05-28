@@ -1,4 +1,4 @@
-package com.fff.ingood.MainFlowActivitys.ReigisterFlow;
+package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.fff.ingood.DataStructure.BaseActivity;
-import com.fff.ingood.DataStructure.PersonAttributes;
 import com.fff.ingood.R;
-import com.fff.ingood.Tool.SerializableHashMap;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.tools.SerializableHashMap;
 
 import java.util.HashMap;
 
@@ -52,7 +51,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(mSpinner_Location.getSelectedItemPosition() != 0){
-                    mRegisterList.put(PersonAttributes.ATTRIBUTES_PERSON_LOCATION, mSpinner_Location.getSelectedItem().toString());
+                    mRegisterList.put(Person.ATTRIBUTES_PERSON_LOCATION, mSpinner_Location.getSelectedItem().toString());
                     Intent intent = new Intent(mActivity, RegisterInterestPageActivity.class);
                     SerializableHashMap hashMapList = new SerializableHashMap();
                     hashMapList.setObjectItems(mRegisterList);
