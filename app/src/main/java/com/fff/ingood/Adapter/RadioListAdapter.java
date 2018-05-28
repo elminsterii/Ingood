@@ -1,4 +1,4 @@
-package com.fff.ingood.Adapter;
+package com.fff.ingood.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

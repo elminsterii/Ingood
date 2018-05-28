@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.fff.ingood.Adapter.RadioListAdapter;
 import com.fff.ingood.R;
+import com.fff.ingood.adapter.RadioListAdapter;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
