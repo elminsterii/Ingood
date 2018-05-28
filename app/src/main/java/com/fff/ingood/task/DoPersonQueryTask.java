@@ -46,7 +46,7 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
                 connection.setDoOutput(true);                                                       //允許輸出流，即允許上傳
                 connection.setUseCaches(false);                                                     //設置是否使用緩存
                 //connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); //设置请求体的类型是文本类型
-                connection.setRequestProperty("Content-Length", String.valueOf(jsonString.length()));                              //設定內容長度
+                //connection.setRequestProperty("Content-Length", String.valueOf(jsonString.length()));                              //設定內容長度
 
                 // 是否添加參數(ex : json...等)
                 //connection.setDoOutput(true);
@@ -59,13 +59,14 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
                 // output body
                 OutputStream os = connection.getOutputStream();
                 DataOutputStream writer = new DataOutputStream(os);
-                writer.writeBytes(jsonString);
+                writer.write(jsonString.getBytes());
+                //writer.writeBytes(jsonString);
                 writer.flush();
                 writer.close();
                 os.close();
 
                 //response body
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 stringBuilder = new StringBuilder();
 
                 String line = null;

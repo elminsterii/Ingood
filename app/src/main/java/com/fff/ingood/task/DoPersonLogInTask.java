@@ -35,6 +35,8 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
                 connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Accept-Charset", "utf-8");
+                connection.setRequestProperty("contentType", "utf-8");
                 connection.setRequestMethod("POST");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
                 connection.setReadTimeout(10000);
@@ -42,7 +44,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                 connection.setDoOutput(true);                                                       //允許輸出流，即允許上傳
                 connection.setUseCaches(false);                                                     //設置是否使用緩存
                 //connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded"); //设置请求体的类型是文本类型
-                connection.setRequestProperty("Content-Length", String.valueOf(jsonString.length()));                              //設定內容長度
+                //connection.setRequestProperty("Content-Length", String.valueOf(jsonString.length()));                              //設定內容長度
 
                 // 是否添加參數(ex : json...等)
                 //connection.setDoOutput(true);
@@ -55,13 +57,14 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                 // output body
                 OutputStream os = connection.getOutputStream();
                 DataOutputStream writer = new DataOutputStream(os);
-                writer.writeBytes(jsonString);
+                writer.write(jsonString.getBytes());
+                //writer.writeBytes(jsonString);
                 writer.flush();
                 writer.close();
                 os.close();
 
                 //response body
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 stringBuilder = new StringBuilder();
 
                 String line = null;
