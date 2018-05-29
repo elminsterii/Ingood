@@ -1,11 +1,11 @@
-package com.fff.ingood.HttpConnect.Task.Implement;
+package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.HttpConnect.HttpProxy;
-import com.fff.ingood.HttpConnect.Task.Abstract.AsyncResponder;
-import com.fff.ingood.HttpConnect.Task.Abstract.HttpPostAbstractTask;
-import com.fff.ingood.Tool.JsonUtils;
+import com.fff.ingood.task.HttpProxy;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.HttpPostAbstractTask;
+import com.fff.ingood.tools.JsonUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -15,10 +15,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 /**
-Created by Chris on 5/26
+ Created by Chris on 5/29
  */
-public class DoPersonLogoutTask <Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonLogoutTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonLogOutTask<Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonLogOutTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override

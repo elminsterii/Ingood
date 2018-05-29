@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.fff.ingood.DataStructure.BaseActivity;
+import com.fff.ingood.activity.BaseActivity;
 import com.fff.ingood.R;
 
 public class UpdatePageActivity extends BaseActivity {

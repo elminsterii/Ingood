@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.fff.ingood.DataStructure.BaseActivity;
-import com.fff.ingood.DataStructure.PersonAttributes;
-import com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterInterestPageActivity;
-import com.fff.ingood.MainFlowActivitys.ReigisterFlow.RegisterPrimaryPageActivity;
+import com.fff.ingood.activity.BaseActivity;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.activity.RegisterInterestPageActivity;
+import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 import com.fff.ingood.R;
-import com.fff.ingood.Tool.ParserUtils;
+import com.fff.ingood.tools.ParserUtils;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -49,7 +49,7 @@ public class SignInPageActivity extends BaseActivity{
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, RegisterInterestPageActivity.class);
+                Intent intent = new Intent(mActivity, LogOutPageActivity.class);
                 startActivity(intent);
             }
         });

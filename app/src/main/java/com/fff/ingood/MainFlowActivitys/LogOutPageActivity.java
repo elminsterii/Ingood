@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.fff.ingood.DataStructure.BaseActivity;
+import com.fff.ingood.activity.BaseActivity;
 import com.fff.ingood.R;
 
 public class LogOutPageActivity extends BaseActivity {
@@ -32,7 +32,7 @@ public class LogOutPageActivity extends BaseActivity {
         return_mainPage.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, LogOutPageActivity.class);
+                Intent intent = new Intent(mActivity, SignInPageActivity.class);
                 startActivity(intent);
             }
         });
