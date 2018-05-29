@@ -21,27 +21,21 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_homepage);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_homepage);
 
         mRecyclerView = findViewById(R.id.recycleViewActivityList);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(true);
 
-        // specify an adapter (see also next example)
         ArrayList<String> lsTempData = new ArrayList<>();
-        lsTempData.add("Activity 01");
-        lsTempData.add("Activity 02");
-        lsTempData.add("Activity 03");
-        lsTempData.add("Activity 04");
-        lsTempData.add("Activity 05");
+
+        final int TEST_SIZE = 20;
+        for(int i=0; i<TEST_SIZE; i++)
+            lsTempData.add("Activities");
 
         mAdapter = new ActivityListAdapter(lsTempData);
         mRecyclerView.setAdapter(mAdapter);
