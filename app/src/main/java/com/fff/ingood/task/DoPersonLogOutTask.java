@@ -23,8 +23,12 @@ public class DoPersonLogOutTask <Object> extends HttpPostAbstractTask<Object> {
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
-            String jsonString = JsonUtils.createJsonString(info);
-
+            String jsonString;
+            if(info instanceof String){
+                jsonString = (String)info;
+            }
+            else
+                jsonString = JsonUtils.createJsonString(info);
             try
             {
                 // create the HttpURLConnection

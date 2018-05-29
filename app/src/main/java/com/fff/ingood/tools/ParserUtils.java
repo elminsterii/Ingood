@@ -2,6 +2,7 @@ package com.fff.ingood.tools;
 
 import com.fff.ingood.data.Activity;
 import com.fff.ingood.data.Person;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -51,44 +52,17 @@ public class ParserUtils {
 
     public static Person getPersonAttr(String Body){
         Person result = new Person();
-
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
         JsonArray jsonArray = new JsonArray();
+        Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
             jsonArray = jsonElement.getAsJsonArray();
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ACCOUNT) != null)
-                result.setEmail(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ACCOUNT).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_PASSWORD) != null)
-                result.setPassword(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_PASSWORD).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_AGE) != null)
-                result.setAge(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_AGE).getAsInt());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_LOCATION) != null)
-                result.setLocation(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_LOCATION).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GENDER) != null)
-                result.setGender(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GENDER).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_INTERESTS) != null)
-                result.setInterests(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_INTERESTS).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_LEADER) != null)
-                result.setGoodLeader(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_LEADER).getAsInt());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_MEMBER) != null)
-                result.setGoodMember(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_MEMBER).getAsInt());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_DESCRIPTION) != null)
-                result.setDescription(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_DESCRIPTION).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY) != null)
-                result.setHoldActivities(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY) != null)
-                result.setJoinActivities(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_NAME) != null)
-                result.setName(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_NAME).getAsString());
-            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ONLINE) != null)
-                result.setOnLine(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ONLINE).getAsInt());
+            result = gson.fromJson(jsonArray.get(1).toString(), Person.class);
+            return result;
         }
         else
             return null;
-
-        return result;
-
     }
 
     public static Activity getACtivityAttr(String Body){

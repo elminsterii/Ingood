@@ -12,6 +12,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
@@ -54,10 +55,10 @@ public class LoginActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
 
-                HashMap<String, Object> registerList = new HashMap<String, Object>();
-                registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
-                registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
-
+                Person userLogin = new Person();
+                userLogin.setEmail(mEditText_Account.getText().toString());
+                userLogin.setPassword(mEditText_Password.getText().toString());
+                String gsonString = new Gson().toJson(userLogin, Person.class);
                 DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
@@ -79,7 +80,7 @@ public class LoginActivity extends BaseActivity{
                                 }
                             }
                         });
-                task.execute(registerList);
+                task.execute(gsonString);
 
 
             }

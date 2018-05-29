@@ -15,6 +15,7 @@ import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.SerializableHashMap;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +31,12 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
     private String[] interests_item = { "SPORT", "MUSIC", "FOOD", "BOOK", "MOVIE",
             "CULTURE", "OUTSIDE", "INDOOR"};
-    private HashMap<String, Object> mRegisterList = new HashMap<>();
     private Button mButton_Done;
     private ListView mInterestsListView;
 
     private RadioListAdapter mRadioListAdapter;
+
+    private Person mUser = new Person();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
     @Override
     protected void initData(){
         super.initData();
-        Bundle bundle = getIntent().getExtras();
-        SerializableHashMap serializableHashMap = (SerializableHashMap) bundle.get("mapList");
-        mRegisterList = serializableHashMap.getObjectItems();
+        mUser = (Person)getIntent().getSerializableExtra("user");
         ArrayList<Boolean> radioStateList = new ArrayList<Boolean>();
         for(int i = 0; i< interests_item.length; i++){
             radioStateList.add(false);
@@ -79,18 +79,19 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     }
                 }
 
-                mRegisterList.put(Person.ATTRIBUTES_PERSON_INTERESTS, ParserUtils.listStringToString(interestsTagList, ','));
-                mRegisterList.put(API_REQUEST_TAG, "5454");
-
+                mUser.setVerifyCode("5454");
+                mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
+                String gsonString =  new Gson().toJson(mUser, Person.class);
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-                                    HashMap<String, Object> registerList = new HashMap<String, Object>();
-                                    registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mRegisterList.get(Person.ATTRIBUTES_PERSON_ACCOUNT));
-                                    registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mRegisterList.get(Person.ATTRIBUTES_PERSON_PASSWORD));
+                                    Person userForLogin = new Person();
+                                    userForLogin.setEmail(mUser.getEmail());
+                                    userForLogin.setPassword(mUser.getPassword());
+                                    String gsonUser = new Gson().toJson(userForLogin, Person.class);
 
                                     DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                                             new AsyncResponder<String>() {
@@ -106,7 +107,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                     }
                                                 }
                                             });
-                                    task.execute(registerList);
+                                    task.execute(gsonUser);
                                 }
                                 else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
@@ -114,7 +115,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                 }
                             }
                         });
-                task.execute(mRegisterList);
+                task.execute(gsonString);
             }
         });
     }

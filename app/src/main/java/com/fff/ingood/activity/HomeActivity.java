@@ -24,8 +24,6 @@ import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_T
 
 public class HomeActivity extends BaseActivity {
     private TextView mTextView_Display;
-    private Button mButton_LogOut;
-
     private Person mUser = new Person();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,6 @@ public class HomeActivity extends BaseActivity {
     protected void initView(){
         super.initView();
         mTextView_Display = findViewById(R.id.text_display);
-        mButton_LogOut = findViewById(R.id.btn_logout);
 
 
         //bind view content
@@ -48,42 +45,14 @@ public class HomeActivity extends BaseActivity {
         super.initData();
         Bundle bundle = getIntent().getExtras();
         String strResponse = bundle.getString("personData");
-        mUser.setPassword(bundle.getString("pwd"));
         mTextView_Display.setText(strResponse);
         mUser = ParserUtils.getPersonAttr(strResponse);
+        mUser.setPassword(bundle.getString("pwd"));
 
     }
     @Override
     protected void initListner(){
         super.initListner();
-        mButton_LogOut.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                HashMap<String, Object> registerList = new HashMap<String, Object>();
-                registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mUser.getEmail());
-                registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mUser.getPassword());
-
-                DoPersonLogOutTask task = new DoPersonLogOutTask(mActivity,
-                        new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
-                                    Toast.makeText(HomeActivity.this, "doLogOut OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, LoginActivity.class);
-                                    startActivity(intent);
-                                }
-                                else {
-                                    Toast.makeText(HomeActivity.this, "doLogOut Failed", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        });
-                task.execute(registerList);
-
-
-            }
-        });
     }
 }

@@ -20,9 +20,9 @@ import java.util.HashMap;
 
 public class RegisterLocationPageActivity extends BaseActivity {
 
-    private HashMap<String, Object> mRegisterList = new HashMap<>();
     private Button mButton_Next;
     private Spinner mSpinner_Location;
+    private Person mUser = new Person();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,8 @@ public class RegisterLocationPageActivity extends BaseActivity {
     @Override
     protected void initData(){
         super.initData();
-        Bundle bundle = getIntent().getExtras();
-        SerializableHashMap serializableHashMap = (SerializableHashMap) bundle.get("mapList");
-        mRegisterList = serializableHashMap.getObjectItems();
+        mUser = (Person)getIntent().getSerializableExtra("user");
+
     }
 
     @Override
@@ -51,12 +50,10 @@ public class RegisterLocationPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(mSpinner_Location.getSelectedItemPosition() != 0){
-                    mRegisterList.put(Person.ATTRIBUTES_PERSON_LOCATION, mSpinner_Location.getSelectedItem().toString());
+                    mUser.setLocation(mSpinner_Location.getSelectedItem().toString());
                     Intent intent = new Intent(mActivity, RegisterInterestPageActivity.class);
-                    SerializableHashMap hashMapList = new SerializableHashMap();
-                    hashMapList.setObjectItems(mRegisterList);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("mapList", hashMapList);
+                    bundle.putSerializable("user", mUser);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
