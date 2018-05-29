@@ -3,4 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="search_bar_height">35dp</dimen>
+    <dimen name="tag_bar_height">30dp</dimen>
 </resources>
