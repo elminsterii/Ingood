@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fff.ingood.MainFlowActivitys.LogOutPageActivity;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
@@ -65,9 +66,11 @@ public class LoginActivity extends BaseActivity{
 
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, HomeActivity.class);
+                                    Intent intent = new Intent(mActivity, LogOutPageActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("personData", strResponse);
+                                    bundle.putString("account", mEditText_Account.getText().toString());
+                                    bundle.putString("password", mEditText_Password.getText().toString());
                                     intent.putExtras(bundle);
                                     startActivity(intent);
                                 }
