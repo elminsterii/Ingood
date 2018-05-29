@@ -11,8 +11,13 @@
     <string name="done">完成</string>
     <string name="next">下一步</string>
     <string name="home_page">首頁</string>
+
+    <!-- Dialog -->
     <string name="loading_wait">讀取中…</string>
 
+    <!-- SearchBar -->
+    <string name="search_bar_label">搜尋</string>
+    <string name="search_bar_hint">地點, 標籤…</string>
 
 
 

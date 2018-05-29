@@ -35,6 +35,13 @@ public class LoginActivity extends BaseActivity{
     }
 
     @Override
+    protected  void onResume() {
+        super.onResume();
+        Intent intent = new Intent(mActivity, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void initView(){
         super.initView();
         mEditText_Account = findViewById(R.id.edit_account);
@@ -66,9 +73,6 @@ public class LoginActivity extends BaseActivity{
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(mActivity, HomeActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("personData", strResponse);
-                                    intent.putExtras(bundle);
                                     startActivity(intent);
                                 }
                                 else {
@@ -78,8 +82,6 @@ public class LoginActivity extends BaseActivity{
                             }
                         });
                 task.execute(registerList);
-
-
             }
         });
 

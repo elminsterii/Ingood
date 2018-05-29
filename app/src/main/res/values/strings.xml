@@ -10,10 +10,13 @@
     <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="home_page">Home Page</string>
+
+    <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
 
-
-
+    <!-- SearchBar -->
+    <string name="search_bar_label">Search</string>
+    <string name="search_bar_hint">locations, tags…</string>
 
 
 
