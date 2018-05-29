@@ -37,8 +37,6 @@ public class LoginActivity extends BaseActivity{
     @Override
     protected  void onResume() {
         super.onResume();
-        Intent intent = new Intent(mActivity, HomeActivity.class);
-        startActivity(intent);
     }
 
     @Override
