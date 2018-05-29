@@ -68,6 +68,8 @@ public class LoginActivity extends BaseActivity{
                                     Intent intent = new Intent(mActivity, HomeActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("personData", strResponse);
+                                    bundle.putString("pwd", mEditText_Password.getText().toString());
+
                                     intent.putExtras(bundle);
                                     startActivity(intent);
                                 }

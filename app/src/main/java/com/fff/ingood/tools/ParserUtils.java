@@ -52,46 +52,43 @@ public class ParserUtils {
     public static Person getPersonAttr(String Body){
         Person result = new Person();
 
-        try {
-            final JSONObject obj = new JSONObject(Body);
-            Iterator x = obj.keys();
-            while (x.hasNext()){
-                String key = (String) x.next();
-                if(key.contains(Person.ATTRIBUTES_PERSON_ACCOUNT))
-                    result.setEmail(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_PASSWORD))
-                    result.setPassword(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_NAME))
-                    result.setName(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_DESCRIPTION))
-                    result.setDescription(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_GENDER))
-                    result.setGender(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_LOCATION))
-                    result.setLocation(obj.getString(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_AGE))
-                    result.setAge(obj.getInt(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_GOOD_LEADER))
-                    result.setGoodLeader(obj.getInt(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_GOOD_MEMBER))
-                    result.setGoodMember(obj.getInt(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_ONLINE))
-                    result.setOnLine(obj.getInt(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_INTERESTS))
-                    result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY))
-                    result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY))
-                    result.setInterests(obj.getJSONArray(key));
-                else if(key.contains(Person.ATTRIBUTES_PERSON_SAVE_ACTIVITY))
-                    result.setInterests(obj.getJSONArray(key));
-
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+        JsonArray jsonArray = new JsonArray();
+        if(jsonElement.isJsonArray()) {
+            jsonArray = jsonElement.getAsJsonArray();
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ACCOUNT) != null)
+                result.setEmail(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ACCOUNT).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_PASSWORD) != null)
+                result.setPassword(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_PASSWORD).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_AGE) != null)
+                result.setAge(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_AGE).getAsInt());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_LOCATION) != null)
+                result.setLocation(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_LOCATION).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GENDER) != null)
+                result.setGender(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GENDER).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_INTERESTS) != null)
+                result.setInterests(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_INTERESTS).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_LEADER) != null)
+                result.setGoodLeader(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_LEADER).getAsInt());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_MEMBER) != null)
+                result.setGoodMember(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_GOOD_MEMBER).getAsInt());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_DESCRIPTION) != null)
+                result.setDescription(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_DESCRIPTION).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY) != null)
+                result.setHoldActivities(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_HOLD_ACTIVITY).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY) != null)
+                result.setJoinActivities(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_JOIN_ACTIVITY).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_NAME) != null)
+                result.setName(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_NAME).getAsString());
+            if(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ONLINE) != null)
+                result.setOnLine(jsonArray.get(1).getAsJsonObject().get(Person.ATTRIBUTES_PERSON_ONLINE).getAsInt());
         }
+        else
+            return null;
+
         return result;
+
     }
 
     public static Activity getACtivityAttr(String Body){

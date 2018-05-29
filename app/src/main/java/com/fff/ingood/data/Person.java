@@ -1,6 +1,8 @@
 package com.fff.ingood.data;
 
 
+import com.google.gson.JsonArray;
+
 import org.json.JSONArray;
 
 public class Person {
@@ -30,10 +32,10 @@ public class Person {
     private String m_icon;				    //Icon
     private String m_description;		    //個人介紹
     private String m_location;			    //所在地區
-    private JSONArray m_interests;		    //興趣Tag
-    private JSONArray m_joinactivities;		//現在參加的活動
-    private JSONArray m_holdactivities;		//現在舉辦的活動
-    private JSONArray m_saveactivities;		//現在保存的活動
+    private String m_interests;		    //興趣Tag
+    private String m_joinactivities;		//現在參加的活動
+    private String m_holdactivities;		//現在舉辦的活動
+    private String m_saveactivities;		//現在保存的活動
     int m_goodmember;				        //好團員指數
     int m_goodleader;				        //好團長指數
     int m_online;			                //是否上線(1 = online)(預設0)
@@ -119,31 +121,31 @@ public class Person {
         m_online  = iOnline;
     }
 
-    public JSONArray getInterests(){
+    public String getInterests(){
         return  m_interests;
     }
-    public void setInterests(JSONArray aInterests){
+    public void setInterests(String aInterests){
         m_interests  = aInterests;
     }
 
-    public JSONArray getJoinActivities(){
+    public String getJoinActivities(){
         return  m_joinactivities;
     }
-    public void setJoinActivities(JSONArray aActivities){
+    public void setJoinActivities(String aActivities){
         m_joinactivities  = aActivities;
     }
 
-    public JSONArray getHoldActivities(){
+    public String getHoldActivities(){
         return  m_holdactivities;
     }
-    public void setHoldActivities(JSONArray aActivities){
+    public void setHoldActivities(String aActivities){
         m_holdactivities  = aActivities;
     }
 
-    public JSONArray getSaveActivities(){
+    public String getSaveActivities(){
         return  m_saveactivities;
     }
-    void setSaveActivities(JSONArray aActivities){
+    void setSaveActivities(String aActivities){
         m_saveactivities  = aActivities;
     }
 }
