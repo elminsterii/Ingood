@@ -4,8 +4,27 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/rtn_mainpage"
+        android:id="@+id/btn_mainpage"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
-        android:text="Return to Main Page" />
+        android:text="Return to Main Page"
+        />
+    <EditText
+
+        android:id="@+id/edit_pwd"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="new Password"
+        android:maxLines="1"
+        android:ems="10"
+        />
+
+    <Button
+        android:id="@+id/btn_update_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finish password update" />
+
 </LinearLayout>

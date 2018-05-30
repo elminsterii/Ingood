@@ -12,6 +12,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
+import com.fff.ingood.task.DoPersonUpdateTask;
 import com.fff.ingood.tools.ParserUtils;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class LoginActivity extends BaseActivity{
     private EditText mEditText_Password;
     private Button mButton_SignIn;
     private Button mButton_Register;
+    private Button mButton_Update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class LoginActivity extends BaseActivity{
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
+        mButton_Update = findViewById(R.id.btn_update);
     }
 
     @Override
@@ -81,8 +84,6 @@ public class LoginActivity extends BaseActivity{
                             }
                         });
                 task.execute(registerList);
-
-
             }
         });
 
@@ -91,6 +92,39 @@ public class LoginActivity extends BaseActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, RegisterPrimaryPageActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mButton_Update.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                HashMap<String, Object> registerList = new HashMap<String, Object>();
+                registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
+                registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
+
+                DoPersonUpdateTask task = new DoPersonUpdateTask(mActivity,
+                        new AsyncResponder<String>() {
+                            @Override
+                            public void onSuccess(String strResponse) {
+
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
+                                    Toast.makeText(LoginActivity.this, "doUpdate OK", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(mActivity, LogOutPageActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("personData", strResponse);
+                                    bundle.putString("account", mEditText_Account.getText().toString());
+                                    bundle.putString("password", mEditText_Password.getText().toString());
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(LoginActivity.this, "doUpdate Failed", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
+                task.execute(registerList);
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.fff.ingood.activity.BaseActivity;
 import com.fff.ingood.R;
@@ -11,6 +12,7 @@ import com.fff.ingood.R;
 public class UpdatePageActivity extends BaseActivity {
 
     private Button mUpdate_finished;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_logout_page);
@@ -19,7 +21,7 @@ public class UpdatePageActivity extends BaseActivity {
     @Override
     protected void initView(){
         super.initView();
-        mUpdate_finished = findViewById(R.id.rtn_mainpage);
+        mUpdate_finished = findViewById(R.id.btn_mainpage);
     }
 
     @Override
