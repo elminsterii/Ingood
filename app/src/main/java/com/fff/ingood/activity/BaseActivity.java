@@ -33,7 +33,7 @@ public class BaseActivity extends AppCompatActivity {
 
         initView();
         initData();
-        initListner();
+        initListener();
         setSystemUI();
     }
 
@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void initData() {
     }
 
-    protected void initListner() {
+    protected void initListener() {
     }
 
     private void setSystemUI() {

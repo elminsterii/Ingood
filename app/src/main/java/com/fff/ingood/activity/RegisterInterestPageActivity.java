@@ -64,7 +64,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
     }
 
     @Override
-    protected void initListner(){
+    protected void initListener(){
 
         mButton_Done.setOnClickListener(new Button.OnClickListener() {
             @Override

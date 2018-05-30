@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity{
     }
 
     @Override
-    protected void initListner(){
+    protected void initListener(){
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {

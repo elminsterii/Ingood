@@ -46,7 +46,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
     }
 
     @Override
-    protected void initListner(){
+    protected void initListener(){
         mButton_Next.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {

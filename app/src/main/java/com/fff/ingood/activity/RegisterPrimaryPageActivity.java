@@ -59,7 +59,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     }
 
     @Override
-    protected void initListner(){
+    protected void initListener(){
         mSpinner_Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
