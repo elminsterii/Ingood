@@ -65,55 +65,22 @@ public class ParserUtils {
             return null;
     }
 
-    public static Activity getACtivityAttr(String Body){
-        Activity result = new Activity();
+    public static ArrayList<Activity> getActivitiyAttrList(String Body){
+        ArrayList<Activity> result = new ArrayList<>();
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+        JsonArray jsonArray = new JsonArray();
+        Gson gson = new Gson();
+        if(jsonElement.isJsonArray()) {
+            jsonArray = jsonElement.getAsJsonArray();
 
-        try {
-            final JSONObject obj = new JSONObject(Body);
-            Iterator x = obj.keys();
-            while (x.hasNext()){
-                String key = (String) x.next();
-                if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISHER_EMAIL))
-                    result.setPublisherEmail(obj.getString(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISHER_PASSWORD))
-                    result.setPublisherPwd(obj.getString(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DISPLAYNAME))
-                    result.setName(obj.getString(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_LOCATION))
-                    result.setLocation(obj.getString(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DESCRIPTION))
-                    result.setDescription(obj.getString(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISH_BEGIN))
-                    result.setPublisBegin(obj.getLong(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_PUBLISH_END))
-                    result.setPublisEnd(obj.getLong(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DATE_BEGIN))
-                    result.setDateBegin(obj.getLong(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_DATE_END))
-                    result.setDateEnd(obj.getLong(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_LARGE_ACTIVITY))
-                    result.setLargeActivity(obj.getBoolean(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_EARLY_BIRD))
-                    result.setEarlyBird(obj.getBoolean(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ATTENDEES))
-                    result.setAttendees(obj.getJSONArray(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ATTENTION))
-                    result.setAttention(obj.getInt(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_GOOD_ACTIVITY))
-                    result.setGoodActivity(obj.getInt(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_TAGS))
-                    result.setTags(obj.getJSONArray(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_ID))
-                    result.setId(obj.getInt(key));
-                else if(key.contains(Activity.ATTRIBUTES_ACTIVITY_STATUS))
-                    result.setStatus(obj.getString(key));
-
-
+            for(int i = 1; i < jsonArray.size(); i++){
+                result.add(gson.fromJson(jsonArray.get(i).toString(), Activity.class));
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+            return result;
         }
-        return result;
+        else
+            return null;
     }
 
     public static String listStringToString(ArrayList<String> lsString, char splitChar) {

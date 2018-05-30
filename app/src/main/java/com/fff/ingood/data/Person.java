@@ -22,9 +22,6 @@ public class Person implements Serializable {
     @SerializedName("displayname")
     private String m_displayname;
 
-    @SerializedName("icon")
-    private String m_icon;
-
     @SerializedName("description")
     private String m_description;
 
@@ -34,20 +31,17 @@ public class Person implements Serializable {
     @SerializedName("interests")
     private String m_interests;
 
-    @SerializedName("joinactivities")
-    private String m_joinactivities;
-
-    @SerializedName("holdactivities")
-    private String m_holdactivities;
+    @SerializedName("anonymous")
+    private String m_anonymous;
 
     @SerializedName("saveactivities")
     private String m_saveactivities;
 
-    @SerializedName("goodmember")
-    private String m_goodmember;
+    @SerializedName("good")
+    private String m_good;
 
-    @SerializedName("goodleader")
-    private String m_goodleader;
+    @SerializedName("nogood")
+    private String m_nogood;
 
     @SerializedName("online")
     private String m_online;
@@ -115,18 +109,18 @@ public class Person implements Serializable {
         m_age  = iAge;
     }
 
-    public String getGoodMember(){
-        return  m_goodmember;
+    public String getGood(){
+        return m_good;
     }
-    public void setGoodMember(String iGoodMember){
-        m_goodmember  = iGoodMember;
+    public void setGood(String good){
+        m_good = good;
     }
 
-    public String getGoodLeader(){
-        return  m_goodleader;
+    public String getNoGood(){
+        return m_nogood;
     }
-    public void setGoodLeader(String iGoodLeader){
-        m_goodleader  = iGoodLeader;
+    public void setNoGood(String nogood){
+        m_nogood = nogood;
     }
 
     public String getOnLine(){
@@ -143,18 +137,13 @@ public class Person implements Serializable {
         m_interests  = aInterests;
     }
 
-    public String getJoinActivities(){
-        return  m_joinactivities;
-    }
-    public void setJoinActivities(String aActivities){
-        m_joinactivities  = aActivities;
-    }
 
-    public String getHoldActivities(){
-        return  m_holdactivities;
+
+    public String getAnonymous(){
+        return m_anonymous;
     }
-    public void setHoldActivities(String aActivities){
-        m_holdactivities  = aActivities;
+    public void setAnonymous(String aActivities){
+        m_anonymous = aActivities;
     }
 
     public String getSaveActivities(){

@@ -12,12 +12,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by yoie7 on 2018/5/16.
- */
-
-public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonQueryTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonUpdateTask <Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonUpdateTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
@@ -36,7 +32,7 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_UPDATE));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線
