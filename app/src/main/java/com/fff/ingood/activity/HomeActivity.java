@@ -2,12 +2,16 @@ package com.fff.ingood.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
@@ -20,11 +24,14 @@ import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView mRecyclerViewActivityList;
+    private RecyclerView.Adapter mActivityListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayoutMenu;
+    private NavigationView mNavigationViewMenu;
+    private ImageView mImageViewMenuBtn;
+    private TabLayout mTabLayoutTagBar;
+    private SearchView mSearchViewSearchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,7 @@ public class HomeActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayoutMenu.openDrawer(GravityCompat.START);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -46,9 +53,12 @@ public class HomeActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-        mRecyclerView = findViewById(R.id.recycleViewActivityList);
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        mNavigationView = findViewById(R.id.nvView);
+        mRecyclerViewActivityList = findViewById(R.id.recycleViewActivityList);
+        mDrawerLayoutMenu = findViewById(R.id.drawer_layout);
+        mNavigationViewMenu = findViewById(R.id.nvView);
+        mImageViewMenuBtn = findViewById(R.id.imageViewMenuBtn);
+        mTabLayoutTagBar = findViewById(R.id.tabLayout_TagBar);
+        mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
     }
 
     @Override
@@ -61,20 +71,28 @@ public class HomeActivity extends BaseActivity {
         final int TEST_SIZE = 20;
         for(int i=0; i<TEST_SIZE; i++)
             lsTempData.add("Activities");
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ActivityListAdapter(lsTempData);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setNestedScrollingEnabled(true);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(mAdapter);
+        //@@ test code
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("淨灘"));
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mActivityListAdapter = new ActivityListAdapter(lsTempData);
+
+        mRecyclerViewActivityList.setLayoutManager(mLayoutManager);
+        mRecyclerViewActivityList.setNestedScrollingEnabled(true);
+        mRecyclerViewActivityList.setHasFixedSize(true);
+        mRecyclerViewActivityList.setAdapter(mActivityListAdapter);
+
+        //mSearchViewSearchBar.setMaxWidth(50);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerViewActivityList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -86,18 +104,18 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        mNavigationView.setNavigationItemSelectedListener(
+        mNavigationViewMenu.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+                        mDrawerLayoutMenu.closeDrawers();
 
                         return true;
                     }
                 });
 
-        mDrawerLayout.addDrawerListener(
+        mDrawerLayoutMenu.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
                     public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -120,5 +138,14 @@ public class HomeActivity extends BaseActivity {
                     }
                 }
         );
+
+        mImageViewMenuBtn.setClickable(true);
+        mImageViewMenuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!mDrawerLayoutMenu.isDrawerOpen(GravityCompat.START))
+                    mDrawerLayoutMenu.openDrawer(Gravity.LEFT);
+            }
+        });
     }
 }

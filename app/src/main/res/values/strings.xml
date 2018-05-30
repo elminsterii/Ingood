@@ -17,6 +17,7 @@
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
     <string name="search_bar_hint">locations, tags…</string>
+    <string name="description_search_bar_menu_btn">this is a btn for open menu in search bar</string>
 
 
 

@@ -24,21 +24,31 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_sessions"
+                android:id="@+id/toolbarSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_bar_height"
                 app:layout_scrollFlags="scroll|enterAlways">
                 <android.support.v7.widget.SearchView
-                    android:id="@+id/search_item"
-                    android:layout_gravity="end"
+                    android:id="@+id/searchViewSearchBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:iconifiedByDefault="false"
+                    android:textColorHint="@color/colorWhite"
+                    android:queryHint="@string/search_bar_hint"
+                    android:layout_gravity="end">
                 </android.support.v7.widget.SearchView>
+                <ImageView
+                    android:id="@+id/imageViewMenuBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@drawable/circle_loading_4"
+                    android:contentDescription="@string/description_search_bar_menu_btn" />
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
                 app:layout_scrollFlags="scroll|enterAlways"
-                android:id="@+id/tab_layout"
+                android:id="@+id/tabLayout_TagBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tag_bar_height"
                 app:tabIndicatorColor="@android:color/background_light"
