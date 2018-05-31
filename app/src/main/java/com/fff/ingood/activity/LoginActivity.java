@@ -14,8 +14,6 @@ import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
@@ -37,6 +35,8 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected  void onResume() {
+        Intent intent = new Intent(mActivity, HomeActivity.class);
+        startActivity(intent);
         super.onResume();
     }
 

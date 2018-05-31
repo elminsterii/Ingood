@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="match_parent"
+    android:padding="12dp"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
         android:id="@+id/imgActivityItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/circle_loading_1"
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:contentDescription="@string/app_name" />
-
-    <TextView
-        android:id="@+id/textActivityItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="24sp"
-        android:gravity="center"
-        android:textColor="#000000"
-        android:text="@string/app_name"
-        android:layout_toRightOf="@id/imgActivityItem"
-        android:layout_toEndOf="@id/imgActivityItem"
-        android:layout_marginStart="10dp" />
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_gravity="top"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/circle_loading_1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:layout_gravity="bottom">
+
+        <ImageView
+            android:id="@+id/imgActivityItemPublisherIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/circle_loading_1" />
+
+        <TextView
+            android:id="@+id/textActivityItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imgActivityItemPublisherIcon"
+            android:textSize="24sp" />
+    </RelativeLayout>
+</LinearLayout>
