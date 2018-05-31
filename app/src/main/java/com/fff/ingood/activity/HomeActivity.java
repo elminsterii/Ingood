@@ -40,16 +40,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayoutMenu.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void initView() {
         super.initView();
 
@@ -84,8 +74,6 @@ public class HomeActivity extends BaseActivity {
         mRecyclerViewActivityList.setNestedScrollingEnabled(true);
         mRecyclerViewActivityList.setHasFixedSize(true);
         mRecyclerViewActivityList.setAdapter(mActivityListAdapter);
-
-        //mSearchViewSearchBar.setMaxWidth(50);
     }
 
     @Override
@@ -109,6 +97,12 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
+
+                        if(menuItem.getItemId() == R.id.menuItemPersonal) {
+                            //TODO - go to personal information page
+                            //FlowManager.getInstance().goLoginFlow(mActivity);
+                        }
+
                         mDrawerLayoutMenu.closeDrawers();
 
                         return true;

@@ -19,6 +19,8 @@
     <string name="search_bar_label">搜尋</string>
     <string name="search_bar_hint">地點, 標籤…</string>
 
+    <!-- Menu Personal -->
+    <string name="menu_personal_detail">個人資料</string>
 
 
 
