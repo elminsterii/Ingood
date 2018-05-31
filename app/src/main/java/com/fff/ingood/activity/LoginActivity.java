@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fff.ingood.MainFlowActivitys.LogOutPageActivity;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
@@ -29,7 +28,6 @@ public class LoginActivity extends BaseActivity{
     private EditText mEditText_Password;
     private Button mButton_SignIn;
     private Button mButton_Register;
-    private Button mButton_Update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,6 @@ public class LoginActivity extends BaseActivity{
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
-        mButton_Update = findViewById(R.id.btn_update);
     }
 
     @Override
@@ -69,7 +66,7 @@ public class LoginActivity extends BaseActivity{
 
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, LogOutPageActivity.class);
+                                    Intent intent = new Intent(mActivity, LogOutActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("personData", strResponse);
                                     bundle.putString("account", mEditText_Account.getText().toString());
@@ -95,37 +92,5 @@ public class LoginActivity extends BaseActivity{
             }
         });
 
-        mButton_Update.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                HashMap<String, Object> registerList = new HashMap<String, Object>();
-                registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
-                registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
-
-                DoPersonUpdateTask task = new DoPersonUpdateTask(mActivity,
-                        new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
-                                    Toast.makeText(LoginActivity.this, "doUpdate OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, LogOutPageActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("personData", strResponse);
-                                    bundle.putString("account", mEditText_Account.getText().toString());
-                                    bundle.putString("password", mEditText_Password.getText().toString());
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }
-                                else {
-                                    Toast.makeText(LoginActivity.this, "doUpdate Failed", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        });
-                task.execute(registerList);
-            }
-        });
     }
 }
