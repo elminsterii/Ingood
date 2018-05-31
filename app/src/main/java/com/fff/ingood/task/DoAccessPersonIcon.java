@@ -12,9 +12,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
-
-    public DoPersonLogInTask(Activity activity, AsyncResponder<String> responder) {
+public class DoAccessPersonIcon <Object>  extends HttpPostAbstractTask <Object>{
+    public DoAccessPersonIcon(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
 
@@ -30,7 +29,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_LOGIN));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACCESS_PERSON_ICON+"EMAIL"+"/"+"ICON"));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線
@@ -93,7 +92,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                     }
                 }
             }
-            return  null;
+            return null;
         }
     }
 }
