@@ -1,5 +1,6 @@
 package com.fff.ingood.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
@@ -65,7 +67,7 @@ public class HomeActivity extends BaseActivity {
         //@@ test code
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("淨灘"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("??"));
 
         mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(lsTempData);
@@ -141,5 +143,6 @@ public class HomeActivity extends BaseActivity {
                     mDrawerLayoutMenu.openDrawer(Gravity.LEFT);
             }
         });
+
     }
 }

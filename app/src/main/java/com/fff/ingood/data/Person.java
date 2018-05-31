@@ -1,44 +1,55 @@
 package com.fff.ingood.data;
 
 
-import org.json.JSONArray;
+import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class Person {
+public class Person implements Serializable {
 
-    public static final String ATTRIBUTES_PERSON_ACCOUNT = "email";
-    public static final String ATTRIBUTES_PERSON_PASSWORD = "userpassword";
-    public static final String ATTRIBUTES_PERSON_NAME = "displayname";
-    public static final String ATTRIBUTES_PERSON_GENDER = "gender";
-    public static final String ATTRIBUTES_PERSON_AGE = "age";
-    public static final String ATTRIBUTES_PERSON_LOCATION = "location";
-    public static final String ATTRIBUTES_PERSON_INTERESTS = "interests";
-    public static final String ATTRIBUTES_PERSON_DESCRIPTION = "description";
-    public static final String ATTRIBUTES_PERSON_JOIN_ACTIVITY = "joinactivities";
-    public static final String ATTRIBUTES_PERSON_HOLD_ACTIVITY = "holdactivities";
-    public static final String ATTRIBUTES_PERSON_SAVE_ACTIVITY = "saveactivities";
 
-    public static final String ATTRIBUTES_PERSON_GOOD_MEMBER = "goodmember";
-    public static final String ATTRIBUTES_PERSON_GOOD_LEADER = "goodleader";
-    public static final String ATTRIBUTES_PERSON_NEW_PASSWORD = "newuserpassword";
-    public static final String ATTRIBUTES_PERSON_ONLINE = "online";
+    @SerializedName("age")
+    private String m_age;
 
-    private int m_age;					    //年紀 (必填)
-    private String m_gender;			    //性別 (Male\Female) (必填)
-    private String m_email;		            //mail (account) (必填) (主Key)
-    private String m_userpassword;		    //password (必填)
-    private String m_displayname;			//暱稱 (必填)
-    private String m_icon;				    //Icon
-    private String m_description;		    //個人介紹
-    private String m_location;			    //所在地區
-    private JSONArray m_interests;		    //興趣Tag
-    private JSONArray m_joinactivities;		//現在參加的活動
-    private JSONArray m_holdactivities;		//現在舉辦的活動
-    private JSONArray m_saveactivities;		//現在保存的活動
-    int m_goodmember;				        //好團員指數
-    int m_goodleader;				        //好團長指數
-    int m_online;			                //是否上線(1 = online)(預設0)
+    @SerializedName("gender")
+    private String m_gender;
 
-    public Person(String sEmail, String sPwd, String sGender, String sName, int iAge){
+    @SerializedName("email")
+    private String m_email;
+
+    @SerializedName("userpassword")
+    private String m_userpassword;
+
+    @SerializedName("displayname")
+    private String m_displayname;
+
+    @SerializedName("description")
+    private String m_description;
+
+    @SerializedName("location")
+    private String m_location;
+
+    @SerializedName("interests")
+    private String m_interests;
+
+    @SerializedName("anonymous")
+    private String m_anonymous;
+
+    @SerializedName("saveactivities")
+    private String m_saveactivities;
+
+    @SerializedName("good")
+    private String m_good;
+
+    @SerializedName("nogood")
+    private String m_nogood;
+
+    @SerializedName("online")
+    private String m_online;
+
+    @SerializedName("verifycode")
+    private String m_verifycode;
+
+    public Person(String sEmail, String sPwd, String sGender, String sName, String iAge){
         m_email = sEmail;
         m_userpassword = sPwd;
         m_displayname = sName;
@@ -57,7 +68,7 @@ public class Person {
     }
 
     public String getPassword(){
-        return  m_email;
+        return  m_userpassword;
     }
     public void setPassword(String sPwd){
         m_userpassword  = sPwd;
@@ -91,59 +102,62 @@ public class Person {
         m_location  = sLocation;
     }
 
-    public int getAge(){
+    public String getAge(){
         return  m_age;
     }
-    public void setAge(int iAge){
+    public void setAge(String iAge){
         m_age  = iAge;
     }
 
-    public int getGoodMember(){
-        return  m_goodmember;
+    public String getGood(){
+        return m_good;
     }
-    public void setGoodMember(int iGoodMember){
-        m_goodmember  = iGoodMember;
-    }
-
-    public int getGoodLeader(){
-        return  m_goodleader;
-    }
-    public void setGoodLeader(int iGoodLeader){
-        m_goodleader  = iGoodLeader;
+    public void setGood(String good){
+        m_good = good;
     }
 
-    public int getOnLine(){
+    public String getNoGood(){
+        return m_nogood;
+    }
+    public void setNoGood(String nogood){
+        m_nogood = nogood;
+    }
+
+    public String getOnLine(){
         return  m_online;
     }
-    public void setOnLine(int iOnline){
+    public void setOnLine(String iOnline){
         m_online  = iOnline;
     }
 
-    public JSONArray getInterests(){
+    public String getInterests(){
         return  m_interests;
     }
-    public void setInterests(JSONArray aInterests){
+    public void setInterests(String aInterests){
         m_interests  = aInterests;
     }
 
-    public JSONArray getJoinActivities(){
-        return  m_joinactivities;
+
+
+    public String getAnonymous(){
+        return m_anonymous;
     }
-    public void setJoinActivities(JSONArray aActivities){
-        m_joinactivities  = aActivities;
+    public void setAnonymous(String aActivities){
+        m_anonymous = aActivities;
     }
 
-    public JSONArray getHoldActivities(){
-        return  m_holdactivities;
-    }
-    public void setHoldActivities(JSONArray aActivities){
-        m_holdactivities  = aActivities;
-    }
-
-    public JSONArray getSaveActivities(){
+    public String getSaveActivities(){
         return  m_saveactivities;
     }
-    void setSaveActivities(JSONArray aActivities){
+    public void setSaveActivities(String aActivities){
         m_saveactivities  = aActivities;
     }
+
+    public String getVerifyCode(){
+        return  m_verifycode;
+    }
+    public void setVerifyCode(String code){
+        m_verifycode  = code;
+    }
+
 }

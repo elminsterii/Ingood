@@ -34,6 +34,9 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     private Spinner mSpinner_Gender;
     private Button mButton_Next;
 
+
+    private Person mUser = new Person();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_primary_page);
@@ -85,18 +88,16 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(isDataValid()){
-                    HashMap<String, Object> registerList = new HashMap<String, Object>();
-                    registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
-                    registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
-                    registerList.put(Person.ATTRIBUTES_PERSON_NAME, mEditText_Name.getText().toString());
-                    registerList.put(Person.ATTRIBUTES_PERSON_AGE, mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1);
-                    registerList.put(Person.ATTRIBUTES_PERSON_GENDER, mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
+
+                    mUser.setEmail(mEditText_Account.getText().toString());
+                    mUser.setPassword(mEditText_Password.getText().toString());
+                    mUser.setName(mEditText_Name.getText().toString());
+                    mUser.setGender(mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
+                    mUser.setAge(String.valueOf(mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1));
 
                     Intent intent = new Intent(mActivity, RegisterLocationPageActivity.class);
-                    SerializableHashMap hashMapList = new SerializableHashMap();
-                    hashMapList.setObjectItems(registerList);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("mapList", hashMapList);
+                    bundle.putSerializable("user", mUser);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

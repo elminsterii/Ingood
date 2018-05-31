@@ -12,8 +12,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonUnregisterTask<Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonUnregisterTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonLogOutTask <Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonLogOutTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
@@ -32,13 +32,15 @@ public class DoPersonUnregisterTask<Object> extends HttpPostAbstractTask<Object>
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_UNREGISTER));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_LOGOUT));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
                 connection.setRequestProperty("Accept", "application/json");
+                connection.setRequestProperty("Accept-Charset", "utf-8");
+                connection.setRequestProperty("contentType", "utf-8");
                 connection.setRequestMethod("POST");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
                 connection.setReadTimeout(10000);

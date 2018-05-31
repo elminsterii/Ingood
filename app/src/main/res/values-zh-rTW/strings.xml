@@ -14,6 +14,7 @@
 
     <!-- Dialog -->
     <string name="loading_wait">讀取中…</string>
+    <string name="log_out">登出</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">搜尋</string>

@@ -12,6 +12,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 
@@ -59,10 +60,10 @@ public class LoginActivity extends BaseActivity{
             @Override
             public void onClick(View v) {
 
-                HashMap<String, Object> registerList = new HashMap<String, Object>();
-                registerList.put(Person.ATTRIBUTES_PERSON_ACCOUNT, mEditText_Account.getText().toString());
-                registerList.put(Person.ATTRIBUTES_PERSON_PASSWORD, mEditText_Password.getText().toString());
-
+                Person userLogin = new Person();
+                userLogin.setEmail(mEditText_Account.getText().toString());
+                userLogin.setPassword(mEditText_Password.getText().toString());
+                String gsonString = new Gson().toJson(userLogin, Person.class);
                 DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
@@ -71,6 +72,12 @@ public class LoginActivity extends BaseActivity{
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(mActivity, HomeActivity.class);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("personData", strResponse);
+                                    bundle.putString("pwd", mEditText_Password.getText().toString());
+
+                                    intent.putExtras(bundle);
                                     startActivity(intent);
                                 }
                                 else {
@@ -79,7 +86,8 @@ public class LoginActivity extends BaseActivity{
                                 }
                             }
                         });
-                task.execute(registerList);
+
+                task.execute(gsonString);
             }
         });
 

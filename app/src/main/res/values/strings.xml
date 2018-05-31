@@ -13,6 +13,7 @@
 
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
+    <string name="log_out">Log Out</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
@@ -21,6 +22,7 @@
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>
+
 
 
 

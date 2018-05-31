@@ -27,12 +27,16 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
-            String jsonString = JsonUtils.createJsonString(info);
-
+            String jsonString;
+            if(info instanceof String){
+                jsonString = (String)info;
+            }
+            else
+                jsonString = JsonUtils.createJsonString(info);
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY_));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線
