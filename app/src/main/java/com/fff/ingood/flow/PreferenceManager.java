@@ -1,5 +1,6 @@
 package com.fff.ingood.flow;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.logging.Level;
@@ -34,23 +35,29 @@ public class PreferenceManager {
 
     }
 
-    private void initialize(SharedPreferences prefLogin, SharedPreferences prefRegister) {
-        m_prefLogin = prefLogin;
-        m_prefRegister = prefRegister;
+    private void initialize(Context context) {
+        if(context == null) {
+            m_logger.log(Level.WARNING, "context is null");
+            return;
+        }
+
+        m_prefLogin = context.getSharedPreferences(PREF_NAME_LOGIN, Context.MODE_PRIVATE);
+        m_prefRegister = context.getSharedPreferences(PREF_NAME_LOGIN, Context.MODE_PRIVATE);
         m_logger = Logger.getLogger(PreferenceManager.class.getName());
     }
 
-    public static PreferenceManager getInstance(SharedPreferences prefLogin, SharedPreferences prefRegister) {
+    public static PreferenceManager getInstance(Context context) {
         if(m_instance == null) {
             m_instance = new PreferenceManager();
-            m_instance.initialize(prefLogin, prefRegister);
+            m_instance.initialize(context);
         }
         return m_instance;
     }
 
     public static PreferenceManager getInstance() {
-        if(m_instance == null)
+        if(m_instance == null) {
             m_logger.log(Level.WARNING, "PreferenceManager is null");
+        }
         return m_instance;
     }
 

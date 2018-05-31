@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.fff.ingood.R;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        PreferenceManager.getInstance(this);
     }
 
     @Override
@@ -41,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-    super.onResume();
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        super.onResume();
+
+        Class clsFlow = FlowManager.getInstance().goLoginFlow();
+        startActivity(new Intent(this, clsFlow));
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -1,8 +1,5 @@
 package com.fff.ingood.flow;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 
@@ -37,21 +34,17 @@ public class FlowManager {
         return m_curFlow;
     }
 
-    public Intent goLoginFlow(Context context) {
-        Intent intent = null;
-
-        if(context == null)
-            return null;
-
+    public Class<?> goLoginFlow() {
+        Class<?> clsFlow = null;
         FlowLogic fl = new LoginFlowLogic();
 
         switch(fl.decideFlow()) {
             case FLOW_LOGIN :
-                intent = new Intent(context, LoginActivity.class);
+                clsFlow = LoginActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_LOGIN;
                 break;
             case FLOW_HOME :
-                intent = new Intent(context, HomeActivity.class);
+                clsFlow = HomeActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_HOME;
                 break;
             case FLOW_UNKNOWN :
@@ -60,6 +53,6 @@ public class FlowManager {
         }
 
         m_logger.log(Level.INFO, "going to" + m_curFlow);
-        return intent;
+        return clsFlow;
     }
 }
