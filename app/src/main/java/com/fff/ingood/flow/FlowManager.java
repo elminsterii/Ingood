@@ -2,6 +2,8 @@ package com.fff.ingood.flow;
 
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
+import com.fff.ingood.activity.RegisterInterestPageActivity;
+import com.fff.ingood.activity.RegisterLocationPageActivity;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +52,30 @@ public class FlowManager {
             case FLOW_UNKNOWN :
                 m_curFlow = FlowLogic.FLOW.FLOW_UNKNOWN;
                 break;
+        }
+
+        m_logger.log(Level.INFO, "going to" + m_curFlow);
+        return clsFlow;
+    }
+
+    public Class<?> goRegisterFlow() {
+        Class<?> clsFlow = null;
+        FlowLogic fl = new RegisterFlowLogic();
+
+        switch(fl.decideFlow()) {
+            case FLOW_REGISTER_LOCATION:
+                clsFlow = RegisterLocationPageActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_LOCATION;
+                break;
+            case FLOW_REGISTER_INTERESTS:
+                clsFlow = RegisterInterestPageActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_INTERESTS;
+                break;
+            case FLOW_HOME :
+                clsFlow = HomeActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_HOME;
+                break;
+
         }
 
         m_logger.log(Level.INFO, "going to" + m_curFlow);
