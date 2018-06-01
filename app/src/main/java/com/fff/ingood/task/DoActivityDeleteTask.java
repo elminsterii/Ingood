@@ -3,6 +3,7 @@ package com.fff.ingood.task;
 import android.app.Activity;
 
 import com.fff.ingood.tools.JsonUtils;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,8 +29,12 @@ public class DoActivityDeleteTask <Object> extends HttpPostAbstractTask<Object>{
             if(info instanceof String){
                 jsonString = (String)info;
             }
-            else
+            else if(info instanceof Activity){
+                jsonString = new Gson().toJson(info, Activity.class);
+            }
+            else {
                 jsonString = JsonUtils.createJsonString(info);
+            }
             try
             {
                 // create the HttpURLConnection

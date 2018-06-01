@@ -89,7 +89,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
                 mUser.setVerifyCode("5454");
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
-                String gsonString =  new Gson().toJson(mUser, Person.class);
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
@@ -99,7 +98,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                     Person userForLogin = new Person();
                                     userForLogin.setEmail(mUser.getEmail());
                                     userForLogin.setPassword(mUser.getPassword());
-                                    String gsonUser = new Gson().toJson(userForLogin, Person.class);
 
                                     DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                                             new AsyncResponder<String>() {
@@ -116,7 +114,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                     }
                                                 }
                                             });
-                                    task.execute(gsonUser);
+                                    task.execute(userForLogin);
                                 }
                                 else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
@@ -124,7 +122,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                 }
                             }
                         });
-                task.execute(gsonString);
+                task.execute(mUser);
             }
         });
     }
