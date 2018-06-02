@@ -63,7 +63,6 @@ public class LoginActivity extends BaseActivity{
                 Person userLogin = new Person();
                 userLogin.setEmail(mEditText_Account.getText().toString());
                 userLogin.setPassword(mEditText_Password.getText().toString());
-                String gsonString = new Gson().toJson(userLogin, Person.class);
                 DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
@@ -87,7 +86,7 @@ public class LoginActivity extends BaseActivity{
                             }
                         });
 
-                task.execute(gsonString);
+                task.execute(userLogin);
             }
         });
 

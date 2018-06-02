@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.RadioListAdapter;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
@@ -42,6 +44,12 @@ public class RegisterInterestPageActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_interest_page);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_INTERESTS);
     }
 
     @Override
@@ -81,7 +89,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
                 mUser.setVerifyCode("5454");
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
-                String gsonString =  new Gson().toJson(mUser, Person.class);
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
                         new AsyncResponder<String>() {
                             @Override
@@ -91,7 +98,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                     Person userForLogin = new Person();
                                     userForLogin.setEmail(mUser.getEmail());
                                     userForLogin.setPassword(mUser.getPassword());
-                                    String gsonUser = new Gson().toJson(userForLogin, Person.class);
 
                                     DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
                                             new AsyncResponder<String>() {
@@ -99,7 +105,8 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                 public void onSuccess(String strResponse) {
                                                     if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                                         Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(mActivity, HomeActivity.class);
+                                                        Class clsFlow = FlowManager.getInstance().goRegisterFlow();
+                                                        Intent intent = new Intent(mActivity, clsFlow);
                                                         Bundle bundle = new Bundle();
                                                         bundle.putString("personData", strResponse);
                                                         intent.putExtras(bundle);
@@ -107,7 +114,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                     }
                                                 }
                                             });
-                                    task.execute(gsonUser);
+                                    task.execute(userForLogin);
                                 }
                                 else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
@@ -115,13 +122,9 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                 }
                             }
                         });
-                task.execute(gsonString);
+                task.execute(mUser);
             }
         });
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-    }
 }

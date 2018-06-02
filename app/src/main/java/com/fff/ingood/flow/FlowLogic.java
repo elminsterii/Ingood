@@ -7,7 +7,9 @@ public abstract class FlowLogic {
     public enum FLOW {
         FLOW_LOGIN
         , FLOW_HOME
-        , FLOW_REGISTER
+        , FLOW_REGISTER_PRIMARY
+        , FLOW_REGISTER_LOCATION
+        , FLOW_REGISTER_INTERESTS
         , FLOW_UNKNOWN
     }
 

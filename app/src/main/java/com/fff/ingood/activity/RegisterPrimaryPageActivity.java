@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.tools.SerializableHashMap;
 
 import java.util.HashMap;
@@ -42,6 +44,12 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
         setContentView(R.layout.activity_register_primary_page);
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_PRIMARY);
     }
 
     @Override
@@ -95,7 +103,8 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                     mUser.setGender(mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
                     mUser.setAge(String.valueOf(mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1));
 
-                    Intent intent = new Intent(mActivity, RegisterLocationPageActivity.class);
+                    Class clsFlow = FlowManager.getInstance().goRegisterFlow();
+                    Intent intent = new Intent(mActivity, clsFlow);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user", mUser);
                     intent.putExtras(bundle);
