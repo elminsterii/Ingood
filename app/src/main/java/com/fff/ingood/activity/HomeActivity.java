@@ -13,10 +13,11 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -100,9 +101,20 @@ public class HomeActivity extends BaseActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         menuItem.setChecked(true);
 
-                        if(menuItem.getItemId() == R.id.menuItemPersonal) {
-                            //TODO - go to personal information page
-                            //FlowManager.getInstance().goLoginFlow(mActivity);
+                        switch(menuItem.getItemId()) {
+                            case R.id.menuItemPersonal :
+                                //TODO - go to personal information page
+                                //FlowManager.getInstance().goLoginFlow(mActivity);
+                                break;
+                            case R.id.menuItemLogout :
+                                //TODO - run logout task
+                                PreferenceManager.getInstance().setLoginSuccess(false);
+
+                                Class clsFlow = FlowManager.getInstance().goLoginFlow();
+
+                                if(clsFlow != null)
+                                    startActivity(new Intent(mActivity, clsFlow));
+                                break;
                         }
 
                         mDrawerLayoutMenu.closeDrawers();

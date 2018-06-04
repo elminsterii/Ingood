@@ -31,10 +31,6 @@ public class PreferenceManager {
     private static final String PREF_KEY_REGISTER_EMAIL_VERIFY = PREF_NAME_REGISTER + "emailverify";
     private static final String PREF_KEY_REGISTER_ANONYMOUS = PREF_NAME_REGISTER + "anonymous";
 
-    public static final int REGISTER_FLOW_PRIMARY = 0;
-    public static final int REGISTER_FLOW_LOCATION = 1;
-    public static final int REGISTER_FLOW_INTERESTS = 2;
-
     private PreferenceManager() {
 
     }
@@ -65,9 +61,6 @@ public class PreferenceManager {
         return m_instance;
     }
 
-
-
-
     //----------------------------------------  Login Functions ----------------------------------------
     public void setLoginData(String strLoginEmail, String strPassword) {
         m_prefLogin.edit().putString(PREF_KEY_LOGIN_EMAIL, strLoginEmail).apply();
@@ -75,8 +68,7 @@ public class PreferenceManager {
     }
 
     public boolean getLoginSuccess() {
-        m_prefLogin.getBoolean(PREF_KEY_LOGIN_SUCCESS, false);
-        return true;
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_SUCCESS, false);
     }
 
     public void setLoginSuccess(boolean bSuccess) {
@@ -84,8 +76,7 @@ public class PreferenceManager {
     }
 
     public boolean getKeepLogin() {
-        m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, true);
-        return true;
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, true);
     }
 
     public void setKeepLogin(boolean bKeepLogin) {

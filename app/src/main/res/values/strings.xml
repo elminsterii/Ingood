@@ -22,6 +22,7 @@
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>
+    <string name="menu_personal_logout">Logout</string>
 
 
 
