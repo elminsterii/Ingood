@@ -8,6 +8,7 @@ public abstract class FlowLogic {
         FLOW_LOGIN
         , FLOW_HOME
         , FLOW_REGISTER_PRIMARY
+        , FLOW_REGISTER_VERIFY
         , FLOW_REGISTER_LOCATION
         , FLOW_REGISTER_INTERESTS
         , FLOW_UNKNOWN

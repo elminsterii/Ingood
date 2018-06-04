@@ -10,8 +10,10 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.RadioListAdapter;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.flow.RegisterFlowLogic;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
@@ -20,6 +22,7 @@ import com.fff.ingood.tools.ParserUtils;
 import java.util.ArrayList;
 
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
+import static com.fff.ingood.flow.FlowLogic.FLOW.FLOW_REGISTER_INTERESTS;
 
 /**
  * Created by yoie7 on 2018/5/21.
@@ -82,7 +85,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     }
                 }
 
-                mUser.setVerifyCode("5454");
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
                         new AsyncResponder<String>() {

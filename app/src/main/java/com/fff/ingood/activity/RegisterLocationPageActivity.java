@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.tools.SerializableHashMap;
 
 
 /**

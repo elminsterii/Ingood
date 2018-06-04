@@ -31,6 +31,8 @@ public class PreferenceManager {
     private static final String PREF_KEY_REGISTER_EMAIL_VERIFY = PREF_NAME_REGISTER + "emailverify";
     private static final String PREF_KEY_REGISTER_ANONYMOUS = PREF_NAME_REGISTER + "anonymous";
 
+
+
     private PreferenceManager() {
 
     }
@@ -76,7 +78,9 @@ public class PreferenceManager {
     }
 
     public boolean getKeepLogin() {
-        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, true);
+
+        m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, false);
+        return true;
     }
 
     public void setKeepLogin(boolean bKeepLogin) {

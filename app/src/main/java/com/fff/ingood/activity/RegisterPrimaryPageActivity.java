@@ -15,6 +15,9 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 
+import com.fff.ingood.flow.RegisterFlowLogic;
+
+
 /**
  * Created by yoie7 on 2018/5/4.
  */
@@ -45,7 +48,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    }
+        }
 
     @Override
     protected void initView(){

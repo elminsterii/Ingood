@@ -45,7 +45,6 @@ public class DoActivityDeleteTask <Object> extends HttpPostAbstractTask<Object>{
                 connection.setRequestMethod("POST");
                 connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
                 connection.setRequestProperty("Accept", "application/json");
-                connection.setRequestMethod("POST");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
                 connection.setReadTimeout(10000);
                 connection.setDoInput(true);                                                        //允許輸入流，即允許下載

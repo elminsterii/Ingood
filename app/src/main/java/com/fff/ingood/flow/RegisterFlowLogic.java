@@ -11,7 +11,13 @@ public class RegisterFlowLogic extends FlowLogic {
         FlowLogic.FLOW fRes;
 
         switch (mCurflow) {
+            case FLOW_LOGIN:
+                fRes = FLOW.FLOW_REGISTER_PRIMARY;
+                break;
             case FLOW_REGISTER_PRIMARY :
+                fRes = FLOW.FLOW_REGISTER_VERIFY;
+                break;
+            case FLOW_REGISTER_VERIFY:
                 fRes = FLOW.FLOW_REGISTER_LOCATION;
                 break;
             case FLOW_REGISTER_LOCATION :
