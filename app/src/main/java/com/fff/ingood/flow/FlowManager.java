@@ -4,6 +4,7 @@ import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.activity.RegisterInterestPageActivity;
 import com.fff.ingood.activity.RegisterLocationPageActivity;
+import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,9 +39,9 @@ public class FlowManager {
 
     public Class<?> goLoginFlow() {
         Class<?> clsFlow = null;
-        FlowLogic fl = new LoginFlowLogic();
+        FlowLogic fl = new LoginFlowLogic(m_curFlow);
 
-        switch(fl.decideFlow()) {
+        switch(fl.nextFlow()) {
             case FLOW_LOGIN :
                 clsFlow = LoginActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_LOGIN;
@@ -60,9 +61,13 @@ public class FlowManager {
 
     public Class<?> goRegisterFlow() {
         Class<?> clsFlow = null;
-        FlowLogic fl = new RegisterFlowLogic();
+        FlowLogic fl = new RegisterFlowLogic(m_curFlow);
 
-        switch(fl.decideFlow()) {
+        switch(fl.nextFlow()) {
+            case FLOW_REGISTER_PRIMARY:
+                clsFlow = RegisterPrimaryPageActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_PRIMARY;
+                break;
             case FLOW_REGISTER_LOCATION:
                 clsFlow = RegisterLocationPageActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_LOCATION;
@@ -75,7 +80,28 @@ public class FlowManager {
                 clsFlow = HomeActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_HOME;
                 break;
+        }
 
+        m_logger.log(Level.INFO, "going to" + m_curFlow);
+        return clsFlow;
+    }
+
+    public Class<?> goHomeFlow() {
+        Class<?> clsFlow = null;
+        FlowLogic fl = new HomeFlowLogic(m_curFlow);
+
+        switch(fl.nextFlow()) {
+            case FLOW_LOGIN :
+                clsFlow = LoginActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_LOGIN;
+                break;
+            case FLOW_HOME :
+                clsFlow = HomeActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_HOME;
+                break;
+            case FLOW_UNKNOWN :
+                m_curFlow = FlowLogic.FLOW.FLOW_UNKNOWN;
+                break;
         }
 
         m_logger.log(Level.INFO, "going to" + m_curFlow);

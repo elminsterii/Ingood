@@ -10,10 +10,6 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
-import com.fff.ingood.tools.SerializableHashMap;
-
-import java.util.HashMap;
 
 
 /**
@@ -35,7 +31,6 @@ public class RegisterLocationPageActivity extends BaseActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_LOCATION);
     }
 
     @Override
@@ -60,11 +55,14 @@ public class RegisterLocationPageActivity extends BaseActivity {
                 if(mSpinner_Location.getSelectedItemPosition() != 0){
                     mUser.setLocation(mSpinner_Location.getSelectedItem().toString());
                     Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-                    Intent intent = new Intent(mActivity, clsFlow);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("user", mUser);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+
+                    if(clsFlow != null) {
+                        Intent intent = new Intent(mActivity, clsFlow);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("user", mUser);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 }
                 else{
                     Toast.makeText(RegisterLocationPageActivity.this, "Please choose Your Location!", Toast.LENGTH_SHORT).show();

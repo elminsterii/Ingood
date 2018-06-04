@@ -9,10 +9,11 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
-import com.google.gson.Gson;
 
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
@@ -35,8 +36,6 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected  void onResume() {
-        Intent intent = new Intent(mActivity, HomeActivity.class);
-        startActivity(intent);
         super.onResume();
     }
 
@@ -70,14 +69,22 @@ public class LoginActivity extends BaseActivity{
 
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(mActivity, HomeActivity.class);
 
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("personData", strResponse);
-                                    bundle.putString("pwd", mEditText_Password.getText().toString());
+                                    PreferenceManager.getInstance().setLoginSuccess(true);
+                                    PreferenceManager.getInstance().setKeepLogin(true);
 
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
+                                    Class<?> clsFlow = FlowManager.getInstance().goHomeFlow();
+
+                                    if(clsFlow != null) {
+                                        Intent intent = new Intent(mActivity, clsFlow);
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("personData", strResponse);
+                                        bundle.putString("pwd", mEditText_Password.getText().toString());
+
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
                                 }
                                 else {
                                     Toast.makeText(LoginActivity.this, "doLogin Failed", Toast.LENGTH_SHORT).show();
@@ -93,8 +100,12 @@ public class LoginActivity extends BaseActivity{
         mButton_Register.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mActivity, RegisterPrimaryPageActivity.class);
-                startActivity(intent);
+                Class<?> clsFlow = FlowManager.getInstance().goRegisterFlow();
+
+                if(clsFlow != null) {
+                    Intent intent = new Intent(mActivity, clsFlow);
+                    startActivity(intent);
+                }
             }
         });
     }

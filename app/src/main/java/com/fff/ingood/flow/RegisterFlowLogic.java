@@ -1,27 +1,28 @@
 package com.fff.ingood.flow;
 
 public class RegisterFlowLogic extends FlowLogic {
+
+    RegisterFlowLogic(FLOW curflow) {
+        super(curflow);
+    }
+
     @Override
-    public FlowLogic.FLOW decideFlow() {
+    public FlowLogic.FLOW nextFlow() {
         FlowLogic.FLOW fRes;
 
-        switch (PreferenceManager.getInstance().getRegisterCurFlow()){
-            case 0:{
+        switch (mCurflow) {
+            case FLOW_REGISTER_PRIMARY :
                 fRes = FLOW.FLOW_REGISTER_LOCATION;
                 break;
-            }
-            case 1:{
+            case FLOW_REGISTER_LOCATION :
                 fRes = FLOW.FLOW_REGISTER_INTERESTS;
                 break;
-            }
-            case 2:{
+            case FLOW_REGISTER_INTERESTS :
                 fRes = FLOW.FLOW_HOME;
                 break;
-            }
-            default:{
+            default :
                 fRes = FLOW.FLOW_REGISTER_PRIMARY;
                 break;
-            }
         }
         return fRes;
     }

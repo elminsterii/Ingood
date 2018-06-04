@@ -3,8 +3,6 @@ package com.fff.ingood.flow;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.fff.ingood.data.Person;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +30,6 @@ public class PreferenceManager {
     private static final String PREF_KEY_REGISTER_SUCCESS = PREF_NAME_REGISTER + "success";
     private static final String PREF_KEY_REGISTER_EMAIL_VERIFY = PREF_NAME_REGISTER + "emailverify";
     private static final String PREF_KEY_REGISTER_ANONYMOUS = PREF_NAME_REGISTER + "anonymous";
-    private static final String PREF_KEY_REGISTER_CUR_FLOW = PREF_NAME_REGISTER + "curflow";
 
     public static final int REGISTER_FLOW_PRIMARY = 0;
     public static final int REGISTER_FLOW_LOCATION = 1;
@@ -120,14 +117,4 @@ public class PreferenceManager {
         m_prefRegister.edit().putBoolean(PREF_KEY_REGISTER_SUCCESS, bSuccess).apply();
         m_prefRegister.edit().putBoolean(PREF_KEY_REGISTER_EMAIL_VERIFY, bSuccess).apply();
     }
-
-    public void setRegisterCurFlow(int flow){
-        m_prefRegister.edit().putInt(PREF_KEY_REGISTER_CUR_FLOW, flow).apply();
-
-    }
-    public int getRegisterCurFlow(){
-        return m_prefRegister.getInt(PREF_KEY_REGISTER_CUR_FLOW, -1);
-
-    }
-
 }

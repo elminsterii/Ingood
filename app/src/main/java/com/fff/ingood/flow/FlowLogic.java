@@ -13,5 +13,11 @@ public abstract class FlowLogic {
         , FLOW_UNKNOWN
     }
 
-    public abstract FLOW decideFlow();
+    FlowLogic.FLOW mCurflow;
+
+    FlowLogic(FLOW curflow) {
+        this.mCurflow = curflow;
+    }
+
+    public abstract FLOW nextFlow();
 }

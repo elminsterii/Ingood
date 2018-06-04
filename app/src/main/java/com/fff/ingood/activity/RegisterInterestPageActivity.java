@@ -16,13 +16,9 @@ import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
-import com.fff.ingood.tools.SerializableHashMap;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_REQUEST_TAG;
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
@@ -49,7 +45,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_INTERESTS);
     }
 
     @Override
@@ -95,6 +90,9 @@ public class RegisterInterestPageActivity extends BaseActivity {
                             public void onSuccess(String strResponse) {
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
+
+                                    PreferenceManager.getInstance().setRegisterSuccess(true);
+
                                     Person userForLogin = new Person();
                                     userForLogin.setEmail(mUser.getEmail());
                                     userForLogin.setPassword(mUser.getPassword());
@@ -106,11 +104,14 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                                     if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                                         Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
                                                         Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-                                                        Intent intent = new Intent(mActivity, clsFlow);
-                                                        Bundle bundle = new Bundle();
-                                                        bundle.putString("personData", strResponse);
-                                                        intent.putExtras(bundle);
-                                                        startActivity(intent);
+
+                                                        if(clsFlow != null) {
+                                                            Intent intent = new Intent(mActivity, clsFlow);
+                                                            Bundle bundle = new Bundle();
+                                                            bundle.putString("personData", strResponse);
+                                                            intent.putExtras(bundle);
+                                                            startActivity(intent);
+                                                        }
                                                     }
                                                 }
                                             });
@@ -118,7 +119,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                                 }
                                 else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         });
@@ -126,5 +126,4 @@ public class RegisterInterestPageActivity extends BaseActivity {
             }
         });
     }
-
 }
