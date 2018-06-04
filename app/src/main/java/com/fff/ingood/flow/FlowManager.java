@@ -1,29 +1,19 @@
 package com.fff.ingood.flow;
 
-import com.fff.ingood.activity.HomeActivity;
-import com.fff.ingood.activity.LoginActivity;
-import com.fff.ingood.activity.RegisterInterestPageActivity;
-import com.fff.ingood.activity.RegisterLocationPageActivity;
-import com.fff.ingood.activity.RegisterPrimaryPageActivity;
-import com.fff.ingood.activity.RegisterVerifyPageActivity;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.fff.ingood.data.Person;
 
 /**
  * Created by ElminsterII on 2018/5/27.
  */
 public class FlowManager {
+    private FlowLogic.FLOW mCurFlow;
 
-    private static Logger m_logger;
     private static FlowManager m_instance = null;
-    private FlowLogic.FLOW m_curFlow;
 
     private FlowManager() {
     }
 
     private void initialize() {
-        m_logger = Logger.getLogger(FlowManager.class.getName());
     }
 
     public static FlowManager getInstance() {
@@ -34,84 +24,27 @@ public class FlowManager {
         return m_instance;
     }
 
-    public FlowLogic.FLOW getCurFlow() {
-        return m_curFlow;
+    public void setCurFlow(FlowLogic.FLOW flow) {
+        mCurFlow = flow;
     }
 
-    public Class<?> goLoginFlow() {
-        Class<?> clsFlow = null;
-
-        FlowLogic fl = new LoginFlowLogic(m_curFlow);
-
-
-        switch(fl.nextFlow()) {
-            case FLOW_LOGIN :
-                clsFlow = LoginActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_LOGIN;
-                break;
-            case FLOW_HOME :
-                clsFlow = HomeActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_HOME;
-                break;
-            case FLOW_UNKNOWN :
-                m_curFlow = FlowLogic.FLOW.FLOW_UNKNOWN;
-                break;
-        }
-
-        m_logger.log(Level.INFO, "going to" + m_curFlow);
-        return clsFlow;
+    public void goLoginFlow(FlowLogic.FlowLogicCaller caller) {
+        FlowLogic fl = new LoginFlowLogic(caller);
+        mCurFlow = fl.doLogic();
     }
 
-    public Class<?> goRegisterFlow() {
-        Class<?> clsFlow = null;
-        FlowLogic fl = new RegisterFlowLogic(m_curFlow);
-
-        switch(fl.nextFlow()) {
-            case FLOW_REGISTER_PRIMARY:
-                clsFlow = RegisterPrimaryPageActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_PRIMARY;
-                break;
-            case FLOW_REGISTER_VERIFY:
-                clsFlow = RegisterVerifyPageActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_VERIFY;
-                break;
-            case FLOW_REGISTER_LOCATION:
-                clsFlow = RegisterLocationPageActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_LOCATION;
-                break;
-            case FLOW_REGISTER_INTERESTS:
-                clsFlow = RegisterInterestPageActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_INTERESTS;
-                break;
-            case FLOW_HOME :
-                clsFlow = HomeActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_HOME;
-                break;
-        }
-
-        m_logger.log(Level.INFO, "going to" + m_curFlow);
-        return clsFlow;
+    public void goLoginFlow(FlowLogic.FlowLogicCaller caller, Person person) {
+        FlowLogic fl = new LoginFlowLogic(caller, person);
+        mCurFlow = fl.doLogic();
     }
 
-    public Class<?> goHomeFlow() {
-        Class<?> clsFlow = null;
-        FlowLogic fl = new HomeFlowLogic(m_curFlow);
+    public void goLogoutFlow(FlowLogic.FlowLogicCaller caller) {
+        FlowLogic fl = new LogoutFlowLogic(caller);
+        mCurFlow = fl.doLogic();
+    }
 
-        switch(fl.nextFlow()) {
-            case FLOW_LOGIN :
-                clsFlow = LoginActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_LOGIN;
-                break;
-            case FLOW_HOME :
-                clsFlow = HomeActivity.class;
-                m_curFlow = FlowLogic.FLOW.FLOW_HOME;
-                break;
-            case FLOW_UNKNOWN :
-                m_curFlow = FlowLogic.FLOW.FLOW_UNKNOWN;
-                break;
-        }
-
-        m_logger.log(Level.INFO, "going to" + m_curFlow);
-        return clsFlow;
+    public void goRegisterFlow(FlowLogic.FlowLogicCaller caller) {
+        FlowLogic fl = new RegisterFlowLogic(caller, mCurFlow);
+        mCurFlow = fl.doLogic();
     }
 }

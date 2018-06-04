@@ -15,13 +15,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class DoPersonVerifyTask<Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonVerifyTask(AsyncResponder<String> responder) {
+        super(responder);
+    }
     public DoPersonVerifyTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
     protected String access(Activity activity, Object info) {
         {
-            boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
@@ -77,10 +79,10 @@ public class DoPersonVerifyTask<Object> extends HttpPostAbstractTask<Object> {
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 stringBuilder = new StringBuilder();
 
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null)
                 {
-                    stringBuilder.append(line + "\n");
+                    stringBuilder.append(line).append("\n");
                 }
                 return stringBuilder.toString();
             }

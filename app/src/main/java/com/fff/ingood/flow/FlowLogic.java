@@ -4,21 +4,26 @@ package com.fff.ingood.flow;
  * Created by ElminsterII on 2018/5/27.
  */
 public abstract class FlowLogic {
+
     public enum FLOW {
-        FLOW_LOGIN
-        , FLOW_HOME
-        , FLOW_REGISTER_PRIMARY
-        , FLOW_REGISTER_VERIFY
-        , FLOW_REGISTER_LOCATION
-        , FLOW_REGISTER_INTERESTS
-        , FLOW_UNKNOWN
+        FL_UNKNOWN
+        ,FL_LOGIN
+        ,FL_HOME
+        ,FL_REGISTER_PRIMARY
+        ,FL_REGISTER_VERIFY
+        ,FL_REGISTER_LOCATION
+        ,FL_REGISTER_INTEREST
     }
 
-    FlowLogic.FLOW mCurflow;
-
-    FlowLogic(FLOW curflow) {
-        this.mCurflow = curflow;
+    public interface FlowLogicCaller {
+        void returnFlow(boolean bSuccess, FLOW flow, Class<?> clsFlow);
     }
 
-    public abstract FLOW nextFlow();
+    FlowLogicCaller mCaller;
+
+    FlowLogic(FlowLogicCaller caller) {
+        mCaller = caller;
+    }
+
+    protected abstract FLOW doLogic();
 }

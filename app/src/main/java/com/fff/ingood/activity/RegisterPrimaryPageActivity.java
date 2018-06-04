@@ -13,9 +13,8 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-
-import com.fff.ingood.flow.RegisterFlowLogic;
 
 
 /**
@@ -26,7 +25,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
     public static final int AGE_LIMITATION = 18;
     public static final String API_RESPONSE_TAG = "status_code";
-    public static final String API_REQUEST_TAG = "verifycode";
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
@@ -35,14 +33,12 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     private Spinner mSpinner_Gender;
     private Button mButton_Next;
 
-
     private Person mUser = new Person();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_primary_page);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -101,15 +97,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                     mUser.setGender(mSpinner_Gender.getSelectedItemPosition() == 1 ? "M":"F");
                     mUser.setAge(String.valueOf(mSpinner_Age.getSelectedItemPosition()+AGE_LIMITATION -1));
 
-                    Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-
-                    if(clsFlow != null) {
-                        Intent intent = new Intent(mActivity, clsFlow);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("user", mUser);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                    FlowManager.getInstance().goRegisterFlow(mActivity);
                 }
             }
         });
@@ -140,6 +128,19 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             isValid = false;
         }
         return isValid;
+    }
+
+    @Override
+    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        FlowManager.getInstance().setCurFlow(flow);
+
+        if(clsFlow != null && bSuccess) {
+            Intent intent = new Intent(mActivity, clsFlow);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", mUser);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 }
 

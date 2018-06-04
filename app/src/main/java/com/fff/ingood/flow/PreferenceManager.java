@@ -64,8 +64,19 @@ public class PreferenceManager {
     }
 
     //----------------------------------------  Login Functions ----------------------------------------
-    public void setLoginData(String strLoginEmail, String strPassword) {
+    public String getLoginEmail() {
+        return m_prefLogin.getString(PREF_KEY_LOGIN_EMAIL, "");
+    }
+
+    public void setLoginEmail(String strLoginEmail) {
         m_prefLogin.edit().putString(PREF_KEY_LOGIN_EMAIL, strLoginEmail).apply();
+    }
+
+    public String getLoginPassword() {
+        return m_prefLogin.getString(PREF_KEY_LOGIN_PASSWORD, "");
+    }
+
+    public void setLoginPassword(String strPassword) {
         m_prefLogin.edit().putString(PREF_KEY_LOGIN_PASSWORD, strPassword).apply();
     }
 
@@ -78,9 +89,7 @@ public class PreferenceManager {
     }
 
     public boolean getKeepLogin() {
-
-        m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, false);
-        return true;
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, false);
     }
 
     public void setKeepLogin(boolean bKeepLogin) {

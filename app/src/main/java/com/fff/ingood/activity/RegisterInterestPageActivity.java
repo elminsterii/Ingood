@@ -13,16 +13,13 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
-import com.fff.ingood.flow.RegisterFlowLogic;
 import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
 
 import java.util.ArrayList;
 
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
-import static com.fff.ingood.flow.FlowLogic.FLOW.FLOW_REGISTER_INTERESTS;
 
 /**
  * Created by yoie7 on 2018/5/21.
@@ -61,7 +58,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
     protected void initData(){
         super.initData();
         mUser = (Person)getIntent().getSerializableExtra("user");
-        ArrayList<Boolean> radioStateList = new ArrayList<Boolean>();
+        ArrayList<Boolean> radioStateList = new ArrayList<>();
         for(int i = 0; i< interests_item.length; i++){
             radioStateList.add(false);
         }
@@ -86,46 +83,46 @@ public class RegisterInterestPageActivity extends BaseActivity {
                 }
 
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
-                DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
-                        new AsyncResponder<String>() {
+                mWaitingDialog.show(getSupportFragmentManager(), RegisterInterestPageActivity.class.getName());
+
+                DoPersonRegisterTask<Person> task = new DoPersonRegisterTask<>(new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
+                                mWaitingDialog.dismiss();
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).equals("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
 
                                     PreferenceManager.getInstance().setRegisterSuccess(true);
 
-                                    Person userForLogin = new Person();
-                                    userForLogin.setEmail(mUser.getEmail());
-                                    userForLogin.setPassword(mUser.getPassword());
-
-                                    DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
-                                            new AsyncResponder<String>() {
-                                                @Override
-                                                public void onSuccess(String strResponse) {
-                                                    if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
-                                                        Toast.makeText(RegisterInterestPageActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-                                                        Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-
-                                                        if(clsFlow != null) {
-                                                            Intent intent = new Intent(mActivity, clsFlow);
-                                                            Bundle bundle = new Bundle();
-                                                            bundle.putString("personData", strResponse);
-                                                            intent.putExtras(bundle);
-                                                            startActivity(intent);
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                    task.execute(userForLogin);
-                                }
-                                else {
+                                    Person person = new Person();
+                                    person.setEmail(mUser.getEmail());
+                                    person.setPassword(mUser.getPassword());
+                                    FlowManager.getInstance().goLoginFlow(mActivity, person);
+                                } else {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
                                 }
+                            }
+                            @Override
+                            public void onFailure() {
+                                mWaitingDialog.dismiss();
+                                Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
                 task.execute(mUser);
             }
         });
+    }
+
+    @Override
+    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        FlowManager.getInstance().setCurFlow(flow);
+
+        if(clsFlow != null && bSuccess) {
+            Intent intent = new Intent(mActivity, clsFlow);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", mUser);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 }

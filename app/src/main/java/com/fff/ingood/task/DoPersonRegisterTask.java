@@ -11,23 +11,23 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Created by yoie7 on 2018/5/16.
  */
 
 public class DoPersonRegisterTask<Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonRegisterTask(AsyncResponder<String> responder) {
+        super(responder);
+    }
     public DoPersonRegisterTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
     protected String access(Activity activity, Object info) {
         {
-            boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
@@ -83,10 +83,10 @@ public class DoPersonRegisterTask<Object> extends HttpPostAbstractTask<Object> {
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 stringBuilder = new StringBuilder();
 
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null)
                 {
-                    stringBuilder.append(line + "\n");
+                    stringBuilder.append(line).append("\n");
                 }
                 return stringBuilder.toString();
             }

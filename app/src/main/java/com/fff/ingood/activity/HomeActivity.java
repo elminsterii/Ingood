@@ -1,6 +1,5 @@
 package com.fff.ingood.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -104,21 +102,13 @@ public class HomeActivity extends BaseActivity {
                         switch(menuItem.getItemId()) {
                             case R.id.menuItemPersonal :
                                 //TODO - go to personal information page
-                                //FlowManager.getInstance().goLoginFlow(mActivity);
                                 break;
                             case R.id.menuItemLogout :
-                                //TODO - run logout task
-                                PreferenceManager.getInstance().setLoginSuccess(false);
-
-                                Class clsFlow = FlowManager.getInstance().goLoginFlow();
-
-                                if(clsFlow != null)
-                                    startActivity(new Intent(mActivity, clsFlow));
+                                FlowManager.getInstance().goLogoutFlow(mActivity);
                                 break;
                         }
 
                         mDrawerLayoutMenu.closeDrawers();
-
                         return true;
                     }
                 });
@@ -155,6 +145,5 @@ public class HomeActivity extends BaseActivity {
                     mDrawerLayoutMenu.openDrawer(Gravity.LEFT);
             }
         });
-
     }
 }

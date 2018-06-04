@@ -9,13 +9,8 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
-import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoPersonLogInTask;
-import com.fff.ingood.tools.ParserUtils;
-
-import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -58,55 +53,30 @@ public class LoginActivity extends BaseActivity{
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Person person = new Person();
+                person.setEmail(mEditText_Account.getText().toString());
+                person.setPassword(mEditText_Password.getText().toString());
 
-                Person userLogin = new Person();
-                userLogin.setEmail(mEditText_Account.getText().toString());
-                userLogin.setPassword(mEditText_Password.getText().toString());
-                DoPersonLogInTask task = new DoPersonLogInTask(mActivity,
-                        new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
-                                    Toast.makeText(LoginActivity.this, "doLogin OK", Toast.LENGTH_SHORT).show();
-
-                                    PreferenceManager.getInstance().setLoginSuccess(true);
-                                    PreferenceManager.getInstance().setKeepLogin(true);
-
-                                    Class<?> clsFlow = FlowManager.getInstance().goHomeFlow();
-
-                                    if(clsFlow != null) {
-                                        Intent intent = new Intent(mActivity, clsFlow);
-
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("personData", strResponse);
-                                        bundle.putString("pwd", mEditText_Password.getText().toString());
-
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
-                                }
-                                else {
-                                    Toast.makeText(LoginActivity.this, "doLogin Failed", Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        });
-
-                task.execute(userLogin);
+                FlowManager.getInstance().goLoginFlow(mActivity, person);
             }
         });
 
         mButton_Register.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Class<?> clsFlow = FlowManager.getInstance().goRegisterFlow();
-
-                if(clsFlow != null) {
-                    Intent intent = new Intent(mActivity, clsFlow);
-                    startActivity(intent);
-                }
+                FlowManager.getInstance().goRegisterFlow(mActivity);
             }
         });
+    }
+
+    @Override
+    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        FlowManager.getInstance().setCurFlow(flow);
+
+        if(clsFlow != null && bSuccess) {
+            startActivity(new Intent(this, clsFlow));
+        } else {
+            Toast.makeText(mActivity, "Login fail", Toast.LENGTH_SHORT).show();
+        }
     }
 }

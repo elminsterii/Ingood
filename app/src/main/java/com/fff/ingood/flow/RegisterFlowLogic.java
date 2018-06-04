@@ -1,35 +1,45 @@
 package com.fff.ingood.flow;
 
+import com.fff.ingood.activity.HomeActivity;
+import com.fff.ingood.activity.RegisterInterestPageActivity;
+import com.fff.ingood.activity.RegisterLocationPageActivity;
+import com.fff.ingood.activity.RegisterPrimaryPageActivity;
+import com.fff.ingood.activity.RegisterVerifyPageActivity;
+
 public class RegisterFlowLogic extends FlowLogic {
 
-    RegisterFlowLogic(FLOW curflow) {
-        super(curflow);
+    private FLOW mFlow;
+
+    RegisterFlowLogic(FlowLogicCaller caller, FLOW flow) {
+        super(caller);
+        mFlow = flow;
     }
 
     @Override
-    public FlowLogic.FLOW nextFlow() {
-        FlowLogic.FLOW fRes;
+    protected FLOW doLogic() {
 
-        switch (mCurflow) {
-            case FLOW_LOGIN:
-                fRes = FLOW.FLOW_REGISTER_PRIMARY;
+        switch(mFlow) {
+            case FL_REGISTER_PRIMARY:
+                mCaller.returnFlow(true, FLOW.FL_REGISTER_VERIFY, RegisterVerifyPageActivity.class);
+                mFlow = FLOW.FL_REGISTER_VERIFY;
                 break;
-            case FLOW_REGISTER_PRIMARY :
-                fRes = FLOW.FLOW_REGISTER_VERIFY;
+            case FL_REGISTER_VERIFY:
+                mCaller.returnFlow(true, FLOW.FL_REGISTER_LOCATION, RegisterLocationPageActivity.class);
+                mFlow = FLOW.FL_REGISTER_LOCATION;
                 break;
-            case FLOW_REGISTER_VERIFY:
-                fRes = FLOW.FLOW_REGISTER_LOCATION;
+            case FL_REGISTER_LOCATION:
+                mCaller.returnFlow(true, FLOW.FL_REGISTER_INTEREST, RegisterInterestPageActivity.class);
+                mFlow = FLOW.FL_REGISTER_INTEREST;
                 break;
-            case FLOW_REGISTER_LOCATION :
-                fRes = FLOW.FLOW_REGISTER_INTERESTS;
-                break;
-            case FLOW_REGISTER_INTERESTS :
-                fRes = FLOW.FLOW_HOME;
+            case FL_REGISTER_INTEREST:
+                mCaller.returnFlow(true, FLOW.FL_HOME, HomeActivity.class);
+                mFlow = FLOW.FL_HOME;
                 break;
             default :
-                fRes = FLOW.FLOW_REGISTER_PRIMARY;
+                mCaller.returnFlow(true, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
+                mFlow = FLOW.FL_REGISTER_PRIMARY;
                 break;
         }
-        return fRes;
+        return mFlow;
     }
 }

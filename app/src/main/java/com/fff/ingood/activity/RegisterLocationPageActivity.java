@@ -9,9 +9,8 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
-import com.fff.ingood.tools.SerializableHashMap;
 
 
 /**
@@ -46,7 +45,6 @@ public class RegisterLocationPageActivity extends BaseActivity {
     protected void initData(){
         super.initData();
         mUser = (Person)getIntent().getSerializableExtra("user");
-
     }
 
     @Override
@@ -56,15 +54,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
             public void onClick(View v) {
                 if(mSpinner_Location.getSelectedItemPosition() != 0){
                     mUser.setLocation(mSpinner_Location.getSelectedItem().toString());
-                    Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-
-                    if(clsFlow != null) {
-                        Intent intent = new Intent(mActivity, clsFlow);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("user", mUser);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+                    FlowManager.getInstance().goRegisterFlow(mActivity);
                 }
                 else{
                     Toast.makeText(RegisterLocationPageActivity.this, "Please choose Your Location!", Toast.LENGTH_SHORT).show();
@@ -73,5 +63,16 @@ public class RegisterLocationPageActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        FlowManager.getInstance().setCurFlow(flow);
 
+        if(clsFlow != null && bSuccess) {
+            Intent intent = new Intent(mActivity, clsFlow);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("user", mUser);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 }

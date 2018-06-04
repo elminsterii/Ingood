@@ -1,18 +1,22 @@
 package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.ui.CircleProgressBarDialog;
 
 /**
  * Created by yoie7 on 2018/5/3.
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLogicCaller {
     private static final int SYSTEM_UI_FLAG_INGOOD = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -20,8 +24,10 @@ public class BaseActivity extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
-    public Activity mActivity;
+    public BaseActivity mActivity;
     private int mCurAPIVersion;
+
+    protected CircleProgressBarDialog mWaitingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,8 @@ public class BaseActivity extends AppCompatActivity {
         initData();
         initListener();
         setSystemUI();
+
+        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     protected void initView() {
@@ -69,5 +77,13 @@ public class BaseActivity extends AppCompatActivity {
         if(mCurAPIVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
             getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
         }
+    }
+
+    @Override
+    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        FlowManager.getInstance().setCurFlow(flow);
+
+        if(clsFlow != null && bSuccess)
+            startActivity(new Intent(this, clsFlow));
     }
 }
