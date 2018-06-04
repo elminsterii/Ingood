@@ -63,7 +63,16 @@ public class RegisterVerifyPageActivity extends BaseActivity {
         mButton_Next.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(!mVerifyCode.isEmpty()
+                        && mVerifyCode.equals(mEditText_VerifyCode.getText().toString())){
+                    mUser.setVerifyCode(mVerifyCode);
+                    Class clsFlow = FlowManager.getInstance().goRegisterFlow();
+                    Intent intent = new Intent(mActivity, clsFlow);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", mUser);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -82,17 +91,8 @@ public class RegisterVerifyPageActivity extends BaseActivity {
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG,strResponse).contains("0")) {
                                     Toast.makeText(RegisterVerifyPageActivity.this, "doVerify OK", Toast.LENGTH_SHORT).show();
                                     Person temp = ParserUtils.getPersonAttr(strResponse);
-                                    if(!temp.getVerifyCode().isEmpty()
-                                            && temp.getVerifyCode() != ""
-                                            && temp.getVerifyCode().equals(mEditText_VerifyCode.getText().toString())){
-                                        mUser.setVerifyCode(temp.getVerifyCode());
-                                        Class clsFlow = FlowManager.getInstance().goRegisterFlow();
-                                        Intent intent = new Intent(mActivity, clsFlow);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("user", mUser);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
+                                    mVerifyCode = temp.getVerifyCode();
+
 
 
                                 }
