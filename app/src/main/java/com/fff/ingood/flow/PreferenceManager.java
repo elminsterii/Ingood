@@ -34,9 +34,7 @@ public class PreferenceManager {
     private static final String PREF_KEY_REGISTER_ANONYMOUS = PREF_NAME_REGISTER + "anonymous";
     private static final String PREF_KEY_REGISTER_CUR_FLOW = PREF_NAME_REGISTER + "curflow";
 
-    public static final int REGISTER_FLOW_PRIMARY = 0;
-    public static final int REGISTER_FLOW_LOCATION = 1;
-    public static final int REGISTER_FLOW_INTERESTS = 2;
+
 
     private PreferenceManager() {
 
@@ -87,7 +85,7 @@ public class PreferenceManager {
     }
 
     public boolean getKeepLogin() {
-        m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, true);
+        m_prefLogin.getBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, false);
         return true;
     }
 

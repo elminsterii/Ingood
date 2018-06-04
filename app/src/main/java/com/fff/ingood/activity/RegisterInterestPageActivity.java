@@ -12,6 +12,7 @@ import com.fff.ingood.adapter.RadioListAdapter;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.flow.RegisterFlowLogic;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.task.DoPersonRegisterTask;
@@ -49,7 +50,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_INTERESTS);
+        PreferenceManager.getInstance().setRegisterCurFlow(RegisterFlowLogic.REGISTER_FLOW_INTERESTS);
     }
 
     @Override
@@ -87,7 +88,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     }
                 }
 
-                mUser.setVerifyCode("5454");
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
                 DoPersonRegisterTask task = new DoPersonRegisterTask(mActivity,
                         new AsyncResponder<String>() {

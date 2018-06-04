@@ -14,8 +14,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonLogInTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonVerifyTask<Object> extends HttpPostAbstractTask<Object> {
+    public DoPersonVerifyTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
@@ -38,7 +38,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
             try
             {
                 // create the HttpURLConnection
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_LOGIN));
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_VERIFY_EMAIL));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 // 使用甚麼方法做連線
@@ -47,6 +47,7 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Accept-Charset", "utf-8");
                 connection.setRequestProperty("contentType", "utf-8");
+                connection.setRequestMethod("POST");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
                 connection.setReadTimeout(10000);
                 connection.setDoInput(true);                                                        //允許輸入流，即允許下載

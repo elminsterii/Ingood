@@ -10,6 +10,8 @@
     <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="home_page">Home Page</string>
+    <string name="send">Send</string>
+    <string name="hint_for_verify">Please push send to send verify code to your email.</string>
 
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>

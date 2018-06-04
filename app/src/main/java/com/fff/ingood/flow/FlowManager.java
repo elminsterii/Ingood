@@ -4,6 +4,7 @@ import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.activity.RegisterInterestPageActivity;
 import com.fff.ingood.activity.RegisterLocationPageActivity;
+import com.fff.ingood.activity.RegisterVerifyPageActivity;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -63,6 +64,10 @@ public class FlowManager {
         FlowLogic fl = new RegisterFlowLogic();
 
         switch(fl.decideFlow()) {
+            case FLOW_REGISTER_VERIFY:
+                clsFlow = RegisterVerifyPageActivity.class;
+                m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_VERIFY;
+                break;
             case FLOW_REGISTER_LOCATION:
                 clsFlow = RegisterLocationPageActivity.class;
                 m_curFlow = FlowLogic.FLOW.FLOW_REGISTER_LOCATION;

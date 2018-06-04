@@ -11,6 +11,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.flow.RegisterFlowLogic;
 import com.fff.ingood.tools.SerializableHashMap;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        PreferenceManager.getInstance().setRegisterCurFlow(PreferenceManager.REGISTER_FLOW_LOCATION);
+        PreferenceManager.getInstance().setRegisterCurFlow(RegisterFlowLogic.REGISTER_FLOW_LOCATION);
     }
 
     @Override

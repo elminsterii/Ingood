@@ -11,6 +11,8 @@
     <string name="done">完成</string>
     <string name="next">下一步</string>
     <string name="home_page">首頁</string>
+    <string name="send">發送</string>
+    <string name="hint_for_verify">請按發送我們將會發送驗證碼到您的信箱</string>
 
     <!-- Dialog -->
     <string name="loading_wait">讀取中…</string>
