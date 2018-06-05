@@ -5,4 +5,5 @@ package com.fff.ingood.global;
  */
 public class Constants {
     public static final String TAG_SERVER_RESPONSE_STATUS_CODE = "status_code";
+    public static final String TAG_STATUS_CODE_SUCCESS = "0";
 }

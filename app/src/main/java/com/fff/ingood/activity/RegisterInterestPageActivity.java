@@ -88,7 +88,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                             @Override
                             public void onSuccess(String strResponse) {
                                 mWaitingDialog.dismiss();
-                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
+                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
 
                                     PreferenceManager.getInstance().setRegisterSuccess(true);

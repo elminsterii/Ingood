@@ -78,7 +78,7 @@ public class RegisterVerifyPageActivity extends BaseActivity {
                 DoPersonVerifyTask<Person> task = new DoPersonVerifyTask<>(new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
-                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
+                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
                                     Toast.makeText(RegisterVerifyPageActivity.this, "doVerify OK", Toast.LENGTH_SHORT).show();
                                     Person temp = ParserUtils.getPersonAttr(strResponse);
                                     if(temp != null)

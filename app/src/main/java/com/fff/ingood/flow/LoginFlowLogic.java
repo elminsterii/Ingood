@@ -43,7 +43,7 @@ public class LoginFlowLogic extends FlowLogic {
             DoPersonLogInTask<Person> task = new DoPersonLogInTask<>(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strResponse) {
-                    if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
+                    if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
                         PreferenceManager.getInstance().setLoginEmail(mPerson.getEmail());
                         PreferenceManager.getInstance().setLoginPassword(mPerson.getPassword());
                         PreferenceManager.getInstance().setLoginSuccess(true);
