@@ -3,11 +3,10 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.Constants;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
-
-import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
  * Created by ElminsterII on 2018/5/27.
@@ -44,7 +43,7 @@ public class LoginFlowLogic extends FlowLogic {
             DoPersonLogInTask<Person> task = new DoPersonLogInTask<>(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strResponse) {
-                    if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).equals("0")) {
+                    if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
                         PreferenceManager.getInstance().setLoginEmail(mPerson.getEmail());
                         PreferenceManager.getInstance().setLoginPassword(mPerson.getPassword());
                         PreferenceManager.getInstance().setLoginSuccess(true);

@@ -12,11 +12,10 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.Constants;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonVerifyTask;
 import com.fff.ingood.tools.ParserUtils;
-
-import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 @SuppressLint("Registered")
 public class RegisterVerifyPageActivity extends BaseActivity {
@@ -79,7 +78,7 @@ public class RegisterVerifyPageActivity extends BaseActivity {
                 DoPersonVerifyTask<Person> task = new DoPersonVerifyTask<>(new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).equals("0")) {
+                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
                                     Toast.makeText(RegisterVerifyPageActivity.this, "doVerify OK", Toast.LENGTH_SHORT).show();
                                     Person temp = ParserUtils.getPersonAttr(strResponse);
                                     if(temp != null)

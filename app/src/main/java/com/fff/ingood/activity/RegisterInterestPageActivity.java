@@ -13,13 +13,12 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.global.Constants;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
 
 import java.util.ArrayList;
-
-import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 /**
  * Created by yoie7 on 2018/5/21.
@@ -89,7 +88,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                             @Override
                             public void onSuccess(String strResponse) {
                                 mWaitingDialog.dismiss();
-                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).equals("0")) {
+                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals("0")) {
                                     Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
 
                                     PreferenceManager.getInstance().setRegisterSuccess(true);

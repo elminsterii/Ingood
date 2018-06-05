@@ -24,7 +24,6 @@ import com.fff.ingood.flow.FlowManager;
 public class RegisterPrimaryPageActivity extends BaseActivity {
 
     public static final int AGE_LIMITATION = 18;
-    public static final String API_RESPONSE_TAG = "status_code";
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
