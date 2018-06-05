@@ -11,6 +11,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.Constants;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -70,13 +71,16 @@ public class LoginActivity extends BaseActivity{
     }
 
     @Override
-    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && bSuccess) {
-            startActivity(new Intent(this, clsFlow));
+        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+            if(clsFlow != null
+                    && !clsFlow.isInstance(LoginActivity.class)) {
+                startActivity(new Intent(this, clsFlow));
+            }
         } else {
-            Toast.makeText(mActivity, "Login fail", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
         }
     }
 }

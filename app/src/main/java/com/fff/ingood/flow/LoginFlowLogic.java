@@ -8,6 +8,9 @@ import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.DoPersonLogInTask;
 import com.fff.ingood.tools.ParserUtils;
 
+import static com.fff.ingood.global.Constants.STATUS_CODE_NWK_FAIL_INT;
+import static com.fff.ingood.global.Constants.STATUS_CODE_SUCCESS_INT;
+
 /**
  * Created by ElminsterII on 2018/5/27.
  */
@@ -43,27 +46,29 @@ public class LoginFlowLogic extends FlowLogic {
             DoPersonLogInTask<Person> task = new DoPersonLogInTask<>(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strResponse) {
-                    if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
+                    String strStatusCode = ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse);
+
+                    if (strStatusCode != null && strStatusCode.equals(Constants.STATUS_CODE_SUCCESS)) {
                         PreferenceManager.getInstance().setLoginEmail(mPerson.getEmail());
                         PreferenceManager.getInstance().setLoginPassword(mPerson.getPassword());
                         PreferenceManager.getInstance().setLoginSuccess(true);
                         PreferenceManager.getInstance().setKeepLogin(true);
 
-                        mCaller.returnFlow(true, FLOW.FL_HOME, HomeActivity.class);
+                        mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_HOME, HomeActivity.class);
                     }
                     else {
-                        mCaller.returnFlow(false, FLOW.FL_LOGIN, LoginActivity.class);
+                        mCaller.returnFlow(Integer.parseInt(strStatusCode), FLOW.FL_LOGIN, LoginActivity.class);
                     }
                 }
 
                 @Override
                 public void onFailure() {
-                    mCaller.returnFlow(false, FLOW.FL_LOGIN, LoginActivity.class);
+                    mCaller.returnFlow(STATUS_CODE_NWK_FAIL_INT, FLOW.FL_LOGIN, LoginActivity.class);
                 }
             });
             task.execute(mPerson);
         } else {
-            mCaller.returnFlow(false, FLOW.FL_LOGIN, LoginActivity.class);
+            mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_LOGIN, LoginActivity.class);
             flow = FLOW.FL_LOGIN;
         }
 

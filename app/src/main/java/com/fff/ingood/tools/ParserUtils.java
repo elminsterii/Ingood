@@ -11,16 +11,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Logger;
 
 /**
  * Created by yoie7 on 2018/5/16.
  */
 
 public class ParserUtils {
-
-    private static Logger m_logger = Logger.getLogger(ParserUtils.class.getName());
 
     public static String getStringByTag(String tag, String Body){
         String result;

@@ -12,10 +12,7 @@ import com.fff.ingood.adapter.RadioListAdapter;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.global.Constants;
-import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoPersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
 
 import java.util.ArrayList;
@@ -34,11 +31,14 @@ public class RegisterInterestPageActivity extends BaseActivity {
     private RadioListAdapter mRadioListAdapter;
 
     private Person mUser = new Person();
+    private RegisterInterestPageActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_interest_page);
         super.onCreate(savedInstanceState);
+
+        mActivity = this;
     }
 
     @Override
@@ -57,10 +57,11 @@ public class RegisterInterestPageActivity extends BaseActivity {
     protected void initData(){
         super.initData();
         mUser = (Person)getIntent().getSerializableExtra("user");
+
         ArrayList<Boolean> radioStateList = new ArrayList<>();
-        for(int i = 0; i< interests_item.length; i++){
+        for (String ignored : interests_item)
             radioStateList.add(false);
-        }
+
         mRadioListAdapter = new RadioListAdapter(this, interests_item, radioStateList);
         mInterestsListView.setAdapter(mRadioListAdapter);
     }
@@ -82,46 +83,36 @@ public class RegisterInterestPageActivity extends BaseActivity {
                 }
 
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
+
                 mWaitingDialog.show(getSupportFragmentManager(), RegisterInterestPageActivity.class.getName());
-
-                DoPersonRegisterTask<Person> task = new DoPersonRegisterTask<>(new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-                                mWaitingDialog.dismiss();
-                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
-                                    Toast.makeText(RegisterInterestPageActivity.this, "doRegister OK", Toast.LENGTH_SHORT).show();
-
-                                    PreferenceManager.getInstance().setRegisterSuccess(true);
-
-                                    Person person = new Person();
-                                    person.setEmail(mUser.getEmail());
-                                    person.setPassword(mUser.getPassword());
-                                    FlowManager.getInstance().goLoginFlow(mActivity, person);
-                                } else {
-                                    Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            @Override
-                            public void onFailure() {
-                                mWaitingDialog.dismiss();
-                                Toast.makeText(RegisterInterestPageActivity.this, "doRegister Failed", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                task.execute(mUser);
+                FlowManager.getInstance().goRegisterPersonFlow(mActivity, mUser);
             }
         });
     }
 
     @Override
-    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        mWaitingDialog.dismiss();
+
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && bSuccess) {
-            Intent intent = new Intent(mActivity, clsFlow);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("user", mUser);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+            if(clsFlow != null
+                    && !clsFlow.isInstance(RegisterInterestPageActivity.class)) {
+
+                if(flow.equals(FlowLogic.FLOW.FL_LOGIN)) {
+                    //Register success, and go login.
+                    FlowManager.getInstance().goLoginFlow(mActivity, mUser);
+                } else {
+                    Intent intent = new Intent(mActivity, clsFlow);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user", mUser);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        } else {
+            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
         }
     }
 }

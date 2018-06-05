@@ -11,6 +11,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.Constants;
 
 
 /**
@@ -64,15 +65,20 @@ public class RegisterLocationPageActivity extends BaseActivity {
     }
 
     @Override
-    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && bSuccess) {
-            Intent intent = new Intent(mActivity, clsFlow);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("user", mUser);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+            if(clsFlow != null
+                    && !clsFlow.isInstance(RegisterLocationPageActivity.class)) {
+                Intent intent = new Intent(mActivity, clsFlow);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", mUser);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } else {
+            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
         }
     }
 }

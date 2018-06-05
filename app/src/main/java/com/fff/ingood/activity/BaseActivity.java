@@ -6,9 +6,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.Constants;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 /**
@@ -24,7 +26,7 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
-    public BaseActivity mActivity;
+    protected BaseActivity mActivity;
     private int mCurAPIVersion;
 
     protected CircleProgressBarDialog mWaitingDialog;
@@ -80,10 +82,12 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
     }
 
     @Override
-    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && bSuccess)
+        if(clsFlow != null && iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT))
             startActivity(new Intent(this, clsFlow));
+        else
+            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
     }
 }

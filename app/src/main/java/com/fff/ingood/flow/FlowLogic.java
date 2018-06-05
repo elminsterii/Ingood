@@ -16,7 +16,7 @@ public abstract class FlowLogic {
     }
 
     public interface FlowLogicCaller {
-        void returnFlow(boolean bSuccess, FLOW flow, Class<?> clsFlow);
+        void returnFlow(Integer iStatusCode, FLOW flow, Class<?> clsFlow);
     }
 
     FlowLogicCaller mCaller;

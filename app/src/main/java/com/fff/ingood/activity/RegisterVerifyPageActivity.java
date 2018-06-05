@@ -12,13 +12,11 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.VerifyEmailFlowLogic;
 import com.fff.ingood.global.Constants;
-import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoPersonVerifyTask;
-import com.fff.ingood.tools.ParserUtils;
 
 @SuppressLint("Registered")
-public class RegisterVerifyPageActivity extends BaseActivity {
+public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEmailFlowLogic.VerifyEmailFlowLogicCaller {
 
     private Button mButton_Next;
     private Button mButton_Send;
@@ -26,11 +24,14 @@ public class RegisterVerifyPageActivity extends BaseActivity {
     private Person mUser = new Person();
 
     private String mVerifyCode;
+    private RegisterVerifyPageActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_verify_page);
         super.onCreate(savedInstanceState);
+
+        mActivity = this;
     }
 
     @Override
@@ -62,7 +63,7 @@ public class RegisterVerifyPageActivity extends BaseActivity {
                 if(mEditText_VerifyCode.getText().toString().equals("5454")) {
                     mUser.setVerifyCode("5454");
                     FlowManager.getInstance().goRegisterFlow(mActivity);
-                } else if(!mVerifyCode.isEmpty()
+                } else if((mVerifyCode != null && !mVerifyCode.isEmpty())
                         && mVerifyCode.equals(mEditText_VerifyCode.getText().toString())) {
                     mUser.setVerifyCode(mVerifyCode);
                     FlowManager.getInstance().goRegisterFlow(mActivity);
@@ -73,34 +74,34 @@ public class RegisterVerifyPageActivity extends BaseActivity {
         mButton_Send.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person userForVerify = new Person();
-                userForVerify.setEmail(mUser.getEmail());
-                DoPersonVerifyTask<Person> task = new DoPersonVerifyTask<>(new AsyncResponder<String>() {
-                            @Override
-                            public void onSuccess(String strResponse) {
-                                if (ParserUtils.getStringByTag(Constants.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse).equals(Constants.TAG_STATUS_CODE_SUCCESS)) {
-                                    Toast.makeText(RegisterVerifyPageActivity.this, "doVerify OK", Toast.LENGTH_SHORT).show();
-                                    Person temp = ParserUtils.getPersonAttr(strResponse);
-                                    if(temp != null)
-                                        mVerifyCode = temp.getVerifyCode();
-                                }
-                            }
-                        });
-                task.execute(userForVerify);
+                Person person = new Person();
+                person.setEmail(mUser.getEmail());
+
+                FlowManager.getInstance().goVerifyEmailFlow(mActivity, person);
             }
         });
     }
 
     @Override
-    public void returnFlow(boolean bSuccess, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && bSuccess) {
-            Intent intent = new Intent(mActivity, clsFlow);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("user", mUser);
-            intent.putExtras(bundle);
-            startActivity(intent);
+        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+            if(clsFlow != null
+                    && !clsFlow.isInstance(RegisterVerifyPageActivity.class)) {
+                Intent intent = new Intent(mActivity, clsFlow);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", mUser);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } else {
+            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void returnVerifyCode(String strCode) {
+        mVerifyCode = strCode;
     }
 }
