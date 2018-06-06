@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.global.Constants;
+import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.ui.CircleProgressBarDialog;
+
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -85,9 +87,9 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT))
+        if(clsFlow != null && iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT))
             startActivity(new Intent(this, clsFlow));
         else
-            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
     }
 }

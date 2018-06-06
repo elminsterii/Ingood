@@ -13,7 +13,9 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.VerifyEmailFlowLogic;
-import com.fff.ingood.global.Constants;
+import com.fff.ingood.global.ServerResponse;
+
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 @SuppressLint("Registered")
 public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEmailFlowLogic.VerifyEmailFlowLogicCaller {
@@ -86,7 +88,7 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+        if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterVerifyPageActivity.class)) {
                 Intent intent = new Intent(mActivity, clsFlow);
@@ -96,7 +98,7 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
                 startActivity(intent);
             }
         } else {
-            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
     }
 

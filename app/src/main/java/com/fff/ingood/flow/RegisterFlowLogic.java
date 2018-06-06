@@ -6,7 +6,7 @@ import com.fff.ingood.activity.RegisterLocationPageActivity;
 import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 import com.fff.ingood.activity.RegisterVerifyPageActivity;
 
-import static com.fff.ingood.global.Constants.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 public class RegisterFlowLogic extends FlowLogic {
 

@@ -15,7 +15,9 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.global.Constants;
+import com.fff.ingood.global.ServerResponse;
+
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 
 /**
@@ -107,24 +109,24 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
         boolean isValid = true;
         if (!Patterns.EMAIL_ADDRESS.matcher(mEditText_Account.getText().toString().trim()).matches()
                 || TextUtils.isEmpty(mEditText_Account.getText().toString().trim())) {
-            Toast.makeText(mActivity, "invalid email", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.register_email_format_wrong), Toast.LENGTH_SHORT).show();
             isValid = false;
         }
         if(TextUtils.isEmpty(mEditText_Password.getText().toString().trim())
                 || mEditText_Password.getText().toString().length() < 8){
-            Toast.makeText(mActivity, "invalid password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.register_password_format_wrong), Toast.LENGTH_SHORT).show();
             isValid = false;
         }
         if(TextUtils.isEmpty(mEditText_Name.getText().toString().trim())){
-            Toast.makeText(mActivity, "invalid name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.register_displayname_format_wrong), Toast.LENGTH_SHORT).show();
             isValid = false;
         }
         if(mSpinner_Gender.getSelectedItemPosition() == 0){
-            Toast.makeText(mActivity, "please choose your gender", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
             isValid = false;
         }
         if(mSpinner_Age.getSelectedItemPosition() == 0){
-            Toast.makeText(mActivity, "please choose your age", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
             isValid = false;
         }
         return isValid;
@@ -134,7 +136,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+        if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterPrimaryPageActivity.class)) {
                 Intent intent = new Intent(mActivity, clsFlow);
@@ -144,7 +146,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
                 startActivity(intent);
             }
         } else {
-            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
     }
 }

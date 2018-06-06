@@ -2,7 +2,7 @@ package com.fff.ingood.flow;
 
 import com.fff.ingood.activity.LoginActivity;
 
-import static com.fff.ingood.global.Constants.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
  * Created by ElminsterII on 2018/5/27.

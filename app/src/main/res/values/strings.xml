@@ -27,30 +27,30 @@
     <string name="menu_personal_logout">Logout</string>
 
     <!-- Toast -->
+    <string name="register_email_format_wrong">Email format wrong</string>
+    <string name="register_password_format_wrong">Password format wrong</string>
+    <string name="register_displayname_format_wrong">Display name format wrong</string>
+    <string name="register_gender_choose">Choose your gender please</string>
+    <string name="register_age_choose">Choose your age please</string>
+    <string name="register_location_choose">Choose your location please</string>
     <string name="nwk_connection_fail">Network connection fail?</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <!-- Server Response -->
+    <string name="server_res_0_success">Success, request has been done</string>
+    <string name="server_res_1_user_not_found">Fail, user was not found</string>
+    <string name="server_res_2_user_already_exist">Fail, user was already exist</string>
+    <string name="server_res_3_invalid_user">Fail, invalid user or user was not exist</string>
+    <string name="server_res_4_not_owner">Fail, activity was not found or you are not owner</string>
+    <string name="server_res_5_missing_data">Fail, missing necessary data?</string>
+    <string name="server_res_6_json_wrong">Fail, json format wrong?</string>
+    <string name="server_res_7_invalid_data">Fail, invalid data input</string>
+    <string name="server_res_8_io_error">Fail, file io error</string>
+    <string name="server_res_9_file_not_found">Fail, file was not found</string>
+    <string name="server_res_10_comment_not_found">Fail, comment was not found</string>
+    <string name="server_res_11_already_attend">Fail, already attend or cancel fail?</string>
+    <string name="server_res_12_verify_code_wrong">Fail, input verify code wrong</string>
+    <string name="server_res_13_time_format_wrong">Fail, time format wrong</string>
+    <string name="server_res_14_unknown_error">Fail, unknown fail happen</string>
 
     <string-array name="user_age_list">
         <item>Age</item>

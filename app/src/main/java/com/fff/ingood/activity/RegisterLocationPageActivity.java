@@ -11,7 +11,9 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.global.Constants;
+import com.fff.ingood.global.ServerResponse;
+
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 
 /**
@@ -58,7 +60,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
                     FlowManager.getInstance().goRegisterFlow(mActivity);
                 }
                 else{
-                    Toast.makeText(RegisterLocationPageActivity.this, "Please choose Your Location!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterLocationPageActivity.this, getResources().getText(R.string.register_location_choose), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -68,7 +70,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+        if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterLocationPageActivity.class)) {
                 Intent intent = new Intent(mActivity, clsFlow);
@@ -78,7 +80,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
                 startActivity(intent);
             }
         } else {
-            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
     }
 }

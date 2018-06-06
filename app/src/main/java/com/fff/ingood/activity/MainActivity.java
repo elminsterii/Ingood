@@ -10,8 +10,10 @@ import com.fff.ingood.R;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
-import com.fff.ingood.global.Constants;
+import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.ui.CircleProgressBarDialog;
+
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLogicCaller {
 
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
         setContentView(R.layout.activity_main);
 
         PreferenceManager.getInstance(this);
+        ServerResponse.getInstance(this);
         mWaitingDialog = new CircleProgressBarDialog();
         mActivity = this;
     }
@@ -42,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
 
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(iStatusCode.equals(Constants.STATUS_CODE_SUCCESS_INT)) {
+        if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(MainActivity.class)) {
                 startActivity(new Intent(this, clsFlow));
             }
         } else {
-            Toast.makeText(mActivity, "statusCode = " + iStatusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
     }
 }
