@@ -12,6 +12,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -25,6 +26,8 @@ public class LoginActivity extends BaseActivity{
     private EditText mEditText_Password;
     private Button mButton_SignIn;
     private Button mButton_Register;
+
+    CircleProgressBarDialog mWaitingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class LoginActivity extends BaseActivity{
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
+
+        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override
@@ -56,6 +61,8 @@ public class LoginActivity extends BaseActivity{
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mWaitingDialog.show(getSupportFragmentManager(), LoginActivity.class.getName());
+
                 Person person = new Person();
                 person.setEmail(mEditText_Account.getText().toString());
                 person.setPassword(mEditText_Password.getText().toString());
@@ -74,6 +81,8 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+        mWaitingDialog.dismiss();
+
         FlowManager.getInstance().setCurFlow(flow);
 
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
