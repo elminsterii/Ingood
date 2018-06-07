@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
+import com.fff.ingood.data.Activity;
 import com.fff.ingood.flow.FlowManager;
 
 import java.util.ArrayList;
@@ -32,7 +32,8 @@ public class HomeActivity extends BaseActivity {
     private NavigationView mNavigationViewMenu;
     private ImageView mImageViewMenuBtn;
     private TabLayout mTabLayoutTagBar;
-    private SearchView mSearchViewSearchBar;
+
+    ArrayList<Activity> m_lsActivities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +46,30 @@ public class HomeActivity extends BaseActivity {
         super.initView();
 
         mRecyclerViewActivityList = findViewById(R.id.recycleViewActivityList);
-        mDrawerLayoutMenu = findViewById(R.id.drawer_layout);
+        mDrawerLayoutMenu = findViewById(R.id.layoutDrawer);
         mNavigationViewMenu = findViewById(R.id.nvView);
         mImageViewMenuBtn = findViewById(R.id.imageViewMenuBtn);
         mTabLayoutTagBar = findViewById(R.id.tabLayout_TagBar);
-        mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
     }
 
     @Override
     protected void initData() {
         super.initData();
 
-        ArrayList<String> lsTempData = new ArrayList<>();
+        m_lsActivities = new ArrayList<>();
 
         //@@ test code
         final int TEST_SIZE = 20;
         for(int i=0; i<TEST_SIZE; i++)
-            lsTempData.add("Activities");
+            m_lsActivities.add(new Activity());
 
         //@@ test code
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("??"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
 
         mLayoutManager = new LinearLayoutManager(this);
-        mActivityListAdapter = new ActivityListAdapter(lsTempData);
+        mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
 
         mRecyclerViewActivityList.setLayoutManager(mLayoutManager);
         mRecyclerViewActivityList.setNestedScrollingEnabled(true);

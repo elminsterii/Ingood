@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.fff.ingood.R;
+import com.fff.ingood.data.Activity;
 
 import java.util.List;
 
@@ -15,20 +15,18 @@ import java.util.List;
  * Created by ElminsterII on 2018/5/29.
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
-    private List<String> mDataset;
+    private List<Activity> m_lsActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView mImageView;
-        TextView mTextView;
+        ImageView mImageViewActivity;
         ViewHolder(View v) {
             super(v);
-            mImageView = v.findViewById(R.id.imgActivityItem);
-            mTextView = v.findViewById(R.id.textActivityItem);
+            mImageViewActivity = v.findViewById(R.id.imgActivityItem);
         }
     }
 
-    public ActivityListAdapter(List<String> lsDataset) {
-        mDataset = lsDataset;
+    public ActivityListAdapter(List<Activity> lsActivity) {
+        m_lsActivity = lsActivity;
     }
 
     @Override
@@ -42,11 +40,17 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTextView.setText(mDataset.get(position));
+        Activity activity = m_lsActivity.get(position);
+        holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - go to detail page of activity
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return m_lsActivity.size();
     }
 }

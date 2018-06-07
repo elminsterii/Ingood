@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutActivityItem"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp"
+    android:layout_height="wrap_content"
+    android:background="@xml/activity_item_background"
+    android:layout_marginTop="8dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView
@@ -13,29 +17,58 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:layout_gravity="top"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/circle_loading_1" />
 
     <RelativeLayout
+        android:id="@+id/layoutActivityTags"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutActivityActions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
 
         <ImageView
-            android:id="@+id/imgActivityItemPublisherIcon"
+            android:id="@+id/imgActivityAction1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
             android:src="@drawable/circle_loading_1" />
 
-        <TextView
-            android:id="@+id/textActivityItem"
+        <ImageView
+            android:id="@+id/imgActivityAction2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imgActivityItemPublisherIcon"
-            android:textSize="24sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/circle_loading_1" />
+
+        <ImageView
+            android:id="@+id/imgActivityAction3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/circle_loading_1" />
     </RelativeLayout>
 </LinearLayout>
