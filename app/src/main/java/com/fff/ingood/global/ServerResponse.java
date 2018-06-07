@@ -33,6 +33,8 @@ public class ServerResponse {
     @SuppressLint("UseSparseArrays")
     private void initialize(Context context) {
         m_mapServerResponseDescriptions = new HashMap<>();
+
+        //response from server
         m_mapServerResponseDescriptions.put(STATUS_CODE_SUCCESS_INT, context.getResources().getText(R.string.server_res_0_success).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_NOT_FOUND_INT, context.getResources().getText(R.string.server_res_1_user_not_found).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT, context.getResources().getText(R.string.server_res_2_user_already_exist).toString());
@@ -48,6 +50,9 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT, context.getResources().getText(R.string.server_res_12_verify_code_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT, context.getResources().getText(R.string.server_res_13_time_format_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_UNKNOWN_ERROR_INT, context.getResources().getText(R.string.server_res_14_unknown_error).toString());
+
+        //response from client
+        m_mapServerResponseDescriptions.put(STATUS_CODE_NWK_FAIL_INT, context.getResources().getText(R.string.nwk_connection_fail).toString());
     }
 
     public static Map<Integer, String> getServerResponseDescriptions() {
