@@ -1,13 +1,19 @@
 package com.fff.ingood.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,10 +36,17 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
+    private EditText mEditText_ConfirmPassword;
+
     private EditText mEditText_Name;
     private Spinner mSpinner_Age;
     private Spinner mSpinner_Gender;
     private Button mButton_Next;
+
+    private ImageButton mImageButton_PwdEye;
+    private Boolean mIsPwdEyeCheck = true;
+    private ImageButton mImageButton_ConfirmPwdEye;
+    private Boolean mIsConfirmPwdEyeCheck = true;
 
     private Person mUser = new Person();
 
@@ -54,10 +67,16 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);
+        mEditText_ConfirmPassword = findViewById(R.id.edit_pwd_confirm);
+
         mEditText_Name = findViewById(R.id.edit_name);
         mSpinner_Age = findViewById(R.id.spinner_age);
         mSpinner_Gender = findViewById(R.id.spinner_gender);
         mButton_Next = findViewById(R.id.btn_done);
+
+        mImageButton_PwdEye = findViewById(R.id.pwd_eye);
+        mImageButton_ConfirmPwdEye = findViewById(R.id.pwd_confirm_eye);
+
     }
 
     @Override
@@ -101,6 +120,43 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
                     FlowManager.getInstance().goRegisterFlow(mActivity);
                 }
+            }
+        });
+
+        mImageButton_PwdEye.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(mIsPwdEyeCheck){
+                    mIsPwdEyeCheck = false;
+                    mImageButton_PwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
+                    mEditText_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+                }
+                else{
+                    mIsPwdEyeCheck = true;
+                    mImageButton_PwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
+                    mEditText_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+
+            }
+        });
+
+        mImageButton_ConfirmPwdEye.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(mIsConfirmPwdEyeCheck){
+                    mIsConfirmPwdEyeCheck = false;
+                    mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
+                    mEditText_ConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+
+                }
+                else{
+                    mIsConfirmPwdEyeCheck = true;
+                    mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
+                    mEditText_ConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+
             }
         });
     }

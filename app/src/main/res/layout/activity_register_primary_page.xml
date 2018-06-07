@@ -4,21 +4,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 <LinearLayout
+    android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1">
+    android:layout_weight="0.25">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="2">
         <EditText
             android:id="@+id/edit_account"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="31dp"
+            android:layout_marginRight="31dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="45dp"
+            android:textSize="14dp"
             android:inputType="textPersonName"
             android:hint="@string/user_data_email"
             android:ems="10"/>
@@ -28,22 +30,38 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="0.25">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2">
-            <EditText
-                android:id="@+id/edit_pwd"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:inputType="textPassword"
-                android:hint="@string/user_data_pwd"
-                android:ems="10"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/edit_pwd"
+                    android:layout_marginLeft="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textSize="14dp"
+                    android:inputType="textPassword"
+                    android:hint="@string/user_data_pwd"
+                    android:ems="10"/>
+
+                <ImageButton
+                    android:id="@+id/pwd_eye"
+                    android:background="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="31dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/view_g"
+                    />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -51,22 +69,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="0.25">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2">
-            <EditText
-                android:id="@+id/edit_pwd_confirm"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:inputType="textPassword"
-                android:hint="@string/user_data_pwd_confirm"
-                android:ems="10"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/edit_pwd_confirm"
+                    android:layout_marginLeft="31dp"
+                    android:layout_marginRight="31dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:textSize="14dp"
+                    android:inputType="textPassword"
+                    android:hint="@string/user_data_pwd_confirm"
+                    android:ems="10"/>
+
+                <ImageButton
+                    android:id="@+id/pwd_confirm_eye"
+                    android:background="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="31dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/view_g"
+                    />
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>
@@ -74,19 +109,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="0.25">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2">
             <EditText
                 android:id="@+id/edit_name"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="31dp"
+                android:layout_marginRight="31dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_height="45dp"
+                android:textSize="14dp"
                 android:inputType="textPersonName"
                 android:hint="@string/user_data_name"
                 android:ems="10"/>
@@ -106,9 +141,8 @@
 
             <Spinner
                 android:id="@+id/spinner_gender"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="31dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/user_gender_list"
@@ -124,7 +158,6 @@
                 android:id="@+id/spinner_age"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/user_age_list"
@@ -139,9 +172,11 @@
         android:layout_weight="1">
         <Button
             android:id="@+id/btn_done"
+            android:background="@drawable/selector_register_next"
+            android:layout_marginBottom="10dp"
             android:text="@string/next"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_weight="1" />
     </LinearLayout>
 
