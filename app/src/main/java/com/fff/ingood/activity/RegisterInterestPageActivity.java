@@ -14,6 +14,7 @@ import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.tools.ParserUtils;
+import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,8 @@ public class RegisterInterestPageActivity extends BaseActivity {
     private Person mUser = new Person();
     private RegisterInterestPageActivity mActivity;
 
+    CircleProgressBarDialog mWaitingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_interest_page);
@@ -53,6 +56,8 @@ public class RegisterInterestPageActivity extends BaseActivity {
         super.initView();
         mButton_Done = findViewById(R.id.btn_next);
         mInterestsListView = findViewById(R.id.interest_list);
+
+        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override
@@ -74,6 +79,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
         mButton_Done.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mWaitingDialog.show(getSupportFragmentManager(), RegisterInterestPageActivity.class.getName());
 
                 ArrayList<Boolean> radioStateList;
                 radioStateList = mRadioListAdapter.getRadioStateList();
@@ -85,8 +91,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
                 }
 
                 mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
-
-                mWaitingDialog.show(getSupportFragmentManager(), RegisterInterestPageActivity.class.getName());
                 FlowManager.getInstance().goRegisterPersonFlow(mActivity, mUser);
             }
         });
@@ -94,7 +98,10 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
     @Override
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
-        mWaitingDialog.dismiss();
+        if(mWaitingDialog != null
+                && mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
 
         FlowManager.getInstance().setCurFlow(flow);
 

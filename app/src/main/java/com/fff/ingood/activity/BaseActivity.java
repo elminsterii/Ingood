@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -31,8 +30,6 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
     protected BaseActivity mActivity;
     private int mCurAPIVersion;
 
-    protected CircleProgressBarDialog mWaitingDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +42,6 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
         initData();
         initListener();
         setSystemUI();
-
-        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     protected void initView() {

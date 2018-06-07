@@ -69,6 +69,8 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
                         && mVerifyCode.equals(mEditText_VerifyCode.getText().toString())) {
                     mUser.setVerifyCode(mVerifyCode);
                     FlowManager.getInstance().goRegisterFlow(mActivity);
+                } else {
+                    Toast.makeText(mActivity, getResources().getText(R.string.server_res_12_verify_code_wrong), Toast.LENGTH_SHORT).show();
                 }
             }
         });

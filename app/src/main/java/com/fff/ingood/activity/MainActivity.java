@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
 
     @Override
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
-        mWaitingDialog.dismiss();
+        if(mWaitingDialog != null
+                && mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
 
         FlowManager.getInstance().setCurFlow(flow);
 
