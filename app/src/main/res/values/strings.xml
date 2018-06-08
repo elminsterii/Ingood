@@ -34,6 +34,7 @@
     <string name="register_age_choose">Choose your age please</string>
     <string name="register_location_choose">Choose your location please</string>
     <string name="nwk_connection_fail">Network connection fail?</string>
+    <string name="missing_necessary_data">Missing necessary condition data</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

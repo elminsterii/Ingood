@@ -35,6 +35,7 @@
     <string name="register_age_choose">請選擇您的年齡</string>
     <string name="register_location_choose">請選擇您的地址</string>
     <string name="nwk_connection_fail">網路連線失敗</string>
+    <string name="missing_necessary_data">缺少必要條件資訊</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>

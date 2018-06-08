@@ -47,15 +47,12 @@ public class ParserUtils {
     }
 
     public static Person getPersonAttr(String Body){
-        Person result = new Person();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
-        JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
-            jsonArray = jsonElement.getAsJsonArray();
-            result = gson.fromJson(jsonArray.get(1).toString(), Person.class);
-            return result;
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            return gson.fromJson(jsonArray.get(1).toString(), Person.class);
         }
         else
             return null;
@@ -65,10 +62,9 @@ public class ParserUtils {
         ArrayList<Activity> result = new ArrayList<>();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
-        JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
-            jsonArray = jsonElement.getAsJsonArray();
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
 
             for(int i = 1; i < jsonArray.size(); i++){
                 result.add(gson.fromJson(jsonArray.get(i).toString(), Activity.class));
@@ -110,6 +106,4 @@ public class ParserUtils {
 
         return strBuilder.toString();
     }
-
-
 }

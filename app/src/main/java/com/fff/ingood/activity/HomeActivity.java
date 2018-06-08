@@ -1,8 +1,9 @@
 package com.fff.ingood.activity;
 
+import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,30 +12,36 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.Activity;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.logic.ActivityLogic;
+import com.fff.ingood.logic.LogicManager;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 /**
  * Created by yoie7 on 2018/5/24.
  */
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements ActivityLogic.ActivityLogicCaller {
 
     private RecyclerView mViewActivityList;
     private RecyclerView.Adapter mActivityListAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
     private DrawerLayout mLayoutMenu;
     private NavigationView mNvMenu;
     private ImageView mImgMenuBtn;
-    private TabLayout mTabLayoutTagBar;
 
-    ArrayList<Activity> m_lsActivities;
+    Activity m_ActivityCondition;
+    List<Activity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
 
     @Override
@@ -58,7 +65,6 @@ public class HomeActivity extends BaseActivity {
         mLayoutMenu = findViewById(R.id.layoutMenu);
         mNvMenu = findViewById(R.id.nvMenu);
         mImgMenuBtn = findViewById(R.id.imgMenuBtn);
-        mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
     }
 
     @Override
@@ -68,22 +74,26 @@ public class HomeActivity extends BaseActivity {
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        final int TEST_SIZE = 20;
-        for(int i=0; i<TEST_SIZE; i++)
-            m_lsActivities.add(new Activity());
+        m_ActivityCondition = new Activity();
+        m_ActivityCondition.setTags("GOGO");
+//        final int TEST_SIZE = 20;
+//        for(int i=0; i<TEST_SIZE; i++)
+//            m_lsActivities.add(new Activity());
+//
+//        //@@ test code
+//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
+//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
+//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
 
-        //@@ test code
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
-
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
 
         mViewActivityList.setLayoutManager(mLayoutManager);
         mViewActivityList.setNestedScrollingEnabled(true);
         mViewActivityList.setHasFixedSize(true);
         mViewActivityList.setAdapter(mActivityListAdapter);
+
+        LogicManager.getInstance().doSearchActivitiesIds(this, m_ActivityCondition);
     }
 
     @Override
@@ -105,7 +115,7 @@ public class HomeActivity extends BaseActivity {
         mNvMenu.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         menuItem.setChecked(true);
 
                         switch(menuItem.getItemId()) {
@@ -125,17 +135,17 @@ public class HomeActivity extends BaseActivity {
         mLayoutMenu.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                         // Respond when the drawer's position changes
                     }
 
                     @Override
-                    public void onDrawerOpened(View drawerView) {
+                    public void onDrawerOpened(@NonNull View drawerView) {
                         // Respond when the drawer is opened
                     }
 
                     @Override
-                    public void onDrawerClosed(View drawerView) {
+                    public void onDrawerClosed(@NonNull View drawerView) {
                         // Respond when the drawer is closed
                     }
 
@@ -151,8 +161,30 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(!mLayoutMenu.isDrawerOpen(GravityCompat.START))
-                    mLayoutMenu.openDrawer(Gravity.LEFT);
+                    mLayoutMenu.openDrawer(Gravity.START);
             }
         });
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnActivities(List<Activity> lsActivities) {
+        m_lsActivities = lsActivities;
+        mActivityListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void returnActivitiesImages(List<Image> lsActivitiesIds) {
+
+    }
+
+    @Override
+    public void returnActivitiesIds(String strActivitiesIds) {
+        LogicManager.getInstance().doGetActivitiesData(this, strActivitiesIds);
     }
 }
