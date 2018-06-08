@@ -16,6 +16,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.Activity;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
 
@@ -25,31 +26,39 @@ import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity {
 
-    private RecyclerView mRecyclerViewActivityList;
+    private RecyclerView mViewActivityList;
     private RecyclerView.Adapter mActivityListAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DrawerLayout mDrawerLayoutMenu;
-    private NavigationView mNavigationViewMenu;
-    private ImageView mImageViewMenuBtn;
+    private DrawerLayout mLayoutMenu;
+    private NavigationView mNvMenu;
+    private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
 
     ArrayList<Activity> m_lsActivities;
+    CircleProgressBarDialog mWaitingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_homepage);
         super.onCreate(savedInstanceState);
+
+        mWaitingDialog = new CircleProgressBarDialog();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        mRecyclerViewActivityList = findViewById(R.id.recycleViewActivityList);
-        mDrawerLayoutMenu = findViewById(R.id.layoutDrawer);
-        mNavigationViewMenu = findViewById(R.id.nvView);
-        mImageViewMenuBtn = findViewById(R.id.imageViewMenuBtn);
-        mTabLayoutTagBar = findViewById(R.id.tabLayout_TagBar);
+        mViewActivityList = findViewById(R.id.viewActivityList);
+        mLayoutMenu = findViewById(R.id.layoutMenu);
+        mNvMenu = findViewById(R.id.nvMenu);
+        mImgMenuBtn = findViewById(R.id.imgMenuBtn);
+        mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
     }
 
     @Override
@@ -71,17 +80,17 @@ public class HomeActivity extends BaseActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
 
-        mRecyclerViewActivityList.setLayoutManager(mLayoutManager);
-        mRecyclerViewActivityList.setNestedScrollingEnabled(true);
-        mRecyclerViewActivityList.setHasFixedSize(true);
-        mRecyclerViewActivityList.setAdapter(mActivityListAdapter);
+        mViewActivityList.setLayoutManager(mLayoutManager);
+        mViewActivityList.setNestedScrollingEnabled(true);
+        mViewActivityList.setHasFixedSize(true);
+        mViewActivityList.setAdapter(mActivityListAdapter);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mRecyclerViewActivityList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mViewActivityList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -93,7 +102,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        mNavigationViewMenu.setNavigationItemSelectedListener(
+        mNvMenu.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -108,12 +117,12 @@ public class HomeActivity extends BaseActivity {
                                 break;
                         }
 
-                        mDrawerLayoutMenu.closeDrawers();
+                        mLayoutMenu.closeDrawers();
                         return true;
                     }
                 });
 
-        mDrawerLayoutMenu.addDrawerListener(
+        mLayoutMenu.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
                     public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -137,12 +146,12 @@ public class HomeActivity extends BaseActivity {
                 }
         );
 
-        mImageViewMenuBtn.setClickable(true);
-        mImageViewMenuBtn.setOnClickListener(new View.OnClickListener() {
+        mImgMenuBtn.setClickable(true);
+        mImgMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mDrawerLayoutMenu.isDrawerOpen(GravityCompat.START))
-                    mDrawerLayoutMenu.openDrawer(Gravity.LEFT);
+                if(!mLayoutMenu.isDrawerOpen(GravityCompat.START))
+                    mLayoutMenu.openDrawer(Gravity.LEFT);
             }
         });
     }
