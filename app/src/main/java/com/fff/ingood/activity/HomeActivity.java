@@ -4,6 +4,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +17,7 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
-import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.ActivityAttr;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.LogicManager;
@@ -39,10 +40,12 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private DrawerLayout mLayoutMenu;
     private NavigationView mNvMenu;
     private ImageView mImgMenuBtn;
+    private TabLayout mTabLayoutTagBar;
 
-    Activity m_ActivityCondition;
-    List<Activity> m_lsActivities;
+    ArrayList<ActivityAttr> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
+
+    private ActivityAttr m_ActivityCondition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        m_ActivityCondition = new Activity();
-        m_ActivityCondition.setTags("GOGO");
+        m_ActivityCondition = new ActivityAttr();
+        m_ActivityCondition.setTags("GOGOGO");
 //        final int TEST_SIZE = 20;
 //        for(int i=0; i<TEST_SIZE; i++)
 //            m_lsActivities.add(new Activity());

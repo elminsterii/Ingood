@@ -43,7 +43,7 @@ public class LoginFlowLogic extends FlowLogic {
                 mPerson.setPassword(PreferenceManager.getInstance().getLoginPassword());
             }
 
-            DoPersonLogInTask<Person> task = new DoPersonLogInTask<>(new AsyncResponder<String>() {
+            DoPersonLogInTask task = new DoPersonLogInTask(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strResponse) {
                     String strStatusCode = ParserUtils.getStringByTag(ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse);

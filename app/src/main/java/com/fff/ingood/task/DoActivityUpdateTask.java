@@ -2,6 +2,7 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
+import com.fff.ingood.data.ActivityAttr;
 import com.fff.ingood.tools.JsonUtils;
 import com.google.gson.Gson;
 
@@ -13,27 +14,23 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoActivityUpdateTask<Object> extends HttpPostAbstractTask<Object>{
+public class DoActivityUpdateTask extends HttpPostAbstractTask<ActivityAttr, String>{
     public DoActivityUpdateTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
+    public DoActivityUpdateTask(AsyncResponder<String> responder) {
+        super(responder);
+    }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, ActivityAttr info) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Activity){
-                jsonString = new Gson().toJson(info, Activity.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+            jsonString = new Gson().toJson(info, ActivityAttr.class);
+
             try
             {
                 // create the HttpURLConnection
@@ -103,5 +100,10 @@ public class DoActivityUpdateTask<Object> extends HttpPostAbstractTask<Object>{
             }
             return  null;
         }
+    }
+
+    @Override
+    protected String parseFromResponse(String response) {
+        return response;
     }
 }

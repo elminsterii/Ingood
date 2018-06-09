@@ -1,6 +1,6 @@
 package com.fff.ingood.data.deserializer;
 
-import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.ActivityAttr;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -9,9 +9,9 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 
-public class ActivityDeserializer implements JsonDeserializer<Activity> {
+public class ActivityAttrDeserializer implements JsonDeserializer<ActivityAttr> {
     @Override
-    public Activity deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public ActivityAttr deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = (JsonObject) jsonElement;
 
         JsonElement jeId = jsonObject.get("id");
@@ -33,7 +33,7 @@ public class ActivityDeserializer implements JsonDeserializer<Activity> {
         JsonElement jeAttention = jsonObject.get("attention");
         JsonElement jeAttendees = jsonObject.get("attendees");
 
-        Activity activity = new Activity();
+        ActivityAttr activity = new ActivityAttr();
 //        activity.setId(jeId.getAsString());
 //        activity.setPublisherEmail(jePublisherEmail == null ? null : jePublisherEmail.getAsString());
 //        activity.setPublisherUserPassword(jePublisherUserPassword == null ? null : jePublisherUserPassword.getAsString());

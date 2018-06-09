@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -13,32 +14,28 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by yoie7 on 2018/5/16.
  */
 
-public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
-    public DoPersonQueryTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonQueryTask extends HttpPostAbstractTask<String, ArrayList<Person>> {
+    public DoPersonQueryTask(Activity activity, AsyncResponder<ArrayList<Person>> responder) {
         super(activity,responder);
     }
+    public DoPersonQueryTask(AsyncResponder<ArrayList<Person>> responder) {
+        super(responder);
+    }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, String info) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
-            String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Person){
-                jsonString = new Gson().toJson(info, Person.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+            String jsonString = info;
+
             try
             {
                 // create the HttpURLConnection
@@ -108,5 +105,9 @@ public class DoPersonQueryTask<Object> extends HttpPostAbstractTask<Object> {
             }
             return  null;
         }
+    }
+
+    protected  ArrayList<Person> parseFromResponse(String response) {
+        return ParserUtils.getPersonList(response);
     }
 }

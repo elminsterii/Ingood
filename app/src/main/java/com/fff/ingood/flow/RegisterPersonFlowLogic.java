@@ -25,7 +25,7 @@ public class RegisterPersonFlowLogic extends FlowLogic {
 
     @Override
     protected FLOW doLogic() {
-        DoPersonRegisterTask<Person> task = new DoPersonRegisterTask<>(new AsyncResponder<String>() {
+        DoPersonRegisterTask task = new DoPersonRegisterTask(new AsyncResponder<String>() {
             @Override
             public void onSuccess(String strResponse) {
                 String strStatusCode = ParserUtils.getStringByTag(ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse);

@@ -2,7 +2,9 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
+import com.fff.ingood.data.ActivityAttr;
 import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -12,28 +14,30 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class DoActivityQueryTask <Object> extends HttpPostAbstractTask<Object>{
-    public DoActivityQueryTask(Activity activity, AsyncResponder<String> responder) {
+public class DoActivityQueryTask  extends HttpPostAbstractTask<String, ArrayList<ActivityAttr>>{
+    public DoActivityQueryTask(Activity activity, AsyncResponder<ArrayList<ActivityAttr>> responder) {
         super(activity,responder);
     }
+    public DoActivityQueryTask(AsyncResponder<ArrayList<ActivityAttr>> responder) {
+        super(responder);
+    }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, String info) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Activity){
-                jsonString = new Gson().toJson(info, Activity.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+            HashMap<String,String> list = new HashMap<>();
+            list.put("ids", info);
+            jsonString = new Gson().toJson(list);
+
+
             try
             {
                 // create the HttpURLConnection
@@ -103,5 +107,10 @@ public class DoActivityQueryTask <Object> extends HttpPostAbstractTask<Object>{
             }
             return  null;
         }
+    }
+
+    @Override
+    protected ArrayList<ActivityAttr> parseFromResponse(String response) {
+        return ParserUtils.getActivitiyAttrList(response);
     }
 }

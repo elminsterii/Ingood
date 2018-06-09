@@ -8,10 +8,10 @@ import android.os.AsyncTask;
  */
 
 
-public abstract class HttpPostAbstractTask<Object> extends AsyncTask<Object,Void,String> {
+public abstract class HttpPostAbstractTask<VIN, VOUT> extends AsyncTask<VIN,Void,VOUT> {
 
     Activity mActivity;
-    private AsyncResponder<String> mResponder;
+    private AsyncResponder<VOUT> mResponder;
 
     public HttpPostAbstractTask() {}
 
@@ -19,11 +19,11 @@ public abstract class HttpPostAbstractTask<Object> extends AsyncTask<Object,Void
         mActivity = activity;
     }
 
-    public HttpPostAbstractTask(AsyncResponder<String> responder) {
+    public HttpPostAbstractTask(AsyncResponder<VOUT> responder) {
         mResponder = responder;
     }
 
-    public HttpPostAbstractTask(Activity activity, AsyncResponder<String> responder) {
+    public HttpPostAbstractTask(Activity activity, AsyncResponder<VOUT> responder) {
         mActivity = activity;
         mResponder = responder;
     }
@@ -34,13 +34,13 @@ public abstract class HttpPostAbstractTask<Object> extends AsyncTask<Object,Void
     }
 
     @Override
-    public String doInBackground(Object... arg0) {
+    public VOUT doInBackground(VIN... arg0) {
 
-        return access(mActivity, arg0[0]);
+        return parseFromResponse(access(mActivity, arg0[0]));
     }
 
     @Override
-    public void onPostExecute(String result) {
+    public void onPostExecute(VOUT result) {
         super.onPostExecute(result);
 
         if (result != null) {
@@ -53,5 +53,7 @@ public abstract class HttpPostAbstractTask<Object> extends AsyncTask<Object,Void
         }
     }
 
-    protected abstract String access(Activity activity, Object value);
+    protected abstract String access(Activity activity, VIN value);
+    protected abstract VOUT parseFromResponse(String response);
+
 }
