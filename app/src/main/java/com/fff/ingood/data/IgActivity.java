@@ -1,9 +1,10 @@
 package com.fff.ingood.data;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
-public class ActivityAttr implements Serializable {
+public class IgActivity implements Serializable {
 
     @SerializedName("id")
     private String m_id;
@@ -60,15 +61,15 @@ public class ActivityAttr implements Serializable {
     private String m_attendees;
 
     private String m_ts;
-    public ActivityAttr(String sEmail,
-                        String sPwd,
-                        String pBegin,
-                        String pEnd,
-                        String bLarge,
-                        String sName,
-                        String dBegin,
-                        String dEnd,
-                        String sLocation
+    public IgActivity(String sEmail,
+                      String sPwd,
+                      String pBegin,
+                      String pEnd,
+                      String bLarge,
+                      String sName,
+                      String dBegin,
+                      String dEnd,
+                      String sLocation
                     ){
         m_publisheremail = sEmail;
         m_publisherpwd = sPwd;
@@ -81,7 +82,7 @@ public class ActivityAttr implements Serializable {
         m_largeactivity = bLarge;
     }
 
-    public ActivityAttr(){
+    public IgActivity(){
     }
 
     public String getPublisherEmail(){

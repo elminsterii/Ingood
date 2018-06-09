@@ -1,6 +1,5 @@
 package com.fff.ingood.activity;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
-import com.fff.ingood.data.ActivityAttr;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.LogicManager;
@@ -36,16 +35,14 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class HomeActivity extends BaseActivity implements ActivityLogic.ActivityLogicCaller {
 
     private RecyclerView mViewActivityList;
-    private RecyclerView.Adapter mActivityListAdapter;
+    private ActivityListAdapter mActivityListAdapter;
     private DrawerLayout mLayoutMenu;
     private NavigationView mNvMenu;
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
 
-    ArrayList<ActivityAttr> m_lsActivities;
+    List<IgActivity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
-
-    private ActivityAttr m_ActivityCondition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +65,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mLayoutMenu = findViewById(R.id.layoutMenu);
         mNvMenu = findViewById(R.id.nvMenu);
         mImgMenuBtn = findViewById(R.id.imgMenuBtn);
+        mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
     }
 
     @Override
@@ -77,16 +75,16 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        m_ActivityCondition = new ActivityAttr();
+        IgActivity m_ActivityCondition = new IgActivity();
         m_ActivityCondition.setTags("GOGOGO");
 //        final int TEST_SIZE = 20;
 //        for(int i=0; i<TEST_SIZE; i++)
 //            m_lsActivities.add(new Activity());
 //
-//        //@@ test code
-//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
-//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-//        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
+        //@@ test code
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
@@ -176,14 +174,10 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     }
 
     @Override
-    public void returnActivities(List<Activity> lsActivities) {
+    public void returnActivities(List<IgActivity> lsActivities) {
         m_lsActivities = lsActivities;
+        mActivityListAdapter.setActivityList(lsActivities);
         mActivityListAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void returnActivitiesImages(List<Image> lsActivitiesIds) {
-
     }
 
     @Override

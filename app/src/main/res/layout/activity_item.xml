@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutActivityItem"
+    android:id="@+id/layoutLinearActivityItem"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,17 +11,32 @@
     android:layout_marginRight="5dp"
     tools:ignore="UseCompoundDrawables">
 
-    <ImageView
-        android:id="@+id/imgActivityItem"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:layout_gravity="top"
+        android:id="@+id/layoutRelativeActivityItem"
+        android:orientation="vertical"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/circle_loading_1" />
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/imgActivityItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/circle_loading_1" />
+
+        <TextView
+            android:id="@+id/textActivityName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layoutActivityTags"

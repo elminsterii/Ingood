@@ -2,8 +2,7 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.data.ActivityAttr;
-import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
@@ -15,7 +14,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<ActivityAttr, String>{
+public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<IgActivity, String>{
     public DoActivityQureyByAttrTask(Activity activity, AsyncResponder<String> responder) {
         super(activity, responder);
     }
@@ -23,7 +22,7 @@ public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<ActivityAttr
         super(responder);
     }
     @Override
-    protected String access(Activity activity, ActivityAttr attr) {
+    protected String access(Activity activity, IgActivity attr) {
         {
             boolean result = false;
             URL url;
@@ -31,7 +30,7 @@ public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<ActivityAttr
             StringBuilder stringBuilder;
             String jsonString;
 
-            jsonString = new Gson().toJson(attr, ActivityAttr.class);
+            jsonString = new Gson().toJson(attr, IgActivity.class);
 
             try
             {

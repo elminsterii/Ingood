@@ -2,8 +2,7 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.data.ActivityAttr;
-import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
@@ -14,15 +13,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DoActivityQueryTask  extends HttpPostAbstractTask<String, ArrayList<ActivityAttr>>{
-    public DoActivityQueryTask(Activity activity, AsyncResponder<ArrayList<ActivityAttr>> responder) {
+public class DoActivityQueryTask  extends HttpPostAbstractTask<String, List<IgActivity>>{
+    public DoActivityQueryTask(Activity activity, AsyncResponder<List<IgActivity>> responder) {
         super(activity,responder);
     }
-    public DoActivityQueryTask(AsyncResponder<ArrayList<ActivityAttr>> responder) {
+    public DoActivityQueryTask(AsyncResponder<List<IgActivity>> responder) {
         super(responder);
     }
     @Override
@@ -110,7 +108,7 @@ public class DoActivityQueryTask  extends HttpPostAbstractTask<String, ArrayList
     }
 
     @Override
-    protected ArrayList<ActivityAttr> parseFromResponse(String response) {
+    protected List<IgActivity> parseFromResponse(String response) {
         return ParserUtils.getActivitiyAttrList(response);
     }
 }

@@ -7,25 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
-import com.fff.ingood.data.ActivityAttr;
-import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
-import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoActivityQueryTask;
-import com.fff.ingood.task.DoActivityQureyByAttrTask;
-import com.fff.ingood.task.DoPersonVerifyTask;
-import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.ui.CircleProgressBarDialog;
-import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLogicCaller {

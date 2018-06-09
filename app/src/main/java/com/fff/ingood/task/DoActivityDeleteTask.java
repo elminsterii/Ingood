@@ -2,8 +2,7 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
-import com.fff.ingood.data.ActivityAttr;
-import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.data.IgActivity;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -14,20 +13,20 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoActivityDeleteTask extends HttpPostAbstractTask<ActivityAttr, String>{
+public class DoActivityDeleteTask extends HttpPostAbstractTask<IgActivity, String>{
 
     public DoActivityDeleteTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
-    protected String access(Activity activity, ActivityAttr info) {
+    protected String access(Activity activity, IgActivity info) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            jsonString = new Gson().toJson(info, ActivityAttr.class);
+            jsonString = new Gson().toJson(info, IgActivity.class);
 
             try
             {
