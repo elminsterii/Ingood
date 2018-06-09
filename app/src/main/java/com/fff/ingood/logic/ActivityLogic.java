@@ -2,8 +2,8 @@ package com.fff.ingood.logic;
 
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.DoActivityQueryByAttrTask;
 import com.fff.ingood.task.DoActivityQueryTask;
-import com.fff.ingood.task.DoActivityQureyByAttrTask;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class ActivityLogic extends Logic {
             task.execute(m_strIds);
         } else if(mActivityCondition != null) {
             //take activities ids by conditions.
-            DoActivityQureyByAttrTask task = new DoActivityQureyByAttrTask(new AsyncResponder<String>() {
+            DoActivityQueryByAttrTask task = new DoActivityQueryByAttrTask(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strActivitiesIds) {
                     mCaller.returnActivitiesIds(strActivitiesIds);

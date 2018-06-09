@@ -42,7 +42,7 @@
     <string name="server_res_1_user_not_found">找不到使用者</string>
     <string name="server_res_2_user_already_exist">使用者已存在</string>
     <string name="server_res_3_invalid_user">不合法的使用者/使用者不存在</string>
-    <string name="server_res_4_not_owner">您並非是合法的擁有者</string>
+    <string name="server_res_4_activity_not_found">無相關活動</string>
     <string name="server_res_5_missing_data">缺少必要資訊</string>
     <string name="server_res_6_json_wrong">Json格式錯誤</string>
     <string name="server_res_7_invalid_data">不合法的資料輸入</string>

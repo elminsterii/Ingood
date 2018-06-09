@@ -20,6 +20,7 @@ import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.LogicManager;
+import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
@@ -41,9 +42,10 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
 
-    IgActivity m_ActivityCondition;
     List<IgActivity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
+
+    private HomeActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         super.onCreate(savedInstanceState);
 
         mWaitingDialog = new CircleProgressBarDialog();
+        mActivity = this;
     }
 
     @Override
@@ -76,12 +79,9 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        m_ActivityCondition = new IgActivity();
-        m_ActivityCondition.setTags("GOGOGO");
-//        final int TEST_SIZE = 20;
-//        for(int i=0; i<TEST_SIZE; i++)
-//            m_lsActivities.add(new Activity());
-//
+        IgActivity activityCondition = new IgActivity();
+        activityCondition.setTags("GOGOGO");
+
         //@@ test code
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
@@ -95,7 +95,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mViewActivityList.setHasFixedSize(true);
         mViewActivityList.setAdapter(mActivityListAdapter);
 
-        LogicManager.getInstance().doSearchActivitiesIds(this, m_ActivityCondition);
+        LogicManager.getInstance().doSearchActivitiesIds(this, activityCondition);
     }
 
     @Override
@@ -166,16 +166,54 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                     mLayoutMenu.openDrawer(Gravity.START);
             }
         });
+
+        mTabLayoutTagBar.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getText() == null)
+                    return;
+
+                IgActivity activityCondition = new IgActivity();
+                String strTag = tab.getText().toString();
+
+                if(StringTool.checkStringNotNull(strTag)) {
+                    activityCondition.setTags(strTag);
+
+                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
     public void returnStatus(Integer iStatusCode) {
+        if(mWaitingDialog != null
+                && mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
+
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void returnActivities(List<IgActivity> lsActivities) {
+        if(mWaitingDialog != null
+                && mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
+
         m_lsActivities = lsActivities;
         mActivityListAdapter.setActivityList(lsActivities);
         mActivityListAdapter.notifyDataSetChanged();

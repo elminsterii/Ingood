@@ -41,7 +41,7 @@
     <string name="server_res_1_user_not_found">Fail, user was not found</string>
     <string name="server_res_2_user_already_exist">Fail, user was already exist</string>
     <string name="server_res_3_invalid_user">Fail, invalid user or user was not exist</string>
-    <string name="server_res_4_not_owner">Fail, activity was not found or you are not owner</string>
+    <string name="server_res_4_activity_not_found">Activity was not found</string>
     <string name="server_res_5_missing_data">Fail, missing necessary data?</string>
     <string name="server_res_6_json_wrong">Fail, json format wrong?</string>
     <string name="server_res_7_invalid_data">Fail, invalid data input</string>

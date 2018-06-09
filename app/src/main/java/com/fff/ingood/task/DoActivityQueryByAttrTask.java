@@ -14,11 +14,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<IgActivity, String>{
-    public DoActivityQureyByAttrTask(Activity activity, AsyncResponder<String> responder) {
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
+import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
+
+public class DoActivityQueryByAttrTask extends HttpPostAbstractTask<IgActivity, String>{
+    public DoActivityQueryByAttrTask(Activity activity, AsyncResponder<String> responder) {
         super(activity, responder);
     }
-    public DoActivityQureyByAttrTask(AsyncResponder<String> responder) {
+    public DoActivityQueryByAttrTask(AsyncResponder<String> responder) {
         super(responder);
     }
     @Override
@@ -99,14 +102,14 @@ public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<IgActivity, 
                     }
                 }
             }
-            return  null;
+            return null;
         }
     }
 
     @Override
     protected String parseFromResponse(String response) {
-        return ParserUtils.getStringByTag( "ids", response);
+        if(ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_STATUS_CODE, response).equals(STATUS_CODE_SUCCESS))
+            return ParserUtils.getStringByTag( "ids", response);
+        return response;
     }
-
-
 }

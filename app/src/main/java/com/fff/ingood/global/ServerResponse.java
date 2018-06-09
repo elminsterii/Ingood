@@ -39,7 +39,7 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_NOT_FOUND_INT, context.getResources().getText(R.string.server_res_1_user_not_found).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT, context.getResources().getText(R.string.server_res_2_user_already_exist).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_INVALID_USER_INT, context.getResources().getText(R.string.server_res_3_invalid_user).toString());
-        m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_NOT_OWNER_INT, context.getResources().getText(R.string.server_res_4_not_owner).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_ACTIVITY_NOT_FOUND_INT, context.getResources().getText(R.string.server_res_4_activity_not_found).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_MISSING_DATA_INT, context.getResources().getText(R.string.server_res_5_missing_data).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_JSON_WRONG_INT, context.getResources().getText(R.string.server_res_6_json_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_INVALID_DATA_INT, context.getResources().getText(R.string.server_res_7_invalid_data).toString());
@@ -71,7 +71,7 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_USER_NOT_FOUND_INT = 1;
     private static final Integer STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT = 2;
     private static final Integer STATUS_CODE_FAIL_INVALID_USER_INT = 3;
-    private static final Integer STATUS_CODE_FAIL_NOT_OWNER_INT = 4;
+    private static final Integer STATUS_CODE_FAIL_ACTIVITY_NOT_FOUND_INT = 4;
     private static final Integer STATUS_CODE_FAIL_MISSING_DATA_INT = 5;
     private static final Integer STATUS_CODE_FAIL_JSON_WRONG_INT = 6;
     private static final Integer STATUS_CODE_FAIL_INVALID_DATA_INT = 7;
