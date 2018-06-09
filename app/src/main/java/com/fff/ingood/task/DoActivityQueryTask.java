@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DoActivityQueryTask  extends HttpPostAbstractTask<String, ArrayList<ActivityAttr>>{
@@ -32,7 +33,10 @@ public class DoActivityQueryTask  extends HttpPostAbstractTask<String, ArrayList
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            jsonString = (String)info;
+            HashMap<String,String> list = new HashMap<>();
+            list.put("ids", info);
+            jsonString = new Gson().toJson(list);
+
 
             try
             {
