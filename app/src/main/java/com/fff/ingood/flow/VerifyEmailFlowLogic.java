@@ -30,7 +30,7 @@ public class VerifyEmailFlowLogic extends FlowLogic {
 
     @Override
     protected FLOW doLogic() {
-        DoPersonVerifyTask<Person> task = new DoPersonVerifyTask<>(new AsyncResponder<String>() {
+        DoPersonVerifyTask task = new DoPersonVerifyTask(new AsyncResponder<String>() {
             @Override
             public void onSuccess(String strResponse) {
                 String strStatusCode = ParserUtils.getStringByTag(ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse);

@@ -2,7 +2,9 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 
+import com.fff.ingood.data.ActivityAttr;
 import com.fff.ingood.tools.JsonUtils;
+import com.fff.ingood.tools.ParserUtils;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -13,27 +15,24 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoActivityQureyByAttrTask<Object> extends HttpPostAbstractTask<Object>{
+public class DoActivityQureyByAttrTask extends HttpPostAbstractTask<ActivityAttr, String>{
     public DoActivityQureyByAttrTask(Activity activity, AsyncResponder<String> responder) {
-        super(activity,responder);
+        super(activity, responder);
+    }
+    public DoActivityQureyByAttrTask(AsyncResponder<String> responder) {
+        super(responder);
     }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, ActivityAttr attr) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Activity){
-                jsonString = new Gson().toJson(info, Activity.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+
+            jsonString = new Gson().toJson(attr, ActivityAttr.class);
+
             try
             {
                 // create the HttpURLConnection
@@ -104,4 +103,11 @@ public class DoActivityQureyByAttrTask<Object> extends HttpPostAbstractTask<Obje
             return  null;
         }
     }
+
+    @Override
+    protected String parseFromResponse(String response) {
+        return ParserUtils.getStringByTag( "ids", response);
+    }
+
+
 }

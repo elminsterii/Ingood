@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
-import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.ActivityAttr;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
@@ -34,7 +34,7 @@ public class HomeActivity extends BaseActivity {
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
 
-    ArrayList<Activity> m_lsActivities;
+    ArrayList<ActivityAttr> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
 
     @Override
@@ -70,7 +70,7 @@ public class HomeActivity extends BaseActivity {
         //@@ test code
         final int TEST_SIZE = 20;
         for(int i=0; i<TEST_SIZE; i++)
-            m_lsActivities.add(new Activity());
+            m_lsActivities.add(new ActivityAttr());
 
         //@@ test code
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));

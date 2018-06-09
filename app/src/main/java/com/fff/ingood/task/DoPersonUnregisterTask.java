@@ -14,27 +14,23 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonUnregisterTask<Object> extends HttpPostAbstractTask<Object> {
+public class DoPersonUnregisterTask extends HttpPostAbstractTask<Person, String> {
     public DoPersonUnregisterTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
+    public DoPersonUnregisterTask(AsyncResponder<String> responder) {
+        super(responder);
+    }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, Person info) {
         {
             boolean result = false;
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Person){
-                jsonString = new Gson().toJson(info, Person.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+            jsonString = new Gson().toJson(info, Person.class);
+
             try
             {
                 // create the HttpURLConnection
@@ -104,5 +100,10 @@ public class DoPersonUnregisterTask<Object> extends HttpPostAbstractTask<Object>
             }
             return  null;
         }
+    }
+
+    @Override
+    protected String parseFromResponse(String response) {
+        return response;
     }
 }

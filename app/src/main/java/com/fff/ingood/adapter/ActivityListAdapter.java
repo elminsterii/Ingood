@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.fff.ingood.R;
-import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.ActivityAttr;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by ElminsterII on 2018/5/29.
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
-    private List<Activity> m_lsActivity;
+    private List<ActivityAttr> m_lsActivity;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
@@ -25,7 +25,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
     }
 
-    public ActivityListAdapter(List<Activity> lsActivity) {
+    public ActivityListAdapter(List<ActivityAttr> lsActivity) {
         m_lsActivity = lsActivity;
     }
 
@@ -40,7 +40,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Activity activity = m_lsActivity.get(position);
+        ActivityAttr activity = m_lsActivity.get(position);
         holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -14,7 +14,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
+public class DoPersonLogInTask  extends HttpPostAbstractTask<Person, String> {
     public DoPersonLogInTask(AsyncResponder<String> responder) {
         super(responder);
     }
@@ -22,21 +22,14 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
         super(activity,responder);
     }
     @Override
-    protected String access(Activity activity, Object info) {
+    protected String access(Activity activity, Person info) {
         {
             URL url;
             BufferedReader reader = null;
             StringBuilder stringBuilder;
             String jsonString;
-            if(info instanceof String){
-                jsonString = (String)info;
-            }
-            else if(info instanceof Person){
-                jsonString = new Gson().toJson(info, Person.class);
-            }
-            else {
-                jsonString = JsonUtils.createJsonString(info);
-            }
+            jsonString = new Gson().toJson(info, Person.class);
+
             try
             {
                 // create the HttpURLConnection
@@ -107,5 +100,9 @@ public class DoPersonLogInTask <Object> extends HttpPostAbstractTask<Object> {
             }
             return  null;
         }
+    }
+    @Override
+    protected String parseFromResponse(String response) {
+        return response;
     }
 }
