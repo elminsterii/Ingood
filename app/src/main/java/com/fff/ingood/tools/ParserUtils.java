@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yoie7 on 2018/5/16.
@@ -62,11 +63,11 @@ public class ParserUtils {
             return null;
     }
 
-    public static ArrayList<IgActivity> getActivitiyAttrList(String Body){
-        ArrayList<IgActivity> result = new ArrayList<>();
+    public static List<IgActivity> getActivitiyList(String Body){
+        List<IgActivity> result = new ArrayList<>();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
-        JsonArray jsonArray = new JsonArray();
+        JsonArray jsonArray;
         Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
             jsonArray = jsonElement.getAsJsonArray();

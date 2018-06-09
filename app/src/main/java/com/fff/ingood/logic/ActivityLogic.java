@@ -39,10 +39,6 @@ public class ActivityLogic extends Logic {
         m_strIds = strIds;
     }
 
-    ActivityLogic(ActivityLogicCaller caller) {
-        super(caller);
-    }
-
     @Override
     protected void doLogic() {
         if(StringTool.checkStringNotNull(m_strIds)) {

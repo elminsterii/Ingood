@@ -109,6 +109,6 @@ public class DoActivityQueryTask  extends HttpPostAbstractTask<String, List<IgAc
 
     @Override
     protected List<IgActivity> parseFromResponse(String response) {
-        return ParserUtils.getActivitiyAttrList(response);
+        return ParserUtils.getActivitiyList(response);
     }
 }

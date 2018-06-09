@@ -41,6 +41,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
 
+    IgActivity m_ActivityCondition;
     List<IgActivity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
 
@@ -75,7 +76,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        IgActivity m_ActivityCondition = new IgActivity();
+        m_ActivityCondition = new IgActivity();
         m_ActivityCondition.setTags("GOGOGO");
 //        final int TEST_SIZE = 20;
 //        for(int i=0; i<TEST_SIZE; i++)
