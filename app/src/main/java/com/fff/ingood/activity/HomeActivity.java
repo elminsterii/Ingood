@@ -1,9 +1,12 @@
 package com.fff.ingood.activity;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +47,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
     private SearchView mSearchViewSearchBar;
+    private FloatingActionButton mFabPublishBtn;
 
     List<IgActivity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
@@ -74,6 +78,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mImgMenuBtn = findViewById(R.id.imgMenuBtn);
         mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
         mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
+        mFabPublishBtn = findViewById(R.id.fabPublishAction);
     }
 
     @Override
@@ -95,6 +100,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mViewActivityList.setNestedScrollingEnabled(true);
         mViewActivityList.setHasFixedSize(true);
         mViewActivityList.setAdapter(mActivityListAdapter);
+
+        mFabPublishBtn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorTransparent)));
     }
 
     @Override
@@ -225,6 +232,13 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             @Override
             public boolean onQueryTextChange(String newText) {
                 return true;
+            }
+        });
+
+        mFabPublishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - enter publish flow
             }
         });
     }
