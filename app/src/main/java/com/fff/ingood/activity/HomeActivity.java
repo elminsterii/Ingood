@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private NavigationView mNvMenu;
     private ImageView mImgMenuBtn;
     private TabLayout mTabLayoutTagBar;
+    private SearchView mSearchViewSearchBar;
 
     List<IgActivity> m_lsActivities;
     CircleProgressBarDialog mWaitingDialog;
@@ -71,6 +73,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mNvMenu = findViewById(R.id.nvMenu);
         mImgMenuBtn = findViewById(R.id.imgMenuBtn);
         mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
+        mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
     }
 
     @Override
@@ -203,6 +206,25 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                     LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
                 }
                 mTabLayoutTagBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
+        mSearchViewSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(StringTool.checkStringNotNull(query)) {
+                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+
+                    IgActivity activityCondition = new IgActivity();
+                    activityCondition.setTags(query);
+                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
             }
         });
     }

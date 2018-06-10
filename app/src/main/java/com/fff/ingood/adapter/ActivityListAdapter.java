@@ -79,7 +79,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         String[] arrStrTags = activity.getTags().split(",");
 
         int iTagId = 1;
-        int MAX_TAGS = 5;
+        final int MAX_TAGS = 5;
         int iSize = arrStrTags.length > MAX_TAGS ? MAX_TAGS : arrStrTags.length;
         int iBeginX = mTagBarWidth / (iSize + 2);
 
