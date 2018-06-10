@@ -2,13 +2,13 @@ package com.fff.ingood.logic;
 
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoActivityQueryByAttrTask;
+import com.fff.ingood.task.DoActivityQueryIdByTask;
 import com.fff.ingood.task.DoActivityQueryTask;
 import com.fff.ingood.tools.StringTool;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_LOGIC_MISSING_DATA_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 
 /**
@@ -42,7 +42,7 @@ public class ActivityLogic extends Logic {
     @Override
     protected void doLogic() {
         if(StringTool.checkStringNotNull(m_strIds)) {
-            //query activity data by ids.
+            //query activities data by ids.
             DoActivityQueryTask task = new DoActivityQueryTask(new AsyncResponder<List<IgActivity>>() {
                 @Override
                 public void onSuccess(List<IgActivity> lsActivities) {
@@ -57,7 +57,7 @@ public class ActivityLogic extends Logic {
             task.execute(m_strIds);
         } else if(mActivityCondition != null) {
             //take activities ids by conditions.
-            DoActivityQueryByAttrTask task = new DoActivityQueryByAttrTask(new AsyncResponder<String>() {
+            DoActivityQueryIdByTask task = new DoActivityQueryIdByTask(new AsyncResponder<String>() {
                 @Override
                 public void onSuccess(String strActivitiesIds) {
                     mCaller.returnActivitiesIds(strActivitiesIds);
@@ -70,7 +70,8 @@ public class ActivityLogic extends Logic {
             });
             task.execute(mActivityCondition);
         } else {
-            mCaller.returnStatus(STATUS_CODE_LOGIC_MISSING_DATA_INT);
+            //clear activity list in Homepage.
+            mCaller.returnActivities(new ArrayList<IgActivity>());
         }
     }
 }

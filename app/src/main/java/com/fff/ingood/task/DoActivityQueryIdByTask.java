@@ -17,11 +17,11 @@ import java.net.URL;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-public class DoActivityQueryByAttrTask extends HttpPostAbstractTask<IgActivity, String>{
-    public DoActivityQueryByAttrTask(Activity activity, AsyncResponder<String> responder) {
+public class DoActivityQueryIdByTask extends HttpPostAbstractTask<IgActivity, String>{
+    public DoActivityQueryIdByTask(Activity activity, AsyncResponder<String> responder) {
         super(activity, responder);
     }
-    public DoActivityQueryByAttrTask(AsyncResponder<String> responder) {
+    public DoActivityQueryIdByTask(AsyncResponder<String> responder) {
         super(responder);
     }
     @Override
@@ -110,6 +110,6 @@ public class DoActivityQueryByAttrTask extends HttpPostAbstractTask<IgActivity, 
     protected String parseFromResponse(String response) {
         if(ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_STATUS_CODE, response).equals(STATUS_CODE_SUCCESS))
             return ParserUtils.getStringByTag( "ids", response);
-        return response;
+        return "";
     }
 }

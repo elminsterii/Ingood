@@ -86,6 +86,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
