@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -79,10 +80,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
-        IgActivity activityCondition = new IgActivity();
-        activityCondition.setTags("GOGOGO");
-
-        //@@ test code
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
@@ -95,8 +92,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mViewActivityList.setNestedScrollingEnabled(true);
         mViewActivityList.setHasFixedSize(true);
         mViewActivityList.setAdapter(mActivityListAdapter);
-
-        LogicManager.getInstance().doSearchActivitiesIds(this, activityCondition);
     }
 
     @Override
@@ -193,6 +188,21 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        mTabLayoutTagBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mActivityListAdapter.setTagBarWidth(mTabLayoutTagBar.getWidth());
+                if(m_lsActivities.size() == 0) {
+                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                    //@@ test code
+                    IgActivity activityCondition = new IgActivity();
+                    activityCondition.setTags("GOGO");
+                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                }
+                mTabLayoutTagBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
     }

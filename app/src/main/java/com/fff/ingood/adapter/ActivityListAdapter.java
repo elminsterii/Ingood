@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
     private List<IgActivity> m_lsActivity;
+    private int mTagBarWidth;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
@@ -70,25 +71,31 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         notifyDataSetChanged();
     }
 
+    public void setTagBarWidth(int mTagBarWidth) {
+        this.mTagBarWidth = mTagBarWidth;
+    }
+
     private void makeTags(ViewHolder holder, IgActivity activity) {
         String[] arrStrTags = activity.getTags().split(",");
 
         int iTagId = 1;
-        TextView preTextView = null;
+        int MAX_TAGS = 5;
+        int iSize = arrStrTags.length > MAX_TAGS ? MAX_TAGS : arrStrTags.length;
+        int iBeginX = mTagBarWidth / (iSize + 2);
 
-        for(String strTag : arrStrTags) {
+        //align center for the one item.
+        if(iSize == 1)
+            iBeginX += (iBeginX / 5);
+
+        for(int i=0; i<iSize; i++) {
+            String strTag = arrStrTags[i];
             TextView textViewTag = new TextView(holder.mLayoutTags.getContext());
             textViewTag.setId(iTagId++);
             textViewTag.setText(strTag);
+            textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
+            textViewTag.setX(iBeginX * (i + 1));
 
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params.addRule(RelativeLayout.CENTER_IN_PARENT);
-
-            if(preTextView != null)
-                params.addRule(RelativeLayout.RIGHT_OF, preTextView.getId());
-
-            holder.mLayoutTags.addView(textViewTag, params);
-            preTextView = textViewTag;
+            holder.mLayoutTags.addView(textViewTag);
         }
     }
 }
