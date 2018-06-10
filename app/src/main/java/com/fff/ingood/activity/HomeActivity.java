@@ -216,8 +216,9 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             mWaitingDialog.dismiss();
 
         m_lsActivities = lsActivities;
-        mActivityListAdapter.setActivityList(lsActivities);
-        mActivityListAdapter.notifyDataSetChanged();
+        mViewActivityList.setAdapter(null);
+        mViewActivityList.setAdapter(mActivityListAdapter);
+        mActivityListAdapter.updateActivityList(lsActivities);
     }
 
     @Override
