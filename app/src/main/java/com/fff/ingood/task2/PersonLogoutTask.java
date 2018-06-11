@@ -15,9 +15,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonLoginTask extends HttpPostAccessTask<Person, Integer, Person> {
+public class PersonLogoutTask extends HttpPostAccessTask<Person, Integer, Void> {
 
-    public PersonLoginTask(AsyncResponder<Integer, Person> responder) {
+    public PersonLogoutTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -28,7 +28,7 @@ public class PersonLoginTask extends HttpPostAccessTask<Person, Integer, Person>
         jsonString = new Gson().toJson(info, Person.class);
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_LOGIN));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_LOGOUT));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

@@ -3,6 +3,7 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.task2.wrapper.PersonLoginTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -49,11 +50,13 @@ public class LoginFlowLogic extends FlowLogic implements PersonLoginTaskWrapper.
     }
 
     @Override
-    public void onLoginSuccess(Person persons) {
-        PreferenceManager.getInstance().setLoginEmail(persons.getEmail());
-        PreferenceManager.getInstance().setLoginPassword(persons.getPassword());
+    public void onLoginSuccess(Person person) {
+        PreferenceManager.getInstance().setLoginEmail(person.getEmail());
+        PreferenceManager.getInstance().setLoginPassword(person.getPassword());
         PreferenceManager.getInstance().setLoginSuccess(true);
         PreferenceManager.getInstance().setKeepLogin(true);
+
+        PersonManager.getInstance().setPerson(person);
 
         mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_HOME, HomeActivity.class);
     }

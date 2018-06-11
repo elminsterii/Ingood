@@ -1,8 +1,8 @@
 package com.fff.ingood.task2.wrapper;
 
-import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityCreateTask;
+import com.fff.ingood.data.Person;
 import com.fff.ingood.task2.AsyncResponder;
+import com.fff.ingood.task2.PersonLogoutTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -15,18 +15,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class ActivityCreateTaskWrapper {
-    public interface ActivityCreateTaskWrapperCallback {
-        void onCreateActivitySuccess(String strIds);
-        void onCreateActivityFailure(Integer iStatusCode);
+public class PersonLogoutTaskWrapper {
+
+    public interface PersonLogoutTaskWrapperCallback {
+        void onLogoutSuccess();
+        void onLogoutFailure(Integer iStatusCode);
     }
 
-    private ActivityCreateTask task;
-    private ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback mCb;
+    private PersonLogoutTask task;
+    private PersonLogoutTaskWrapperCallback mCb;
 
-    public ActivityCreateTaskWrapper(ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback cb) {
+    public PersonLogoutTaskWrapper(PersonLogoutTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityCreateTask(new AsyncResponder<Integer, String>() {
+        task = new PersonLogoutTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean makeOutput(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -39,7 +40,6 @@ public class ActivityCreateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getActivitiesByJson(strJsonResponse).get(0).getId());
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -51,18 +51,18 @@ public class ActivityCreateTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String strIds) {
-                mCb.onCreateActivitySuccess(strIds);
+            public void onSuccess(Void aVoid) {
+                mCb.onLogoutSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onCreateActivityFailure(iStatusCode);
+                mCb.onLogoutFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(IgActivity activity) {
-        task.execute(activity);
+    public void execute(Person person) {
+        task.execute(person);
     }
 }

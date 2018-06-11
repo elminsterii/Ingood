@@ -10,7 +10,7 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class RegisterPersonFlowLogic extends FlowLogic implements PersonRegisterTaskWrapper.PersonRegisterTaskWrapperCallback{
+public class RegisterPersonFlowLogic extends FlowLogic implements PersonRegisterTaskWrapper.PersonRegisterTaskWrapperCallback {
 
     private Person mPerson;
 

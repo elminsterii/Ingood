@@ -17,7 +17,7 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class PersonLoginTaskWrapper {
 
     public interface PersonLoginTaskWrapperCallback {
-        void onLoginSuccess(Person persons);
+        void onLoginSuccess(Person person);
         void onLoginFailure(Integer iStatusCode);
     }
 
@@ -51,8 +51,8 @@ public class PersonLoginTaskWrapper {
             }
 
             @Override
-            public void onSuccess(Person persons) {
-                mCb.onLoginSuccess(persons);
+            public void onSuccess(Person person) {
+                mCb.onLoginSuccess(person);
             }
 
             @Override
