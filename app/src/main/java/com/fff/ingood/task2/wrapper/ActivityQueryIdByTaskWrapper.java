@@ -1,7 +1,7 @@
 package com.fff.ingood.task2.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityCreateTask;
+import com.fff.ingood.task2.ActivityQueryIdByTask;
 import com.fff.ingood.task2.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -9,25 +9,26 @@ import com.fff.ingood.tools.StringTool;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
+import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_ACTIVITIES_IDS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
 /**
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class ActivityCreateTaskWrapper {
+public class ActivityQueryIdByTaskWrapper {
 
-    public interface ActivityCreateTaskWrapperCallback {
-        void onCreateActivitySuccess(String strId);
-        void onCreateActivityFailure(Integer iStatusCode);
+    public interface ActivityQueryIdByTaskWrapperCallback {
+        void onQueryActivitiesIdsSuccess(String strIds);
+        void onQueryActivitiesIdsFailure(Integer iStatusCode);
     }
 
-    private ActivityCreateTask task;
-    private ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback mCb;
+    private ActivityQueryIdByTask task;
+    private ActivityQueryIdByTaskWrapperCallback mCb;
 
-    public ActivityCreateTaskWrapper(ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback cb) {
+    public ActivityQueryIdByTaskWrapper(ActivityQueryIdByTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityCreateTask(new AsyncResponder<Integer, String>() {
+        task = new ActivityQueryIdByTask(new AsyncResponder<Integer, String>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -40,7 +41,7 @@ public class ActivityCreateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getActivitiesByJson(strJsonResponse).get(0).getId());
+                        setData(ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_ACTIVITIES_IDS, strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -52,13 +53,13 @@ public class ActivityCreateTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String strId) {
-                mCb.onCreateActivitySuccess(strId);
+            public void onSuccess(String strIds) {
+                mCb.onQueryActivitiesIdsSuccess(strIds);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onCreateActivityFailure(iStatusCode);
+                mCb.onQueryActivitiesIdsFailure(iStatusCode);
             }
         });
     }

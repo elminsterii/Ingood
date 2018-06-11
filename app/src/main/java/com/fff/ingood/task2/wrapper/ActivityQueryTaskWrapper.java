@@ -1,10 +1,12 @@
 package com.fff.ingood.task2.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityCreateTask;
+import com.fff.ingood.task2.ActivityQueryTask;
 import com.fff.ingood.task2.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+
+import java.util.List;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
@@ -15,19 +17,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class ActivityCreateTaskWrapper {
+public class ActivityQueryTaskWrapper {
 
-    public interface ActivityCreateTaskWrapperCallback {
-        void onCreateActivitySuccess(String strId);
-        void onCreateActivityFailure(Integer iStatusCode);
+    public interface ActivityQueryTaskWrapperCallback {
+        void onQueryActivitiesSuccess(List<IgActivity> lsActivities);
+        void onQueryActivitiesFailure(Integer iStatusCode);
     }
 
-    private ActivityCreateTask task;
-    private ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback mCb;
+    private ActivityQueryTask task;
+    private ActivityQueryTaskWrapperCallback mCb;
 
-    public ActivityCreateTaskWrapper(ActivityCreateTaskWrapper.ActivityCreateTaskWrapperCallback cb) {
+    public ActivityQueryTaskWrapper(ActivityQueryTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityCreateTask(new AsyncResponder<Integer, String>() {
+        task = new ActivityQueryTask(new AsyncResponder<Integer, List<IgActivity>>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -40,7 +42,7 @@ public class ActivityCreateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getActivitiesByJson(strJsonResponse).get(0).getId());
+                        setData(ParserUtils.getActivitiesByJson(strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -52,18 +54,18 @@ public class ActivityCreateTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String strId) {
-                mCb.onCreateActivitySuccess(strId);
+            public void onSuccess(List<IgActivity> lsActivities) {
+                mCb.onQueryActivitiesSuccess(lsActivities);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onCreateActivityFailure(iStatusCode);
+                mCb.onQueryActivitiesFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(IgActivity activity) {
-        task.execute(activity);
+    public void execute(String strIds) {
+        task.execute(strIds);
     }
 }

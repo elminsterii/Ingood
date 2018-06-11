@@ -1,20 +1,19 @@
 package com.fff.ingood.logic;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoActivityQueryIdByTask;
-import com.fff.ingood.task.DoActivityQueryTask;
+import com.fff.ingood.task2.wrapper.ActivityQueryIdByTaskWrapper;
+import com.fff.ingood.task2.wrapper.ActivityQueryTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
-
 /**
  * Created by ElminsterII on 2018/6/8.
  */
-public class ActivityLogic extends Logic {
+public class ActivityLogic extends Logic implements
+        ActivityQueryIdByTaskWrapper.ActivityQueryIdByTaskWrapperCallback
+        , ActivityQueryTaskWrapper.ActivityQueryTaskWrapperCallback {
 
     public interface ActivityLogicCaller extends Logic.LogicCaller {
         void returnStatus(Integer iStatusCode);
@@ -43,35 +42,35 @@ public class ActivityLogic extends Logic {
     protected void doLogic() {
         if(StringTool.checkStringNotNull(m_strIds)) {
             //query activities data by ids.
-            DoActivityQueryTask task = new DoActivityQueryTask(new AsyncResponder<List<IgActivity>>() {
-                @Override
-                public void onSuccess(List<IgActivity> lsActivities) {
-                    mCaller.returnActivities(lsActivities);
-                }
-
-                @Override
-                public void onFailure() {
-                    mCaller.returnStatus(STATUS_CODE_NWK_FAIL_INT);
-                }
-            });
+            ActivityQueryTaskWrapper task = new ActivityQueryTaskWrapper(this);
             task.execute(m_strIds);
         } else if(mActivityCondition != null) {
             //take activities ids by conditions.
-            DoActivityQueryIdByTask task = new DoActivityQueryIdByTask(new AsyncResponder<String>() {
-                @Override
-                public void onSuccess(String strActivitiesIds) {
-                    mCaller.returnActivitiesIds(strActivitiesIds);
-                }
-
-                @Override
-                public void onFailure() {
-                    mCaller.returnStatus(STATUS_CODE_NWK_FAIL_INT);
-                }
-            });
+            ActivityQueryIdByTaskWrapper task = new ActivityQueryIdByTaskWrapper(this);
             task.execute(mActivityCondition);
         } else {
             //clear activity list in Homepage.
             mCaller.returnActivities(new ArrayList<IgActivity>());
         }
+    }
+
+    @Override
+    public void onQueryActivitiesIdsSuccess(String strIds) {
+        mCaller.returnActivitiesIds(strIds);
+    }
+
+    @Override
+    public void onQueryActivitiesIdsFailure(Integer iStatusCode) {
+        mCaller.returnStatus(iStatusCode);
+    }
+
+    @Override
+    public void onQueryActivitiesSuccess(List<IgActivity> lsActivities) {
+        mCaller.returnActivities(lsActivities);
+    }
+
+    @Override
+    public void onQueryActivitiesFailure(Integer iStatusCode) {
+        mCaller.returnStatus(iStatusCode);
     }
 }
