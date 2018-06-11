@@ -29,7 +29,7 @@ public class PersonVerifyTaskWrapper {
         mCb = cb;
         task = new PersonVerifyTask(new AsyncResponder<Integer, String>() {
             @Override
-            public boolean makeOutput(String strJsonResponse) {
+            public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
                     setStatus(STATUS_CODE_NWK_FAIL_INT);
                     return false;

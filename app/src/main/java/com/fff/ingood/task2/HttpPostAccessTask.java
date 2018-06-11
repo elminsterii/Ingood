@@ -30,7 +30,7 @@ public abstract class HttpPostAccessTask<VIN, VOUT_STATUS, VOUT_DATA> extends As
     public void onPostExecute(String result) {
         super.onPostExecute(result);
 
-        if(result != null && mResponder.makeOutput(result))
+        if(result != null && mResponder.parseResponse(result))
             mResponder.onSuccess(mResponder.getData());
         else
             mResponder.onFailure(mResponder.getStatus());

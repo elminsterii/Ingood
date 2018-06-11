@@ -30,7 +30,7 @@ public class PersonQueryTaskWrapper {
         mCb = cb;
         task = new PersonQueryTask(new AsyncResponder<Integer, List<Person>>() {
             @Override
-            public boolean makeOutput(String strJsonResponse) {
+            public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
                     setStatus(STATUS_CODE_NWK_FAIL_INT);
                     return false;

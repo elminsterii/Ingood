@@ -8,7 +8,7 @@ public abstract class AsyncResponder<VOUT_STATUS, VOUT_DATA> {
     private VOUT_STATUS mStatus = null;
     private VOUT_DATA mData = null;
 
-    public abstract boolean makeOutput(String strJsonResponse);
+    public abstract boolean parseResponse(String strJsonResponse);
     public abstract void onSuccess(VOUT_DATA data);
     public abstract void onFailure(VOUT_STATUS status);
 
