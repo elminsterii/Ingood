@@ -35,6 +35,7 @@
     <string name="register_location_choose">Choose your location please</string>
     <string name="nwk_connection_fail">Network connection fail?</string>
     <string name="missing_necessary_data">Missing necessary condition data</string>
+    <string name="parsing_data_error">Parsing data error</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
 
         PreferenceManager.getInstance(this);
         ServerResponse.getInstance(this);
+
         mWaitingDialog = new CircleProgressBarDialog();
         mActivity = this;
     }

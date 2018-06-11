@@ -43,6 +43,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
         setContentView(R.layout.activity_register_interest_page);
         super.onCreate(savedInstanceState);
 
+        mWaitingDialog = new CircleProgressBarDialog();
         mActivity = this;
     }
 
@@ -56,8 +57,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
         super.initView();
         mButton_Done = findViewById(R.id.btn_next);
         mInterestsListView = findViewById(R.id.interest_list);
-
-        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override

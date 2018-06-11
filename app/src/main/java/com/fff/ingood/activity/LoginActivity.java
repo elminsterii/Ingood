@@ -20,7 +20,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  * Created by yoie7 on 2018/5/3.
  */
 
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends BaseActivity {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
@@ -29,10 +29,15 @@ public class LoginActivity extends BaseActivity{
 
     CircleProgressBarDialog mWaitingDialog;
 
+    private LoginActivity mActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_signin_page);
         super.onCreate(savedInstanceState);
+
+        mWaitingDialog = new CircleProgressBarDialog();
+        mActivity = this;
     }
 
     @Override
@@ -43,12 +48,11 @@ public class LoginActivity extends BaseActivity{
     @Override
     protected void initView(){
         super.initView();
+
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
-
-        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override

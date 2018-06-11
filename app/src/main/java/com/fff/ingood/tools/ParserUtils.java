@@ -51,7 +51,7 @@ public class ParserUtils {
         return result;
     }
 
-    public static Person getPersonAttr(String Body){
+    public static Person getPersonByJson(String Body){
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
         Gson gson = new Gson();
@@ -63,7 +63,7 @@ public class ParserUtils {
             return null;
     }
 
-    public static List<IgActivity> getActivitiyList(String Body){
+    public static List<IgActivity> getActivitiesByJson(String Body){
         List<IgActivity> result = new ArrayList<>();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
@@ -81,8 +81,8 @@ public class ParserUtils {
             return null;
     }
 
-    public static ArrayList<Person> getPersonList(String Body){
-        ArrayList<Person> result = new ArrayList<>();
+    public static List<Person> getPersonsByJson(String Body){
+        List<Person> result = new ArrayList<>();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
         Gson gson = new Gson();

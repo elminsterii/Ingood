@@ -36,7 +36,7 @@ public class VerifyEmailFlowLogic extends FlowLogic {
                 String strStatusCode = ParserUtils.getStringByTag(ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE, strResponse);
 
                 if (strStatusCode != null && strStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS)) {
-                    Person person = ParserUtils.getPersonAttr(strResponse);
+                    Person person = ParserUtils.getPersonByJson(strResponse);
                     if(person != null) {
                         mCaller.returnVerifyCode(person.getVerifyCode());
                     }

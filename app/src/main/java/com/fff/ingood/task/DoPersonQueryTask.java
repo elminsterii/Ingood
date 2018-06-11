@@ -3,9 +3,7 @@ package com.fff.ingood.task;
 import android.app.Activity;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.tools.JsonUtils;
 import com.fff.ingood.tools.ParserUtils;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,17 +12,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yoie7 on 2018/5/16.
  */
 
-public class DoPersonQueryTask extends HttpPostAbstractTask<String, ArrayList<Person>> {
-    public DoPersonQueryTask(Activity activity, AsyncResponder<ArrayList<Person>> responder) {
+public class DoPersonQueryTask extends HttpPostAbstractTask<String, List<Person>> {
+    public DoPersonQueryTask(Activity activity, AsyncResponder<List<Person>> responder) {
         super(activity,responder);
     }
-    public DoPersonQueryTask(AsyncResponder<ArrayList<Person>> responder) {
+    public DoPersonQueryTask(AsyncResponder<List<Person>> responder) {
         super(responder);
     }
     @Override
@@ -107,7 +105,7 @@ public class DoPersonQueryTask extends HttpPostAbstractTask<String, ArrayList<Pe
         }
     }
 
-    protected  ArrayList<Person> parseFromResponse(String response) {
-        return ParserUtils.getPersonList(response);
+    protected List<Person> parseFromResponse(String response) {
+        return ParserUtils.getPersonsByJson(response);
     }
 }
