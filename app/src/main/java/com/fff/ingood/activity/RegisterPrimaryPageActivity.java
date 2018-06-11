@@ -18,6 +18,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -45,21 +46,23 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     private ImageButton mImageButton_ConfirmPwdEye;
     private Boolean mIsConfirmPwdEyeCheck = true;
 
-    private Person mUser = new Person();
+    private Person mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register_primary_page);
         super.onCreate(savedInstanceState);
+
+        mUser = new Person();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        }
+    }
 
     @Override
-    protected void initView(){
+    protected void initView() {
         super.initView();
 
         mEditText_Account = findViewById(R.id.edit_account);
@@ -73,7 +76,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
         mImageButton_PwdEye = findViewById(R.id.pwd_eye);
         mImageButton_ConfirmPwdEye = findViewById(R.id.pwd_confirm_eye);
-
     }
 
     @Override
@@ -82,7 +84,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
     }
 
     @Override
-    protected void initListener(){
+    protected void initListener() {
         mSpinner_Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -104,7 +106,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             }
         });
 
-        mButton_Next.setOnClickListener(new Button.OnClickListener(){
+        mButton_Next.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isDataValid()){
@@ -120,40 +122,33 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             }
         });
 
-        mImageButton_PwdEye.setOnClickListener(new Button.OnClickListener(){
+        mImageButton_PwdEye.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mIsPwdEyeCheck){
+                if(mIsPwdEyeCheck) {
                     mIsPwdEyeCheck = false;
                     mImageButton_PwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
                     mEditText_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-
-                }
-                else{
+                } else {
                     mIsPwdEyeCheck = true;
                     mImageButton_PwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
                     mEditText_Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-
             }
         });
 
-        mImageButton_ConfirmPwdEye.setOnClickListener(new Button.OnClickListener(){
+        mImageButton_ConfirmPwdEye.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mIsConfirmPwdEyeCheck){
                     mIsConfirmPwdEyeCheck = false;
                     mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
                     mEditText_ConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-
-                }
-                else{
+                } else{
                     mIsConfirmPwdEyeCheck = true;
                     mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
                     mEditText_ConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
                 }
-
             }
         });
     }
@@ -192,11 +187,9 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterPrimaryPageActivity.class)) {
-                Intent intent = new Intent(mActivity, clsFlow);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", mUser);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                PersonManager.getInstance().setPerson(mUser);
+                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.finish();
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

@@ -82,8 +82,10 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
     public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(clsFlow != null && iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT))
+        if(clsFlow != null && iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             startActivity(new Intent(this, clsFlow));
+            mActivity.finish();
+        }
         else
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
     }

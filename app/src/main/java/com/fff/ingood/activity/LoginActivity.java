@@ -96,6 +96,7 @@ public class LoginActivity extends BaseActivity {
             if(clsFlow != null
                     && !clsFlow.isInstance(LoginActivity.class)) {
                 startActivity(new Intent(this, clsFlow));
+                mActivity.finish();
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

@@ -13,6 +13,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.VerifyEmailFlowLogic;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -23,7 +24,6 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
     private Button mButton_Next;
     private Button mButton_Send;
     private EditText mEditText_VerifyCode;
-    private Person mUser = new Person();
 
     private String mVerifyCode;
     private RegisterVerifyPageActivity mActivity;
@@ -52,7 +52,6 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
     @Override
     protected void initData(){
         super.initData();
-        mUser = (Person)getIntent().getSerializableExtra("user");
     }
 
     @Override
@@ -62,12 +61,13 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
             @Override
             public void onClick(View v) {
                 //@@@ test
+                Person person = PersonManager.getInstance().getPerson();
                 if(mEditText_VerifyCode.getText().toString().equals("5454")) {
-                    mUser.setVerifyCode("5454");
+                    person.setVerifyCode("5454");
                     FlowManager.getInstance().goRegisterFlow(mActivity);
                 } else if((mVerifyCode != null && !mVerifyCode.isEmpty())
                         && mVerifyCode.equals(mEditText_VerifyCode.getText().toString())) {
-                    mUser.setVerifyCode(mVerifyCode);
+                    person.setVerifyCode(mVerifyCode);
                     FlowManager.getInstance().goRegisterFlow(mActivity);
                 } else {
                     Toast.makeText(mActivity, getResources().getText(R.string.server_res_12_verify_code_wrong), Toast.LENGTH_SHORT).show();
@@ -78,10 +78,7 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
         mButton_Send.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person person = new Person();
-                person.setEmail(mUser.getEmail());
-
-                FlowManager.getInstance().goVerifyEmailFlow(mActivity, person);
+                FlowManager.getInstance().goVerifyEmailFlow(mActivity, PersonManager.getInstance().getPerson());
             }
         });
     }
@@ -93,11 +90,8 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterVerifyPageActivity.class)) {
-                Intent intent = new Intent(mActivity, clsFlow);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", mUser);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.finish();
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

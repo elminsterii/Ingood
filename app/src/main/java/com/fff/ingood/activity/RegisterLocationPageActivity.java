@@ -8,9 +8,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
-import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -24,7 +24,6 @@ public class RegisterLocationPageActivity extends BaseActivity {
 
     private Button mButton_Next;
     private Spinner mSpinner_Location;
-    private Person mUser = new Person();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,6 @@ public class RegisterLocationPageActivity extends BaseActivity {
     @Override
     protected void initData(){
         super.initData();
-        mUser = (Person)getIntent().getSerializableExtra("user");
     }
 
     @Override
@@ -56,7 +54,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if(mSpinner_Location.getSelectedItemPosition() != 0){
-                    mUser.setLocation(mSpinner_Location.getSelectedItem().toString());
+                    PersonManager.getInstance().getPerson().setLocation(mSpinner_Location.getSelectedItem().toString());
                     FlowManager.getInstance().goRegisterFlow(mActivity);
                 }
                 else{
@@ -73,11 +71,8 @@ public class RegisterLocationPageActivity extends BaseActivity {
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterLocationPageActivity.class)) {
-                Intent intent = new Intent(mActivity, clsFlow);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user", mUser);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.finish();
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

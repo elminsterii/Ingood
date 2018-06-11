@@ -2,33 +2,32 @@ package com.fff.ingood.task2.wrapper;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonQueryTask;
+import com.fff.ingood.task2.PersonRegisterTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
-import java.util.List;
-
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
 /**
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonQueryTaskWrapper {
+public class PersonRegisterTaskWrapper {
 
-    public interface PersonQueryTaskWrapperCallback {
-        void onSuccess(List<Person> lsPersons);
-        void onFailure(Integer iStatusCode);
+    public interface PersonRegisterTaskWrapperCallback {
+        void onRegisterSuccess();
+        void onRegisterFailure(Integer iStatusCode);
     }
 
-    private PersonQueryTask task;
-    private PersonQueryTaskWrapperCallback mCb;
+    private PersonRegisterTask task;
+    private PersonRegisterTaskWrapperCallback mCb;
 
-    public PersonQueryTaskWrapper(PersonQueryTaskWrapperCallback cb) {
+    public PersonRegisterTaskWrapper(PersonRegisterTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonQueryTask(new AsyncResponder<Integer, List<Person>>() {
+        task = new PersonRegisterTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean makeOutput(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -39,28 +38,31 @@ public class PersonQueryTaskWrapper {
                 String strStatusCode = ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_STATUS_CODE, strJsonResponse);
 
                 if(StringTool.checkStringNotNull(strStatusCode)) {
-                    setStatus(Integer.parseInt(strStatusCode));
-                    setData(ParserUtils.getPersonsByJson(strJsonResponse));
-                    return true;
+                    if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
+                        setStatus(Integer.parseInt(strStatusCode));
+                        return true;
+                    } else {
+                        setStatus(Integer.parseInt(strStatusCode));
+                    }
                 } else {
                     setStatus(STATUS_CODE_PARSING_ERROR);
-                    return false;
                 }
+                return false;
             }
 
             @Override
-            public void onSuccess(List<Person> lsPersons) {
-                mCb.onSuccess(lsPersons);
+            public void onSuccess(Void aVoid) {
+                mCb.onRegisterSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onFailure(iStatusCode);
+                mCb.onRegisterFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(String strIds) {
-        task.execute(strIds);
+    public void execute(Person person) {
+        task.execute(person);
     }
 }

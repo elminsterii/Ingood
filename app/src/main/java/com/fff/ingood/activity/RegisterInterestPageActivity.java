@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.RadioListAdapter;
-import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowLogic;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.ui.CircleProgressBarDialog;
@@ -30,12 +30,9 @@ public class RegisterInterestPageActivity extends BaseActivity {
             "CULTURE", "OUTSIDE", "INDOOR"};
     private Button mButton_Done;
     private ListView mInterestsListView;
-
     private RadioListAdapter mRadioListAdapter;
 
-    private Person mUser = new Person();
     private RegisterInterestPageActivity mActivity;
-
     CircleProgressBarDialog mWaitingDialog;
 
     @Override
@@ -62,7 +59,6 @@ public class RegisterInterestPageActivity extends BaseActivity {
     @Override
     protected void initData(){
         super.initData();
-        mUser = (Person)getIntent().getSerializableExtra("user");
 
         ArrayList<Boolean> radioStateList = new ArrayList<>();
         for (String ignored : interests_item)
@@ -89,8 +85,8 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     }
                 }
 
-                mUser.setInterests(ParserUtils.listStringToString(interestsTagList, ','));
-                FlowManager.getInstance().goRegisterPersonFlow(mActivity, mUser);
+                PersonManager.getInstance().getPerson().setInterests(ParserUtils.listStringToString(interestsTagList, ','));
+                FlowManager.getInstance().goRegisterPersonFlow(mActivity, PersonManager.getInstance().getPerson());
             }
         });
     }
@@ -110,17 +106,21 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
                 if(flow.equals(FlowLogic.FLOW.FL_LOGIN)) {
                     //Register success, and go login.
-                    FlowManager.getInstance().goLoginFlow(mActivity, mUser);
+                    FlowManager.getInstance().goLoginFlow(mActivity, PersonManager.getInstance().getPerson());
                 } else {
-                    Intent intent = new Intent(mActivity, clsFlow);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("user", mUser);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivity(new Intent(mActivity, clsFlow));
+                    mActivity.finish();
                 }
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+            PersonManager.getInstance().setPerson(null);
+
+            if(clsFlow != null
+                    && !clsFlow.isInstance(RegisterInterestPageActivity.class)) {
+                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.finish();
+            }
         }
     }
 }
