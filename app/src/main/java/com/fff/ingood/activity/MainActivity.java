@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(MainActivity.class)) {
-                startActivity(new Intent(this, clsFlow));
+                mActivity.startActivity(new Intent(this, clsFlow));
             }
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

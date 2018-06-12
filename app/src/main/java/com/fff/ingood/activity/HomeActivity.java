@@ -24,7 +24,7 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
-import com.fff.ingood.logic.LogicManager;
+import com.fff.ingood.logic.ActivityTaskExecutor;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
@@ -53,6 +53,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     CircleProgressBarDialog mWaitingDialog;
 
     private HomeActivity mActivity;
+    private ActivityTaskExecutor mActivityMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     protected void initData() {
         super.initData();
 
+        mActivityMgr = new ActivityTaskExecutor();
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
@@ -186,7 +188,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                     activityCondition.setTags(strTag);
 
                     mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
-                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
                 }
             }
 
@@ -210,7 +212,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                     //@@ test code
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags("GOGO");
-                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
                 }
                 mTabLayoutTagBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -224,7 +226,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
-                    LogicManager.getInstance().doSearchActivitiesIds(mActivity, activityCondition);
+                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
                 }
                 return true;
             }
@@ -269,6 +271,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     public void returnActivitiesIds(String strActivitiesIds) {
-        LogicManager.getInstance().doGetActivitiesData(this, strActivitiesIds);
+        mActivityMgr.doGetActivitiesData(this, strActivitiesIds);
     }
 }

@@ -188,7 +188,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterPrimaryPageActivity.class)) {
                 PersonManager.getInstance().setPerson(mUser);
-                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.startActivity(new Intent(mActivity, clsFlow));
                 mActivity.finish();
             }
         } else {

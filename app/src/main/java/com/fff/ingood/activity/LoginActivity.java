@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(LoginActivity.class)) {
-                startActivity(new Intent(this, clsFlow));
+                mActivity.startActivity(new Intent(this, clsFlow));
                 mActivity.finish();
             }
         } else {

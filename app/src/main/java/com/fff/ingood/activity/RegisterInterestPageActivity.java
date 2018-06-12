@@ -108,7 +108,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
                     //Register success, and go login.
                     FlowManager.getInstance().goLoginFlow(mActivity, PersonManager.getInstance().getPerson());
                 } else {
-                    startActivity(new Intent(mActivity, clsFlow));
+                    mActivity.startActivity(new Intent(mActivity, clsFlow));
                     mActivity.finish();
                 }
             }
@@ -118,7 +118,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterInterestPageActivity.class)) {
-                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.startActivity(new Intent(mActivity, clsFlow));
                 mActivity.finish();
             }
         }

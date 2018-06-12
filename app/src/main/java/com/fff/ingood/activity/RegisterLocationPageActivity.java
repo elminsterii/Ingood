@@ -71,7 +71,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterLocationPageActivity.class)) {
-                startActivity(new Intent(mActivity, clsFlow));
+                mActivity.startActivity(new Intent(mActivity, clsFlow));
                 mActivity.finish();
             }
         } else {

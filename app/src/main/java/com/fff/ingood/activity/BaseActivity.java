@@ -83,7 +83,7 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
         FlowManager.getInstance().setCurFlow(flow);
 
         if(clsFlow != null && iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
-            startActivity(new Intent(this, clsFlow));
+            mActivity.startActivity(new Intent(this, clsFlow));
             mActivity.finish();
         }
         else

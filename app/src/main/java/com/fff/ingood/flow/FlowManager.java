@@ -20,7 +20,7 @@ public class FlowManager {
         if(m_instance == null) {
             m_instance = new FlowManager();
             m_instance.initialize();
-        }
+    }
         return m_instance;
     }
 
