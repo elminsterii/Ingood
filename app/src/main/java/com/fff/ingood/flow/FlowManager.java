@@ -48,11 +48,6 @@ public class FlowManager {
         mCurFlow = fl.doLogic();
     }
 
-    public void goVerifyEmailFlow(VerifyEmailFlow.VerifyEmailFlowLogicCaller caller, Person person) {
-        Flow fl = new VerifyEmailFlow(caller, person);
-        mCurFlow = fl.doLogic();
-    }
-
     public void goRegisterPersonFlow(Flow.FlowLogicCaller caller, Person person) {
         Flow fl = new RegisterPersonFlow(caller, person);
         mCurFlow = fl.doLogic();

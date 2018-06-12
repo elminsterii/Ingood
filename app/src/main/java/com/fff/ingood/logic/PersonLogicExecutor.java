@@ -21,4 +21,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonRegisterLogic(caller, personNew);
         fl.doLogic();
     }
+
+    public void doPersonVerify(PersonVerifyLogic.PersonVerifyLogicCaller caller, Person person) {
+        Logic fl = new PersonVerifyLogic(caller, person);
+        fl.doLogic();
+    }
 }

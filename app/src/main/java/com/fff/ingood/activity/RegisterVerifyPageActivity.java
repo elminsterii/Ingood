@@ -12,14 +12,15 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.VerifyEmailFlow;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.logic.PersonVerifyLogic;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 @SuppressLint("Registered")
-public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEmailFlow.VerifyEmailFlowLogicCaller {
+public class RegisterVerifyPageActivity extends BaseActivity implements PersonVerifyLogic.PersonVerifyLogicCaller {
 
     private Button mButton_Next;
     private Button mButton_Send;
@@ -78,7 +79,8 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
         mButton_Send.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FlowManager.getInstance().goVerifyEmailFlow(mActivity, PersonManager.getInstance().getPerson());
+                PersonLogicExecutor executor = new PersonLogicExecutor();
+                executor.doPersonVerify(mActivity, PersonManager.getInstance().getPerson());
             }
         });
     }
@@ -99,7 +101,13 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
     }
 
     @Override
+    public void returnStatus(Integer iStatusCode) {
+        //do nothing.
+    }
+
+    @Override
     public void returnVerifyCode(String strCode) {
         mVerifyCode = strCode;
+        Toast.makeText(mActivity, getResources().getText(R.string.verify_email_sent), Toast.LENGTH_SHORT).show();
     }
 }
