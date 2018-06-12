@@ -3,8 +3,8 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonLoginLogic;
-import com.fff.ingood.logic.PersonTaskExecutor;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
@@ -28,12 +28,10 @@ public class LoginFlow extends Flow implements PersonLoginLogic.PersonLoginLogic
 
     @Override
     protected FLOW doLogic() {
-        FLOW flow = FLOW.FL_LOGIN;
-
-        PersonTaskExecutor executor = new PersonTaskExecutor();
+        PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonLogin(this, mPersonCondition);
 
-        return flow;
+        return FLOW.FL_LOGIN;
     }
 
     @Override

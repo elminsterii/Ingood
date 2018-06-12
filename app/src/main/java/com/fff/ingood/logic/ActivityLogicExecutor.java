@@ -5,7 +5,7 @@ import com.fff.ingood.data.IgActivity;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class ActivityTaskExecutor {
+public class ActivityLogicExecutor {
 
     public void doSearchActivitiesIds(ActivityLogic.ActivityLogicCaller caller, IgActivity activity) {
         Logic fl = new ActivityLogic(caller, activity);

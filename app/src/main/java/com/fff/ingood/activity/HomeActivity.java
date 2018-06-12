@@ -24,7 +24,7 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
-import com.fff.ingood.logic.ActivityTaskExecutor;
+import com.fff.ingood.logic.ActivityLogicExecutor;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
@@ -53,7 +53,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     CircleProgressBarDialog mWaitingDialog;
 
     private HomeActivity mActivity;
-    private ActivityTaskExecutor mActivityMgr;
+    private ActivityLogicExecutor mActivityMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     protected void initData() {
         super.initData();
 
-        mActivityMgr = new ActivityTaskExecutor();
+        mActivityMgr = new ActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
         //@@ test code
