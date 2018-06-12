@@ -70,6 +70,11 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void initView() {
         super.initView();
 
