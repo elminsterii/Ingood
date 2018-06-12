@@ -3,39 +3,41 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.global.PreferenceManager;
-import com.fff.ingood.task2.wrapper.PersonRegisterTaskWrapper;
+import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.logic.PersonRegisterLogic;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class RegisterPersonFlow extends Flow implements PersonRegisterTaskWrapper.PersonRegisterTaskWrapperCallback {
+public class RegisterPersonFlow extends Flow implements PersonRegisterLogic.PersonRegisterLogicCaller {
 
-    private Person mPerson;
+    private Person mPersonNew;
+    private boolean m_bIsRegisterSuccess;
 
-    RegisterPersonFlow(Flow.FlowLogicCaller caller, Person person) {
+    RegisterPersonFlow(Flow.FlowLogicCaller caller, Person personNew) {
         super(caller);
-        mPerson = person;
+        mPersonNew = personNew;
     }
 
     @Override
     protected FLOW doLogic() {
-        PersonRegisterTaskWrapper task = new PersonRegisterTaskWrapper(this);
-        task.execute(mPerson);
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonRegister(this, mPersonNew);
 
-        return FLOW.FL_REGISTER_INTEREST;
+        return FLOW.FL_REGISTER_PRIMARY;
     }
 
     @Override
     public void onRegisterSuccess() {
-        PreferenceManager.getInstance().setRegisterSuccess(true);
+        m_bIsRegisterSuccess = true;
         mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_LOGIN, LoginActivity.class);
     }
 
     @Override
-    public void onRegisterFailure(Integer iStatusCode) {
-        mCaller.returnFlow(iStatusCode, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
+    public void returnStatus(Integer iStatusCode) {
+        if(!m_bIsRegisterSuccess)
+            mCaller.returnFlow(iStatusCode, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
     }
 }

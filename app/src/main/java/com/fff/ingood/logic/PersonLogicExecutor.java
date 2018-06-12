@@ -16,4 +16,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonLogoutLogic(caller);
         fl.doLogic();
     }
+
+    public void doPersonRegister(PersonRegisterLogic.PersonRegisterLogicCaller caller, Person personNew) {
+        Logic fl = new PersonRegisterLogic(caller, personNew);
+        fl.doLogic();
+    }
 }
