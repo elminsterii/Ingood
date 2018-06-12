@@ -63,8 +63,6 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        super.initView();
-
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);
         mEditText_ConfirmPassword = findViewById(R.id.edit_pwd_confirm);
@@ -80,7 +78,7 @@ public class RegisterPrimaryPageActivity extends BaseActivity {
 
     @Override
     protected void initData(){
-        super.initData();
+
     }
 
     @Override

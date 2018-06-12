@@ -19,7 +19,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
+public abstract class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
     private static final int SYSTEM_UI_FLAG_INGOOD = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -29,6 +29,12 @@ public class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
     protected BaseActivity mActivity;
     private int mCurAPIVersion;
+
+    protected abstract void initView();
+
+    protected abstract void initData();
+
+    protected abstract void initListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +48,6 @@ public class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCal
         initData();
         initListener();
         setSystemUI();
-    }
-
-    protected void initView() {
-    }
-
-    protected void initData() {
-    }
-
-    protected void initListener() {
     }
 
     private void setSystemUI() {

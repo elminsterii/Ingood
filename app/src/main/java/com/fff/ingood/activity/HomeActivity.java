@@ -76,8 +76,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     protected void initView() {
-        super.initView();
-
         mViewActivityList = findViewById(R.id.viewActivityList);
         mLayoutMenu = findViewById(R.id.layoutMenu);
         mNvMenu = findViewById(R.id.nvMenu);
@@ -89,8 +87,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     protected void initData() {
-        super.initData();
-
         mActivityMgr = new ActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
@@ -113,8 +109,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     protected void initListener() {
-        super.initListener();
-
         mViewActivityList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

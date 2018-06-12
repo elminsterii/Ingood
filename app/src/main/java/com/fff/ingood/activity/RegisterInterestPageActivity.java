@@ -51,15 +51,12 @@ public class RegisterInterestPageActivity extends BaseActivity {
 
     @Override
     protected void initView(){
-        super.initView();
         mButton_Done = findViewById(R.id.btn_next);
         mInterestsListView = findViewById(R.id.interest_list);
     }
 
     @Override
     protected void initData(){
-        super.initData();
-
         ArrayList<Boolean> radioStateList = new ArrayList<>();
         for (String ignored : interests_item)
             radioStateList.add(false);

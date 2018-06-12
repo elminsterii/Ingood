@@ -47,8 +47,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView(){
-        super.initView();
-
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
@@ -57,7 +55,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData(){
-        super.initData();
+
     }
 
     @Override

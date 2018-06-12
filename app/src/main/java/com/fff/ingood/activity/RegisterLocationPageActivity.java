@@ -38,14 +38,13 @@ public class RegisterLocationPageActivity extends BaseActivity {
 
     @Override
     protected void initView(){
-        super.initView();
         mButton_Next = findViewById(R.id.btn_next);
         mSpinner_Location = findViewById(R.id.spinner_location);
     }
 
     @Override
     protected void initData(){
-        super.initData();
+
     }
 
     @Override

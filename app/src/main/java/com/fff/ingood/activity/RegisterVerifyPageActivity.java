@@ -44,7 +44,6 @@ public class RegisterVerifyPageActivity extends BaseActivity implements PersonVe
 
     @Override
     protected void initView(){
-        super.initView();
         mButton_Next = findViewById(R.id.btn_next);
         mButton_Send = findViewById(R.id.btn_send);
         mEditText_VerifyCode = findViewById(R.id.edit_verify);
@@ -52,12 +51,11 @@ public class RegisterVerifyPageActivity extends BaseActivity implements PersonVe
 
     @Override
     protected void initData(){
-        super.initData();
+
     }
 
     @Override
     protected void initListener(){
-        super.initListener();
         mButton_Next.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
