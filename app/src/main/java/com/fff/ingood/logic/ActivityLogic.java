@@ -8,6 +8,8 @@ import com.fff.ingood.tools.StringTool;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
+
 /**
  * Created by ElminsterII on 2018/6/8.
  */
@@ -57,6 +59,7 @@ public class ActivityLogic extends Logic implements
     @Override
     public void onQueryActivitiesIdsSuccess(String strIds) {
         mCaller.returnActivitiesIds(strIds);
+        mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 
     @Override
@@ -67,6 +70,7 @@ public class ActivityLogic extends Logic implements
     @Override
     public void onQueryActivitiesSuccess(List<IgActivity> lsActivities) {
         mCaller.returnActivities(lsActivities);
+        mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 
     @Override
