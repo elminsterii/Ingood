@@ -8,11 +8,11 @@ import com.fff.ingood.activity.RegisterVerifyPageActivity;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
-public class RegisterFlowLogic extends FlowLogic {
+public class RegisterFlow extends Flow {
 
     private FLOW mFlow;
 
-    RegisterFlowLogic(FlowLogicCaller caller, FLOW flow) {
+    RegisterFlow(FlowLogicCaller caller, FLOW flow) {
         super(caller);
         mFlow = flow;
     }

@@ -3,6 +3,7 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.task2.wrapper.PersonRegisterTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -10,11 +11,11 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class RegisterPersonFlowLogic extends FlowLogic implements PersonRegisterTaskWrapper.PersonRegisterTaskWrapperCallback {
+public class RegisterPersonFlow extends Flow implements PersonRegisterTaskWrapper.PersonRegisterTaskWrapperCallback {
 
     private Person mPerson;
 
-    RegisterPersonFlowLogic(FlowLogic.FlowLogicCaller caller, Person person) {
+    RegisterPersonFlow(Flow.FlowLogicCaller caller, Person person) {
         super(caller);
         mPerson = person;
     }

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.RadioListAdapter;
-import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
@@ -92,7 +92,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
     }
 
     @Override
-    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         if(mWaitingDialog != null
                 && mWaitingDialog.getDialog() != null
                 && mWaitingDialog.getDialog().isShowing())
@@ -104,7 +104,7 @@ public class RegisterInterestPageActivity extends BaseActivity {
             if(clsFlow != null
                     && !clsFlow.isInstance(RegisterInterestPageActivity.class)) {
 
-                if(flow.equals(FlowLogic.FLOW.FL_LOGIN)) {
+                if(flow.equals(Flow.FLOW.FL_LOGIN)) {
                     //Register success, and go login.
                     FlowManager.getInstance().goLoginFlow(mActivity, PersonManager.getInstance().getPerson());
                 } else {

@@ -2,6 +2,7 @@ package com.fff.ingood.flow;
 
 import com.fff.ingood.activity.LoginActivity;
 import com.fff.ingood.global.PersonManager;
+import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.task2.wrapper.PersonLogoutTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -9,9 +10,9 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class LogoutFlowLogic extends FlowLogic implements PersonLogoutTaskWrapper.PersonLogoutTaskWrapperCallback {
+public class LogoutFlow extends Flow implements PersonLogoutTaskWrapper.PersonLogoutTaskWrapperCallback {
 
-    LogoutFlowLogic(FlowLogicCaller caller) {
+    LogoutFlow(FlowLogicCaller caller) {
         super(caller);
     }
 

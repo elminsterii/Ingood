@@ -10,16 +10,16 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.VerifyEmailFlowLogic;
+import com.fff.ingood.flow.VerifyEmailFlow;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 @SuppressLint("Registered")
-public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEmailFlowLogic.VerifyEmailFlowLogicCaller {
+public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEmailFlow.VerifyEmailFlowLogicCaller {
 
     private Button mButton_Next;
     private Button mButton_Send;
@@ -84,7 +84,7 @@ public class RegisterVerifyPageActivity extends BaseActivity implements VerifyEm
     }
 
     @Override
-    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {

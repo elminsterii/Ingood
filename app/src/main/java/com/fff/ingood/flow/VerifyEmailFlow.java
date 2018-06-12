@@ -7,7 +7,7 @@ import com.fff.ingood.task2.wrapper.PersonVerifyTaskWrapper;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class VerifyEmailFlowLogic extends FlowLogic implements PersonVerifyTaskWrapper.PersonVerifyTaskWrapperCallback {
+public class VerifyEmailFlow extends Flow implements PersonVerifyTaskWrapper.PersonVerifyTaskWrapperCallback {
 
     public interface VerifyEmailFlowLogicCaller extends FlowLogicCaller{
         void returnFlow(Integer iStatusCode, FLOW flow, Class<?> clsFlow);
@@ -17,7 +17,7 @@ public class VerifyEmailFlowLogic extends FlowLogic implements PersonVerifyTaskW
     private VerifyEmailFlowLogicCaller mCaller;
     private Person mPerson;
 
-    VerifyEmailFlowLogic(VerifyEmailFlowLogicCaller caller, Person person) {
+    VerifyEmailFlow(VerifyEmailFlowLogicCaller caller, Person person) {
         super(caller);
         mCaller = caller;
         mPerson = person;

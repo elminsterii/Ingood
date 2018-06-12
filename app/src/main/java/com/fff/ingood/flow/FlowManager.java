@@ -6,7 +6,7 @@ import com.fff.ingood.data.Person;
  * Created by ElminsterII on 2018/5/27.
  */
 public class FlowManager {
-    private FlowLogic.FLOW mCurFlow;
+    private Flow.FLOW mCurFlow;
 
     private static FlowManager m_instance = null;
 
@@ -24,37 +24,37 @@ public class FlowManager {
         return m_instance;
     }
 
-    public void setCurFlow(FlowLogic.FLOW flow) {
+    public void setCurFlow(Flow.FLOW flow) {
         mCurFlow = flow;
     }
 
-    public void goLoginFlow(FlowLogic.FlowLogicCaller caller) {
-        FlowLogic fl = new LoginFlowLogic(caller);
+    public void goLoginFlow(Flow.FlowLogicCaller caller) {
+        Flow fl = new LoginFlow(caller);
         mCurFlow = fl.doLogic();
     }
 
-    public void goLoginFlow(FlowLogic.FlowLogicCaller caller, Person person) {
-        FlowLogic fl = new LoginFlowLogic(caller, person);
+    public void goLoginFlow(Flow.FlowLogicCaller caller, Person person) {
+        Flow fl = new LoginFlow(caller, person);
         mCurFlow = fl.doLogic();
     }
 
-    public void goLogoutFlow(FlowLogic.FlowLogicCaller caller) {
-        FlowLogic fl = new LogoutFlowLogic(caller);
+    public void goLogoutFlow(Flow.FlowLogicCaller caller) {
+        Flow fl = new LogoutFlow(caller);
         mCurFlow = fl.doLogic();
     }
 
-    public void goRegisterFlow(FlowLogic.FlowLogicCaller caller) {
-        FlowLogic fl = new RegisterFlowLogic(caller, mCurFlow);
+    public void goRegisterFlow(Flow.FlowLogicCaller caller) {
+        Flow fl = new RegisterFlow(caller, mCurFlow);
         mCurFlow = fl.doLogic();
     }
 
-    public void goVerifyEmailFlow(VerifyEmailFlowLogic.VerifyEmailFlowLogicCaller caller, Person person) {
-        FlowLogic fl = new VerifyEmailFlowLogic(caller, person);
+    public void goVerifyEmailFlow(VerifyEmailFlow.VerifyEmailFlowLogicCaller caller, Person person) {
+        Flow fl = new VerifyEmailFlow(caller, person);
         mCurFlow = fl.doLogic();
     }
 
-    public void goRegisterPersonFlow(FlowLogic.FlowLogicCaller caller, Person person) {
-        FlowLogic fl = new RegisterPersonFlowLogic(caller, person);
+    public void goRegisterPersonFlow(Flow.FlowLogicCaller caller, Person person) {
+        Flow fl = new RegisterPersonFlow(caller, person);
         mCurFlow = fl.doLogic();
     }
 }

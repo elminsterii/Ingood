@@ -1,4 +1,4 @@
-package com.fff.ingood.flow;
+package com.fff.ingood.global;
 
 import android.content.Context;
 import android.content.SharedPreferences;

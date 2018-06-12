@@ -8,7 +8,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
-import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
@@ -65,7 +65,7 @@ public class RegisterLocationPageActivity extends BaseActivity {
     }
 
     @Override
-    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {

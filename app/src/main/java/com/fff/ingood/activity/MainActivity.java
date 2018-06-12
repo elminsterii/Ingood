@@ -7,15 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
-import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLogicCaller {
+public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
 
     Activity mActivity;
     CircleProgressBarDialog mWaitingDialog;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements FlowLogic.FlowLog
     }
 
     @Override
-    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         if(mWaitingDialog != null
                 && mWaitingDialog.getDialog() != null
                 && mWaitingDialog.getDialog().isShowing())

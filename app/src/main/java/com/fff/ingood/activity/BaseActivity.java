@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.fff.ingood.flow.FlowLogic;
+import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
 
@@ -19,7 +19,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLogicCaller {
+public class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
     private static final int SYSTEM_UI_FLAG_INGOOD = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -79,7 +79,7 @@ public class BaseActivity extends AppCompatActivity implements FlowLogic.FlowLog
     }
 
     @Override
-    public void returnFlow(Integer iStatusCode, FlowLogic.FLOW flow, Class<?> clsFlow) {
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);
 
         if(clsFlow != null && iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
