@@ -1,4 +1,4 @@
-package com.fff.ingood.task2;
+package com.fff.ingood.task;
 
 import com.fff.ingood.data.IgActivity;
 import com.google.gson.Gson;

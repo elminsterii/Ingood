@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonRegisterTask;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.PersonUnregisterTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -15,19 +15,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonRegisterTaskWrapper {
+public class PersonUnregisterTaskWrapper {
 
-    public interface PersonRegisterTaskWrapperCallback {
-        void onRegisterSuccess();
-        void onRegisterFailure(Integer iStatusCode);
+    public interface PersonUnregisterTaskWrapperCallback {
+        void onUnregisterSuccess();
+        void onUnregisterFailure(Integer iStatusCode);
     }
 
-    private PersonRegisterTask task;
-    private PersonRegisterTaskWrapperCallback mCb;
+    private PersonUnregisterTask task;
+    private PersonUnregisterTaskWrapperCallback mCb;
 
-    public PersonRegisterTaskWrapper(PersonRegisterTaskWrapperCallback cb) {
+    public PersonUnregisterTaskWrapper(PersonUnregisterTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonRegisterTask(new AsyncResponder<Integer, Void>() {
+        task = new PersonUnregisterTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -52,12 +52,12 @@ public class PersonRegisterTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onRegisterSuccess();
+                mCb.onUnregisterSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onRegisterFailure(iStatusCode);
+                mCb.onUnregisterFailure(iStatusCode);
             }
         });
     }

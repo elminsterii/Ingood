@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonUpdateTask;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.PersonVerifyTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -15,19 +15,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonUpdateTaskWrapper {
+public class PersonVerifyTaskWrapper {
 
-    public interface PersonUpdateTaskWrapperCallback {
-        void onUpdateSuccess();
-        void onUpdateFailure(Integer iStatusCode);
+    public interface PersonVerifyTaskWrapperCallback {
+        void onVerifyCodeIncoming(String strVerifyCode);
+        void onFailure(Integer iStatusCode);
     }
 
-    private PersonUpdateTask task;
-    private PersonUpdateTaskWrapperCallback mCb;
+    private PersonVerifyTask task;
+    private PersonVerifyTaskWrapperCallback mCb;
 
-    public PersonUpdateTaskWrapper(PersonUpdateTaskWrapperCallback cb) {
+    public PersonVerifyTaskWrapper(PersonVerifyTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonUpdateTask(new AsyncResponder<Integer, Void>() {
+        task = new PersonVerifyTask(new AsyncResponder<Integer, String>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -40,7 +40,14 @@ public class PersonUpdateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        return true;
+                        Person person = ParserUtils.getPersonByJson(strJsonResponse);
+
+                        if(person != null) {
+                            setData(person.getVerifyCode());
+                            return true;
+                        } else {
+                            setStatus(Integer.parseInt(strStatusCode));
+                        }
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
                     }
@@ -51,13 +58,13 @@ public class PersonUpdateTaskWrapper {
             }
 
             @Override
-            public void onSuccess(Void aVoid) {
-                mCb.onUpdateSuccess();
+            public void onSuccess(String strVerifyCode) {
+                mCb.onVerifyCodeIncoming(strVerifyCode);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onUpdateFailure(iStatusCode);
+                mCb.onFailure(iStatusCode);
             }
         });
     }

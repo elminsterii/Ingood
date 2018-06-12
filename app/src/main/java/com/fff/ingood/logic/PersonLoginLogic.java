@@ -3,7 +3,7 @@ package com.fff.ingood.logic;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
-import com.fff.ingood.task2.wrapper.PersonLoginTaskWrapper;
+import com.fff.ingood.task.wrapper.PersonLoginTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 

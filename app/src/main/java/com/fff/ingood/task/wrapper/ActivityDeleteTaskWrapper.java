@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityUpdateTask;
-import com.fff.ingood.task2.AsyncResponder;
+import com.fff.ingood.task.ActivityDeleteTask;
+import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -11,19 +11,19 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-public class ActivityUpdateTaskWrapper {
+public class ActivityDeleteTaskWrapper {
 
-    public interface ActivityUpdateTaskWrapperCallback {
-        void onUpdateActivitiesIdsSuccess();
-        void onUpdateActivitiesIdsFailure(Integer iStatusCode);
+    public interface ActivityDeleteTaskWrapperCallback {
+        void onDeleteActivitiesIdsSuccess();
+        void onDeleteActivitiesIdsFailure(Integer iStatusCode);
     }
 
-    private ActivityUpdateTask task;
-    private ActivityUpdateTaskWrapper.ActivityUpdateTaskWrapperCallback mCb;
+    private ActivityDeleteTask task;
+    private ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback mCb;
 
-    public ActivityUpdateTaskWrapper(ActivityUpdateTaskWrapper.ActivityUpdateTaskWrapperCallback cb) {
+    public ActivityDeleteTaskWrapper(ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityUpdateTask(new AsyncResponder<Integer, Void>() {
+        task = new ActivityDeleteTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -48,12 +48,12 @@ public class ActivityUpdateTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onUpdateActivitiesIdsSuccess();
+                mCb.onDeleteActivitiesIdsSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onUpdateActivitiesIdsFailure(iStatusCode);
+                mCb.onDeleteActivitiesIdsFailure(iStatusCode);
             }
         });
     }

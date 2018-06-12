@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonUnregisterTask;
+import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.task.ActivityUpdateTask;
+import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -11,23 +11,19 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-/**
- * Created by ElminsterII on 2018/6/11.
- */
+public class ActivityUpdateTaskWrapper {
 
-public class PersonUnregisterTaskWrapper {
-
-    public interface PersonUnregisterTaskWrapperCallback {
-        void onUnregisterSuccess();
-        void onUnregisterFailure(Integer iStatusCode);
+    public interface ActivityUpdateTaskWrapperCallback {
+        void onUpdateActivitiesIdsSuccess();
+        void onUpdateActivitiesIdsFailure(Integer iStatusCode);
     }
 
-    private PersonUnregisterTask task;
-    private PersonUnregisterTaskWrapperCallback mCb;
+    private ActivityUpdateTask task;
+    private ActivityUpdateTaskWrapper.ActivityUpdateTaskWrapperCallback mCb;
 
-    public PersonUnregisterTaskWrapper(PersonUnregisterTaskWrapperCallback cb) {
+    public ActivityUpdateTaskWrapper(ActivityUpdateTaskWrapper.ActivityUpdateTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonUnregisterTask(new AsyncResponder<Integer, Void>() {
+        task = new ActivityUpdateTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -52,17 +48,17 @@ public class PersonUnregisterTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onUnregisterSuccess();
+                mCb.onUpdateActivitiesIdsSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onUnregisterFailure(iStatusCode);
+                mCb.onUpdateActivitiesIdsFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(Person person) {
-        task.execute(person);
+    public void execute(IgActivity activity) {
+        task.execute(activity);
     }
 }

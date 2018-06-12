@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityCreateTask;
-import com.fff.ingood.task2.AsyncResponder;
+import com.fff.ingood.task.ActivityCreateTask;
+import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 

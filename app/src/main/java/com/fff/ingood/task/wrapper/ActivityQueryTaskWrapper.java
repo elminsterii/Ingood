@@ -1,10 +1,12 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonVerifyTask;
+import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.task.ActivityQueryTask;
+import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+
+import java.util.List;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
@@ -15,19 +17,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonVerifyTaskWrapper {
+public class ActivityQueryTaskWrapper {
 
-    public interface PersonVerifyTaskWrapperCallback {
-        void onVerifyCodeIncoming(String strVerifyCode);
-        void onFailure(Integer iStatusCode);
+    public interface ActivityQueryTaskWrapperCallback {
+        void onQueryActivitiesSuccess(List<IgActivity> lsActivities);
+        void onQueryActivitiesFailure(Integer iStatusCode);
     }
 
-    private PersonVerifyTask task;
-    private PersonVerifyTaskWrapperCallback mCb;
+    private ActivityQueryTask task;
+    private ActivityQueryTaskWrapperCallback mCb;
 
-    public PersonVerifyTaskWrapper(PersonVerifyTaskWrapperCallback cb) {
+    public ActivityQueryTaskWrapper(ActivityQueryTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonVerifyTask(new AsyncResponder<Integer, String>() {
+        task = new ActivityQueryTask(new AsyncResponder<Integer, List<IgActivity>>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -40,14 +42,8 @@ public class PersonVerifyTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        Person person = ParserUtils.getPersonByJson(strJsonResponse);
-
-                        if(person != null) {
-                            setData(person.getVerifyCode());
-                            return true;
-                        } else {
-                            setStatus(Integer.parseInt(strStatusCode));
-                        }
+                        setData(ParserUtils.getActivitiesByJson(strJsonResponse));
+                        return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
                     }
@@ -58,18 +54,18 @@ public class PersonVerifyTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String strVerifyCode) {
-                mCb.onVerifyCodeIncoming(strVerifyCode);
+            public void onSuccess(List<IgActivity> lsActivities) {
+                mCb.onQueryActivitiesSuccess(lsActivities);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onFailure(iStatusCode);
+                mCb.onQueryActivitiesFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(Person person) {
-        task.execute(person);
+    public void execute(String strIds) {
+        task.execute(strIds);
     }
 }

@@ -1,4 +1,4 @@
-package com.fff.ingood.task2;
+package com.fff.ingood.task;
 
 import com.fff.ingood.data.IgActivity;
 import com.google.gson.Gson;
@@ -11,9 +11,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
+public class ActivityDeleteTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
 
-    public ActivityUpdateTask(AsyncResponder<Integer, Void> responder) {
+    public ActivityDeleteTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -23,7 +23,7 @@ public class ActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, 
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_UPDATE));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_DELETE));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

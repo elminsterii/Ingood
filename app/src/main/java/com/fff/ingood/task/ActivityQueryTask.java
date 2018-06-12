@@ -1,7 +1,7 @@
-package com.fff.ingood.task2;
+package com.fff.ingood.task;
 
 import com.fff.ingood.data.IgActivity;
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,20 +10,23 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
-public class ActivityCreateTask extends HttpPostAccessTask<IgActivity, Integer, String> {
+import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_ACTIVITIES_IDS;
 
-    public ActivityCreateTask(AsyncResponder<Integer, String> responder) {
+public class ActivityQueryTask extends HttpPostAccessTask<String, Integer, List<IgActivity>> {
+
+    public ActivityQueryTask(AsyncResponder<Integer, List<IgActivity>> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(IgActivity info) {
+    protected String access(String info) {
         BufferedReader reader = null;
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_CREATE));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_QUERY));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -39,9 +42,11 @@ public class ActivityCreateTask extends HttpPostAccessTask<IgActivity, Integer, 
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
-            String jsonString;
-            jsonString = new Gson().toJson(info, IgActivity.class);
-            writer.write(jsonString.getBytes());
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(TAG_SERVER_RESPONSE_ACTIVITIES_IDS, info);
+
+            writer.write(jsonObject.toString().getBytes());
             writer.flush();
             writer.close();
             os.close();

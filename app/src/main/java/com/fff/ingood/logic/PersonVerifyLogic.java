@@ -1,7 +1,7 @@
 package com.fff.ingood.logic;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.wrapper.PersonVerifyTaskWrapper;
+import com.fff.ingood.task.wrapper.PersonVerifyTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 

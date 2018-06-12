@@ -1,4 +1,4 @@
-package com.fff.ingood.task2;
+package com.fff.ingood.task;
 
 import com.fff.ingood.data.Person;
 import com.google.gson.Gson;
@@ -15,9 +15,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonRegisterTask extends HttpPostAccessTask<Person, Integer, Void> {
+public class PersonUnregisterTask extends HttpPostAccessTask<Person, Integer, Void> {
 
-    public PersonRegisterTask(AsyncResponder<Integer, Void> responder) {
+    public PersonUnregisterTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -28,14 +28,14 @@ public class PersonRegisterTask extends HttpPostAccessTask<Person, Integer, Void
         jsonString = new Gson().toJson(info, Person.class);
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_REGISTER));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_UNREGISTER));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setRequestMethod("POST");
+            connection.setRequestProperty("contentType", "utf-8");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
             connection.setDoInput(true);

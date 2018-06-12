@@ -1,7 +1,6 @@
-package com.fff.ingood.task2;
+package com.fff.ingood.task;
 
 import com.fff.ingood.data.Person;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,32 +9,31 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonVerifyTask extends HttpPostAccessTask<Person, Integer, String> {
+public class PersonQueryTask extends HttpPostAccessTask<String, Integer, List<Person>> {
 
-    public PersonVerifyTask(AsyncResponder<Integer, String> responder) {
+    public PersonQueryTask(AsyncResponder<Integer, List<Person>> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(Person info) {
+    protected String access(String info) {
         BufferedReader reader = null;
-        String jsonString;
-        jsonString = new Gson().toJson(info, Person.class);
+        StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_VERIFY_EMAIL));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Accept-Charset", "utf-8");
-            connection.setRequestProperty("contentType", "utf-8");
+            connection.setRequestMethod("POST");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
             connection.setDoInput(true);
@@ -45,13 +43,13 @@ public class PersonVerifyTask extends HttpPostAccessTask<Person, Integer, String
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
-            writer.write(jsonString.getBytes());
+            writer.write(info.getBytes());
             writer.flush();
             writer.close();
             os.close();
 
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder = new StringBuilder();
 
             String line;
             while ((line = reader.readLine()) != null)

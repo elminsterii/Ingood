@@ -1,8 +1,8 @@
 package com.fff.ingood.logic;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.wrapper.ActivityQueryIdByTaskWrapper;
-import com.fff.ingood.task2.wrapper.ActivityQueryTaskWrapper;
+import com.fff.ingood.task.wrapper.ActivityQueryIdByTaskWrapper;
+import com.fff.ingood.task.wrapper.ActivityQueryTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;

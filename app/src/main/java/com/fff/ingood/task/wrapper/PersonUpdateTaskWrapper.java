@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task2.ActivityDeleteTask;
-import com.fff.ingood.task2.AsyncResponder;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.PersonUpdateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -11,19 +11,23 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-public class ActivityDeleteTaskWrapper {
+/**
+ * Created by ElminsterII on 2018/6/11.
+ */
 
-    public interface ActivityDeleteTaskWrapperCallback {
-        void onDeleteActivitiesIdsSuccess();
-        void onDeleteActivitiesIdsFailure(Integer iStatusCode);
+public class PersonUpdateTaskWrapper {
+
+    public interface PersonUpdateTaskWrapperCallback {
+        void onUpdateSuccess();
+        void onUpdateFailure(Integer iStatusCode);
     }
 
-    private ActivityDeleteTask task;
-    private ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback mCb;
+    private PersonUpdateTask task;
+    private PersonUpdateTaskWrapperCallback mCb;
 
-    public ActivityDeleteTaskWrapper(ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback cb) {
+    public PersonUpdateTaskWrapper(PersonUpdateTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityDeleteTask(new AsyncResponder<Integer, Void>() {
+        task = new PersonUpdateTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -48,17 +52,17 @@ public class ActivityDeleteTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onDeleteActivitiesIdsSuccess();
+                mCb.onUpdateSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onDeleteActivitiesIdsFailure(iStatusCode);
+                mCb.onUpdateFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(IgActivity activity) {
-        task.execute(activity);
+    public void execute(Person person) {
+        task.execute(person);
     }
 }

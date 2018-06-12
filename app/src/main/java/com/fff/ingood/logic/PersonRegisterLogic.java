@@ -2,7 +2,7 @@ package com.fff.ingood.logic;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PreferenceManager;
-import com.fff.ingood.task2.wrapper.PersonRegisterTaskWrapper;
+import com.fff.ingood.task.wrapper.PersonRegisterTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 

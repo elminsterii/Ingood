@@ -1,8 +1,8 @@
-package com.fff.ingood.task2.wrapper;
+package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.task2.AsyncResponder;
-import com.fff.ingood.task2.PersonLogoutTask;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.PersonLoginTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -14,20 +14,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 /**
  * Created by ElminsterII on 2018/6/11.
  */
+public class PersonLoginTaskWrapper {
 
-public class PersonLogoutTaskWrapper {
-
-    public interface PersonLogoutTaskWrapperCallback {
-        void onLogoutSuccess();
-        void onLogoutFailure(Integer iStatusCode);
+    public interface PersonLoginTaskWrapperCallback {
+        void onLoginSuccess(Person person);
+        void onLoginFailure(Integer iStatusCode);
     }
 
-    private PersonLogoutTask task;
-    private PersonLogoutTaskWrapperCallback mCb;
+    private PersonLoginTask task;
+    private PersonLoginTaskWrapperCallback mCb;
 
-    public PersonLogoutTaskWrapper(PersonLogoutTaskWrapperCallback cb) {
+    public PersonLoginTaskWrapper(PersonLoginTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonLogoutTask(new AsyncResponder<Integer, Void>() {
+        task = new PersonLoginTask(new AsyncResponder<Integer, Person>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -40,6 +39,7 @@ public class PersonLogoutTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
+                        setData(ParserUtils.getPersonByJson(strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -51,13 +51,13 @@ public class PersonLogoutTaskWrapper {
             }
 
             @Override
-            public void onSuccess(Void aVoid) {
-                mCb.onLogoutSuccess();
+            public void onSuccess(Person person) {
+                mCb.onLoginSuccess(person);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onLogoutFailure(iStatusCode);
+                mCb.onLoginFailure(iStatusCode);
             }
         });
     }

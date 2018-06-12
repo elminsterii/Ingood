@@ -2,7 +2,7 @@ package com.fff.ingood.logic;
 
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
-import com.fff.ingood.task2.wrapper.PersonLogoutTaskWrapper;
+import com.fff.ingood.task.wrapper.PersonLogoutTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
