@@ -3,8 +3,8 @@ package com.fff.ingood.flow;
 import com.fff.ingood.activity.HomeActivity;
 import com.fff.ingood.activity.RegisterInterestPageActivity;
 import com.fff.ingood.activity.RegisterLocationPageActivity;
-import com.fff.ingood.activity.RegisterPrimaryPageActivity;
 import com.fff.ingood.activity.RegisterVerifyPageActivity;
+import com.fff.ingood.activity.RegistrationActivity;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
@@ -38,7 +38,8 @@ public class RegisterFlow extends Flow {
                 mFlow = FLOW.FL_HOME;
                 break;
             default :
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
+                //mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
+                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_PRIMARY, RegistrationActivity.class);
                 mFlow = FLOW.FL_REGISTER_PRIMARY;
                 break;
         }

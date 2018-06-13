@@ -30,6 +30,8 @@
     <!-- Toast -->
     <string name="register_email_format_wrong">Email信箱格式不正確</string>
     <string name="register_password_format_wrong">密碼格式不正確</string>
+    <string name="register_confirm_password_format_wrong">確認密碼格式不正確</string>
+    <string name="register_password_not_consistent">密碼與確認密碼不一致</string>
     <string name="register_displayname_format_wrong">暱稱格式不正確</string>
     <string name="register_gender_choose">請選擇您的性別</string>
     <string name="register_age_choose">請選擇您的年齡</string>

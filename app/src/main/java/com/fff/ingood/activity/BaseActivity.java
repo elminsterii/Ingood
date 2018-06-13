@@ -30,15 +30,24 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
     protected BaseActivity mActivity;
     private int mCurAPIVersion;
 
+    private int mContentViewId = 0;
+
     protected abstract void initView();
 
     protected abstract void initData();
 
     protected abstract void initListener();
 
+    protected void setContentViewId(int iContentViewId) {
+        mContentViewId = iContentViewId;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(mContentViewId != 0)
+            setContentView(mContentViewId);
+
         super.setTitle(getTitle());
 
         mCurAPIVersion = android.os.Build.VERSION.SDK_INT;

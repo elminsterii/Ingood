@@ -29,6 +29,8 @@
     <!-- Toast -->
     <string name="register_email_format_wrong">Email format wrong</string>
     <string name="register_password_format_wrong">Password format wrong</string>
+    <string name="register_confirm_password_format_wrong">Confirm password format wrong</string>
+    <string name="register_password_not_consistent">Password and confirm password are not consistent</string>
     <string name="register_displayname_format_wrong">Display name format wrong</string>
     <string name="register_gender_choose">Choose your gender please</string>
     <string name="register_age_choose">Choose your age please</string>
@@ -125,17 +127,17 @@
     </string-array>
 
 
-    <item type="id" name="tag_0"></item>
-    <item type="id" name="tag_1"></item>
-    <item type="id" name="tag_2"></item>
-    <item type="id" name="tag_3"></item>
-    <item type="id" name="tag_4"></item>
-    <item type="id" name="tag_5"></item>
-    <item type="id" name="tag_6"></item>
-    <item type="id" name="tag_7"></item>
-    <item type="id" name="tag_8"></item>
-    <item type="id" name="tag_9"></item>
-    <item type="id" name="tag_10"></item>
+    <item name="tag_0" type="id"></item>
+    <item name="tag_1" type="id"></item>
+    <item name="tag_2" type="id"></item>
+    <item name="tag_3" type="id"></item>
+    <item name="tag_4" type="id"></item>
+    <item name="tag_5" type="id"></item>
+    <item name="tag_6" type="id"></item>
+    <item name="tag_7" type="id"></item>
+    <item name="tag_8" type="id"></item>
+    <item name="tag_9" type="id"></item>
+    <item name="tag_10" type="id"></item>
 </resources>
 
 
