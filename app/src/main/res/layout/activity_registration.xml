@@ -5,9 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".activity.RegistrationActivity">
 
-    <fragment class="com.fff.ingood.fragment.RegistrationFormFragment"
-        android:id="@+id/fragmentRegistrationForm" android:layout_weight="1"
-        android:layout_width="match_parent" android:layout_height="match_parent" />
+    <!--<fragment class="com.fff.ingood.fragment.RegistrationFormFragment"-->
+        <!--android:id="@+id/fragmentRegistrationForm"-->
+        <!--android:layout_width="match_parent" -->
+        <!--android:layout_height="match_parent" -->
+        <!--android:visibility="gone"/>-->
+
+    <!--<fragment class="com.fff.ingood.fragment.RegistrationVerifyFragment"-->
+        <!--android:id="@+id/fragmentRegistrationVerify"-->
+        <!--android:layout_width="match_parent" -->
+        <!--android:layout_height="match_parent" -->
+        <!--android:visibility="gone"/>-->
+
+    <!--<fragment class="com.fff.ingood.fragment.RegistrationLocationFragment"-->
+        <!--android:id="@+id/fragmentRegistrationLocation"-->
+        <!--android:layout_width="match_parent" -->
+        <!--android:layout_height="match_parent" -->
+        <!--android:visibility="gone"/>-->
+
+    <!--<fragment class="com.fff.ingood.fragment.RegistrationInterestFragment"-->
+        <!--android:id="@+id/fragmentRegistrationInterest"-->
+        <!--android:layout_width="match_parent" -->
+        <!--android:layout_height="match_parent" -->
+        <!--android:visibility="gone"/>-->
 
     <FrameLayout
         android:id="@+id/layoutFragmentContainer"

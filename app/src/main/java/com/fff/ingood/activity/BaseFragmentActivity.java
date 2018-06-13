@@ -15,11 +15,11 @@ import com.fff.ingood.global.ServerResponse;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 /**
- * Created by yoie7 on 2018/5/3.
+ * Created by ElminsterII on 2018/6/13.
  */
 
 @SuppressLint("Registered")
-public abstract class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
+public abstract class BaseFragmentActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
     private static final int SYSTEM_UI_FLAG_INGOOD = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -27,8 +27,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
-    protected BaseActivity mActivity;
+    protected BaseFragmentActivity mActivity;
     private int mCurAPIVersion;
+
+    private int mContentViewId = 0;
 
     protected abstract void initView();
 
@@ -36,9 +38,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
 
     protected abstract void initListener();
 
+    protected void setContentViewId(int iContentViewId) {
+        mContentViewId = iContentViewId;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(mContentViewId);
+
         super.setTitle(getTitle());
 
         mCurAPIVersion = android.os.Build.VERSION.SDK_INT;

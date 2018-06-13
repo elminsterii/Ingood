@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.RegistrationVerifyFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/hint_for_verify"/>
+    <EditText
+        android:id="@+id/edit_verify"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Verify Code"/>
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_marginRight="31dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/selector_register_send_verify"
+        android:layout_width="95dp"
+        android:layout_height="36dp"
+        android:text="@string/send" />
+</LinearLayout>

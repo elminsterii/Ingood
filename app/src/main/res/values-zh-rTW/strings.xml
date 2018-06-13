@@ -58,20 +58,6 @@
     <string name="server_res_13_time_format_wrong">時間格式錯誤</string>
     <string name="server_res_14_unknown_error">未知錯誤</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <string-array name="user_age_list">
         <item>年齡</item>
         <item>18</item>
@@ -140,14 +126,4 @@
         <item>澎湖縣</item>
         <item>連江縣</item>
     </string-array>
-
-
-
-
-
-
-
-
-
-
 </resources>
