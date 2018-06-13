@@ -13,6 +13,7 @@ import com.fff.ingood.fragment.RegistrationFormFragment;
 import com.fff.ingood.fragment.RegistrationInterestFragment;
 import com.fff.ingood.fragment.RegistrationLocationFragment;
 import com.fff.ingood.fragment.RegistrationVerifyFragment;
+import com.fff.ingood.global.PersonManager;
 
 public class RegistrationActivity extends BaseFragmentActivity {
 
@@ -49,14 +50,18 @@ public class RegistrationActivity extends BaseFragmentActivity {
             mFragmentRegistrationVerify = RegistrationVerifyFragment.newInstance();
             mFragmentRegistrationLocation = RegistrationLocationFragment.newInstance();
         }
-        mCurFragment = mFragmentRegistrationForm;
-        mCurFragmentTag = TAG_FRAGMENT_REGISTRATION_FORM;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showFragment(mCurFragment, mCurFragmentTag);
+
+        if(bInitialize)
+            showFragment(mCurFragment, mCurFragmentTag);
+        else {
+            bInitialize = true;
+            showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
+        }
     }
 
     @Override
@@ -78,8 +83,10 @@ public class RegistrationActivity extends BaseFragmentActivity {
                 if(mCurFragment instanceof RegistrationFormFragment) {
                     Person personNew = mFragmentRegistrationForm.getUser();
 
-                    if (personNew != null)
+                    if (personNew != null) {
+                        PersonManager.getInstance().setPerson(personNew);
                         showFragment(mFragmentRegistrationVerify, TAG_FRAGMENT_REGISTRATION_VERIFY);
+                    }
                 } else if(mCurFragment instanceof RegistrationVerifyFragment) {
                     if(mFragmentRegistrationVerify.isVerifyPass())
                         showFragment(mFragmentRegistrationLocation, TAG_FRAGMENT_REGISTRATION_LOCATION);
@@ -90,19 +97,16 @@ public class RegistrationActivity extends BaseFragmentActivity {
 
     @SuppressLint("CommitTransaction")
     private void showFragment(Fragment fragment, String strTag) {
-        if(bInitialize)
-            if (mCurFragment == fragment)
-                return;
-        else
-            bInitialize = true;
+        if (mCurFragment == fragment)
+            return;
 
         mFragmentMgr.executePendingTransactions();
 
-        for(Fragment fr : mFragmentMgr.getFragments())
-            mFragmentMgr.beginTransaction().hide(fr);
-
-        if(!fragment.isAdded())
+        if(!fragment.isAdded()) {
             mFragmentMgr.beginTransaction().add(R.id.layoutFragmentContainer, fragment, strTag).show(fragment).commit();
+            if(mCurFragment != null)
+                mFragmentMgr.beginTransaction().hide(mCurFragment).commit();
+        }
         else
             mFragmentMgr.beginTransaction().show(fragment).commit();
 
