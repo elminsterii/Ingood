@@ -7,16 +7,33 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RegistrationLocationFragment extends BaseFragment {
 
+    private Spinner mSpinnerLocation;
+
     public static RegistrationLocationFragment newInstance() {
         return new RegistrationLocationFragment();
+    }
+
+    public String getLocation() {
+        String strLocation = null;
+
+        if(mSpinnerLocation.getSelectedItemPosition() != 0)
+            strLocation = mSpinnerLocation.getSelectedItem().toString();
+        else
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_location_choose), Toast.LENGTH_SHORT).show();
+
+        return strLocation;
     }
 
     @Override
@@ -28,7 +45,7 @@ public class RegistrationLocationFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        mSpinnerLocation = Objects.requireNonNull(getActivity()).findViewById(R.id.spinner_location);
     }
 
     @Override

@@ -9,10 +9,7 @@ public abstract class Flow {
         FL_UNKNOWN
         ,FL_LOGIN
         ,FL_HOME
-        ,FL_REGISTER_PRIMARY
-        ,FL_REGISTER_VERIFY
-        ,FL_REGISTER_LOCATION
-        ,FL_REGISTER_INTEREST
+        ,FL_REGISTER
     }
 
     public interface FlowLogicCaller {

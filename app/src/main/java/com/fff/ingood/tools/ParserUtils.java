@@ -98,7 +98,7 @@ public class ParserUtils {
             return null;
     }
 
-    public static String listStringToString(ArrayList<String> lsString, char splitChar) {
+    public static String listStringToString(List<String> lsString, char splitChar) {
         if(lsString == null || lsString.isEmpty())
             return "";
 

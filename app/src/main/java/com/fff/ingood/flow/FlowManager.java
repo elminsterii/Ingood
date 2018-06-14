@@ -1,6 +1,9 @@
 package com.fff.ingood.flow;
 
+import com.fff.ingood.activity.RegistrationFragmentActivity;
 import com.fff.ingood.data.Person;
+
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
  * Created by ElminsterII on 2018/5/27.
@@ -44,12 +47,12 @@ public class FlowManager {
     }
 
     public void goRegisterFlow(Flow.FlowLogicCaller caller) {
-        Flow fl = new RegisterFlow(caller, mCurFlow);
-        mCurFlow = fl.doLogic();
+        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_REGISTER, RegistrationFragmentActivity.class);
+        mCurFlow = Flow.FLOW.FL_REGISTER;
     }
 
-    public void goRegisterPersonFlow(Flow.FlowLogicCaller caller, Person person) {
-        Flow fl = new RegisterPersonFlow(caller, person);
+    public void endRegisterFlow(Flow.FlowLogicCaller caller, Person personNew) {
+        Flow fl = new RegisterFlow(caller, personNew);
         mCurFlow = fl.doLogic();
     }
 }

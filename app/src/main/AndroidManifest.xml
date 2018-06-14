@@ -21,26 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.RegisterPrimaryPageActivity"
-            android:label="@string/sign_up"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".activity.RegisterVerifyPageActivity"
-            android:label="@string/sign_up"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".activity.RegisterLocationPageActivity"
-            android:label="@string/sign_up"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".activity.RegisterInterestPageActivity"
-            android:label="@string/sign_up"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".activity.LoginActivity"
             android:label="@string/sign_in"
             android:screenOrientation="portrait"
@@ -50,7 +30,7 @@
             android:label="@string/home_page"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".activity.RegistrationActivity"></activity>
+        <activity android:name=".activity.RegistrationFragmentActivity"></activity>
     </application>
 
 </manifest>

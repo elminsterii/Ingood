@@ -1,48 +1,50 @@
 package com.fff.ingood.flow;
 
 import com.fff.ingood.activity.HomeActivity;
-import com.fff.ingood.activity.RegisterInterestPageActivity;
-import com.fff.ingood.activity.RegisterLocationPageActivity;
-import com.fff.ingood.activity.RegisterVerifyPageActivity;
-import com.fff.ingood.activity.RegistrationActivity;
+import com.fff.ingood.activity.RegistrationFragmentActivity;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.logic.PersonLoginLogic;
+import com.fff.ingood.logic.PersonRegisterLogic;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
-public class RegisterFlow extends Flow {
+/**
+ * Created by ElminsterII on 2018/5/27.
+ */
+public class RegisterFlow extends Flow implements
+        PersonRegisterLogic.PersonRegisterLogicCaller
+        , PersonLoginLogic.PersonLoginLogicCaller {
 
-    private FLOW mFlow;
+    private Person mPersonNew;
 
-    RegisterFlow(FlowLogicCaller caller, FLOW flow) {
+    RegisterFlow(Flow.FlowLogicCaller caller, Person personNew) {
         super(caller);
-        mFlow = flow;
+        mPersonNew = personNew;
     }
 
     @Override
     protected FLOW doLogic() {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonRegister(this, mPersonNew);
 
-        switch(mFlow) {
-            case FL_REGISTER_PRIMARY:
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_VERIFY, RegisterVerifyPageActivity.class);
-                mFlow = FLOW.FL_REGISTER_VERIFY;
-                break;
-            case FL_REGISTER_VERIFY:
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_LOCATION, RegisterLocationPageActivity.class);
-                mFlow = FLOW.FL_REGISTER_LOCATION;
-                break;
-            case FL_REGISTER_LOCATION:
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_INTEREST, RegisterInterestPageActivity.class);
-                mFlow = FLOW.FL_REGISTER_INTEREST;
-                break;
-            case FL_REGISTER_INTEREST:
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_HOME, HomeActivity.class);
-                mFlow = FLOW.FL_HOME;
-                break;
-            default :
-                //mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_PRIMARY, RegisterPrimaryPageActivity.class);
-                mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_REGISTER_PRIMARY, RegistrationActivity.class);
-                mFlow = FLOW.FL_REGISTER_PRIMARY;
-                break;
-        }
-        return mFlow;
+        return FLOW.FL_REGISTER;
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonLogin(this, mPersonNew);
+    }
+
+    @Override
+    public void returnLoginPerson(Person person) {
+        mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_HOME, HomeActivity.class);
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+            mCaller.returnFlow(iStatusCode, FLOW.FL_REGISTER, RegistrationFragmentActivity.class);
     }
 }

@@ -29,6 +29,10 @@ public class RegistrationVerifyFragment extends BaseFragment implements PersonVe
         return new RegistrationVerifyFragment();
     }
 
+    public String getVerifyCode() {
+        return mEditText_VerifyCode.getText().toString();
+    }
+
     public boolean isVerifyPass() {
         final String PASS_CODE = "5454";
         String strInputVerifyCode = mEditText_VerifyCode.getText().toString();
