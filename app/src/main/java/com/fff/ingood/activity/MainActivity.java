@@ -35,9 +35,11 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     @Override
     protected void onResume() {
         super.onResume();
+        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+        startActivity(intent);
 
-        mWaitingDialog.show(getSupportFragmentManager(), MainActivity.class.getName());
-        FlowManager.getInstance().goLoginFlow(this);
+        //mWaitingDialog.show(getSupportFragmentManager(), MainActivity.class.getName());
+        //FlowManager.getInstance().goLoginFlow(this);
     }
 
     @Override
