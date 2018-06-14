@@ -7,9 +7,9 @@ public abstract class Flow {
 
     public enum FLOW {
         FL_UNKNOWN
-        ,FL_LOGIN
-        ,FL_HOME
-        ,FL_REGISTER
+        , FL_LOGIN
+        , FL_HOME
+        , FL_REGISTRATION
     }
 
     public interface FlowLogicCaller {

@@ -46,13 +46,13 @@ public class FlowManager {
         mCurFlow = fl.doLogic();
     }
 
-    public void goRegisterFlow(Flow.FlowLogicCaller caller) {
-        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_REGISTER, RegistrationFragmentActivity.class);
-        mCurFlow = Flow.FLOW.FL_REGISTER;
+    public void goRegistrationFlow(Flow.FlowLogicCaller caller) {
+        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_REGISTRATION, RegistrationFragmentActivity.class);
+        mCurFlow = Flow.FLOW.FL_REGISTRATION;
     }
 
-    public void endRegisterFlow(Flow.FlowLogicCaller caller, Person personNew) {
-        Flow fl = new RegisterFlow(caller, personNew);
+    public void endRegistrationFlow(Flow.FlowLogicCaller caller, Person personNew) {
+        Flow fl = new RegistrationFlow(caller, personNew);
         mCurFlow = fl.doLogic();
     }
 }

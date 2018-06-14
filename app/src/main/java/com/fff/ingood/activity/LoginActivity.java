@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
         mButton_Register.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FlowManager.getInstance().goRegisterFlow(mActivity);
+                FlowManager.getInstance().goRegistrationFlow(mActivity);
             }
         });
     }

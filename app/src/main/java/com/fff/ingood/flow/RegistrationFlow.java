@@ -12,13 +12,13 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 /**
  * Created by ElminsterII on 2018/5/27.
  */
-public class RegisterFlow extends Flow implements
+public class RegistrationFlow extends Flow implements
         PersonRegisterLogic.PersonRegisterLogicCaller
         , PersonLoginLogic.PersonLoginLogicCaller {
 
     private Person mPersonNew;
 
-    RegisterFlow(Flow.FlowLogicCaller caller, Person personNew) {
+    RegistrationFlow(Flow.FlowLogicCaller caller, Person personNew) {
         super(caller);
         mPersonNew = personNew;
     }
@@ -28,7 +28,7 @@ public class RegisterFlow extends Flow implements
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonRegister(this, mPersonNew);
 
-        return FLOW.FL_REGISTER;
+        return FLOW.FL_REGISTRATION;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class RegisterFlow extends Flow implements
     @Override
     public void returnStatus(Integer iStatusCode) {
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
-            mCaller.returnFlow(iStatusCode, FLOW.FL_REGISTER, RegistrationFragmentActivity.class);
+            mCaller.returnFlow(iStatusCode, FLOW.FL_REGISTRATION, RegistrationFragmentActivity.class);
     }
 }

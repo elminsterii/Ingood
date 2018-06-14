@@ -123,7 +123,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
                         mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
 
                         PersonManager.getInstance().getPerson().setInterests(strInterests);
-                        FlowManager.getInstance().endRegisterFlow(mActivity, PersonManager.getInstance().getPerson());
+                        FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
                     }
                 }
             }
