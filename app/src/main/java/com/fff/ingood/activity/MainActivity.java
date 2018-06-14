@@ -19,6 +19,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
 
+    private final int STARTUP_ANIMATION_DURATION = 1000;
+
     private MainActivity mActivity;
     private CircleProgressBarDialog mWaitingDialog;
 
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f
                 , Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(3000);
+        scaleAnimation.setDuration(STARTUP_ANIMATION_DURATION);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
