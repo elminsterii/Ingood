@@ -4,7 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@drawable/landingpage_bg"
     android:orientation="vertical"
     tools:context="com.fff.ingood.activity.MainActivity">
+
+    <ImageView
+        android:id="@+id/imgStartupAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/app_name" />
+
 </android.support.design.widget.CoordinatorLayout>

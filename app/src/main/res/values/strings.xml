@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Ingood</string>
-    <string name="action_settings">Post</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
     <string name="user_data_email">E-mail</string>

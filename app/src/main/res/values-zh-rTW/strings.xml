@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ingood</string>
-    <string name="action_settings">Post</string>
     <string name="sign_in">登入</string>
     <string name="sign_up">註冊</string>
     <string name="user_data_email">電子郵件</string>
