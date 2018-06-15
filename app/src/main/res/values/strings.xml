@@ -4,13 +4,14 @@
     <string name="sign_up">Register</string>
     <string name="user_data_email">E-mail</string>
     <string name="user_data_pwd">Password</string>
-    <string name="user_data_pwd_confirm">Password Again</string>
-    <string name="user_data_name">Display Name</string>
+    <string name="user_data_pwd_confirm">Confirm password</string>
+    <string name="user_data_name">Name</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
     <string name="home_page">Home Page</string>
-    <string name="send">Send</string>
-    <string name="hint_for_verify">Please push send to send verify code to your email.</string>
+    <string name="send_verify_code">Send Code</string>
+    <string name="input_verify_code_hint">Input verify code please</string>
+    <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>
 
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
@@ -19,7 +20,6 @@
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
     <string name="search_bar_hint">locations, tags…</string>
-    <string name="description_search_bar_menu_btn">this is a btn for open menu in search bar</string>
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>

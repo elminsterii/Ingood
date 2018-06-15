@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -63,11 +64,11 @@ public class RegistrationFormFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mEditTextAccount = Objects.requireNonNull(getActivity()).findViewById(R.id.edit_account);
+        mEditTextDisplayName = Objects.requireNonNull(getActivity()).findViewById(R.id.edit_name);
+        mEditTextAccount = getActivity().findViewById(R.id.edit_account);
         mEditTextPassword = getActivity().findViewById(R.id.edit_pwd);
         mEditTextConfirmPassword = getActivity().findViewById(R.id.edit_pwd_confirm);
 
-        mEditTextDisplayName = getActivity().findViewById(R.id.edit_name);
         mSpinnerAge = getActivity().findViewById(R.id.spinner_age);
         mSpinnerGender = getActivity().findViewById(R.id.spinner_gender);
 
@@ -77,7 +78,15 @@ public class RegistrationFormFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        String[] arrAges = getResources().getStringArray(R.array.user_age_list);
+        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.spinner_item, arrAges);
+        spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mSpinnerAge.setAdapter(spinnerAgeAdapter);
 
+        String[] arrGender = getResources().getStringArray(R.array.user_gender_list);
+        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.spinner_item, arrGender);
+        spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mSpinnerGender.setAdapter(spinnerGenderAdapter);
     }
 
     @Override
@@ -99,7 +108,6 @@ public class RegistrationFormFragment extends BaseFragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -135,6 +143,12 @@ public class RegistrationFormFragment extends BaseFragment {
     }
 
     private boolean isDataValid(){
+        if(TextUtils.isEmpty(mEditTextDisplayName.getText().toString().trim())) {
+            mEditTextDisplayName.requestFocus();
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_displayname_format_wrong), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         if (!Patterns.EMAIL_ADDRESS.matcher(mEditTextAccount.getText().toString().trim()).matches()
                 || TextUtils.isEmpty(mEditTextAccount.getText().toString().trim())) {
             mEditTextAccount.requestFocus();
@@ -162,21 +176,38 @@ public class RegistrationFormFragment extends BaseFragment {
             return false;
         }
 
-        if(TextUtils.isEmpty(mEditTextDisplayName.getText().toString().trim())) {
-            mEditTextDisplayName.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_displayname_format_wrong), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
         if(mSpinnerGender.getSelectedItemPosition() == 0) {
+            clearAllFocus();
+            mSpinnerGender.setFocusable(true);
+            mSpinnerGender.setFocusableInTouchMode(true);
+            mSpinnerGender.requestFocus();
             Toast.makeText(getActivity(), getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if(mSpinnerAge.getSelectedItemPosition() == 0) {
+            clearAllFocus();
+            mSpinnerAge.setFocusable(true);
+            mSpinnerAge.setFocusableInTouchMode(true);
+            mSpinnerAge.requestFocus();
             Toast.makeText(getActivity(), getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
+    }
+
+    private void clearAllFocus() {
+        if(mEditTextDisplayName.hasFocus())
+            mEditTextDisplayName.clearFocus();
+        if(mEditTextAccount.hasFocus())
+            mEditTextAccount.clearFocus();
+        if(mEditTextPassword.hasFocus())
+            mEditTextPassword.clearFocus();
+        if(mEditTextConfirmPassword.hasFocus())
+            mEditTextConfirmPassword.clearFocus();
+        if(mSpinnerAge.hasFocus())
+            mSpinnerAge.clearFocus();
+        if(mSpinnerGender.hasFocus())
+            mSpinnerGender.clearFocus();
     }
 }

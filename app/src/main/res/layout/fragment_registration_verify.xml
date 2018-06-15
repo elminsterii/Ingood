@@ -19,7 +19,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Verify Code"/>
+        android:hint="@string/input_verify_code_hint"/>
     <Button
         android:id="@+id/btn_send"
         android:layout_marginRight="31dp"
@@ -29,5 +29,5 @@
         android:background="@drawable/selector_register_send_verify"
         android:layout_width="95dp"
         android:layout_height="36dp"
-        android:text="@string/send" />
+        android:text="@string/send_verify_code" />
 </LinearLayout>

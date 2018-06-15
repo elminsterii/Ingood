@@ -13,16 +13,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="progress_bar_loading_circle">
         <item name="android:indeterminateDrawable">@drawable/progress_bar_loading_circle_animation</item>
         <item name="android:minWidth">25dp</item>
         <item name="android:minHeight">25dp</item>
         <item name="android:maxWidth">60dp</item>
         <item name="android:maxHeight">60dp</item>
+    </style>
+
+    <style name="IngoodEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/colorTextInput</item>
+        <item name="colorControlNormal">@color/colorTextInput</item>
+    </style>
+
+    <style name="IngoodSpinnerStyle">
+        <item name="colorControlNormal">@color/colorTextInput</item>
+        <item name="colorAccent">@color/colorTextInput</item>
     </style>
 
 </resources>

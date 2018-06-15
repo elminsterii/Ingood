@@ -7,4 +7,8 @@
     <dimen name="search_bar_height">40dp</dimen>
     <dimen name="tag_bar_height">35dp</dimen>
     <dimen name="tag_bar_text_size">4dp</dimen>
+
+    <!-- Registration -->
+    <dimen name="text_size_register_form">18sp</dimen>
+    <dimen name="gap_register_form_texts">20dp</dimen>
 </resources>

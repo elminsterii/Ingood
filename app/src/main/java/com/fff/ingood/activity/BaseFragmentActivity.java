@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.ServerResponse;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -20,12 +21,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 @SuppressLint("Registered")
 public abstract class BaseFragmentActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
-    private static final int SYSTEM_UI_FLAG_INGOOD = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+    private static final int SYSTEM_UI_FLAG_INGOOD = GlobalProperty.SYSTEM_UI_FLAG_INGOOD;
 
     protected BaseFragmentActivity mActivity;
     private int mCurAPIVersion;

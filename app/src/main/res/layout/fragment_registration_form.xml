@@ -6,152 +6,126 @@
     android:orientation="vertical"
     tools:context=".fragment.RegistrationFormFragment">
 
-    <LinearLayout
-        android:layout_marginTop="15dp"
+    <EditText
+        android:theme="@style/IngoodEditTextStyle"
+        android:id="@+id/edit_name"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="86dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.25">
+        android:textSize="@dimen/text_size_register_form"
+        android:textCursorDrawable="@null"
+        android:lineSpacingExtra="1sp"
+        android:inputType="textPersonName"
+        android:hint="@string/user_data_name"
+        android:paddingStart="12dp"
+        tools:ignore="RtlSymmetry"
+        android:ems="10" />
 
-        <LinearLayout
+    <EditText
+        android:theme="@style/IngoodEditTextStyle"
+        android:id="@+id/edit_account"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_register_form_texts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_register_form"
+        android:textCursorDrawable="@null"
+        android:lineSpacingExtra="1sp"
+        android:inputType="textPersonName"
+        android:hint="@string/user_data_email"
+        android:paddingStart="12dp"
+        tools:ignore="RtlSymmetry"
+        android:ems="10"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_register_form_texts">
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2">
-            <EditText
-                android:id="@+id/edit_account"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="31dp"
-                android:layout_marginRight="31dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:textSize="14dp"
-                android:inputType="textPersonName"
-                android:hint="@string/user_data_email"
-                android:ems="10"/>
-        </LinearLayout>
-    </LinearLayout>
+            android:textSize="@dimen/text_size_register_form"
+            android:textCursorDrawable="@null"
+            android:inputType="textPassword"
+            android:hint="@string/user_data_pwd"
+            android:paddingStart="12dp"
+            tools:ignore="RtlSymmetry"
+            android:ems="10"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/edit_pwd"
-                    android:layout_marginLeft="31dp"
-                    android:layout_marginRight="31dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:textSize="14dp"
-                    android:inputType="textPassword"
-                    android:hint="@string/user_data_pwd"
-                    android:ems="10"/>
-
-                <ImageButton
-                    android:id="@+id/pwd_eye"
-                    android:background="@color/colorWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="31dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/view_g" />
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/edit_pwd_confirm"
-                    android:layout_marginLeft="31dp"
-                    android:layout_marginRight="31dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:textSize="14dp"
-                    android:inputType="textPassword"
-                    android:hint="@string/user_data_pwd_confirm"
-                    android:ems="10"/>
-
-                <ImageButton
-                    android:id="@+id/pwd_confirm_eye"
-                    android:background="@color/colorWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="31dp"
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/view_g" />
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.25">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-            <EditText
-                android:id="@+id/edit_name"
-                android:layout_marginLeft="31dp"
-                android:layout_marginRight="31dp"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:textSize="14dp"
-                android:inputType="textPersonName"
-                android:hint="@string/user_data_name"
-                android:ems="10"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/pwd_eye"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
 
-            <Spinner
-                android:id="@+id/spinner_gender"
-                android:layout_marginLeft="31dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/user_gender_list" />
-        </LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_register_form_texts">
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_pwd_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_register_form"
+            android:textCursorDrawable="@null"
+            android:inputType="textPassword"
+            android:hint="@string/user_data_pwd_confirm"
+            android:paddingStart="12dp"
+            tools:ignore="RtlSymmetry"
+            android:ems="10"/>
 
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/pwd_confirm_eye"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-            <Spinner
-                android:id="@+id/spinner_age"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/user_age_list"
-                />
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd_confirm"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="31dp"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginTop="@dimen/gap_register_form_texts">
+
+        <Spinner
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:theme="@style/IngoodSpinnerStyle"
+            android:id="@+id/spinner_gender"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:spinnerMode="dropdown"/>
+
+        <Spinner
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:theme="@style/IngoodSpinnerStyle"
+            android:id="@+id/spinner_age"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="5dp"
+            android:spinnerMode="dropdown"/>
+    </RelativeLayout>
+
 </LinearLayout>
