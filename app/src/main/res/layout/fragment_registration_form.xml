@@ -11,10 +11,10 @@
         android:id="@+id/edit_name"
         android:layout_marginStart="31.5dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_register_form"
+        android:textSize="@dimen/text_size_registration"
         android:textCursorDrawable="@null"
         android:lineSpacingExtra="1sp"
         android:inputType="textPersonName"
@@ -28,10 +28,10 @@
         android:id="@+id/edit_account"
         android:layout_marginStart="31.5dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginTop="@dimen/gap_register_form_texts"
+        android:layout_marginTop="@dimen/gap_registration_btw_texts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_register_form"
+        android:textSize="@dimen/text_size_registration"
         android:textCursorDrawable="@null"
         android:lineSpacingExtra="1sp"
         android:inputType="textPersonName"
@@ -45,13 +45,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="31.5dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginTop="@dimen/gap_register_form_texts">
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
         <EditText
             android:theme="@style/IngoodEditTextStyle"
             android:id="@+id/edit_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_register_form"
+            android:textSize="@dimen/text_size_registration"
             android:textCursorDrawable="@null"
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd"
@@ -74,13 +74,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="31.5dp"
         android:layout_marginEnd="31dp"
-        android:layout_marginTop="@dimen/gap_register_form_texts">
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
         <EditText
             android:theme="@style/IngoodEditTextStyle"
             android:id="@+id/edit_pwd_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_register_form"
+            android:textSize="@dimen/text_size_registration"
             android:textCursorDrawable="@null"
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd_confirm"
@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="31dp"
         android:layout_marginStart="31.5dp"
-        android:layout_marginTop="@dimen/gap_register_form_texts">
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
 
         <Spinner
             style="@style/Widget.AppCompat.Spinner.Underlined"

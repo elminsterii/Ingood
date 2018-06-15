@@ -5,29 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".activity.RegistrationFragmentActivity">
 
-    <!--<fragment class="com.fff.ingood.fragment.RegistrationFormFragment"-->
-        <!--android:id="@+id/fragmentRegistrationForm"-->
-        <!--android:layout_width="match_parent" -->
-        <!--android:layout_height="match_parent" -->
-        <!--android:visibility="gone"/>-->
+    <RelativeLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginTop="10dp">
 
-    <!--<fragment class="com.fff.ingood.fragment.RegistrationVerifyFragment"-->
-        <!--android:id="@+id/fragmentRegistrationVerify"-->
-        <!--android:layout_width="match_parent" -->
-        <!--android:layout_height="match_parent" -->
-        <!--android:visibility="gone"/>-->
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/back_dark" />
 
-    <!--<fragment class="com.fff.ingood.fragment.RegistrationLocationFragment"-->
-        <!--android:id="@+id/fragmentRegistrationLocation"-->
-        <!--android:layout_width="match_parent" -->
-        <!--android:layout_height="match_parent" -->
-        <!--android:visibility="gone"/>-->
-
-    <!--<fragment class="com.fff.ingood.fragment.RegistrationInterestFragment"-->
-        <!--android:id="@+id/fragmentRegistrationInterest"-->
-        <!--android:layout_width="match_parent" -->
-        <!--android:layout_height="match_parent" -->
-        <!--android:visibility="gone"/>-->
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_marginStart="7.5dp"
+            android:textSize="@dimen/title_size_registration_form"
+            android:textColor="@color/colorSlave"
+            android:textStyle="bold"
+            android:text="@string/register_title_form" />
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/layoutFragmentContainer"

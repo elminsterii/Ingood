@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
@@ -36,6 +38,9 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
     private RegistrationInterestFragment mFragmentRegistrationInterest;
 
     private FragmentManager mFragmentMgr;
+
+    private ImageView mImageViewBack;
+    private TextView mTextViewTitle;
     private Button mButtonNext;
 
     private Fragment mCurFragment;
@@ -83,6 +88,8 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     @Override
     protected void initView() {
+        mImageViewBack = findViewById(R.id.imgBack);
+        mTextViewTitle = findViewById(R.id.textViewTitle);
         mButtonNext = findViewById(R.id.btnNext);
     }
 
@@ -126,8 +133,27 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
                         FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
                     }
                 }
+                changeTitle(mCurFragment);
             }
         });
+
+        mImageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    private void changeTitle(Fragment curFragment) {
+        if(curFragment instanceof RegistrationFormFragment)
+            mTextViewTitle.setText(R.string.register_title_form);
+        else if(curFragment instanceof RegistrationVerifyFragment)
+            mTextViewTitle.setText(R.string.register_title_verify);
+        else if(curFragment instanceof RegistrationLocationFragment)
+            mTextViewTitle.setText(R.string.register_title_location);
+        else if(curFragment instanceof RegistrationInterestFragment)
+            mTextViewTitle.setText(R.string.register_title_interest);
     }
 
     @SuppressLint("CommitTransaction")

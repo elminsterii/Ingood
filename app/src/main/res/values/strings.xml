@@ -2,6 +2,12 @@
     <string name="app_name">Ingood</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
+
+    <!-- Registration -->
+    <string name="register_title_form">Registration</string>
+    <string name="register_title_verify">Verification</string>
+    <string name="register_title_location">Location</string>
+    <string name="register_title_interest">Interest</string>
     <string name="user_data_email">E-mail</string>
     <string name="user_data_pwd">Password</string>
     <string name="user_data_pwd_confirm">Confirm password</string>

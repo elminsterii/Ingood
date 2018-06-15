@@ -22,13 +22,13 @@
     </style>
 
     <style name="IngoodEditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="colorControlActivated">@color/colorTextInput</item>
-        <item name="colorControlNormal">@color/colorTextInput</item>
+        <item name="colorControlActivated">@color/colorTextHint</item>
+        <item name="colorControlNormal">@color/colorTextHint</item>
     </style>
 
     <style name="IngoodSpinnerStyle">
-        <item name="colorControlNormal">@color/colorTextInput</item>
-        <item name="colorAccent">@color/colorTextInput</item>
+        <item name="colorControlNormal">@color/colorTextHint</item>
+        <item name="colorAccent">@color/colorTextHint</item>
     </style>
 
 </resources>
