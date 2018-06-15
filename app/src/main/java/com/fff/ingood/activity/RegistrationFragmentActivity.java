@@ -45,10 +45,11 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     private Fragment mCurFragment;
     private String mCurFragmentTag;
-    private boolean bInitialize = false;
 
     private RegistrationFragmentActivity mActivity;
-    CircleProgressBarDialog mWaitingDialog;
+    private CircleProgressBarDialog mWaitingDialog;
+
+    private boolean bInitialize = false;
 
     @SuppressLint("CommitTransaction")
     @Override
@@ -84,6 +85,11 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             bInitialize = true;
             showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backToPreviousFragment();
     }
 
     @Override
@@ -140,7 +146,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
         mImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onBackPressed();
             }
         });
     }
@@ -156,6 +162,18 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             mTextViewTitle.setText(R.string.register_title_interest);
     }
 
+    private void backToPreviousFragment() {
+        if(mCurFragment instanceof RegistrationFormFragment) {
+            FlowManager.getInstance().goLoginFlow(mActivity);
+        } else if(mCurFragment instanceof RegistrationVerifyFragment
+                || mCurFragment instanceof RegistrationLocationFragment) {
+            showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
+        } else if(mCurFragment instanceof RegistrationInterestFragment) {
+            showFragment(mFragmentRegistrationLocation, TAG_FRAGMENT_REGISTRATION_LOCATION);
+        }
+        changeTitle(mCurFragment);
+    }
+
     @SuppressLint("CommitTransaction")
     private void showFragment(Fragment fragment, String strTag) {
         if (mCurFragment == fragment)
@@ -163,13 +181,13 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
         mFragmentMgr.executePendingTransactions();
 
-        if(!fragment.isAdded()) {
+        if(!fragment.isAdded())
             mFragmentMgr.beginTransaction().add(R.id.layoutFragmentContainer, fragment, strTag).show(fragment).commit();
-            if(mCurFragment != null)
-                mFragmentMgr.beginTransaction().hide(mCurFragment).commit();
-        }
         else
             mFragmentMgr.beginTransaction().show(fragment).commit();
+
+        if(mCurFragment != null)
+            mFragmentMgr.beginTransaction().hide(mCurFragment).commit();
 
         mCurFragment = fragment;
         mCurFragmentTag = strTag;
