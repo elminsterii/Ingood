@@ -9,7 +9,8 @@
     <dimen name="tag_bar_text_size">4dp</dimen>
 
     <!-- Registration -->
-    <dimen name="title_size_registration_form">21sp</dimen>
-    <dimen name="text_size_registration">18sp</dimen>
+    <dimen name="title_size_registration">21sp</dimen>
+    <dimen name="text_size_registration_form_input">18sp</dimen>
+    <dimen name="text_size_registration_verify_description">15sp</dimen>
     <dimen name="gap_registration_btw_texts">20dp</dimen>
 </resources>

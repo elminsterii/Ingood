@@ -7,12 +7,14 @@
     tools:context=".fragment.RegistrationLocationFragment">
 
     <Spinner
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:theme="@style/IngoodSpinnerStyle"
         android:id="@+id/spinner_location"
-        android:layout_marginTop="128dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/user_location_list"
-        />
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginStart="31.5dp"
+        android:spinnerMode="dropdown"/>
 
 </FrameLayout>

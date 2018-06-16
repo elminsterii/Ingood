@@ -19,8 +19,8 @@ import java.util.Objects;
 
 public class RegistrationVerifyFragment extends BaseFragment implements PersonVerifyLogic.PersonVerifyLogicCaller {
 
-    private Button mButton_Send;
-    private EditText mEditText_VerifyCode;
+    private Button mButtonSendCode;
+    private EditText mEditTextVerifyCode;
 
     private RegistrationVerifyFragment mThis;
     private String mVerifyCode;
@@ -30,12 +30,12 @@ public class RegistrationVerifyFragment extends BaseFragment implements PersonVe
     }
 
     public String getVerifyCode() {
-        return mEditText_VerifyCode.getText().toString();
+        return mEditTextVerifyCode.getText().toString();
     }
 
     public boolean isVerifyPass() {
         final String PASS_CODE = "5454";
-        String strInputVerifyCode = mEditText_VerifyCode.getText().toString();
+        String strInputVerifyCode = mEditTextVerifyCode.getText().toString();
 
         boolean bIsVerifyPass = strInputVerifyCode.equals(PASS_CODE)
                 || (StringTool.checkStringNotNull(mVerifyCode)
@@ -58,8 +58,8 @@ public class RegistrationVerifyFragment extends BaseFragment implements PersonVe
 
     @Override
     protected void initView() {
-        mButton_Send = Objects.requireNonNull(getActivity()).findViewById(R.id.btn_send);
-        mEditText_VerifyCode = getActivity().findViewById(R.id.edit_verify);
+        mButtonSendCode = Objects.requireNonNull(getActivity()).findViewById(R.id.btn_send);
+        mEditTextVerifyCode = getActivity().findViewById(R.id.edit_verify);
     }
 
     @Override
@@ -69,9 +69,11 @@ public class RegistrationVerifyFragment extends BaseFragment implements PersonVe
 
     @Override
     protected void initListener() {
-        mButton_Send.setOnClickListener(new Button.OnClickListener() {
+        mButtonSendCode.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mButtonSendCode.setEnabled(false);
+
                 PersonLogicExecutor executor = new PersonLogicExecutor();
                 executor.doPersonVerify(mThis, PersonManager.getInstance().getPerson());
             }
@@ -85,6 +87,8 @@ public class RegistrationVerifyFragment extends BaseFragment implements PersonVe
 
     @Override
     public void returnVerifyCode(String strCode) {
+        mButtonSendCode.setEnabled(true);
+
         mVerifyCode = strCode;
         Toast.makeText(getActivity(), getResources().getText(R.string.verify_email_sent), Toast.LENGTH_SHORT).show();
     }

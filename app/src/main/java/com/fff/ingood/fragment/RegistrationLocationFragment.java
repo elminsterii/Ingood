@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -50,7 +51,10 @@ public class RegistrationLocationFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        String[] arrLocations = getResources().getStringArray(R.array.user_location_list);
+        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), R.layout.spinner_item, arrLocations);
+        spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mSpinnerLocation.setAdapter(spinnerLocationAdapter);
     }
 
     @Override

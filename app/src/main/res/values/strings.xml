@@ -2,6 +2,7 @@
     <string name="app_name">Ingood</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
+    <string name="home_page">Home Page</string>
 
     <!-- Registration -->
     <string name="register_title_form">Registration</string>
@@ -14,7 +15,6 @@
     <string name="user_data_name">Name</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
-    <string name="home_page">Home Page</string>
     <string name="send_verify_code">Send Code</string>
     <string name="input_verify_code_hint">Input verify code please</string>
     <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>

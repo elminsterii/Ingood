@@ -165,9 +165,10 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
     private void backToPreviousFragment() {
         if(mCurFragment instanceof RegistrationFormFragment) {
             FlowManager.getInstance().goLoginFlow(mActivity);
-        } else if(mCurFragment instanceof RegistrationVerifyFragment
-                || mCurFragment instanceof RegistrationLocationFragment) {
+        } else if(mCurFragment instanceof RegistrationVerifyFragment) {
             showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
+        } else if(mCurFragment instanceof RegistrationLocationFragment) {
+            showFragment(mFragmentRegistrationVerify, TAG_FRAGMENT_REGISTRATION_VERIFY);
         } else if(mCurFragment instanceof RegistrationInterestFragment) {
             showFragment(mFragmentRegistrationLocation, TAG_FRAGMENT_REGISTRATION_LOCATION);
         }
