@@ -4,14 +4,14 @@ package com.fff.ingood.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.fff.ingood.R;
-import com.fff.ingood.adapter.RadioListAdapter;
-import com.fff.ingood.tools.ParserUtils;
+import com.fff.ingood.adapter.InterestTagListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,29 +22,27 @@ import java.util.Objects;
  */
 public class RegistrationInterestFragment extends BaseFragment {
 
-    private static final String[] DEFAULT_INTERESTS = { "Sport", "Music", "Food", "Book", "Movie", "Culture"};
-
-    private ListView mInterestsListView;
-    private RadioListAdapter mRadioListAdapter;
+    private RecyclerView mInterestsRecyclerView;
+    private InterestTagListAdapter mInterestTagListAdapter;
 
     public static RegistrationInterestFragment newInstance() {
         return new RegistrationInterestFragment();
     }
 
     public String getInterests() {
-        String strInterests;
+        StringBuilder strInterests = new StringBuilder();
 
-        List<Boolean> lsRadioStates = mRadioListAdapter.getRadioStateList();
-        List<String> lsInterests = new ArrayList<>();
+        List<InterestTagListAdapter.InterestData> lsInterestData = mInterestTagListAdapter.getInterestList();
 
-        for(int i = 0; i < lsRadioStates.size(); i++){
-            if(lsRadioStates.get(i))
-                lsInterests.add(DEFAULT_INTERESTS[i]);
+        for(InterestTagListAdapter.InterestData data : lsInterestData) {
+            if(data.isSelected())
+                strInterests.append(data.getInterestItemTitle()).append(",");
         }
 
-        strInterests = ParserUtils.listStringToString(lsInterests, ',');
+        if(strInterests.length() > 0)
+            strInterests.deleteCharAt(strInterests.length() - 1);
 
-        return strInterests;
+        return strInterests.toString();
     }
 
     @Override
@@ -56,17 +54,31 @@ public class RegistrationInterestFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mInterestsListView = Objects.requireNonNull(getActivity()).findViewById(R.id.interest_list);
+        mInterestsRecyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.interest_list);
     }
 
     @Override
     protected void initData() {
-        ArrayList<Boolean> radioStateList = new ArrayList<>();
-        for (String ignored : DEFAULT_INTERESTS)
-            radioStateList.add(false);
+        List<InterestTagListAdapter.InterestData> lsInterestData = new ArrayList<>();
 
-        mRadioListAdapter = new RadioListAdapter(getActivity(), DEFAULT_INTERESTS, radioStateList);
-        mInterestsListView.setAdapter(mRadioListAdapter);
+        InterestTagListAdapter.InterestData interestDataCare = new InterestTagListAdapter.InterestData();
+        interestDataCare.setInterestItemIconResId(R.drawable.circle_loading_1);
+        interestDataCare.setInterestItemTitle(getResources().getString(R.string.tag_care));
+        interestDataCare.setInterestItemDescription(getResources().getString(R.string.tag_care_description));
+        lsInterestData.add(interestDataCare);
+
+        InterestTagListAdapter.InterestData interestDataEducation = new InterestTagListAdapter.InterestData();
+        interestDataEducation.setInterestItemIconResId(R.drawable.circle_loading_1);
+        interestDataEducation.setInterestItemTitle(getResources().getString(R.string.tag_education));
+        interestDataEducation.setInterestItemDescription(getResources().getString(R.string.tag_education_description));
+        lsInterestData.add(interestDataEducation);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mInterestTagListAdapter = new InterestTagListAdapter(lsInterestData);
+        mInterestsRecyclerView.setLayoutManager(mLayoutManager);
+        mInterestsRecyclerView.setNestedScrollingEnabled(true);
+        mInterestsRecyclerView.setHasFixedSize(true);
+        mInterestsRecyclerView.setAdapter(mInterestTagListAdapter);
     }
 
     @Override
