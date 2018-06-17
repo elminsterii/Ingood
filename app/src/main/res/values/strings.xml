@@ -19,6 +19,19 @@
     <string name="input_verify_code_hint">Input verify code please</string>
     <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>
 
+    <!-- Tags -->
+    <string name="tag_care">Care</string>
+    <string name="tag_environmental_protection">Environmental Protection</string>
+    <string name="tag_education">Education</string>
+    <string name="tag_manpower">Manpower</string>
+
+    <!-- Tags Description-->
+    <string name="tag_care_description">關心社會上的弱勢族群。\n例如街友、街賣者、憨兒、獨居老人等等。</string>
+    <string name="tag_environmental_protection_description">與環境保育有關。\n例如資源回收、淨灘、節能等等。</string>
+    <string name="tag_education_description">到偏鄉地區/社區 教導小朋友或是民眾技能。\n例如到偏鄉小學教導小朋友英文、或是到郊區小鎮教導民眾電腦技能等等。</string>
+    <string name="tag_manpower_description">到市區/鄉下提供人力協助。\n例如到鄉下協助農民採收，到市區協助當地團體舉辦愛心活動等等</string>
+    <string name="tag_animal_description">動物關懷相關議題。\n例如流浪動物之家，領養代替購買等等</string>
+
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
     <string name="log_out">Log Out</string>
