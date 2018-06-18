@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -45,6 +47,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private DrawerLayout mLayoutMenu;
     private NavigationView mNvMenu;
     private ImageView mImgMenuBtn;
+    private ImageView mImgIngoodIcon;
     private TabLayout mTabLayoutTagBar;
     private SearchView mSearchViewSearchBar;
     private FloatingActionButton mFabPublishBtn;
@@ -71,7 +74,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     public void onBackPressed() {
-
+        closeSearchView();
     }
 
     @Override
@@ -80,6 +83,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mLayoutMenu = findViewById(R.id.layoutMenu);
         mNvMenu = findViewById(R.id.nvMenu);
         mImgMenuBtn = findViewById(R.id.imgMenuBtn);
+        mImgIngoodIcon = findViewById(R.id.imgIngoodIcon);
         mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
         mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
         mFabPublishBtn = findViewById(R.id.fabPublishAction);
@@ -105,6 +109,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mViewActivityList.setAdapter(mActivityListAdapter);
 
         mFabPublishBtn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.colorTransparent)));
+
+        mSearchViewSearchBar.setSubmitButtonEnabled(true);
     }
 
     @Override
@@ -121,7 +127,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             }
         });
 
-        mNvMenu.setNavigationItemSelectedListener(
+        mNvMenu.setNavigationItemSelectedListener (
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -220,6 +226,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mSearchViewSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                hideSoftInput();
+
                 if(StringTool.checkStringNotNull(query)) {
                     mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
 
@@ -233,6 +241,21 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             @Override
             public boolean onQueryTextChange(String newText) {
                 return true;
+            }
+        });
+
+        mSearchViewSearchBar.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mImgIngoodIcon.setVisibility(View.GONE);
+            }
+        });
+
+        mSearchViewSearchBar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mImgIngoodIcon.setVisibility(View.VISIBLE);
+                return false;
             }
         });
 
@@ -271,5 +294,19 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     @Override
     public void returnActivitiesIds(String strActivitiesIds) {
         mActivityMgr.doGetActivitiesData(this, strActivitiesIds);
+    }
+
+    private void hideSoftInput() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
+    }
+
+    private void closeSearchView() {
+        hideSoftInput();
+        mSearchViewSearchBar.onActionViewCollapsed();
+
+        if(mImgIngoodIcon.getVisibility() != View.VISIBLE)
+            mImgIngoodIcon.setVisibility(View.VISIBLE);
     }
 }
