@@ -14,7 +14,8 @@
     </style>
 
     <style name="progress_bar_loading_circle">
-        <item name="android:indeterminateDrawable">@drawable/progress_bar_loading_circle_animation</item>
+        <item name="android:indeterminateDrawable">@drawable/progress_bar_loading_circle_animation
+        </item>
         <item name="android:minWidth">25dp</item>
         <item name="android:minHeight">25dp</item>
         <item name="android:maxWidth">60dp</item>
@@ -30,5 +31,9 @@
         <item name="colorControlNormal">@color/colorTextHint</item>
         <item name="colorAccent">@color/colorTextHint</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

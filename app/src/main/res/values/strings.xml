@@ -3,6 +3,7 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
     <string name="home_page">Home Page</string>
+    <string name="activity_page">Activity content</string>
 
     <!-- Registration -->
     <string name="register_title_form">Registration</string>

@@ -4,6 +4,7 @@
     <string name="sign_in">登入</string>
     <string name="sign_up">註冊</string>
     <string name="home_page">首頁</string>
+    <string name="activity_page">活動內容</string>
 
     <!-- Registration -->
     <string name="register_title_form">個人資料</string>
