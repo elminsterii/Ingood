@@ -28,20 +28,28 @@
                 android:id="@+id/toolbarSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_bar_height"
+                android:background="@color/colorWhite"
                 app:layout_scrollFlags="scroll|enterAlways">
                 <ImageView
                     android:id="@+id/imgMenuBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:src="@drawable/circle_loading_4"/>
+                    android:src="@drawable/drawer_dark"/>
+                <ImageView
+                    android:id="@+id/imgIngoodIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ingood_logo_s"/>
                 <android.support.v7.widget.SearchView
                     android:id="@+id/searchViewSearchBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
                     app:defaultQueryHint="@string/search_bar_hint"
-                    android:layout_gravity="end" />
+                    android:layout_gravity="end"
+                    android:src="@drawable/search_dark"/>
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
@@ -49,9 +57,10 @@
                 android:id="@+id/layoutTagBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tag_bar_height"
-                app:tabIndicatorColor="@android:color/background_light"
-                app:tabSelectedTextColor="@android:color/background_light"
-                app:tabTextColor="@android:color/background_light">
+                android:background="@color/colorWhite"
+                app:tabIndicatorColor="@color/colorSlaveLight"
+                app:tabSelectedTextColor="@color/colorSlave"
+                app:tabTextColor="@color/colorSlaveLight">
             </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>
