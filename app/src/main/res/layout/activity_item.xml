@@ -25,7 +25,7 @@
         <ImageView
             android:id="@+id/imgActivityItem"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_gravity="top"
             android:src="@drawable/sample_activity" />
 
@@ -33,7 +33,21 @@
             android:id="@+id/textActivityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/imgActivityItem"
+            android:layout_marginBottom="38dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_activity_item_title_hp"/>
+
+        <TextView
+            android:id="@+id/textActivityTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/imgActivityItem"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/colorWhite"/>
 
     </RelativeLayout>
 

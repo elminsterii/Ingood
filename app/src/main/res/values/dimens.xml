@@ -15,4 +15,7 @@
     <dimen name="subtitle_size_registration_tag">18sp</dimen>
     <dimen name="text_size_registration_tag_description">13sp</dimen>
     <dimen name="gap_registration_btw_texts">20dp</dimen>
+
+    <!-- Activity item in Homepage -->
+    <dimen name="text_size_activity_item_title_hp">20sp</dimen>
 </resources>
