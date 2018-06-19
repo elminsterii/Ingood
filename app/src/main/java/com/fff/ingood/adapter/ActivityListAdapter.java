@@ -1,5 +1,10 @@
 package com.fff.ingood.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +32,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
 
+    private Context mContext;
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
         TextView mTextViewActivityName;
@@ -47,8 +54,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
     }
 
-    public ActivityListAdapter(List<IgActivity> lsActivity) {
+    public ActivityListAdapter(List<IgActivity> lsActivity, Context mContext) {
         m_lsActivity = lsActivity;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -106,6 +114,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             textViewTag.setText(strTag);
             textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
             textViewTag.setX(iBeginX * (i + 1));
+            textViewTag.setTypeface(null, Typeface.BOLD);
+            textViewTag.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+            textViewTag.setBackground(getTagBackground(mContext.getResources().getColor(R.color.colorPrimary)));
 
             holder.mLayoutTags.addView(textViewTag);
         }
@@ -168,5 +179,29 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 //TODO - add/cancel bookmark
             }
         });
+    }
+
+    private Drawable getTagBackground(int iColor) {
+        final int STROKE_WIDTH = 5;
+        final float CORNER_RADIUS = 40f;
+
+        GradientDrawable gd = new GradientDrawable() {
+            @Override
+            public int getIntrinsicWidth() {
+                return super.getIntrinsicWidth() + 80;
+            }
+
+            @Override
+            public int getIntrinsicHeight() {
+                return super.getIntrinsicHeight() + 40;
+            }
+        };
+        gd.setShape(GradientDrawable.RECTANGLE);
+        gd.setSize(50,30);
+        gd.setColor(Color.TRANSPARENT);
+        gd.setStroke(STROKE_WIDTH, iColor);
+        gd.setCornerRadius(CORNER_RADIUS);
+
+        return gd;
     }
 }

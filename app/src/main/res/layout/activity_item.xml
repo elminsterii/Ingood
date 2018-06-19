@@ -86,8 +86,7 @@
             android:layout_centerVertical="true"
             android:textColor="@color/colorTextHint"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_activity_item_action_hp"
-            tools:ignore="RelativeOverlap" />
+            android:textSize="@dimen/text_size_activity_item_action_hp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -108,7 +107,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imgActivityActionGood"
                 android:textColor="@color/colorTextHint"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_activity_item_action_hp"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -132,7 +132,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imgActivityActionBookmark"
                 android:textColor="@color/colorSlave"
-                android:textSize="@dimen/text_size_activity_item_action_hp"
+                android:textStyle="bold"
+                android:textSize="14sp"
                 android:text="@string/activity_action_bookmark"/>
         </RelativeLayout>
     </RelativeLayout>
