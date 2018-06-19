@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,8 +116,20 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
             textViewTag.setX(iBeginX * (i + 1));
             textViewTag.setTypeface(null, Typeface.BOLD);
+            textViewTag.setGravity(Gravity.CENTER_VERTICAL);
             textViewTag.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
-            textViewTag.setBackground(getTagBackground(mContext.getResources().getColor(R.color.colorPrimary)));
+
+            textViewTag.measure(0, 0);
+            int iMeasuredWidth = textViewTag.getMeasuredWidth();
+            int iTagWidth = (int) (iMeasuredWidth * 0.7);
+
+            //adjust position with measured width
+            float fAdjustX = textViewTag.getX() - (int)(iTagWidth * 0.8);
+            textViewTag.setX(fAdjustX);
+
+            textViewTag.setPadding(30,0,0,0);
+            Drawable drawableTagBg = getTagBackground(mContext.getResources().getColor(R.color.colorPrimary), iTagWidth);
+            textViewTag.setBackground(drawableTagBg);
 
             holder.mLayoutTags.addView(textViewTag);
         }
@@ -181,23 +194,24 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         });
     }
 
-    private Drawable getTagBackground(int iColor) {
+    private Drawable getTagBackground(int iColor, final int iRectangleWidth) {
         final int STROKE_WIDTH = 5;
         final float CORNER_RADIUS = 40f;
+        final int HEIGHT = 45;
 
         GradientDrawable gd = new GradientDrawable() {
             @Override
             public int getIntrinsicWidth() {
-                return super.getIntrinsicWidth() + 80;
+                return super.getIntrinsicWidth() + (int)(iRectangleWidth * 1.3);
             }
 
             @Override
             public int getIntrinsicHeight() {
-                return super.getIntrinsicHeight() + 40;
+                return super.getIntrinsicHeight() + HEIGHT;
             }
         };
         gd.setShape(GradientDrawable.RECTANGLE);
-        gd.setSize(50,30);
+        gd.setSize(iRectangleWidth, HEIGHT);
         gd.setColor(Color.TRANSPARENT);
         gd.setStroke(STROKE_WIDTH, iColor);
         gd.setCornerRadius(CORNER_RADIUS);

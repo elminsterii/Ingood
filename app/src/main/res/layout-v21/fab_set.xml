@@ -11,10 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:backgroundTint="@android:color/transparent"
-        android:src="@drawable/add_dark"
+        android:tint="@color/colorSlave"
+        app:srcCompat="@android:drawable/ic_input_add"
         app:backgroundTint="@android:color/transparent"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:rippleColor="@android:color/transparent" />
+        app:borderWidth="3dp"
+        app:elevation="2dp" />
 </RelativeLayout>
