@@ -19,6 +19,9 @@
     <string name="input_verify_code_hint">Input verify code please</string>
     <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>
 
+    <!-- Activity -->
+    <string name="activity_action_bookmark">Save</string>
+
     <!-- Tags -->
     <string name="tag_care">Care</string>
     <string name="tag_environmental_protection">Environmental Protection</string>

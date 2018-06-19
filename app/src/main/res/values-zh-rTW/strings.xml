@@ -20,6 +20,9 @@
     <string name="input_verify_code_hint">請輸入驗證碼</string>
     <string name="hint_for_verify">請按發送驗證碼，平台將會發送驗證碼到您的信箱</string>
 
+    <!-- Activity -->
+    <string name="activity_action_bookmark">保存</string>
+
     <!-- Tags -->
     <string name="tag_care">關懷</string>
     <string name="tag_environmental_protection">環保</string>

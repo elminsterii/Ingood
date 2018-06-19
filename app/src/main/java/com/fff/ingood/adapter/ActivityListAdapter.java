@@ -11,8 +11,14 @@ import android.widget.TextView;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.tools.StringTool;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by ElminsterII on 2018/5/29.
@@ -24,12 +30,20 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
         TextView mTextViewActivityName;
+        TextView mTextViewActivityTime;
+        TextView mTextViewActivityActionAttention;
+        TextView mTextViewActivityActionGoodCount;
         RelativeLayout mLayoutTags;
+        RelativeLayout mLayoutActivityBookmark;
         ViewHolder(View v) {
             super(v);
             mImageViewActivity = v.findViewById(R.id.imgActivityItem);
             mTextViewActivityName = v.findViewById(R.id.textActivityName);
+            mTextViewActivityTime = v.findViewById(R.id.textActivityTime);
+            mTextViewActivityActionAttention = v.findViewById(R.id.textActivityActionAttention);
+            mTextViewActivityActionGoodCount = v.findViewById(R.id.textActivityActionGood);
             mLayoutTags = v.findViewById(R.id.layoutActivityTags);
+            mLayoutActivityBookmark = v.findViewById(R.id.layoutActivityBookmark);
         }
     }
 
@@ -50,15 +64,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         IgActivity activity = m_lsActivity.get(position);
-        holder.mTextViewActivityName.setText(activity.getName());
-        makeTags(holder, activity);
 
-        holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO - go to detail page of activity
-            }
-        });
+        makeActivityName(holder, activity);
+        makeTime(holder, activity);
+        makeAttention(holder, activity);
+        makeGood(holder, activity);
+        makeTags(holder, activity);
+        makeListener(holder);
     }
 
     @Override
@@ -97,5 +109,64 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             holder.mLayoutTags.addView(textViewTag);
         }
+    }
+
+    private void makeActivityName(ViewHolder holder, IgActivity activity) {
+        String strActivityName = activity.getName();
+        holder.mTextViewActivityName.setText(strActivityName);
+    }
+
+    private void makeAttention(ViewHolder holder, IgActivity activity) {
+        String strAttention = activity.getAttention();
+        if(!StringTool.checkStringNotNull(strAttention))
+            strAttention = "0";
+        holder.mTextViewActivityActionAttention.setText(strAttention);
+    }
+
+    private void makeGood(ViewHolder holder, IgActivity activity) {
+        String strGood = activity.getGood();
+        if(!StringTool.checkStringNotNull(strGood))
+            strGood = "0";
+        holder.mTextViewActivityActionGoodCount.setText(strGood);
+    }
+
+    private void makeTime(ViewHolder holder, IgActivity activity) {
+        String strOriginPattern = "yyyy-MM-dd HH:mm:ss";
+        String strNewPattern = "yyyy-MM-dd(EEE) HH:mm";
+
+        DateFormat dateOriginFormat = new SimpleDateFormat(strOriginPattern, Locale.getDefault());
+        DateFormat dateNewFormat = new SimpleDateFormat(strNewPattern, Locale.getDefault());
+
+        String strTimeBegin = activity.getDateBegin();
+        String strTimeEnd = activity.getDateEnd();
+
+        try {
+            Date dateBegin = dateOriginFormat.parse(strTimeBegin);
+            strTimeBegin = dateNewFormat.format(dateBegin);
+
+            Date dateEnd = dateOriginFormat.parse(strTimeEnd);
+            strTimeEnd = dateNewFormat.format(dateEnd);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String strTime = strTimeBegin + " ~ " + strTimeEnd;
+        holder.mTextViewActivityTime.setText(strTime);
+    }
+
+    private void makeListener(ViewHolder holder) {
+        holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - go to detail page of activity
+            }
+        });
+
+        holder.mLayoutActivityBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - add/cancel bookmark
+            }
+        });
     }
 }

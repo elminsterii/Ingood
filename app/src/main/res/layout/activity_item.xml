@@ -14,7 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:id="@+id/layoutRelativeActivityItem"
         android:orientation="vertical"
         android:layout_marginTop="8dp"
@@ -54,7 +54,8 @@
     <RelativeLayout
         android:id="@+id/layoutActivityTags"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
         android:layout_gravity="bottom"
         android:layout_marginBottom="6dp">
     </RelativeLayout>
@@ -63,34 +64,76 @@
         android:id="@+id/layoutActivityActions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".5"
+        android:layout_weight=".3"
         android:layout_gravity="bottom"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
 
         <ImageView
-            android:id="@+id/imgActivityAction1"
+            android:id="@+id/imgActivityActionComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_edge_action_item_hp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:src="@drawable/comment" />
+        <TextView
+            android:id="@+id/textActivityActionAttention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgActivityActionComment"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextHint"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_activity_item_action_hp"
+            tools:ignore="RelativeOverlap" />
 
-        <ImageView
-            android:id="@+id/imgActivityAction2"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/good_36" />
+            tools:ignore="RelativeOverlap">
 
-        <ImageView
-            android:id="@+id/imgActivityAction3"
+            <ImageView
+                android:id="@+id/imgActivityActionGood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/good_36" />
+
+            <TextView
+                android:id="@+id/textActivityActionGood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imgActivityActionGood"
+                android:textColor="@color/colorTextHint"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutActivityBookmark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/bookmark_n_36" />
+            android:layout_marginEnd="@dimen/margin_edge_action_item_hp"
+            tools:ignore="RelativeOverlap">
+
+            <ImageView
+                android:id="@+id/imgActivityActionBookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/bookmark_n_36" />
+            <TextView
+                android:id="@+id/textActivityActionBookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imgActivityActionBookmark"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_activity_item_action_hp"
+                android:text="@string/activity_action_bookmark"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
