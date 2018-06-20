@@ -126,8 +126,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         adjustXaxisForTagsInTagBar(lsTextViewTags, iTagBarContain);
         paddingAllTagsForAlignCenter(lsTextViewTags);
 
-        for(TextView view : lsTextViewTags)
-            holder.mLayoutTags.addView(view);
+        for(int i=0; i<iTagBarContain; i++)
+            holder.mLayoutTags.addView(lsTextViewTags.get(i));
     }
 
     private void paddingAllTagsForAlignCenter(List<TextView> lsTextViewTags) {
@@ -190,12 +190,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private int measureHowManyTagsInTagBar(List<TextView> lsTextViewTags) {
+        final int MARGIN_WIDTH_OF_TAG_BAR = 100;
+
         int iTagSize = lsTextViewTags.size();
 
         if(iTagSize == 0)
             return 0;
 
-        int MAX_TAG_BAR_WIDTH = mTagBarWidth;
+        int MAX_TAG_BAR_WIDTH = mTagBarWidth - MARGIN_WIDTH_OF_TAG_BAR;
 
         int bRes = 0;
         int iSumAllTagGapWidth = GAP_TAGS * (lsTextViewTags.size() - 1);
