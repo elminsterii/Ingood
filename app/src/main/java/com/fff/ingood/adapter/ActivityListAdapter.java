@@ -159,7 +159,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
 
         //shift all tags with remain width
-        final float RATIO_SHIFT = 0.27f;
+        final float RATIO_SHIFT = getShiftRatio(iTagBarContain);
         int iRemainWidth = MAX_TAG_BAR_WIDTH - iCurXAxis;
         int iShiftXAxis = (int)(iRemainWidth * RATIO_SHIFT);
         for(int i=0; i<iTagBarContain; i++) {
@@ -167,6 +167,27 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             int iNewXAxis = (int)view.getX() + iShiftXAxis;
             view.setX(iNewXAxis);
         }
+    }
+
+    private float getShiftRatio(int iTagBarContain) {
+        float iShiftRatio;
+
+        switch(iTagBarContain) {
+            case 1 :
+                iShiftRatio = 0.42f;
+                break;
+            case 2 :
+                iShiftRatio = 0.33f;
+                break;
+            case 3 :
+                iShiftRatio = 0.29f;
+                break;
+            default :
+                iShiftRatio = 0.27f;
+                break;
+        }
+
+        return iShiftRatio;
     }
 
     private int measureHowManyTagsInTagBar(List<TextView> lsTextViewTags) {
