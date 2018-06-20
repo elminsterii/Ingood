@@ -1,5 +1,8 @@
 package com.fff.ingood.adapter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 
 import java.text.DateFormat;
@@ -35,6 +39,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
+
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
@@ -56,8 +62,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
     }
 
-    public ActivityListAdapter(List<IgActivity> lsActivity) {
+    public ActivityListAdapter(List<IgActivity> lsActivity, Context context) {
         m_lsActivity = lsActivity;
+        mContext = context;
     }
 
     @NonNull
@@ -74,6 +81,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         IgActivity activity = m_lsActivity.get(position);
 
+        makeImage(holder, activity);
         makeActivityName(holder, activity);
         makeTime(holder, activity);
         makeAttention(holder, activity);
@@ -94,6 +102,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     public void setTagBarWidth(int mTagBarWidth) {
         this.mTagBarWidth = mTagBarWidth;
+    }
+
+    private void makeImage(ViewHolder holder, IgActivity activity) {
+        final int CORNER_LEVEL_VALUE = 100;
+        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_activity);
+        bm = ImageHelper.getRoundedCornerBitmap(bm, CORNER_LEVEL_VALUE);
+
+        holder.mImageViewActivity.setImageBitmap(bm);
     }
 
     private void makeTags(ViewHolder holder, IgActivity activity) {
