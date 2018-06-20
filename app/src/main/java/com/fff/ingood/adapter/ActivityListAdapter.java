@@ -22,6 +22,7 @@ import com.fff.ingood.tools.StringTool;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +31,8 @@ import java.util.Locale;
  * Created by ElminsterII on 2018/5/29.
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
+    private final int GAP_TAGS = 40;
+
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
 
@@ -99,40 +102,96 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private void makeTags(ViewHolder holder, IgActivity activity) {
         String[] arrStrTags = activity.getTags().split(",");
 
+        List<TextView> lsTextViewTags = new ArrayList<>();
         int iTagId = 1;
-        final int MAX_TAGS = 5;
-        int iSize = arrStrTags.length > MAX_TAGS ? MAX_TAGS : arrStrTags.length;
-        int iBeginX = mTagBarWidth / (iSize + 2);
-
-        //align center for the one item.
-        if(iSize == 1)
-            iBeginX += (iBeginX / 5);
-
-        for(int i=0; i<iSize; i++) {
-            String strTag = arrStrTags[i];
+        for (String strTag : arrStrTags) {
             TextView textViewTag = new TextView(holder.mLayoutTags.getContext());
             textViewTag.setId(iTagId++);
             textViewTag.setText(strTag);
             textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
-            textViewTag.setX(iBeginX * (i + 1));
             textViewTag.setTypeface(null, Typeface.BOLD);
             textViewTag.setGravity(Gravity.CENTER_VERTICAL);
             textViewTag.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
 
             textViewTag.measure(0, 0);
             int iMeasuredWidth = textViewTag.getMeasuredWidth();
-            int iTagWidth = (int) (iMeasuredWidth * 0.7);
+            int iMeasuredHeight = textViewTag.getMeasuredHeight();
 
-            //adjust position with measured width
-            float fAdjustX = textViewTag.getX() - (int)(iTagWidth * 0.8);
-            textViewTag.setX(fAdjustX);
-
-            textViewTag.setPadding(30,0,0,0);
-            Drawable drawableTagBg = getTagBackground(mContext.getResources().getColor(R.color.colorPrimary), iTagWidth);
+            Drawable drawableTagBg = getTagBackground(mContext.getResources().getColor(R.color.colorPrimary), iMeasuredWidth, iMeasuredHeight);
             textViewTag.setBackground(drawableTagBg);
 
-            holder.mLayoutTags.addView(textViewTag);
+            lsTextViewTags.add(textViewTag);
         }
+
+        int iTagBarContain = measureHowManyTagsInTagBar(lsTextViewTags);
+        adjustXaxisForTagsInTagBar(lsTextViewTags, iTagBarContain);
+        paddingAllTagsForAlignCenter(lsTextViewTags);
+
+        for(TextView view : lsTextViewTags)
+            holder.mLayoutTags.addView(view);
+    }
+
+    private void paddingAllTagsForAlignCenter(List<TextView> lsTextViewTags) {
+        float RATIO_PADDING = 0.17f;
+
+        for(TextView view : lsTextViewTags) {
+            int iBackgroundWidth = view.getBackground().getIntrinsicWidth();
+            int iPaddingX = (int)(iBackgroundWidth * RATIO_PADDING);
+            view.setPadding(iPaddingX, 0, 0, 0);
+        }
+    }
+
+    private void adjustXaxisForTagsInTagBar(List<TextView> lsTextViewTags, int iTagBarContain) {
+        int iTagSize = lsTextViewTags.size();
+
+        if(iTagSize == 0)
+            return;
+
+        int MAX_TAG_BAR_WIDTH = mTagBarWidth;
+        int iCurXAxis = 0;
+
+        //set X axis for each tags
+        for(int i=0; i<iTagBarContain; i++) {
+            iCurXAxis += GAP_TAGS;
+            TextView view = lsTextViewTags.get(i);
+            view.setX(iCurXAxis);
+            iCurXAxis += view.getBackground().getIntrinsicWidth();
+        }
+
+        //shift all tags with remain width
+        final float RATIO_SHIFT = 0.27f;
+        int iRemainWidth = MAX_TAG_BAR_WIDTH - iCurXAxis;
+        int iShiftXAxis = (int)(iRemainWidth * RATIO_SHIFT);
+        for(int i=0; i<iTagBarContain; i++) {
+            TextView view = lsTextViewTags.get(i);
+            int iNewXAxis = (int)view.getX() + iShiftXAxis;
+            view.setX(iNewXAxis);
+        }
+    }
+
+    private int measureHowManyTagsInTagBar(List<TextView> lsTextViewTags) {
+        int iTagSize = lsTextViewTags.size();
+
+        if(iTagSize == 0)
+            return 0;
+
+        int MAX_TAG_BAR_WIDTH = mTagBarWidth;
+
+        int bRes = 0;
+        int iSumAllTagGapWidth = GAP_TAGS * (lsTextViewTags.size() - 1);
+        int iSumAllTagWidth;
+
+        for(int i=0; i<iTagSize; i++) {
+            iSumAllTagWidth = 0;
+            for (int j=0; j<iTagSize-i; j++)
+                iSumAllTagWidth += lsTextViewTags.get(j).getBackground().getIntrinsicWidth();
+
+            if((iSumAllTagWidth + iSumAllTagGapWidth) < MAX_TAG_BAR_WIDTH) {
+                bRes = iTagSize - i;
+                break;
+            }
+        }
+        return bRes;
     }
 
     private void makeActivityName(ViewHolder holder, IgActivity activity) {
@@ -194,24 +253,25 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         });
     }
 
-    private Drawable getTagBackground(int iColor, final int iRectangleWidth) {
+    private Drawable getTagBackground(int iColor, final int iTextViewWidth, final int iTextViewHeight) {
+        final float RATIO_SHAPE_WIDTH = 1.5f;
+        final float RATIO_SHAPE_HEIGHT = 1.5f;
         final int STROKE_WIDTH = 5;
         final float CORNER_RADIUS = 40f;
-        final int HEIGHT = 45;
 
         GradientDrawable gd = new GradientDrawable() {
             @Override
             public int getIntrinsicWidth() {
-                return super.getIntrinsicWidth() + (int)(iRectangleWidth * 1.3);
+                return (int)(super.getIntrinsicWidth() * RATIO_SHAPE_WIDTH);
             }
 
             @Override
             public int getIntrinsicHeight() {
-                return super.getIntrinsicHeight() + HEIGHT;
+                return (int)(super.getIntrinsicHeight() * RATIO_SHAPE_HEIGHT);
             }
         };
         gd.setShape(GradientDrawable.RECTANGLE);
-        gd.setSize(iRectangleWidth, HEIGHT);
+        gd.setSize(iTextViewWidth, iTextViewHeight);
         gd.setColor(Color.TRANSPARENT);
         gd.setStroke(STROKE_WIDTH, iColor);
         gd.setCornerRadius(CORNER_RADIUS);
