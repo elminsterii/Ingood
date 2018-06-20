@@ -13,16 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/viewActivityList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorHomepageBackground"
-            android:padding="10dp"/>
-
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
             android:id="@+id/search_edit_frame"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
@@ -30,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_bar_height"
                 android:background="@color/colorWhite"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll">
                 <ImageView
                     android:id="@+id/imgMenuBtn"
                     android:layout_width="wrap_content"
@@ -54,17 +47,25 @@
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
-                app:layout_scrollFlags="scroll|enterAlways"
                 android:id="@+id/layoutTagBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tag_bar_height"
                 android:background="@color/colorWhite"
+                app:layout_scrollFlags="exitUntilCollapsed"
                 app:tabIndicatorColor="@color/colorSlaveLight"
                 app:tabSelectedTextColor="@color/colorSlave"
                 app:tabTextColor="@color/colorSlaveLight">
             </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/viewActivityList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorHomepageBackground"
+            android:padding="10dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <include
             android:id="@+id/fabSet_Home"
