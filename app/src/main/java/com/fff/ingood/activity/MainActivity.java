@@ -13,6 +13,7 @@ import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.global.TagManager;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        TagManager.getInstance(this);
         PreferenceManager.getInstance(this);
         ServerResponse.getInstance(this);
 

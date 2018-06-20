@@ -101,7 +101,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mActivityListAdapter = new ActivityListAdapter(m_lsActivities, this);
+        mActivityListAdapter = new ActivityListAdapter(m_lsActivities);
 
         mViewActivityList.setLayoutManager(mLayoutManager);
         mViewActivityList.setNestedScrollingEnabled(true);

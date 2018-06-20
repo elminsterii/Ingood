@@ -1,6 +1,5 @@
 package com.fff.ingood.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.global.TagManager;
 import com.fff.ingood.tools.StringTool;
 
 import java.text.DateFormat;
@@ -35,8 +35,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
-
-    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView mImageViewActivity;
@@ -58,9 +56,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
     }
 
-    public ActivityListAdapter(List<IgActivity> lsActivity, Context mContext) {
+    public ActivityListAdapter(List<IgActivity> lsActivity) {
         m_lsActivity = lsActivity;
-        this.mContext = mContext;
     }
 
     @NonNull
@@ -111,13 +108,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
             textViewTag.setTypeface(null, Typeface.BOLD);
             textViewTag.setGravity(Gravity.CENTER_VERTICAL);
-            textViewTag.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+
+            int iColor = TagManager.getInstance().getTagColor(strTag);
+            textViewTag.setTextColor(iColor);
 
             textViewTag.measure(0, 0);
             int iMeasuredWidth = textViewTag.getMeasuredWidth();
             int iMeasuredHeight = textViewTag.getMeasuredHeight();
 
-            Drawable drawableTagBg = getTagBackground(mContext.getResources().getColor(R.color.colorPrimary), iMeasuredWidth, iMeasuredHeight);
+            Drawable drawableTagBg = getTagBackground(iColor, iMeasuredWidth, iMeasuredHeight);
             textViewTag.setBackground(drawableTagBg);
 
             lsTextViewTags.add(textViewTag);

@@ -11,4 +11,11 @@
     <color name="colorTransparent">#00000000</color>
     <color name="colorTextHint">#A8A7A8</color>
     <color name="colorHomepageBackground">#fafafa</color>
+
+    <!-- Tags Color -->
+    <color name="colorTagCare">#DC808A</color>
+    <color name="colorTagEnvironmentalProtection">#14803A</color>
+    <color name="colorTagEducation">#3C5071</color>
+    <color name="colorTagManpower">#CF5044</color>
+    <color name="colorTagAnimal">#664536</color>
 </resources>
