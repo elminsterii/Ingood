@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class IgActivity implements Serializable {
 
+    public static final String TAG_IGACTIVITY = "igactivity";
+
     @SerializedName("id")
     private String m_id;
 

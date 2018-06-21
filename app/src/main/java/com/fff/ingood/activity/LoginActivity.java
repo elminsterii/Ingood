@@ -46,6 +46,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void preInit() {
+
+    }
+
+    @Override
     protected void initView(){
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);

@@ -26,6 +26,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
     protected BaseActivity mActivity;
     private int mCurAPIVersion;
 
+    protected abstract void preInit();
+
     protected abstract void initView();
 
     protected abstract void initData();
@@ -40,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
         mCurAPIVersion = android.os.Build.VERSION.SDK_INT;
         mActivity = this;
 
+        preInit();
         initView();
         initData();
         initListener();

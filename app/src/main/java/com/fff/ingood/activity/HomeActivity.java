@@ -78,6 +78,11 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     }
 
     @Override
+    protected void preInit() {
+
+    }
+
+    @Override
     protected void initView() {
         mViewActivityList = findViewById(R.id.viewActivityList);
         mLayoutMenu = findViewById(R.id.layoutMenu);

@@ -1,6 +1,7 @@
 package com.fff.ingood.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fff.ingood.R;
+import com.fff.ingood.activity.IgActivityDetailActivity;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.tools.ImageHelper;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 
 /**
  * Created by ElminsterII on 2018/5/29.
@@ -80,6 +84,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         IgActivity activity = m_lsActivity.get(position);
+        holder.mImageViewActivity.setTag(position);
 
         makeImage(holder, activity);
         makeActivityName(holder, activity);
@@ -279,7 +284,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - go to detail page of activity
+                //@@@ test
+                int position = (int)v.getTag();
+                IgActivity activity = m_lsActivity.get(position);
+
+                Intent intent = new Intent(mContext, IgActivityDetailActivity.class);
+                intent.putExtra(TAG_IGACTIVITY, activity);
+                mContext.startActivity(intent);
             }
         });
 
