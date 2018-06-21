@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -84,6 +85,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
         else {
             bInitialize = true;
             showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
+            hideKeyboard();
         }
     }
 
@@ -110,36 +112,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             @SuppressLint("CommitTransaction")
             @Override
             public void onClick(View v) {
-                if(mCurFragment instanceof RegistrationFormFragment) {
-                    Person personNew = mFragmentRegistrationForm.getUser();
-
-                    if (personNew != null) {
-                        PersonManager.getInstance().setPerson(personNew);
-                        showFragment(mFragmentRegistrationVerify, TAG_FRAGMENT_REGISTRATION_VERIFY);
-                    }
-                } else if(mCurFragment instanceof RegistrationVerifyFragment) {
-                    if(mFragmentRegistrationVerify.isVerifyPass()) {
-                        PersonManager.getInstance().getPerson().setVerifyCode(mFragmentRegistrationVerify.getVerifyCode());
-                        showFragment(mFragmentRegistrationLocation, TAG_FRAGMENT_REGISTRATION_LOCATION);
-                    }
-                } else if(mCurFragment instanceof RegistrationLocationFragment) {
-                    String strLocation = mFragmentRegistrationLocation.getLocation();
-
-                    if(strLocation != null) {
-                        PersonManager.getInstance().getPerson().setLocation(strLocation);
-                        showFragment(mFragmentRegistrationInterest, TAG_FRAGMENT_REGISTRATION_INTEREST);
-                    }
-                } else if(mCurFragment instanceof RegistrationInterestFragment) {
-                    String strInterests = mFragmentRegistrationInterest.getInterests();
-
-                    if(strInterests != null) {
-                        mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
-
-                        PersonManager.getInstance().getPerson().setInterests(strInterests);
-                        FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
-                    }
-                }
-                changeTitle(mCurFragment);
+                goToNextPage();
             }
         });
 
@@ -149,6 +122,43 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
                 onBackPressed();
             }
         });
+    }
+
+    public void goToNextPage() {
+        if(mCurFragment instanceof RegistrationFormFragment) {
+            Person personNew = mFragmentRegistrationForm.getUser();
+
+            if (personNew != null) {
+                PersonManager.getInstance().setPerson(personNew);
+                showFragment(mFragmentRegistrationVerify, TAG_FRAGMENT_REGISTRATION_VERIFY);
+                openKeyboard();
+            }
+        } else if(mCurFragment instanceof RegistrationVerifyFragment) {
+            if(mFragmentRegistrationVerify.isVerifyPass()) {
+                PersonManager.getInstance().getPerson().setVerifyCode(mFragmentRegistrationVerify.getVerifyCode());
+                showFragment(mFragmentRegistrationLocation, TAG_FRAGMENT_REGISTRATION_LOCATION);
+                hideKeyboard();
+            }
+        } else if(mCurFragment instanceof RegistrationLocationFragment) {
+            String strLocation = mFragmentRegistrationLocation.getLocation();
+
+            if(strLocation != null) {
+                PersonManager.getInstance().getPerson().setLocation(strLocation);
+                showFragment(mFragmentRegistrationInterest, TAG_FRAGMENT_REGISTRATION_INTEREST);
+                hideKeyboard();
+            }
+        } else if(mCurFragment instanceof RegistrationInterestFragment) {
+            String strInterests = mFragmentRegistrationInterest.getInterests();
+
+            if(strInterests != null) {
+                mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+
+                PersonManager.getInstance().getPerson().setInterests(strInterests);
+                FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
+                hideKeyboard();
+            }
+        }
+        changeTitle(mCurFragment);
     }
 
     private void changeTitle(Fragment curFragment) {
@@ -212,5 +222,19 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        if(getCurrentFocus() == null)
+            return;
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }

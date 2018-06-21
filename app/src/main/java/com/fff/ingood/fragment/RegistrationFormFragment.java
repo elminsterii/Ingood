@@ -142,6 +142,11 @@ public class RegistrationFormFragment extends BaseFragment {
         });
     }
 
+    @Override
+    protected void postInit() {
+
+    }
+
     private boolean isDataValid(){
         if(TextUtils.isEmpty(mEditTextDisplayName.getText().toString().trim())) {
             mEditTextDisplayName.requestFocus();

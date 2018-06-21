@@ -20,6 +20,7 @@
         android:inputType="textPersonName"
         android:hint="@string/user_data_name"
         android:paddingStart="12dp"
+        android:textColorHighlight="@color/colorSlaveUltraLight"
         tools:ignore="RtlSymmetry"
         android:ems="10" />
 
@@ -37,6 +38,7 @@
         android:inputType="textEmailAddress"
         android:hint="@string/user_data_email"
         android:paddingStart="12dp"
+        android:textColorHighlight="@color/colorSlaveUltraLight"
         tools:ignore="RtlSymmetry"
         android:ems="10"/>
 
@@ -56,6 +58,7 @@
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd"
             android:paddingStart="12dp"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
 
@@ -85,6 +88,7 @@
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd_confirm"
             android:paddingStart="12dp"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
 

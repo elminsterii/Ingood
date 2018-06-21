@@ -61,4 +61,9 @@ public class RegistrationLocationFragment extends BaseFragment {
     protected void initListener() {
 
     }
+
+    @Override
+    protected void postInit() {
+
+    }
 }

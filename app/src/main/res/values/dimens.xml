@@ -11,6 +11,8 @@
     <!-- Registration -->
     <dimen name="title_size_registration">21sp</dimen>
     <dimen name="text_size_registration_form_input">18sp</dimen>
+    <dimen name="text_size_registration_verify_code_input">23sp</dimen>
+    <dimen name="text_size_registration_verify_code_width">60dp</dimen>
     <dimen name="text_size_registration_description">15sp</dimen>
     <dimen name="subtitle_size_registration_tag">18sp</dimen>
     <dimen name="text_size_registration_tag_description">13sp</dimen>

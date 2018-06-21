@@ -26,6 +26,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initListener();
 
+    protected abstract void postInit();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,5 +41,6 @@ public abstract class BaseFragment extends Fragment {
         initView();
         initListener();
         initData();
+        postInit();
     }
 }
