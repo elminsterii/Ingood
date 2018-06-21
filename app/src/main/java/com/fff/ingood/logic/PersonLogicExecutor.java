@@ -26,4 +26,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonVerifyLogic(caller, person);
         fl.doLogic();
     }
+
+    public void doPersonCheckExist(PersonCheckExistLogic.PersonCheckExistLogicCaller caller, Person person) {
+        Logic fl = new PersonCheckExistLogic(caller, person);
+        fl.doLogic();
+    }
 }

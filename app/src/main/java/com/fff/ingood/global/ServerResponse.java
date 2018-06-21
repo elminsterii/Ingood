@@ -71,7 +71,7 @@ public class ServerResponse {
 
     public static final Integer STATUS_CODE_SUCCESS_INT = 0;
     private static final Integer STATUS_CODE_FAIL_USER_NOT_FOUND_INT = 1;
-    private static final Integer STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT = 2;
+    public static final Integer STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT = 2;
     private static final Integer STATUS_CODE_FAIL_INVALID_USER_INT = 3;
     private static final Integer STATUS_CODE_FAIL_ACTIVITY_NOT_FOUND_INT = 4;
     private static final Integer STATUS_CODE_FAIL_MISSING_DATA_INT = 5;

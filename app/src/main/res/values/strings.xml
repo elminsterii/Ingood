@@ -51,6 +51,7 @@
 
     <!-- Toast -->
     <string name="register_email_format_wrong">Email format wrong</string>
+    <string name="register_email_was_exist">The email was exist</string>
     <string name="register_password_format_wrong">Password format wrong</string>
     <string name="register_confirm_password_format_wrong">Confirm password format wrong</string>
     <string name="register_password_not_consistent">Password and confirm password are not consistent</string>

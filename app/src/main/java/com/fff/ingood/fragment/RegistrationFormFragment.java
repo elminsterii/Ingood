@@ -1,7 +1,9 @@
 package com.fff.ingood.fragment;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -19,10 +21,14 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.logic.PersonCheckExistLogic;
+import com.fff.ingood.logic.PersonLogicExecutor;
 
 import java.util.Objects;
 
-public class RegistrationFormFragment extends BaseFragment {
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
+
+public class RegistrationFormFragment extends BaseFragment implements PersonCheckExistLogic.PersonCheckExistLogicCaller {
     public static final int AGE_LIMITATION = 18;
 
     private EditText mEditTextAccount;
@@ -37,6 +43,10 @@ public class RegistrationFormFragment extends BaseFragment {
     private Boolean mIsPwdEyeCheck = true;
     private ImageButton mImageButton_ConfirmPwdEye;
     private Boolean mIsConfirmPwdEyeCheck = true;
+
+    private boolean m_bIsEmailExist = true;
+
+    private RegistrationFormFragment mThis;
 
     public static RegistrationFormFragment newInstance() {
         return new RegistrationFormFragment();
@@ -59,6 +69,7 @@ public class RegistrationFormFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mThis = this;
         return inflater.inflate(R.layout.fragment_registration_form, container, false);
     }
 
@@ -91,6 +102,56 @@ public class RegistrationFormFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
+        mEditTextDisplayName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                    checkDisplayNameValid();
+            }
+        });
+
+        mEditTextAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                    checkEmailExistFromServer();
+            }
+        });
+
+        mEditTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                    checkPasswordValid();
+            }
+        });
+
+        mEditTextConfirmPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    checkConfirmPasswordValid();
+                    checkConfirmPasswordEqualPassword();
+                }
+            }
+        });
+
+        mSpinnerGender.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                    checkGenderValid();
+            }
+        });
+
+        mSpinnerAge.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                    checkAgeValid();
+            }
+        });
+
         mSpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -147,72 +208,123 @@ public class RegistrationFormFragment extends BaseFragment {
 
     }
 
-    private boolean isDataValid(){
+    private boolean checkDisplayNameValid() {
         if(TextUtils.isEmpty(mEditTextDisplayName.getText().toString().trim())) {
-            mEditTextDisplayName.requestFocus();
             Toast.makeText(getActivity(), getResources().getText(R.string.register_displayname_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextDisplayName, getResources().getColor(R.color.colorWarningRed));
             return false;
         }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(mEditTextAccount.getText().toString().trim()).matches()
-                || TextUtils.isEmpty(mEditTextAccount.getText().toString().trim())) {
-            mEditTextAccount.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_email_format_wrong), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(TextUtils.isEmpty(mEditTextPassword.getText().toString().trim())
-                || mEditTextPassword.getText().toString().length() < 8) {
-            mEditTextPassword.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_password_format_wrong), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(TextUtils.isEmpty(mEditTextConfirmPassword.getText().toString().trim())
-                || mEditTextConfirmPassword.getText().toString().length() < 8) {
-            mEditTextConfirmPassword.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_confirm_password_format_wrong), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(!mEditTextConfirmPassword.getText().toString().equals(mEditTextPassword.getText().toString())) {
-            mEditTextConfirmPassword.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_password_not_consistent), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(mSpinnerGender.getSelectedItemPosition() == 0) {
-            clearAllFocus();
-            mSpinnerGender.setFocusable(true);
-            mSpinnerGender.setFocusableInTouchMode(true);
-            mSpinnerGender.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if(mSpinnerAge.getSelectedItemPosition() == 0) {
-            clearAllFocus();
-            mSpinnerAge.setFocusable(true);
-            mSpinnerAge.setFocusableInTouchMode(true);
-            mSpinnerAge.requestFocus();
-            Toast.makeText(getActivity(), getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
-            return false;
-        }
+        setViewUnderlineColor(mEditTextDisplayName, getResources().getColor(R.color.colorTextHint));
         return true;
     }
 
-    private void clearAllFocus() {
-        if(mEditTextDisplayName.hasFocus())
-            mEditTextDisplayName.clearFocus();
-        if(mEditTextAccount.hasFocus())
-            mEditTextAccount.clearFocus();
-        if(mEditTextPassword.hasFocus())
-            mEditTextPassword.clearFocus();
-        if(mEditTextConfirmPassword.hasFocus())
-            mEditTextConfirmPassword.clearFocus();
-        if(mSpinnerAge.hasFocus())
-            mSpinnerAge.clearFocus();
-        if(mSpinnerGender.hasFocus())
-            mSpinnerGender.clearFocus();
+    private boolean checkEmailValid() {
+        if (!Patterns.EMAIL_ADDRESS.matcher(mEditTextAccount.getText().toString().trim()).matches()
+                || TextUtils.isEmpty(mEditTextAccount.getText().toString().trim())) {
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_email_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextAccount, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+
+        if(m_bIsEmailExist) {
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_email_was_exist), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextAccount, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+
+        setViewUnderlineColor(mEditTextAccount, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkPasswordValid() {
+        if(TextUtils.isEmpty(mEditTextPassword.getText().toString().trim())
+                || mEditTextPassword.getText().toString().length() < 8) {
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_password_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextPassword, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mEditTextPassword, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkConfirmPasswordValid() {
+        if(TextUtils.isEmpty(mEditTextConfirmPassword.getText().toString().trim())
+                || mEditTextConfirmPassword.getText().toString().length() < 8) {
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_confirm_password_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextConfirmPassword, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mEditTextConfirmPassword, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkConfirmPasswordEqualPassword() {
+        if(!mEditTextConfirmPassword.getText().toString().equals(mEditTextPassword.getText().toString())) {
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_password_not_consistent), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextConfirmPassword, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mEditTextConfirmPassword, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkGenderValid() {
+        if(mSpinnerGender.getSelectedItemPosition() == 0) {
+            mSpinnerGender.setFocusable(true);
+            mSpinnerGender.setFocusableInTouchMode(true);
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mSpinnerGender, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mSpinnerGender, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkAgeValid() {
+        if(mSpinnerAge.getSelectedItemPosition() == 0) {
+            mSpinnerAge.setFocusable(true);
+            mSpinnerAge.setFocusableInTouchMode(true);
+            Toast.makeText(getActivity(), getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mSpinnerAge, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mSpinnerAge, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean isDataValid() {
+        return checkDisplayNameValid()
+                && checkEmailValid()
+                && checkPasswordValid()
+                && checkConfirmPasswordValid()
+                && checkConfirmPasswordEqualPassword()
+                && checkGenderValid()
+                && checkAgeValid();
+    }
+
+    private void checkEmailExistFromServer() {
+        String strEmail = mEditTextAccount.getText().toString();
+        Person person = new Person();
+        person.setEmail(strEmail);
+
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonCheckExist(mThis, person);
+    }
+
+    private void setViewUnderlineColor(View view, int iColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(iColor);
+        ViewCompat.setBackgroundTintList(view, colorStateList);
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        if(iStatusCode.equals(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT))
+            m_bIsEmailExist = true;
+        checkEmailValid();
+    }
+
+    @Override
+    public void onPersonNotExist() {
+        m_bIsEmailExist = false;
     }
 }

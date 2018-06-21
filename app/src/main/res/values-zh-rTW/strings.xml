@@ -52,6 +52,7 @@
 
     <!-- Toast -->
     <string name="register_email_format_wrong">信箱格式不正確</string>
+    <string name="register_email_was_exist">該信箱已註冊</string>
     <string name="register_password_format_wrong">密碼格式不正確</string>
     <string name="register_confirm_password_format_wrong">確認密碼格式不正確</string>
     <string name="register_password_not_consistent">密碼與確認密碼不一致</string>

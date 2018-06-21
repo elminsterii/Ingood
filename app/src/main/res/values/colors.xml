@@ -10,7 +10,8 @@
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorTextHint">#A8A7A8</color>
-    <color name="colorHomepageBackground">#fafafa</color>
+    <color name="colorHomepageBackground">#FAFAFA</color>
+    <color name="colorWarningRed">#FF5F5F</color>
 
     <!-- Tags Color -->
     <color name="colorTagCare">#DC808A</color>

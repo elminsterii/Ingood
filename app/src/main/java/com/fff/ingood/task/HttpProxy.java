@@ -14,6 +14,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_VERIFY_EMAIL = SERVER_URL + "/verifyemail";
     public static final String HTTP_POST_API_PERSON_QUERY = SERVER_URL + "/queryperson";
     public static final String HTTP_POST_API_PERSON_UPDATE = SERVER_URL + "/updateperson";
+    public static final String HTTP_POST_API_PERSON_CHECK_EXIST = SERVER_URL + "/checkpersonexist";
     public static final String HTTP_POST_API_ACTIVITY_CREATE = SERVER_URL + "/createactivity";
     public static final String HTTP_POST_API_ACTIVITY_DELETE = SERVER_URL + "/deleteactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY = SERVER_URL + "/queryactivity";
