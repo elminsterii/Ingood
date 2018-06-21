@@ -27,6 +27,13 @@
             android:textColorHighlight="@color/colorSlave"
             android:textStyle="bold"/>
 
+        <include
+            android:id="@+id/fabSetIgActivity"
+            layout="@layout/fab_set_ig_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+
     </LinearLayout>
 
 </com.fff.ingood.ui.HeadZoomScrollView>
