@@ -102,53 +102,12 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
 
     @Override
     protected void initListener() {
-        mEditTextDisplayName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                    checkDisplayNameValid();
-            }
-        });
 
         mEditTextAccount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                     checkEmailExistFromServer();
-            }
-        });
-
-        mEditTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                    checkPasswordValid();
-            }
-        });
-
-        mEditTextConfirmPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    checkConfirmPasswordValid();
-                    checkConfirmPasswordEqualPassword();
-                }
-            }
-        });
-
-        mSpinnerGender.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                    checkGenderValid();
-            }
-        });
-
-        mSpinnerAge.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                    checkAgeValid();
             }
         });
 
@@ -190,11 +149,11 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
         mImageButton_ConfirmPwdEye.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mIsConfirmPwdEyeCheck){
+                if(mIsConfirmPwdEyeCheck) {
                     mIsConfirmPwdEyeCheck = false;
                     mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
                     mEditTextConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else{
+                } else {
                     mIsConfirmPwdEyeCheck = true;
                     mImageButton_ConfirmPwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
                     mEditTextConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -270,8 +229,6 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
 
     private boolean checkGenderValid() {
         if(mSpinnerGender.getSelectedItemPosition() == 0) {
-            mSpinnerGender.setFocusable(true);
-            mSpinnerGender.setFocusableInTouchMode(true);
             Toast.makeText(getActivity(), getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
             setViewUnderlineColor(mSpinnerGender, getResources().getColor(R.color.colorWarningRed));
             return false;
@@ -282,8 +239,6 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
 
     private boolean checkAgeValid() {
         if(mSpinnerAge.getSelectedItemPosition() == 0) {
-            mSpinnerAge.setFocusable(true);
-            mSpinnerAge.setFocusableInTouchMode(true);
             Toast.makeText(getActivity(), getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
             setViewUnderlineColor(mSpinnerAge, getResources().getColor(R.color.colorWarningRed));
             return false;
@@ -320,7 +275,6 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
     public void returnStatus(Integer iStatusCode) {
         if(iStatusCode.equals(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT))
             m_bIsEmailExist = true;
-        checkEmailValid();
     }
 
     @Override
