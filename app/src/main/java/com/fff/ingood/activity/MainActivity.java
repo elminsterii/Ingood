@@ -16,6 +16,7 @@ import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
+import static com.fff.ingood.global.GlobalProperty.STARTUP_ANIMATION_DURATION;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
@@ -40,6 +41,10 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     protected void onResume() {
         super.onResume();
         startStartupAnimation();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     @Override
@@ -70,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f
                 , Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        final int STARTUP_ANIMATION_DURATION = 1000;
         scaleAnimation.setDuration(STARTUP_ANIMATION_DURATION);
         scaleAnimation.setFillAfter(true);
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
