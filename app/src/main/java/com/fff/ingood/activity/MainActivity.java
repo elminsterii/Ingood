@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
     private void startStartupAnimation() {
         ImageView imgStartupAnimation = findViewById(R.id.imgStartupAnimation);
-        imgStartupAnimation.setImageResource(R.drawable.landingpage_bg);
+        imgStartupAnimation.setImageResource(R.drawable.landingpage_logo);
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 

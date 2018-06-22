@@ -4,6 +4,10 @@
     <string name="sign_up">Register</string>
     <string name="home_page">Home Page</string>
     <string name="activity_page">Activity content</string>
+    <!-- LoginPage -->
+    <string name="login_slogan">You,  make the world better!</string>
+    <string name="login_account">Account</string>
+    <string name="login_pwd">Password</string>
 
     <!-- Registration -->
     <string name="register_title_form">Registration</string>
