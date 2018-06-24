@@ -64,7 +64,8 @@
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,24 +102,33 @@
                 android:layout_gravity="center"
                 android:background="@drawable/selector_login_btn" />
         </LinearLayout>
-
     </LinearLayout>
-    <Button
+
+    <ImageButton
         android:id="@+id/btn_facebook"
         android:layout_marginTop="7.5dp"
         android:gravity="center"
-        android:text="Facebook"
         android:layout_width="240dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
-        android:background="@drawable/selector_login_btn" />
-    <Button
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:background="@drawable/selector_login_btn"
+        android:src="@drawable/flogo"/>
+    <ImageButton
         android:id="@+id/btn_google"
         android:layout_marginTop="12.5dp"
         android:gravity="center"
-        android:text="Google"
         android:layout_width="240dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
-        android:background="@drawable/selector_login_btn" />
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:background="@drawable/selector_login_btn"
+        android:src="@drawable/glogo"/>
+
 </LinearLayout>
