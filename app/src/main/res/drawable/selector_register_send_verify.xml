@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <corners android:radius="18dip" />
+            <corners android:radius="@dimen/button_radius" />
             <stroke android:width="2.5dip" android:color="@color/colorPrimary" />
             <gradient android:angle="-90" android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />
         </shape>
@@ -11,10 +10,9 @@
 
     <item android:color="@android:color/black">
         <shape android:shape="rectangle"  >
-            <corners android:radius="18dip" />
+            <corners android:radius="@dimen/button_radius" />
             <stroke android:width="2dip" android:color="@color/colorPrimary" />
             <gradient android:angle="-90" android:startColor="@color/colorWhite" android:endColor="@color/colorWhite"  />
         </shape>
     </item>
-
 </selector>

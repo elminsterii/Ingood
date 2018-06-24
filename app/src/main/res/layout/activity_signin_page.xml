@@ -12,8 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:maxHeight="100dp"
         android:maxWidth="100dp"
         android:src="@drawable/landingpage_logo" />
@@ -22,11 +20,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:gravity="center"
         android:text="@string/login_slogan"/>
-
-
 
     <EditText
         android:theme="@style/IngoodEditTextStyle"
@@ -79,15 +75,13 @@
             <Button
                 android:id="@+id/btn_signin"
                 android:layout_marginBottom="3dp"
-                android:layout_marginLeft="23dp"
+                android:layout_marginStart="23dp"
                 android:layout_width="105dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:background="@drawable/selector_login_btn"
                 android:gravity="center"
                 android:text="@string/sign_in" />
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -99,18 +93,14 @@
             <Button
                 android:id="@+id/btn_register"
                 android:layout_marginBottom="3dp"
-                android:layout_marginRight="23dp"
+                android:layout_marginEnd="23dp"
                 android:gravity="center"
                 android:text="@string/sign_up"
                 android:layout_width="105dp"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
-                android:background="@drawable/selector_login_btn"
-
-                />
-
+                android:background="@drawable/selector_login_btn" />
         </LinearLayout>
-
 
     </LinearLayout>
     <Button
@@ -121,8 +111,7 @@
         android:layout_width="240dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
-        android:background="@drawable/selector_login_btn"
-        />
+        android:background="@drawable/selector_login_btn" />
     <Button
         android:id="@+id/btn_google"
         android:layout_marginTop="12.5dp"
@@ -131,9 +120,5 @@
         android:layout_width="240dp"
         android:layout_height="36dp"
         android:layout_gravity="center"
-        android:background="@drawable/selector_login_btn"
-        />
-
-
-
+        android:background="@drawable/selector_login_btn" />
 </LinearLayout>

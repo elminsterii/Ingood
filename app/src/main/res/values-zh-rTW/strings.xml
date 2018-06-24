@@ -6,7 +6,7 @@
     <string name="home_page">首頁</string>
     <string name="activity_page">活動內容</string>
     <!-- LoginPage -->
-    <string name="login_slogan">你,  讓這世界更美麗!</string>
+    <string name="login_slogan">你 讓這世界更美麗</string>
     <string name="login_account">帳號</string>
     <string name="login_pwd">密碼</string>
     <!-- Registration -->
