@@ -26,6 +26,10 @@
 
     <!-- Activity -->
     <string name="activity_action_bookmark">Save</string>
+    <string name="activity_action_no_attend">Cancel</string>
+    <string name="activity_action_attend">Attend</string>
+    <string name="activity_action_report">Report</string>
+    <string name="activity_action_share">Share</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>

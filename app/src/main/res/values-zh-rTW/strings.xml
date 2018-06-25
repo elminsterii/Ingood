@@ -26,6 +26,10 @@
 
     <!-- Activity -->
     <string name="activity_action_bookmark">保存</string>
+    <string name="activity_action_no_attend">取消參加</string>
+    <string name="activity_action_attend">參加</string>
+    <string name="activity_action_report">檢舉</string>
+    <string name="activity_action_share">分享</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>
