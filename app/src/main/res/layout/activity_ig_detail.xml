@@ -37,12 +37,55 @@
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
 
-    <include
+    <RelativeLayout
+        android:id="@+id/layoutIgActivityButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16.5dp"
+        android:layout_marginBottom="7dp"
+        app:layout_anchor="@+id/zoomViewIgActivity"
+        app:layout_anchorGravity="bottom|center">
+
+        <Button
+            android:id="@+id/btnIgActivityShare"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/selector_register_next"
+            android:textSize="@dimen/text_size_button_ig_activity"
+            android:textColor="@color/colorSlave"
+            android:text="@string/activity_action_share" />
+
+        <Button
+            android:id="@+id/btnIgActivityAttend"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/selector_register_next"
+            android:textSize="@dimen/text_size_button_ig_activity"
+            android:textColor="@color/colorSlave"
+            android:text="@string/activity_action_attend" />
+
+        <Button
+            android:id="@+id/btnIgActivityReport"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/selector_register_next"
+            android:textSize="@dimen/text_size_button_ig_activity"
+            android:textColor="@color/colorSlave"
+            android:text="@string/activity_action_report" />
+    </RelativeLayout>
+
+    <!--<include
         android:id="@+id/fabSetIgActivity"
         layout="@layout/fab_set_ig_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@+id/zoomViewIgActivity"
         app:layout_anchorGravity="bottom|center"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" /> -->
 </android.support.design.widget.CoordinatorLayout>

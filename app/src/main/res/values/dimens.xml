@@ -25,6 +25,7 @@
 
     <!-- IgActivity detail -->
     <dimen name="text_size_ig_activity_title">24sp</dimen>
+    <dimen name="text_size_button_ig_activity">17sp</dimen>
 
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>
