@@ -27,6 +27,15 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
 
+        <ImageView
+            android:id="@+id/imgActivityItemMask"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_gravity="top"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_mask_home_activity"/>
+
         <TextView
             android:id="@+id/textActivityName"
             android:layout_width="wrap_content"
