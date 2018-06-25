@@ -1,6 +1,8 @@
 package com.fff.ingood.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 
 public class IgActivityDetailActivity extends BaseActivity {
 
+    private AppCompatImageView mImageViewBack;
     private HeadZoomScrollView mZoomView;
     private ImageView mImageViewIgActivityMain;
     private TextView mTextViewTitle;
@@ -34,6 +37,7 @@ public class IgActivityDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mImageViewBack = findViewById(R.id.imageViewBack);
         mZoomView = findViewById(R.id.zoomViewIgActivity);
         mImageViewIgActivityMain = findViewById(R.id.imageViewIgActivityMain);
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
@@ -54,6 +58,11 @@ public class IgActivityDetailActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-
+        mImageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

@@ -18,7 +18,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="1000dp"
-            android:orientation="vertical">
+            android:background="@color/colorHomepageBackground">
 
             <ImageView
                 android:id="@+id/imageViewIgActivityMain"
@@ -101,6 +101,13 @@
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
 
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="16dp"
+                app:srcCompat="@drawable/ic_arrow_back_white"/>
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
 
@@ -146,14 +153,6 @@
             android:textColor="@color/colorSlave"
             android:text="@string/activity_action_report" />
     </RelativeLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="16dp"
-        app:srcCompat="@drawable/ic_arrow_back_white"/>
 
     <!--<include
         android:id="@+id/fabSetIgActivity"
