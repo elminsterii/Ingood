@@ -21,17 +21,13 @@ import android.widget.TextView;
 import com.fff.ingood.R;
 import com.fff.ingood.activity.IgActivityDetailActivity;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 
@@ -257,26 +253,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeTime(ViewHolder holder, IgActivity activity) {
-        String strOriginPattern = "yyyy-MM-dd HH:mm:ss";
-        String strNewPattern = "yyyy-MM-dd(EEE) HH:mm";
-
-        DateFormat dateOriginFormat = new SimpleDateFormat(strOriginPattern, Locale.getDefault());
-        DateFormat dateNewFormat = new SimpleDateFormat(strNewPattern, Locale.getDefault());
-
-        String strTimeBegin = activity.getDateBegin();
-        String strTimeEnd = activity.getDateEnd();
-
-        try {
-            Date dateBegin = dateOriginFormat.parse(strTimeBegin);
-            strTimeBegin = dateNewFormat.format(dateBegin);
-
-            Date dateEnd = dateOriginFormat.parse(strTimeEnd);
-            strTimeEnd = dateNewFormat.format(dateEnd);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String strTime = strTimeBegin + " ~ " + strTimeEnd;
+        String strTime = IgActivityHelper.makeDateStringByIgActivity(activity);
         holder.mTextViewActivityTime.setText(strTime);
     }
 

@@ -31,9 +31,67 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/imageViewIgActivityMain"
-                android:textColorHighlight="@color/colorSlave"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_title"
                 android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_below="@+id/textViewIgActivityTitle">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/circle_loading_3"/>
+
+                <TextView
+                    android:id="@+id/textViewIgActivityDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imageViewIgActivityDate"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_below="@+id/layoutIgActivityDate">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/circle_loading_3" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageViewIgActivityLocation"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
+            </RelativeLayout>
+
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
 

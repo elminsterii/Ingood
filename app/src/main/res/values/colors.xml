@@ -8,6 +8,7 @@
     <color name="colorSlaveUltraLight">#CFCECC</color>
     <color name="colorPrimaryDark">#4F4E4C</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="colorWhiteButton">#E6FFFFFF</color>
     <color name="colorWhiteButtonPressed">#CCE5E5E5</color>

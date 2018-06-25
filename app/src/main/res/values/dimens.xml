@@ -25,7 +25,12 @@
 
     <!-- IgActivity detail -->
     <dimen name="text_size_ig_activity_title">24sp</dimen>
+    <dimen name="text_size_ig_activity_sub_title">18sp</dimen>
     <dimen name="text_size_button_ig_activity">17sp</dimen>
+    <dimen name="margin_start_ig_activity">10dp</dimen>
+    <dimen name="margin_end_ig_activity">16dp</dimen>
+    <dimen name="gap_every_row_ig_activity">15dp</dimen>
+    <dimen name="gap_icon_and_des_ig_activity">10dp</dimen>
 
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>
