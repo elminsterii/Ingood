@@ -96,10 +96,24 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/imageViewIgActivityLocation"
-                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                    android:layout_marginTop="@dimen/gap_every_row_ig_activity"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
+
+            <com.fff.ingood.ui.ExpandableTextView
+                android:id="@+id/textViewIgActivityDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/layoutIgActivityLocation"
+                android:layout_marginStart="@dimen/margin_start_des_ig_activity"
+                android:layout_marginEnd="@dimen/margin_end_des_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_ig_activity_sub_title" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageViewBack"
@@ -108,6 +122,7 @@
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="16dp"
                 app:srcCompat="@drawable/ic_arrow_back_white"/>
+
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
 

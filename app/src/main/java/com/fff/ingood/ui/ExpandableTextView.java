@@ -16,21 +16,22 @@ public class ExpandableTextView extends TextView implements View.OnClickListener
     private int currentMaxLines = Integer.MAX_VALUE;
     private int mResExpandIconResId;
 
-    public ExpandableTextView(Context context, int resExpandIconResId) {
+    public ExpandableTextView(Context context) {
         super(context);
         setOnClickListener(this);
-        mResExpandIconResId = resExpandIconResId;
     }
 
-    public ExpandableTextView(Context context, AttributeSet attrs, int defStyle, int resExpandIconResId) {
+    public ExpandableTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setOnClickListener(this);
-        mResExpandIconResId = resExpandIconResId;
     }
 
-    public ExpandableTextView(Context context, AttributeSet attrs, int resExpandIconResId) {
+    public ExpandableTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOnClickListener(this);
+    }
+
+    public void setExpandIcon(int resExpandIconResId) {
         mResExpandIconResId = resExpandIconResId;
     }
 

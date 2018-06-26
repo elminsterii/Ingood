@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.HeadZoomScrollView;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
@@ -21,6 +22,7 @@ public class IgActivityDetailActivity extends BaseActivity {
     private TextView mTextViewTitle;
     private TextView mTextViewDate;
     private TextView mTextViewLocation;
+    private ExpandableTextView mTextViewDescription;
 
     private IgActivity mIgActivity;
 
@@ -43,6 +45,7 @@ public class IgActivityDetailActivity extends BaseActivity {
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
+        mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
     }
 
     @Override
@@ -54,6 +57,10 @@ public class IgActivityDetailActivity extends BaseActivity {
         mTextViewTitle.setText(mIgActivity.getName());
         mTextViewDate.setText(strDate);
         mTextViewLocation.setText(mIgActivity.getLocation());
+
+        mTextViewDescription.setExpandIcon(R.drawable.ic_arrow_back_white);
+        mTextViewDescription.setMaxLines(1);
+        mTextViewDescription.setText(mIgActivity.getDescription());
     }
 
     @Override
