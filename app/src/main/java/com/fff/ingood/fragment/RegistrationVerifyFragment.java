@@ -44,6 +44,7 @@ public class RegistrationVerifyFragment extends BaseFragment implements
     }
 
     public boolean isVerifyPass() {
+        //@@ test
         final String PASS_CODE = "5454";
         String strInput = mVerifyCodeInput.toString();
 

@@ -92,5 +92,6 @@
         android:layout_marginTop="30dp"
         android:background="@drawable/selector_register_send_verify"
         android:text="@string/send_verify_code"
+        android:textSize="11sp"
         android:textColor="@color/colorPrimary" />
 </LinearLayout>

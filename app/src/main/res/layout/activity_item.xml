@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/imgActivityItem"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="135dp"
             android:layout_gravity="top"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/imgActivityItemMask"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="135dp"
             android:layout_gravity="top"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
@@ -54,7 +54,8 @@
             android:layout_centerHorizontal="true"
             android:layout_alignBottom="@+id/imgActivityItem"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/colorWhite"/>
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_activity_item_date_hp"/>/>
 
     </RelativeLayout>
 

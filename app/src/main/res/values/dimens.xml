@@ -4,30 +4,31 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="search_bar_height">40dp</dimen>
-    <dimen name="tag_bar_height">35dp</dimen>
-    <dimen name="tag_bar_text_size">4dp</dimen>
-
     <!-- Registration -->
-    <dimen name="title_size_registration">21sp</dimen>
-    <dimen name="text_size_registration_form_input">18sp</dimen>
-    <dimen name="text_size_registration_verify_code_input">23sp</dimen>
-    <dimen name="text_size_registration_verify_code_width">60dp</dimen>
-    <dimen name="text_size_registration_description">15sp</dimen>
-    <dimen name="subtitle_size_registration_tag">18sp</dimen>
-    <dimen name="text_size_registration_tag_description">13sp</dimen>
+    <dimen name="title_size_registration">17.8sp</dimen>
+    <dimen name="text_size_registration_form_input">14sp</dimen>
+    <dimen name="text_size_registration_verify_code_input">14sp</dimen>
+    <dimen name="text_size_registration_verify_code_width">50dp</dimen>
+    <dimen name="text_size_registration_description">11sp</dimen>
+    <dimen name="subtitle_size_registration_tag">14sp</dimen>
+    <dimen name="text_size_registration_tag_description">11sp</dimen>
     <dimen name="gap_registration_btw_texts">20dp</dimen>
 
     <!-- Activity item in Homepage -->
-    <dimen name="text_size_activity_item_title_hp">20sp</dimen>
-    <dimen name="text_size_activity_item_action_hp">15sp</dimen>
+    <dimen name="text_size_activity_item_title_hp">15sp</dimen>
+    <dimen name="text_size_activity_item_date_hp">12sp</dimen>
+    <dimen name="text_size_activity_item_action_hp">13sp</dimen>
     <dimen name="margin_edge_action_item_hp">25dp</dimen>
     <dimen name="gap_action_item_and_image_hp">3dp</dimen>
+    <dimen name="tag_bar_text_size">4sp</dimen>
+
+    <dimen name="search_bar_height">47dp</dimen>
+    <dimen name="tag_bar_height">42.7dp</dimen>
 
     <!-- IgActivity detail -->
     <dimen name="text_size_ig_activity_title">18sp</dimen>
     <dimen name="text_size_ig_activity_sub_title">12sp</dimen>
-    <dimen name="text_size_button_ig_activity">17sp</dimen>
+    <dimen name="text_size_button_ig_activity">14sp</dimen>
     <dimen name="margin_start_ig_activity">10dp</dimen>
     <dimen name="margin_end_ig_activity">16dp</dimen>
     <dimen name="margin_start_des_ig_activity">27dp</dimen>
