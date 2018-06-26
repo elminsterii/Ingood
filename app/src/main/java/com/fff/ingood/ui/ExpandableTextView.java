@@ -12,9 +12,10 @@ import android.widget.TextView;
 @SuppressLint("AppCompatCustomView")
 public class ExpandableTextView extends TextView implements View.OnClickListener {
 
-    private static final int MAX_LINES = 5;
-    private int currentMaxLines = Integer.MAX_VALUE;
+    private static final int DEFAULT_MAX_LINES = 5;
+    private int iMaxLines = DEFAULT_MAX_LINES;
     private int mResExpandIconResId;
+    private int mResCollapsedIconResId;
 
     public ExpandableTextView(Context context) {
         super(context);
@@ -35,37 +36,37 @@ public class ExpandableTextView extends TextView implements View.OnClickListener
         mResExpandIconResId = resExpandIconResId;
     }
 
+    public void setCollapsedIcon(int resCollapsedIconResId) {
+        mResCollapsedIconResId = resCollapsedIconResId;
+    }
+
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         post(new Runnable() {
             public void run() {
-                if (getLineCount() > MAX_LINES)
+                if (getLineCount() > iMaxLines)
                     setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResExpandIconResId);
                 else
                     setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
-                setMaxLines(MAX_LINES);
+                setMaxLines(iMaxLines);
             }
         });
     }
 
-    @Override
-    public void setMaxLines(int maxLines) {
-        currentMaxLines = maxLines;
-        super.setMaxLines(maxLines);
-    }
-
-    /* Custom method because standard getMaxLines() requires API > 16 */
-    public int getMaxLines() {
-        return currentMaxLines;
+    public void setMaxLine(int maxLines) {
+        iMaxLines = maxLines;
     }
 
     @Override
     public void onClick(View v) {
-        /* Toggle between expanded collapsed states */
-        if (getMaxLines() == Integer.MAX_VALUE)
-            setMaxLines(MAX_LINES);
-        else
-            setMaxLines(Integer.MAX_VALUE);
+        if (getMaxLines() == Integer.MAX_VALUE) {
+            super.setMaxLines(iMaxLines);
+            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResExpandIconResId);
+        }
+        else {
+            super.setMaxLines(Integer.MAX_VALUE);
+            setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResCollapsedIconResId);
+        }
     }
 }

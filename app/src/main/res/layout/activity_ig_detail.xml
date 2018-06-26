@@ -112,8 +112,13 @@
                 android:layout_marginStart="@dimen/margin_start_des_ig_activity"
                 android:layout_marginEnd="@dimen/margin_end_des_ig_activity"
                 android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:drawablePadding="15dp"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_ig_activity_sub_title" />
+                android:textSize="@dimen/text_size_ig_activity_sub_title"
+                android:paddingTop="10dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@xml/igactivity_des_background"/>
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageViewBack"

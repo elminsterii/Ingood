@@ -58,8 +58,9 @@ public class IgActivityDetailActivity extends BaseActivity {
         mTextViewDate.setText(strDate);
         mTextViewLocation.setText(mIgActivity.getLocation());
 
-        mTextViewDescription.setExpandIcon(R.drawable.ic_arrow_back_white);
-        mTextViewDescription.setMaxLines(1);
+        mTextViewDescription.setCollapsedIcon(R.drawable.ic_arrow_upward_blue);
+        mTextViewDescription.setExpandIcon(R.drawable.ic_arrow_downward_blue);
+        mTextViewDescription.setMaxLine(4);
         mTextViewDescription.setText(mIgActivity.getDescription());
     }
 
