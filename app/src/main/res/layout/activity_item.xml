@@ -64,8 +64,17 @@
         android:layout_height="0dp"
         android:layout_weight=".2"
         android:layout_gravity="bottom"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp">
     </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:src="@xml/separate_line_shape" />
 
     <RelativeLayout
         android:id="@+id/layoutActivityActions"
@@ -73,6 +82,7 @@
         android:layout_height="0dp"
         android:layout_weight=".3"
         android:layout_gravity="bottom"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">

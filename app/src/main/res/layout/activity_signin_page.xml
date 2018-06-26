@@ -116,7 +116,7 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:background="@drawable/selector_login_btn"
-        android:src="@drawable/flogo"/>
+        android:src="@drawable/facebook"/>
     <ImageButton
         android:id="@+id/btn_google"
         android:layout_marginTop="12.5dp"
@@ -129,6 +129,6 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:background="@drawable/selector_login_btn"
-        android:src="@drawable/glogo"/>
+        android:src="@drawable/google"/>
 
 </LinearLayout>
