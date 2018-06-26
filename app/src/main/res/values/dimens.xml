@@ -22,6 +22,7 @@
     <dimen name="text_size_activity_item_title_hp">20sp</dimen>
     <dimen name="text_size_activity_item_action_hp">15sp</dimen>
     <dimen name="margin_edge_action_item_hp">25dp</dimen>
+    <dimen name="gap_action_item_and_image_hp">3dp</dimen>
 
     <!-- IgActivity detail -->
     <dimen name="text_size_ig_activity_title">24sp</dimen>

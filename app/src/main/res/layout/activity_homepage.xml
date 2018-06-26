@@ -52,9 +52,9 @@
                 android:layout_height="@dimen/tag_bar_height"
                 android:background="@color/colorWhite"
                 app:layout_scrollFlags="exitUntilCollapsed"
-                app:tabIndicatorColor="@color/colorSlaveLight"
+                app:tabIndicatorColor="@color/colorSlave"
                 app:tabSelectedTextColor="@color/colorSlave"
-                app:tabTextColor="@color/colorSlaveLight">
+                app:tabTextColor="@color/colorTextHint">
             </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>

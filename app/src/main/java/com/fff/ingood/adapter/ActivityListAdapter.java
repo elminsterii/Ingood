@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
@@ -123,7 +122,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             textViewTag.setId(iTagId++);
             textViewTag.setText(strTag);
             textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
-            textViewTag.setTypeface(null, Typeface.BOLD);
             textViewTag.setGravity(Gravity.CENTER_VERTICAL);
 
             int iColor = TagManager.getInstance().getTagColor(strTag);
@@ -190,7 +188,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         switch(iTagBarContain) {
             case 1 :
-                iShiftRatio = 0.42f;
+                iShiftRatio = 0.43f;
                 break;
             case 2 :
                 iShiftRatio = 0.33f;
@@ -282,7 +280,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private Drawable getTagBackground(int iColor, final int iTextViewWidth, final int iTextViewHeight) {
         final float RATIO_SHAPE_WIDTH = 1.5f;
         final float RATIO_SHAPE_HEIGHT = 1.5f;
-        final int STROKE_WIDTH = 5;
+        final int STROKE_WIDTH = 3;
         final float CORNER_RADIUS = 40f;
 
         GradientDrawable gd = new GradientDrawable() {

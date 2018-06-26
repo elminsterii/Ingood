@@ -78,21 +78,21 @@
         android:layout_marginRight="5dp">
 
         <ImageView
-            android:id="@+id/imgActivityActionComment"
+            android:id="@+id/imgActivityActionAttention"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_edge_action_item_hp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/comment" />
+            android:src="@drawable/people" />
         <TextView
             android:id="@+id/textActivityActionAttention"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgActivityActionComment"
+            android:layout_toEndOf="@+id/imgActivityActionAttention"
+            android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
             android:layout_centerVertical="true"
             android:textColor="@color/colorTextHint"
-            android:textStyle="bold"
             android:textSize="@dimen/text_size_activity_item_action_hp" />
 
         <RelativeLayout
@@ -102,20 +102,26 @@
             android:layout_centerVertical="true"
             tools:ignore="RelativeOverlap">
 
-            <ImageView
-                android:id="@+id/imgActivityActionGood"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/good_36" />
+                android:layout_marginEnd="15dp">
 
-            <TextView
-                android:id="@+id/textActivityActionGood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/imgActivityActionGood"
-                android:textColor="@color/colorTextHint"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_size_activity_item_action_hp"/>
+                <ImageView
+                    android:id="@+id/imgActivityActionGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/good_36" />
+
+                <TextView
+                    android:id="@+id/textActivityActionGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgActivityActionGood"
+                    android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/text_size_activity_item_action_hp"/>
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -138,8 +144,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imgActivityActionBookmark"
+                android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
                 android:textColor="@color/colorSlave"
-                android:textStyle="bold"
                 android:textSize="14sp"
                 android:text="@string/activity_action_bookmark"/>
         </RelativeLayout>
