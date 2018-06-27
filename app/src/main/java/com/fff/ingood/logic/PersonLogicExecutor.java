@@ -31,4 +31,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonCheckExistLogic(caller, person);
         fl.doLogic();
     }
+
+    public void doPersonUpdate(PersonUpdateLogic.PersonUpdateLogicCaller caller, Person personNew) {
+        Logic fl = new PersonUpdateLogic(caller, personNew);
+        fl.doLogic();
+    }
 }
