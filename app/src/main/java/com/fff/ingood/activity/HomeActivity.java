@@ -309,13 +309,14 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     private void makeTodayTags() {
         //@@ test
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_care));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_environmental_protection));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_education));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_manpower));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_animal));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("關懷"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("環保"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("教育"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("心靈"));
     }
 }

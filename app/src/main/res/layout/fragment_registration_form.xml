@@ -9,17 +9,17 @@
     <EditText
         android:theme="@style/IngoodEditTextStyle"
         android:id="@+id/edit_name"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="@dimen/margin_start_registration_form"
+        android:layout_marginEnd="@dimen/margin_end_registration_form"
+        android:layout_marginTop="72dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_registration_form_input"
         android:textCursorDrawable="@null"
-        android:lineSpacingExtra="1sp"
+        android:lineSpacingExtra="0.8sp"
         android:inputType="textPersonName"
         android:hint="@string/user_data_name"
-        android:paddingStart="12dp"
+        android:paddingStart="@dimen/padding_start_registration_form_input_text"
         android:textColorHighlight="@color/colorSlaveUltraLight"
         tools:ignore="RtlSymmetry"
         android:ems="10" />
@@ -27,17 +27,17 @@
     <EditText
         android:theme="@style/IngoodEditTextStyle"
         android:id="@+id/edit_account"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
+        android:layout_marginStart="@dimen/margin_start_registration_form"
+        android:layout_marginEnd="@dimen/margin_end_registration_form"
         android:layout_marginTop="@dimen/gap_registration_btw_texts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_registration_form_input"
         android:textCursorDrawable="@null"
-        android:lineSpacingExtra="1sp"
+        android:lineSpacingExtra="0.8sp"
         android:inputType="textEmailAddress"
         android:hint="@string/user_data_email"
-        android:paddingStart="12dp"
+        android:paddingStart="@dimen/padding_start_registration_form_input_text"
         android:textColorHighlight="@color/colorSlaveUltraLight"
         tools:ignore="RtlSymmetry"
         android:ems="10"/>
@@ -45,8 +45,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
+        android:layout_marginStart="@dimen/margin_start_registration_form"
+        android:layout_marginEnd="@dimen/margin_end_registration_form"
         android:layout_marginTop="@dimen/gap_registration_btw_texts">
         <EditText
             android:theme="@style/IngoodEditTextStyle"
@@ -55,9 +55,10 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
+            android:lineSpacingExtra="0.8sp"
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd"
-            android:paddingStart="12dp"
+            android:paddingStart="@dimen/padding_start_registration_form_input_text"
             android:textColorHighlight="@color/colorSlaveUltraLight"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
@@ -75,8 +76,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
+        android:layout_marginStart="@dimen/margin_start_registration_form"
+        android:layout_marginEnd="@dimen/margin_end_registration_form"
         android:layout_marginTop="@dimen/gap_registration_btw_texts">
         <EditText
             android:theme="@style/IngoodEditTextStyle"
@@ -85,9 +86,10 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
+            android:lineSpacingExtra="0.8sp"
             android:inputType="textPassword"
             android:hint="@string/user_data_pwd_confirm"
-            android:paddingStart="12dp"
+            android:paddingStart="@dimen/padding_start_registration_form_input_text"
             android:textColorHighlight="@color/colorSlaveUltraLight"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
@@ -105,30 +107,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="31dp"
-        android:layout_marginStart="31.5dp"
+        android:layout_marginStart="@dimen/margin_start_registration_form"
+        android:layout_marginEnd="@dimen/margin_end_registration_form"
         android:layout_marginTop="@dimen/gap_registration_btw_texts">
 
         <Spinner
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:theme="@style/IngoodSpinnerStyle"
             android:id="@+id/spinner_gender"
-            android:layout_width="120dp"
+            android:layout_width="146.5dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
             android:spinnerMode="dropdown"/>
 
         <Spinner
             style="@style/Widget.AppCompat.Spinner.Underlined"
             android:theme="@style/IngoodSpinnerStyle"
             android:id="@+id/spinner_age"
-            android:layout_width="120dp"
+            android:layout_width="146.5dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/spinner_gender"
+            android:layout_marginStart="21.5dp"
             android:spinnerMode="dropdown"/>
     </RelativeLayout>
 
