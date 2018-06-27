@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="59.5dp"
+        android:layout_marginEnd="59.5dp"
+        android:layout_marginTop="79dp"
         android:gravity="center_horizontal"
         android:textSize="@dimen/text_size_registration_description"
         android:text="@string/hint_for_verify"/>
@@ -19,9 +19,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="52.5dp"
-        android:layout_marginRight="52.5dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginLeft="59.5dp"
+        android:layout_marginRight="59.5dp"
+        android:layout_marginTop="22dp">
 
         <EditText
             android:theme="@style/IngoodEditTextStyle"
@@ -86,11 +86,12 @@
 
     <Button
         android:id="@+id/btn_send"
-        android:layout_width="102dp"
-        android:layout_height="43dp"
+        android:layout_width="115.5dp"
+        android:layout_height="43.8dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:background="@drawable/selector_register_send_verify"
+        android:textSize="13sp"
         android:text="@string/send_verify_code"
         android:textColor="@color/colorPrimary" />
 </LinearLayout>
