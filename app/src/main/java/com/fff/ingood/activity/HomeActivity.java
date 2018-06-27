@@ -97,11 +97,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         mActivityMgr = new ActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
-        //@@ test code
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
+        makeTodayTags();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities, this);
@@ -309,5 +305,17 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
         if(mImgIngoodIcon.getVisibility() != View.VISIBLE)
             mImgIngoodIcon.setVisibility(View.VISIBLE);
+    }
+
+    private void makeTodayTags() {
+        //@@ test
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("關懷"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("環保"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("教育"));
+        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("心靈"));
     }
 }
