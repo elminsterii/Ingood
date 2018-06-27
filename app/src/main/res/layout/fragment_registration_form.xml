@@ -118,7 +118,9 @@
             android:layout_width="146.5dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:spinnerMode="dropdown"/>
+            android:paddingStart="@dimen/padding_start_registration_form_spinner"
+            android:spinnerMode="dropdown"
+            tools:ignore="RtlSymmetry" />
 
         <Spinner
             style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -128,7 +130,9 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/spinner_gender"
             android:layout_marginStart="21.5dp"
-            android:spinnerMode="dropdown"/>
+            android:paddingStart="@dimen/padding_start_registration_form_spinner"
+            android:spinnerMode="dropdown"
+            tools:ignore="RtlSymmetry" />
     </RelativeLayout>
 
 </LinearLayout>

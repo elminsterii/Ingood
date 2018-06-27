@@ -20,6 +20,7 @@
     <dimen name="margin_start_registration_form">23dp</dimen>
     <dimen name="margin_end_registration_form">23dp</dimen>
     <dimen name="padding_start_registration_form_input_text">14.6dp</dimen>
+    <dimen name="padding_start_registration_form_spinner">12dp</dimen>
 
     <!-- Activity item in Homepage -->
     <dimen name="text_size_activity_item_title_hp">20sp</dimen>
