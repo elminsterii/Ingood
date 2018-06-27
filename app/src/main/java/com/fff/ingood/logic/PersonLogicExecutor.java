@@ -31,4 +31,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonCheckExistLogic(caller, person);
         fl.doLogic();
     }
+
+    public void doPersonQuery(PersonQueryLogic.PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail) {
+        Logic fl = new PersonQueryLogic(caller, strPersonPrimaryKey, bByEmail);
+        fl.doLogic();
+    }
 }

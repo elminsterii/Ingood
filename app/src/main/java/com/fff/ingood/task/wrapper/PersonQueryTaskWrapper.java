@@ -60,7 +60,13 @@ public class PersonQueryTaskWrapper {
         });
     }
 
-    public void execute(String strIds) {
-        task.execute(strIds);
+    public void executeByIds(String strIds) {
+        String strInput = "{\"ids\":\"" + strIds + "\"}";
+        task.execute(strInput);
+    }
+
+    public void executeByEmails(String strEmails) {
+        String strInput = "{\"emails\":\"" + strEmails + "\"}";
+        task.execute(strInput);
     }
 }

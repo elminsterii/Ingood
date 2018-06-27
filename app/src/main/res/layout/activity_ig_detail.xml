@@ -47,6 +47,15 @@
                 android:textSize="@dimen/text_size_ig_activity_title"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/imageViewIgActivityBookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textViewIgActivityTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/bookmark_n_36"/>
+
             <RelativeLayout
                 android:id="@+id/layoutIgActivityDate"
                 android:layout_width="wrap_content"
@@ -101,12 +110,59 @@
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityPublisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_below="@+id/layoutIgActivityLocation">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityPublisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/host" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityPublisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageViewIgActivityPublisher"
+                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title"
+                    android:text="@string/activity_detail_publisher"/>
+
+                <TextView
+                    android:id="@+id/textViewIgActivityPublisherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/textViewIgActivityPublisher"
+                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title"/>
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageViewIgActivityPublisherThumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_below="@+id/layoutIgActivityPublisher"/>
+
             <com.fff.ingood.ui.ExpandableTextView
                 android:id="@+id/textViewIgActivityDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_below="@+id/layoutIgActivityLocation"
+                android:layout_below="@+id/imageViewIgActivityPublisherThumbnail"
                 android:layout_marginStart="@dimen/margin_start_des_ig_activity"
                 android:layout_marginEnd="@dimen/margin_end_des_ig_activity"
                 android:layout_marginTop="@dimen/gap_every_row_ig_activity"

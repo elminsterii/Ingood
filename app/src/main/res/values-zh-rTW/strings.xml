@@ -31,6 +31,9 @@
     <string name="activity_action_report">檢舉</string>
     <string name="activity_action_share">分享</string>
 
+    <!-- Activity detail -->
+    <string name="activity_detail_publisher">主辦人 : </string>
+
     <!-- Tags -->
     <string name="tag_care">關懷</string>
     <string name="tag_environmental_protection">環保</string>

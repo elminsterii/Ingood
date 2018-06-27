@@ -31,6 +31,9 @@
     <string name="activity_action_report">Report</string>
     <string name="activity_action_share">Share</string>
 
+    <!-- Activity detail -->
+    <string name="activity_detail_publisher">Publisher : </string>
+
     <!-- Tags -->
     <string name="tag_care">Care</string>
     <string name="tag_environmental_protection">Environmental Protection</string>
