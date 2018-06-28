@@ -63,7 +63,6 @@ public class LoginActivity extends BaseActivity {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(LoginActivity.class.getName());
                 FlowManager.getInstance().goLoginAccountFlow(mActivity);
             }
         });

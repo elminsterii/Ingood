@@ -42,6 +42,11 @@ public class LoginAccountActivity extends BaseActivity {
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+        FlowManager.getInstance().goLoginFlow(mActivity);
+    }
+
 
     @Override
     protected void preInit() {
