@@ -11,7 +11,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layoutCoordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorHomepageBackground">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/search_edit_frame"
@@ -51,8 +52,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tag_bar_height"
                 android:background="@color/colorWhite"
+                app:tabTextAppearance="@style/IngoodTagBarText"
                 app:layout_scrollFlags="exitUntilCollapsed"
                 app:tabMode="scrollable"
+                app:tabIndicatorHeight="2dp"
                 app:tabIndicatorColor="@color/colorSlave"
                 app:tabSelectedTextColor="@color/colorSlave"
                 app:tabTextColor="@color/colorTextHint">

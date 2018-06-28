@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@xml/igactivity_item_background"
-    android:layout_marginTop="8dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginTop="@dimen/margin_top_igactivity_item_hp"
+    android:layout_marginStart="@dimen/margin_start_igactivity_item_hp"
+    android:layout_marginEnd="@dimen/margin_end_igactivity_item_hp"
     tools:ignore="UseCompoundDrawables">
 
     <RelativeLayout
@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/imgActivityItem"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="@dimen/height_igactivity_image_hp"
             android:layout_gravity="top"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
@@ -30,7 +30,7 @@
         <ImageView
             android:id="@+id/imgActivityItemMask"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="@dimen/height_igactivity_image_hp"
             android:layout_gravity="top"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
@@ -42,9 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignBottom="@+id/imgActivityItem"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginBottom="22.4dp"
+            android:layout_marginLeft="12.3dp"
+            android:layout_marginRight="12.3dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:maxLines="1"
             android:ellipsize="end"
             android:textStyle="bold"
@@ -57,8 +59,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignBottom="@+id/imgActivityItem"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/colorWhite"/>
+            android:layout_marginLeft="12.3dp"
+            android:layout_marginRight="12.3dp"
+            android:layout_marginBottom="4dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_activity_item_time_hp"/>
 
     </RelativeLayout>
 

@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,7 @@ import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
  * Created by ElminsterII on 2018/5/29.
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> {
-    private final int GAP_TAGS = 40;
+    private final int GAP_TAGS = 35;
 
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
@@ -121,7 +122,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             TextView textViewTag = new TextView(holder.mLayoutTags.getContext());
             textViewTag.setId(iTagId++);
             textViewTag.setText(strTag);
-            textViewTag.setTextSize(holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
+            textViewTag.setTextSize(TypedValue.COMPLEX_UNIT_PX
+                    , holder.mLayoutTags.getContext().getResources().getDimension(R.dimen.tag_bar_text_size));
             textViewTag.setGravity(Gravity.CENTER_VERTICAL);
 
             int iColor = TagManager.getInstance().getTagColor(strTag);
@@ -172,10 +174,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             iCurXAxis += view.getBackground().getIntrinsicWidth();
         }
 
+        iCurXAxis += GAP_TAGS;
+
         //shift all tags with remain width
         final float RATIO_SHIFT = getShiftRatio(iTagBarContain);
         int iRemainWidth = MAX_TAG_BAR_WIDTH - iCurXAxis;
-        int iShiftXAxis = (int)(iRemainWidth * RATIO_SHIFT);
+        int iShiftXAxis = (int)((float)iRemainWidth * RATIO_SHIFT);
         for(int i=0; i<iTagBarContain; i++) {
             TextView view = lsTextViewTags.get(i);
             int iNewXAxis = (int)view.getX() + iShiftXAxis;
@@ -188,16 +192,22 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         switch(iTagBarContain) {
             case 1 :
-                iShiftRatio = 0.43f;
+                iShiftRatio = 0.41f;
                 break;
             case 2 :
-                iShiftRatio = 0.33f;
+                iShiftRatio = 0.38f;
                 break;
             case 3 :
-                iShiftRatio = 0.29f;
+                iShiftRatio = 0.35f;
+                break;
+            case 4 :
+                iShiftRatio = 0.32f;
+                break;
+            case 5 :
+                iShiftRatio = 0.28f;
                 break;
             default :
-                iShiftRatio = 0.27f;
+                iShiftRatio = 0.20f;
                 break;
         }
 
@@ -259,7 +269,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //@@@ test
                 int position = (int)v.getTag();
                 IgActivity activity = m_lsActivity.get(position);
 
@@ -279,7 +288,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private Drawable getTagBackground(int iColor, final int iTextViewWidth, final int iTextViewHeight) {
         final float RATIO_SHAPE_WIDTH = 1.5f;
-        final float RATIO_SHAPE_HEIGHT = 1.5f;
+        final float RATIO_SHAPE_HEIGHT = 1.3f;
         final int STROKE_WIDTH = 3;
         final float CORNER_RADIUS = 40f;
 
