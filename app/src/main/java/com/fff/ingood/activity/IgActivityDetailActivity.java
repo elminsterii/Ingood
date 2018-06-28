@@ -13,7 +13,6 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.HeadZoomScrollView;
 
@@ -37,14 +36,10 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private IgActivity mIgActivity;
     private Person mPublisher;
 
-    CircleProgressBarDialog mWaitingDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ig_detail);
         super.onCreate(savedInstanceState);
-
-        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override
@@ -102,15 +97,12 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonQuery(this, strPublisherEmail, true);
 
-        //mWaitingDialog.show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
+        showWaitingDialog(IgActivityDetailActivity.class.getName());
     }
 
     @Override
     public void returnPersons(List<Person> lsPersons) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         if(lsPersons != null && lsPersons.size() > 0) {
             mPublisher = lsPersons.get(0);
@@ -120,10 +112,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();

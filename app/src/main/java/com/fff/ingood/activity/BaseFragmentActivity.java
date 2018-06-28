@@ -12,6 +12,8 @@ import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -26,7 +28,10 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
     protected BaseFragmentActivity mActivity;
     private int mCurAPIVersion;
 
+    private CircleProgressBarDialog mWaitingDialog;
     private int mContentViewId = 0;
+
+    protected abstract void preInit();
 
     protected abstract void initView();
 
@@ -47,7 +52,9 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
 
         mCurAPIVersion = android.os.Build.VERSION.SDK_INT;
         mActivity = this;
+        mWaitingDialog = new CircleProgressBarDialog();
 
+        preInit();
         initView();
         initData();
         initListener();
@@ -89,5 +96,23 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
         }
         else
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showWaitingDialog(final String strTag) {
+        if(!StringTool.checkStringNotNull(strTag))
+            return;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mWaitingDialog.show(getSupportFragmentManager(), strTag);
+            }
+        });
+    }
+
+    protected void hideWaitingDialog() {
+        if(mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
     }
 }

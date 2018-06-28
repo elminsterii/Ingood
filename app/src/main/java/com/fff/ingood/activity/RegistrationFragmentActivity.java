@@ -22,7 +22,6 @@ import com.fff.ingood.fragment.RegistrationLocationFragment;
 import com.fff.ingood.fragment.RegistrationVerifyFragment;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -48,7 +47,6 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
     private String mCurFragmentTag;
 
     private RegistrationFragmentActivity mActivity;
-    private CircleProgressBarDialog mWaitingDialog;
 
     private boolean bInitialize = false;
 
@@ -71,9 +69,6 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             mFragmentRegistrationLocation = RegistrationLocationFragment.newInstance();
             mFragmentRegistrationInterest = RegistrationInterestFragment.newInstance();
         }
-
-        mWaitingDialog = new CircleProgressBarDialog();
-        mActivity = this;
     }
 
     @Override
@@ -92,6 +87,11 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
     @Override
     public void onBackPressed() {
         backToPreviousFragment();
+    }
+
+    @Override
+    protected void preInit() {
+        mActivity = this;
     }
 
     @Override
@@ -151,7 +151,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             String strInterests = mFragmentRegistrationInterest.getInterests();
 
             if(strInterests != null) {
-                mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                showWaitingDialog(RegistrationFragmentActivity.class.getName());
 
                 PersonManager.getInstance().getPerson().setInterests(strInterests);
                 FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
@@ -206,10 +206,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         FlowManager.getInstance().setCurFlow(flow);
 

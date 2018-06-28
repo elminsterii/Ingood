@@ -25,7 +25,6 @@ import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.ActivityLogicExecutor;
 import com.fff.ingood.tools.StringTool;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
     private FloatingActionButton mFabPublishBtn;
 
     List<IgActivity> m_lsActivities;
-    CircleProgressBarDialog mWaitingDialog;
 
     private HomeActivity mActivity;
     private ActivityLogicExecutor mActivityMgr;
@@ -61,7 +59,6 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
         setContentView(R.layout.activity_homepage);
         super.onCreate(savedInstanceState);
 
-        mWaitingDialog = new CircleProgressBarDialog();
         mActivity = this;
     }
 
@@ -189,7 +186,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                 if(StringTool.checkStringNotNull(strTag)) {
                     activityCondition.setTags(strTag);
 
-                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                    showWaitingDialog(HomeActivity.class.getName());
                     mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
                 }
             }
@@ -210,7 +207,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
             public void onGlobalLayout() {
                 mActivityListAdapter.setTagBarWidth(mTabLayoutTagBar.getWidth());
                 if(m_lsActivities.size() == 0) {
-                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                    showWaitingDialog(HomeActivity.class.getName());
+
                     //@@ test code
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags("GOGO");
@@ -226,7 +224,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                 hideSoftInput();
 
                 if(StringTool.checkStringNotNull(query)) {
-                    mWaitingDialog.show(getSupportFragmentManager(), HomeActivity.class.getName());
+                    showWaitingDialog(HomeActivity.class.getName());
 
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
@@ -266,10 +264,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
@@ -277,10 +272,7 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
 
     @Override
     public void returnActivities(List<IgActivity> lsActivities) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         m_lsActivities = lsActivities;
         mViewActivityList.setAdapter(null);

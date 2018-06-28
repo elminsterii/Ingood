@@ -14,6 +14,7 @@ import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.GlobalProperty.STARTUP_ANIMATION_DURATION;
@@ -29,12 +30,16 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TagManager.getInstance(this);
-        PreferenceManager.getInstance(this);
-        ServerResponse.getInstance(this);
+        initApplication();
 
         mWaitingDialog = new CircleProgressBarDialog();
         mActivity = this;
+    }
+
+    private void initApplication() {
+        TagManager.getInstance(this);
+        PreferenceManager.getInstance(this);
+        ServerResponse.getInstance(this);
     }
 
     @Override
@@ -49,10 +54,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         FlowManager.getInstance().setCurFlow(flow);
 
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mWaitingDialog.show(getSupportFragmentManager(), MainActivity.class.getName());
+                showWaitingDialog(MainActivity.class.getName());
                 FlowManager.getInstance().goLoginFlow(mActivity);
             }
 
@@ -94,5 +96,23 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
             }
         });
         imgStartupAnimation.startAnimation(scaleAnimation);
+    }
+
+    private void showWaitingDialog(final String strTag) {
+        if(!StringTool.checkStringNotNull(strTag))
+            return;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mWaitingDialog.show(getSupportFragmentManager(), strTag);
+            }
+        });
+    }
+
+    private void hideWaitingDialog() {
+        if(mWaitingDialog.getDialog() != null
+                && mWaitingDialog.getDialog().isShowing())
+            mWaitingDialog.dismiss();
     }
 }

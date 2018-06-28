@@ -12,7 +12,6 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -27,17 +26,12 @@ public class LoginActivity extends BaseActivity {
     private Button mButton_SignIn;
     private Button mButton_Register;
 
-    CircleProgressBarDialog mWaitingDialog;
-
     private LoginActivity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_signin_page);
         super.onCreate(savedInstanceState);
-
-        mWaitingDialog = new CircleProgressBarDialog();
-        mActivity = this;
     }
 
     @Override
@@ -51,7 +45,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void preInit() {
-
+        mActivity = this;
     }
 
     @Override
@@ -72,7 +66,7 @@ public class LoginActivity extends BaseActivity {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mWaitingDialog.show(getSupportFragmentManager(), LoginActivity.class.getName());
+                showWaitingDialog(LoginActivity.class.getName());
 
                 Person person = new Person();
                 person.setEmail(mEditText_Account.getText().toString());
@@ -92,10 +86,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
-        if(mWaitingDialog != null
-                && mWaitingDialog.getDialog() != null
-                && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+        hideWaitingDialog();
 
         FlowManager.getInstance().setCurFlow(flow);
 
