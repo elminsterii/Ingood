@@ -22,6 +22,18 @@
     <dimen name="padding_start_registration_form_input_text">14.6dp</dimen>
     <dimen name="padding_start_registration_form_spinner">12dp</dimen>
 
+    <!-- Login Accoount-->
+    <dimen name="loginaccount_margin_start_login_form">23dp</dimen>
+    <dimen name="loginaccount_margin_end_login_form">23dp</dimen>
+    <dimen name="loginaccount_margin_btw_forget_and_pwd">32.5dp</dimen>
+    <dimen name="loginaccount_margin_btw_account_and_top">96dp</dimen>
+
+    <!-- Login-->
+    <dimen name="login_margin_btw_slogan_and_btns">172.5dp</dimen>
+    <dimen name="login_margin_btw_img_and_top">76dp</dimen>
+    <dimen name="login_margin_btw_slogan_and_img">15dp</dimen>
+
+
     <!-- Activity item in Homepage -->
     <dimen name="text_size_activity_item_title_hp">20sp</dimen>
     <dimen name="text_size_activity_item_action_hp">15sp</dimen>

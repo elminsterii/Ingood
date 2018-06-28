@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="@dimen/login_margin_btw_img_and_top"
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:maxWidth="100dp"
         android:src="@drawable/landingpage_logo" />
     <TextView
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/login_margin_btw_slogan_and_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
@@ -24,44 +24,10 @@
         android:gravity="center"
         android:text="@string/login_slogan"/>
 
-    <EditText
-        android:theme="@style/IngoodEditTextStyle"
-        android:id="@+id/edit_account"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_registration_form_input"
-        android:textCursorDrawable="@null"
-        android:lineSpacingExtra="1sp"
-        android:inputType="textPersonName"
-        android:hint="@string/login_account"
-        android:paddingStart="12dp"
-        android:textColorHighlight="@color/colorSlaveUltraLight"
-        tools:ignore="RtlSymmetry"
-        android:ems="10" />
 
-    <EditText
-        android:theme="@style/IngoodEditTextStyle"
-        android:id="@+id/edit_pwd"
-        android:layout_marginStart="31.5dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_registration_form_input"
-        android:textCursorDrawable="@null"
-        android:lineSpacingExtra="1sp"
-        android:inputType="textPassword"
-        android:hint="@string/login_pwd"
-        android:paddingStart="12dp"
-        android:textColorHighlight="@color/colorSlaveUltraLight"
-        tools:ignore="RtlSymmetry"
-        android:ems="10" />
 
     <LinearLayout
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/login_margin_btw_slogan_and_btns"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
