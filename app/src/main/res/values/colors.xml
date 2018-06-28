@@ -19,6 +19,7 @@
     <color name="colorHomepageBackground">#FAFAFA</color>
     <color name="colorWarningRed">#FF5F5F</color>
     <color name="colorSeparateLineGray">#DDDDDD</color>
+    <color name="colorPersonThumbnailBoarder">#19000000</color>
 
     <!-- Tags Color -->
     <color name="colorTagCare">#DC808A</color>

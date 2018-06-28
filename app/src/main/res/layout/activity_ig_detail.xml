@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
@@ -25,14 +24,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/sample_activity"/>
+                android:src="@drawable/sample_activity" />
 
             <ImageView
                 android:id="@+id/imageViewIgActivityMainMask"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_mask_ig_activity"/>
+                android:src="@drawable/image_mask_ig_activity" />
 
             <TextView
                 android:id="@+id/textViewIgActivityTitle"
@@ -40,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/imageViewIgActivityMain"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="60dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/gap_every_row_ig_activity"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_title"
@@ -51,34 +50,34 @@
                 android:id="@+id/imageViewIgActivityBookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textViewIgActivityTitle"
                 android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/textViewIgActivityTitle"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/bookmark_n_36"/>
+                android:src="@drawable/bookmark_n_36" />
 
             <RelativeLayout
                 android:id="@+id/layoutIgActivityDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_below="@+id/textViewIgActivityTitle"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
-                android:layout_below="@+id/textViewIgActivityTitle">
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/date"/>
+                    android:src="@drawable/date" />
 
                 <TextView
                     android:id="@+id/textViewIgActivityDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/imageViewIgActivityDate"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityDate"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
@@ -88,10 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_below="@+id/layoutIgActivityDate"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
-                android:layout_below="@+id/layoutIgActivityDate">
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityLocation"
@@ -104,8 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imageViewIgActivityLocation"
                     android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityLocation"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
@@ -115,10 +114,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_below="@+id/layoutIgActivityLocation"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
-                android:layout_below="@+id/layoutIgActivityLocation">
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityPublisher"
@@ -131,49 +130,64 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imageViewIgActivityPublisher"
                     android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityPublisher"
+                    android:text="@string/activity_detail_publisher"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size_ig_activity_sub_title"
-                    android:text="@string/activity_detail_publisher"/>
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
 
                 <TextView
                     android:id="@+id/textViewIgActivityPublisherName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/textViewIgActivityPublisher"
                     android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_toEndOf="@+id/textViewIgActivityPublisher"
                     android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size_ig_activity_sub_title"/>
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/imageViewIgActivityPublisherThumbnail"
+            <FrameLayout
+                android:id="@+id/layoutIgActivityPublisherThumbnail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutIgActivityPublisher"
                 android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
-                android:layout_below="@+id/layoutIgActivityPublisher"/>
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityPublisherThumbnail"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/sample_activity" />
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityPublisherThumbnailMask"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="fitXY"
+                    android:src="@xml/mask_circle_person_thumbnail" />
+            </FrameLayout>
 
             <com.fff.ingood.ui.ExpandableTextView
                 android:id="@+id/textViewIgActivityDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutIgActivityPublisherThumbnail"
                 android:layout_centerVertical="true"
-                android:layout_below="@+id/imageViewIgActivityPublisherThumbnail"
-                android:layout_marginStart="@dimen/margin_start_des_ig_activity"
                 android:layout_marginEnd="@dimen/margin_end_des_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_des_ig_activity"
                 android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:background="@xml/igactivity_des_background"
                 android:drawablePadding="15dp"
                 android:ellipsize="end"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_ig_activity_sub_title"
-                android:paddingTop="10dp"
-                android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:background="@xml/igactivity_des_background"/>
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_ig_activity_sub_title" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageViewBack"
@@ -181,7 +195,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
                 android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/ic_arrow_back_white"/>
+                app:srcCompat="@drawable/ic_arrow_back_white" />
 
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
@@ -190,9 +204,9 @@
         android:id="@+id/layoutIgActivityButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16.5dp"
-        android:layout_marginBottom="7dp"
         app:layout_anchor="@+id/zoomViewIgActivity"
         app:layout_anchorGravity="bottom|center">
 
@@ -202,9 +216,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:textSize="@dimen/text_size_button_ig_activity"
+            android:text="@string/activity_action_share"
             android:textColor="@color/colorSlave"
-            android:text="@string/activity_action_share" />
+            android:textSize="@dimen/text_size_button_ig_activity" />
 
         <Button
             android:id="@+id/btnIgActivityAttend"
@@ -213,9 +227,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:textSize="@dimen/text_size_button_ig_activity"
+            android:text="@string/activity_action_attend"
             android:textColor="@color/colorSlave"
-            android:text="@string/activity_action_attend" />
+            android:textSize="@dimen/text_size_button_ig_activity" />
 
         <Button
             android:id="@+id/btnIgActivityReport"
@@ -224,9 +238,9 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:textSize="@dimen/text_size_button_ig_activity"
+            android:text="@string/activity_action_report"
             android:textColor="@color/colorSlave"
-            android:text="@string/activity_action_report" />
+            android:textSize="@dimen/text_size_button_ig_activity" />
     </RelativeLayout>
 
     <!--<include
