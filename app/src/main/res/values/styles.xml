@@ -39,4 +39,8 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="IngoodSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/search_dark</item>
+    </style>
+
 </resources>

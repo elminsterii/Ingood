@@ -38,13 +38,13 @@
                     android:layout_gravity="center"
                     android:src="@drawable/ingood_logo_s"/>
                 <android.support.v7.widget.SearchView
+                    style="@style/IngoodSearchViewStyle"
                     android:id="@+id/searchViewSearchBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
                     app:defaultQueryHint="@string/search_bar_hint"
-                    android:layout_gravity="end"
-                    android:src="@drawable/search_dark"/>
+                    android:layout_gravity="end"/>
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout

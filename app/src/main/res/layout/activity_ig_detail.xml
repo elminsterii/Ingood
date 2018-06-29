@@ -189,6 +189,17 @@
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_sub_title" />
 
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewIgActivityDescription"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+            </RelativeLayout>
+
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageViewBack"
                 android:layout_width="wrap_content"
