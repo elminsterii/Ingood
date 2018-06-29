@@ -25,13 +25,13 @@
     <!-- Activity item in Homepage -->
     <dimen name="height_igactivity_image_hp">150.8dp</dimen>
     <dimen name="margin_top_igactivity_item_hp">12.7dp</dimen>
-    <dimen name="margin_start_igactivity_item_hp">12.5dp</dimen>
-    <dimen name="margin_end_igactivity_item_hp">12.5dp</dimen>
+    <dimen name="margin_start_igactivity_item_hp">12dp</dimen>
+    <dimen name="margin_end_igactivity_item_hp">13dp</dimen>
     <dimen name="text_size_activity_item_title_hp">17.5sp</dimen>
     <dimen name="text_size_activity_item_time_hp">13sp</dimen>
     <dimen name="text_size_activity_item_action_hp">15sp</dimen>
     <dimen name="margin_edge_action_item_hp">25dp</dimen>
-    <dimen name="gap_action_item_and_image_hp">3dp</dimen>
+    <dimen name="gap_action_item_and_image_hp">2dp</dimen>
 
     <!-- IgActivity detail -->
     <dimen name="text_size_ig_activity_title">18sp</dimen>

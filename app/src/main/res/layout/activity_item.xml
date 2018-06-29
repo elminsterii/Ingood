@@ -126,13 +126,14 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp">
 
                 <ImageView
                     android:id="@+id/imgActivityActionGood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/good_36" />
+                    android:src="@drawable/good" />
 
                 <TextView
                     android:id="@+id/textActivityActionGood"
@@ -140,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/imgActivityActionGood"
                     android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/colorTextHint"
                     android:textSize="@dimen/text_size_activity_item_action_hp"/>
             </RelativeLayout>
@@ -159,15 +161,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:src="@drawable/bookmark_n_36" />
+                android:src="@drawable/bookmark_n_s" />
             <TextView
                 android:id="@+id/textActivityActionBookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/imgActivityActionBookmark"
                 android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+                android:layout_centerVertical="true"
                 android:textColor="@color/colorSlave"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_size_activity_item_action_hp"
                 android:text="@string/activity_action_bookmark"/>
         </RelativeLayout>
     </RelativeLayout>
