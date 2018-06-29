@@ -8,6 +8,7 @@
     <string name="login_slogan">You make the world better</string>
     <string name="login_account">Account</string>
     <string name="login_pwd">Password</string>
+    <string name="login_forget_pwd">Forget Password?</string>
 
     <!-- Registration -->
     <string name="register_title_form">Registration</string>

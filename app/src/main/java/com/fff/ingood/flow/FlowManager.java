@@ -1,5 +1,6 @@
 package com.fff.ingood.flow;
 
+import com.fff.ingood.activity.LoginAccountActivity;
 import com.fff.ingood.activity.RegistrationFragmentActivity;
 import com.fff.ingood.data.Person;
 
@@ -44,6 +45,11 @@ public class FlowManager {
     public void goLogoutFlow(Flow.FlowLogicCaller caller) {
         Flow fl = new LogoutFlow(caller);
         mCurFlow = fl.doLogic();
+    }
+
+    public void goLoginAccountFlow(Flow.FlowLogicCaller caller) {
+        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_LOGIN, LoginAccountActivity.class);
+        mCurFlow = Flow.FLOW.FL_LOGIN;
     }
 
     public void goRegistrationFlow(Flow.FlowLogicCaller caller) {
