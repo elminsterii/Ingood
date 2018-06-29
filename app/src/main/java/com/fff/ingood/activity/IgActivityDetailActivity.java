@@ -3,7 +3,11 @@ package com.fff.ingood.activity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,8 +15,10 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
+import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.HeadZoomScrollView;
 
@@ -32,9 +38,13 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private TextView mTextViewLocation;
     private TextView mTextViewIgPublisherName;
     private ExpandableTextView mTextViewDescription;
+    private LinearLayout mLayoutTagBar;
 
     private IgActivity mIgActivity;
     private Person mPublisher;
+
+    private int mTagBarWidth;
+    private boolean m_bIsMakeTags = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
         mTextViewIgPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
+        mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
     }
 
     @Override
@@ -86,6 +97,55 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
                 onBackPressed();
             }
         });
+
+        mLayoutTagBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(!m_bIsMakeTags) {
+                    mTagBarWidth = mLayoutTagBar.getWidth();
+
+                    String[] arrTags = mIgActivity.getTags().split(",");
+                    List<String> lsTags = StringTool.arrayStringToListString(arrTags);
+
+                    int iRemainTags = arrTags.length;
+                    Integer resIdPreLayout = null;
+
+                    while(iRemainTags > 0) {
+                        RelativeLayout layout = makeTagBarLayout(mLayoutTagBar, resIdPreLayout);
+
+                        int iShowTags = TagManager.getInstance().makeTagsInLayout(layout, lsTags.toArray(new String[lsTags.size()]), mTagBarWidth);
+                        iRemainTags -= iShowTags;
+                        resIdPreLayout = layout.getId();
+
+                        for(int i=0; i<iShowTags; i++)
+                            lsTags.remove(0);
+                    }
+
+                    m_bIsMakeTags = true;
+                }
+            }
+        });
+    }
+
+    private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
+        final int MARGIN_TOP = 20;
+
+        RelativeLayout layout = new RelativeLayout(parent.getContext());
+        layout.setId(View.generateViewId());
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        if(resIdBelowView != null) {
+            params.addRule(RelativeLayout.BELOW, resIdBelowView);
+            params.setMargins(0, MARGIN_TOP, 0, 0);
+        }
+
+        layout.setLayoutParams(params);
+        parent.addView(layout);
+
+        return layout;
     }
 
     private void getPublisherByIgActivity(IgActivity activity) {

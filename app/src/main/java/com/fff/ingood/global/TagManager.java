@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fff.ingood.R;
@@ -74,10 +74,8 @@ public class TagManager {
         m_mapTagColor.put(strTagAnimal, colTagAnimal);
     }
 
-    public void makeTagsInLayout(RelativeLayout layout, IgActivity activity, int iTagBarWidth) {
+    public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {
         mTagBarWidth = iTagBarWidth;
-
-        String[] arrStrTags = activity.getTags().split(",");
 
         List<TextView> lsTextViewTags = new ArrayList<>();
         int iTagId = 1;
@@ -108,6 +106,15 @@ public class TagManager {
 
         for(int i=0; i<iTagBarContain; i++)
             layout.addView(lsTextViewTags.get(i));
+
+        return iTagBarContain;
+    }
+
+    public int makeTagsInLayout(ViewGroup layout, IgActivity activity, int iTagBarWidth) {
+        mTagBarWidth = iTagBarWidth;
+
+        String[] arrStrTags = activity.getTags().split(",");
+        return makeTagsInLayout(layout, arrStrTags, iTagBarWidth);
     }
 
     private void paddingAllTagsForAlignCenter(List<TextView> lsTextViewTags) {

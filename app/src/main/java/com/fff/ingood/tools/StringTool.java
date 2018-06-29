@@ -1,5 +1,7 @@
 package com.fff.ingood.tools;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -80,5 +82,9 @@ public class StringTool {
         strBuilder.trimToSize();
 
         return strBuilder.toString();
+    }
+
+    public static List<String> arrayStringToListString(String[] arrString) {
+        return new ArrayList<>(Arrays.asList(arrString));
     }
 }
