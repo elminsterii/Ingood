@@ -30,8 +30,11 @@
 
     <!-- Login-->
     <dimen name="login_margin_btw_slogan_and_btns">172.5dp</dimen>
-    <dimen name="login_margin_btw_img_and_top">76dp</dimen>
+    <dimen name="login_margin_btw_img_and_top">152dp</dimen>
     <dimen name="login_margin_btw_slogan_and_img">15dp</dimen>
+    <dimen name="login_margin_btns_btw_edge">10dp</dimen>
+    <dimen name="login_margin_signin_btn_btw_register_btn">4.5dp</dimen>
+    <dimen name="login_btns_height">42.5dp</dimen>
 
 
     <!-- Activity item in Homepage -->
