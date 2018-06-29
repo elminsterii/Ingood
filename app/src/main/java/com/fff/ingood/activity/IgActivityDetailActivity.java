@@ -128,7 +128,6 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     }
 
     private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
-        final int MARGIN_TOP = 20;
 
         RelativeLayout layout = new RelativeLayout(parent.getContext());
         layout.setId(View.generateViewId());
@@ -138,8 +137,9 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         if(resIdBelowView != null) {
+            int iGapPx = parent.getResources().getDimensionPixelSize(R.dimen.gap_tags_row_ig_activity);
             params.addRule(RelativeLayout.BELOW, resIdBelowView);
-            params.setMargins(0, MARGIN_TOP, 0, 0);
+            params.setMargins(0, iGapPx, 0, 0);
         }
 
         layout.setLayoutParams(params);

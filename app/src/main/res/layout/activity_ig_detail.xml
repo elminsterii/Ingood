@@ -195,9 +195,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textViewIgActivityDescription"
-                android:layout_marginEnd="@dimen/margin_end_ig_activity"
-                android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15.5dp"
                 android:orientation="vertical">
             </LinearLayout>
 
