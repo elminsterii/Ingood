@@ -21,7 +21,7 @@ public class HttpProxy {
     public interface AsyncResponse {
         boolean processFinish(boolean output);
     }
-    public static final String SERVER_URL = "https://hangouttw.appspot.com";
+    public static final String SERVER_URL = "https://ingoodtw.appspot.com";
 
     public static final String HTTP_POST_API_REGISTER = SERVER_URL + "/register";
     public static final String HTTP_POST_API_UNREGISTER = SERVER_URL + "/unregister";
