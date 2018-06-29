@@ -21,8 +21,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class LoginActivity extends BaseActivity {
 
-    private EditText mEditText_Account;
-    private EditText mEditText_Password;
+
     private Button mButton_SignIn;
     private Button mButton_Register;
 
@@ -50,8 +49,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView(){
-        mEditText_Account = findViewById(R.id.edit_account);
-        mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
     }
@@ -66,13 +63,7 @@ public class LoginActivity extends BaseActivity {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(LoginActivity.class.getName());
-
-                Person person = new Person();
-                person.setEmail(mEditText_Account.getText().toString());
-                person.setPassword(mEditText_Password.getText().toString());
-
-                FlowManager.getInstance().goLoginFlow(mActivity, person);
+                FlowManager.getInstance().goLoginAccountFlow(mActivity);
             }
         });
 

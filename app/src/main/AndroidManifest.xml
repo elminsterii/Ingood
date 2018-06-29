@@ -27,6 +27,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activity.LoginAccountActivity"
+            android:label="@string/sign_in"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.HomeActivity"
             android:label="@string/home_page"
             android:screenOrientation="portrait"
