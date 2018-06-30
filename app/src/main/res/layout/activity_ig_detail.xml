@@ -204,7 +204,8 @@
                 android:layout_below="@+id/textViewIgActivityAttention"
                 android:layout_marginStart="@dimen/margin_start_attendees_thumbnail_ig_activity"
                 android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
-                android:layout_marginTop="13.5dp">
+                android:layout_marginTop="13.5dp"
+                android:scrollbars="none">
                 <LinearLayout
                     android:id="@+id/layoutIgActivityAttendeesIcons"
                     android:orientation="horizontal"
