@@ -117,6 +117,9 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
                         RelativeLayout layout = makeTagBarLayout(mLayoutTagBar, resIdPreLayout);
 
                         int iShowTags = TagManager.getInstance().makeTagsInLayout(layout, lsTags.toArray(new String[lsTags.size()]), mTagBarWidth);
+                        if(iShowTags == 0)
+                            break;
+
                         iRemainTags -= iShowTags;
                         resIdPreLayout = layout.getId();
 
