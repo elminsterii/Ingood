@@ -23,7 +23,6 @@ import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
-import com.fff.ingood.ui.HeadZoomScrollView;
 
 import java.util.List;
 
@@ -34,7 +33,6 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class IgActivityDetailActivity extends BaseActivity implements PersonQueryLogic.PersonQueryLogicCaller {
 
     private AppCompatImageView mImageViewBack;
-    private HeadZoomScrollView mZoomView;
     private ImageView mImageViewIgActivityMain;
     private TextView mTextViewTitle;
     private TextView mTextViewDate;
@@ -66,7 +64,6 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     @Override
     protected void initView() {
         mImageViewBack = findViewById(R.id.imageViewBack);
-        mZoomView = findViewById(R.id.zoomViewIgActivity);
         mImageViewIgActivityMain = findViewById(R.id.imageViewIgActivityMain);
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
@@ -95,6 +92,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewDescription.setMaxLine(4);
         mTextViewDescription.setText(mIgActivity.getDescription());
 
+        setIgActivityImageByIgActivity(mIgActivity);
         setPublisherByIgActivity(mIgActivity);
         setAttentionByIgActivity(mIgActivity);
     }
@@ -159,6 +157,10 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         parent.addView(layout);
 
         return layout;
+    }
+
+    private void setIgActivityImageByIgActivity(IgActivity activity) {
+        mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
     private void setPublisherByIgActivity(IgActivity activity) {
