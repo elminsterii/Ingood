@@ -1,12 +1,16 @@
 package com.fff.ingood.tools;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by ElminsterII on 2018/6/20.
@@ -35,5 +39,27 @@ public class ImageHelper {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    public static Bitmap resizeBitmap(Bitmap bm, int iWidth, int iHeight) {
+        return Bitmap.createScaledBitmap(bm, iWidth, iHeight, false);
+    }
+
+    public static Bitmap resizeBitmap(byte[] arrImageBytes, int iWidth, int iHeight) {
+        Bitmap b = BitmapFactory.decodeByteArray(arrImageBytes, 0, arrImageBytes.length);
+        return Bitmap.createScaledBitmap(b, iWidth, iHeight, false);
+    }
+
+    public static Bitmap loadBitmapFromResId(Context context, int iResId) {
+        return BitmapFactory.decodeResource(context.getResources(), iResId);
+    }
+
+    public static byte[] bitmapToByteArray(Bitmap bmp) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        bmp.recycle();
+
+        return byteArray;
     }
 }

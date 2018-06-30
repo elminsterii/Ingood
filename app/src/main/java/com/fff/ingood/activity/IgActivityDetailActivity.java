@@ -1,7 +1,9 @@
 package com.fff.ingood.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -39,6 +41,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private TextView mTextViewLocation;
     private TextView mTextViewIgPublisherName;
     private FrameLayout mLayoutPublisherIcon;
+    private LinearLayout mLayoutAttendeesIcons;
     private ExpandableTextView mTextViewDescription;
     private LinearLayout mLayoutTagBar;
     private TextView mTextViewAttention;
@@ -70,6 +73,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
         mTextViewIgPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mLayoutPublisherIcon = findViewById(R.id.layoutIgActivityPublisherThumbnail);
+        mLayoutAttendeesIcons = findViewById(R.id.layoutIgActivityAttendeesIcons);
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
         mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
         mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
@@ -174,6 +178,19 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         imageViewIcon.setImageResource(R.drawable.sample_activity);
     }
 
+    private void setAttendeesIconByPerson(Person person) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        @SuppressLint("InflateParams") FrameLayout layout = (FrameLayout)inflater.inflate(R.layout.layout_person_thumbnail, null, false);
+        ImageView imageViewIcon = (ImageView)layout.getChildAt(0);
+        imageViewIcon.setImageResource(R.drawable.sample_activity);
+
+//        Bitmap bmSample = ImageHelper.loadBitmapFromResId(this, R.drawable.sample_activity);
+//        bmSample = ImageHelper.resizeBitmap(bmSample, 100, 100);
+//        imageViewIcon.setImageBitmap(bmSample);
+
+        mLayoutAttendeesIcons.addView(layout);
+    }
+
     private void setAttentionByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
@@ -188,6 +205,9 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         strAttention += strAttention2;
 
         mTextViewAttention.setText(strAttention);
+
+        for(int i=0; i<iAttention; i++)
+            setAttendeesIconByPerson(mPublisher);
     }
 
     @Override

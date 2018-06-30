@@ -199,18 +199,17 @@
                 android:textSize="@dimen/text_size_attendees_count_ig_activity" />
 
             <HorizontalScrollView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityAttention"
                 android:layout_marginStart="@dimen/margin_start_attendees_thumbnail_ig_activity"
+                android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
                 android:layout_marginTop="13.5dp">
-
-                <include
-                    android:id="@+id/layoutIgActivityAttendeesThumbnail"
-                    layout="@layout/layout_person_thumbnail"
+                <LinearLayout
+                    android:id="@+id/layoutIgActivityAttendeesIcons"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
             </HorizontalScrollView>
 
             <RelativeLayout
