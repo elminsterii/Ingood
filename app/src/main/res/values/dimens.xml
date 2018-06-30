@@ -52,11 +52,13 @@
     <dimen name="text_size_ig_activity_title">18sp</dimen>
     <dimen name="text_size_ig_activity_sub_title">12sp</dimen>
     <dimen name="text_size_button_ig_activity">17.5sp</dimen>
+    <dimen name="text_size_attendees_count_ig_activity">16sp</dimen>
     <dimen name="margin_start_ig_activity">5dp</dimen>
     <dimen name="margin_start_ig_activity_thumbnail">30dp</dimen>
     <dimen name="margin_end_ig_activity">16dp</dimen>
     <dimen name="margin_start_des_ig_activity">27dp</dimen>
     <dimen name="margin_end_des_ig_activity">27dp</dimen>
+    <dimen name="margin_start_attention_ig_activity">12.5dp</dimen>
     <dimen name="gap_every_row_ig_activity">15dp</dimen>
     <dimen name="gap_icon_and_des_ig_activity">10dp</dimen>
     <dimen name="gap_tags_row_ig_activity">5dp</dimen>

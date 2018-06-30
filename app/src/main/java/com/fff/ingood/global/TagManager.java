@@ -195,15 +195,18 @@ public class TagManager {
         int MAX_TAG_BAR_WIDTH = mTagBarWidth - MARGIN_WIDTH_OF_TAG_BAR;
 
         int bRes = 0;
-        int iSumAllTagGapWidth = GAP_TAGS * (lsTextViewTags.size() - 1);
         int iSumAllTagWidth;
 
         for(int i=0; i<iTagSize; i++) {
             iSumAllTagWidth = 0;
-            for (int j=0; j<iTagSize-i; j++)
+            for (int j=0; j<iTagSize-i; j++) {
+                iSumAllTagWidth += GAP_TAGS;
                 iSumAllTagWidth += lsTextViewTags.get(j).getBackground().getIntrinsicWidth();
+            }
 
-            if((iSumAllTagWidth + iSumAllTagGapWidth) < MAX_TAG_BAR_WIDTH) {
+            iSumAllTagWidth += GAP_TAGS;
+
+            if(iSumAllTagWidth < MAX_TAG_BAR_WIDTH) {
                 bRes = iTagSize - i;
                 break;
             }

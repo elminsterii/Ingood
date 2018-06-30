@@ -39,6 +39,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private TextView mTextViewIgPublisherName;
     private ExpandableTextView mTextViewDescription;
     private LinearLayout mLayoutTagBar;
+    private TextView mTextViewAttention;
 
     private IgActivity mIgActivity;
     private Person mPublisher;
@@ -68,6 +69,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewIgPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
         mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
+        mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
     }
 
     @Override
@@ -86,7 +88,8 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewDescription.setMaxLine(4);
         mTextViewDescription.setText(mIgActivity.getDescription());
 
-        getPublisherByIgActivity(mIgActivity);
+        setPublisherByIgActivity(mIgActivity);
+        setAttentionByIgActivity(mIgActivity);
     }
 
     @Override
@@ -148,7 +151,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         return layout;
     }
 
-    private void getPublisherByIgActivity(IgActivity activity) {
+    private void setPublisherByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -158,6 +161,22 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         executor.doPersonQuery(this, strPublisherEmail, true);
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
+    }
+
+    private void setAttentionByIgActivity(IgActivity activity) {
+        if(activity == null)
+            return;
+
+        String strAttention1 = mActivity.getResources().getText(R.string.activity_detail_attendees_count_1).toString();
+        String strAttention2 = mActivity.getResources().getText(R.string.activity_detail_attendees_count_2).toString();
+        String strAttention;
+
+        int iAttention = Integer.parseInt(activity.getAttention());
+        strAttention = strAttention1;
+        strAttention += iAttention;
+        strAttention += strAttention2;
+
+        mTextViewAttention.setText(strAttention);
     }
 
     @Override
