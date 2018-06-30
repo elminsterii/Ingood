@@ -59,6 +59,7 @@
     <dimen name="margin_start_des_ig_activity">27dp</dimen>
     <dimen name="margin_end_des_ig_activity">27dp</dimen>
     <dimen name="margin_start_attention_ig_activity">12.5dp</dimen>
+    <dimen name="margin_start_attendees_thumbnail_ig_activity">15.7dp</dimen>
     <dimen name="gap_every_row_ig_activity">15dp</dimen>
     <dimen name="gap_icon_and_des_ig_activity">10dp</dimen>
     <dimen name="gap_tags_row_ig_activity">5dp</dimen>

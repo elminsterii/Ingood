@@ -147,7 +147,8 @@
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
 
-            <FrameLayout
+            <include
+                layout="@layout/layout_person_thumbnail"
                 android:id="@+id/layoutIgActivityPublisherThumbnail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,21 +156,7 @@
                 android:layout_below="@+id/layoutIgActivityPublisher"
                 android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
                 android:layout_marginTop="@dimen/gap_every_row_ig_activity">
-
-                <ImageView
-                    android:id="@+id/imageViewIgActivityPublisherThumbnail"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/sample_activity" />
-
-                <ImageView
-                    android:id="@+id/imageViewIgActivityPublisherThumbnailMask"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitXY"
-                    android:src="@xml/mask_circle_person_thumbnail" />
-            </FrameLayout>
+            </include>
 
             <com.fff.ingood.ui.ExpandableTextView
                 android:id="@+id/textViewIgActivityDescription"
@@ -206,10 +193,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_start_attention_ig_activity"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
                 android:layout_below="@+id/layoutIgActivityTags"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_attendees_count_ig_activity" />
+
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewIgActivityAttention"
+                android:layout_marginStart="@dimen/margin_start_attendees_thumbnail_ig_activity"
+                android:layout_marginTop="13.5dp">
+
+                <include
+                    android:id="@+id/layoutIgActivityAttendeesThumbnail"
+                    layout="@layout/layout_person_thumbnail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </HorizontalScrollView>
 
             <RelativeLayout
                 android:layout_width="match_parent"

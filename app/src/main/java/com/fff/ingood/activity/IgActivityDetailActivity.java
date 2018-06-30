@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private TextView mTextViewDate;
     private TextView mTextViewLocation;
     private TextView mTextViewIgPublisherName;
+    private FrameLayout mLayoutPublisherIcon;
     private ExpandableTextView mTextViewDescription;
     private LinearLayout mLayoutTagBar;
     private TextView mTextViewAttention;
@@ -67,6 +69,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
         mTextViewIgPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
+        mLayoutPublisherIcon = findViewById(R.id.layoutIgActivityPublisherThumbnail);
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
         mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
         mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
@@ -166,6 +169,11 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         showWaitingDialog(IgActivityDetailActivity.class.getName());
     }
 
+    private void setPublisherIconByPerson(Person person) {
+        ImageView imageViewIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
+        imageViewIcon.setImageResource(R.drawable.sample_activity);
+    }
+
     private void setAttentionByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
@@ -189,6 +197,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         if(lsPersons != null && lsPersons.size() > 0) {
             mPublisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(mPublisher.getName());
+            setPublisherIconByPerson(mPublisher);
         }
     }
 
