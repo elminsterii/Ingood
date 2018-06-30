@@ -5,27 +5,41 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
+import com.fff.ingood.data.Person;
+import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.flow.PreferenceManager;
+import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.DoPersonLogInTask;
+import com.fff.ingood.task.DoPersonUploadIconTask;
 import com.fff.ingood.task.HttpProxy;
+import com.fff.ingood.tools.ParserUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
 
 public class PersonIconPageActivity extends BaseActivity {
@@ -35,7 +49,9 @@ public class PersonIconPageActivity extends BaseActivity {
     private ImageView ivShow;
     private Bitmap photoBmp;
     private EditText mEditText_Account;
+    private EditText mEditText_Pwd;
     private String img_src;
+    private String account, password;
     URL uploadUrl;
     Uri uri;
 
@@ -54,6 +70,7 @@ public class PersonIconPageActivity extends BaseActivity {
     protected void initView(){
         super.initView();
         mEditText_Account = findViewById(R.id.edit_account);
+        mEditText_Pwd = findViewById(R.id.edit_pwd);
         mButton_upLoad = findViewById(R.id.btn_upload);
         mButton_choose = findViewById(R.id.btn_choose);
         mButton_get = findViewById(R.id.btn_get);
@@ -82,7 +99,7 @@ public class PersonIconPageActivity extends BaseActivity {
                 if (cursor != null) {
                     int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     cursor.moveToFirst();
-                    img_src = cursor.getString(column_index);//图片实际路径
+                    img_src = cursor.getString(column_index); // actual image path
                 }
                 cursor.close();
 
@@ -110,19 +127,37 @@ public class PersonIconPageActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                //convert image to stream
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            File file = new File(img_src);
-                            uploadImg(file);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
+                DoPersonUploadIconTask task = new DoPersonUploadIconTask(mActivity,
+                        new AsyncResponder<String>() {
+                            @Override
+                            public void onSuccess(String strResponse) {
 
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
+                                    Toast.makeText(PersonIconPageActivity.this, "doUpload OK", Toast.LENGTH_SHORT).show();
+
+                                    PreferenceManager.getInstance().setLoginSuccess(true);
+                                    PreferenceManager.getInstance().setKeepLogin(true);
+
+                                    Class<?> clsFlow = FlowManager.getInstance().goHomeFlow();
+
+                                    if(clsFlow != null) {
+                                        Intent intent = new Intent(mActivity, clsFlow);
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("personData", strResponse);
+                                        //bundle.putString("pwd", mEditText_Password.getText().toString());
+
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(PersonIconPageActivity.this, "doUpload Failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                task.execute(mEditText_Account.getText().toString()+"&"+img_src);
             }
         });
 
@@ -133,50 +168,4 @@ public class PersonIconPageActivity extends BaseActivity {
             }
         });
     }
-
-    private void uploadImg(File file) {
-        BufferedReader reader = null;
-        StringBuilder stringBuilder;
-
-        try {
-            uploadUrl = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/" + mEditText_Account.getText().toString() + "/icon02.jpg");
-            HttpURLConnection connection = (HttpURLConnection) uploadUrl.openConnection();
-
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestProperty("Charset", "UTF_8");
-            connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
-            connection.setReadTimeout(10000);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(false);
-            connection.connect();
-
-            if (file != null) {
-
-                DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                FileInputStream is = new FileInputStream(file);
-                int read = 0;
-                byte[] bytes = new byte[1024000];
-                while ((read = is.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-                is.close();
-                out.flush();
-                out.close();
-
-                //response body
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                stringBuilder = new StringBuilder();
-                String line = null;
-                while ((line = reader.readLine()) != null)
-                {
-                    stringBuilder.append(line + "\n");
-                }
-            }
-        }catch(IOException e){
-                e.printStackTrace();
-        }
-    }
-
 }
