@@ -23,8 +23,8 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
-import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.ActivityLogicExecutor;
+import com.fff.ingood.logic.ActivityQueryLogic;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  * Created by yoie7 on 2018/5/24.
  */
 
-public class HomeActivity extends BaseActivity implements ActivityLogic.ActivityLogicCaller {
+public class HomeActivity extends BaseActivity implements ActivityQueryLogic.ActivityQueryLogicCaller {
 
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;

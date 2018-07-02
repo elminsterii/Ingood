@@ -13,28 +13,28 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 /**
  * Created by ElminsterII on 2018/6/8.
  */
-public class ActivityLogic extends Logic implements
+public class ActivityQueryLogic extends Logic implements
         ActivityQueryIdByTaskWrapper.ActivityQueryIdByTaskWrapperCallback
         , ActivityQueryTaskWrapper.ActivityQueryTaskWrapperCallback {
 
-    public interface ActivityLogicCaller extends Logic.LogicCaller {
+    public interface ActivityQueryLogicCaller extends Logic.LogicCaller {
         void returnStatus(Integer iStatusCode);
         void returnActivities(List<IgActivity> lsActivities);
         //void returnActivitiesImages(List<Image> lsActivitiesIds);
         void returnActivitiesIds(String strActivitiesIds);
     }
 
-    private ActivityLogicCaller mCaller;
+    private ActivityQueryLogicCaller mCaller;
     private IgActivity mActivityCondition;
     private String m_strIds;
 
-    ActivityLogic(ActivityLogicCaller caller, IgActivity activity) {
+    ActivityQueryLogic(ActivityQueryLogicCaller caller, IgActivity activity) {
         super(caller);
         mCaller = caller;
         mActivityCondition = activity;
     }
 
-    ActivityLogic(ActivityLogicCaller caller, String strIds) {
+    ActivityQueryLogic(ActivityQueryLogicCaller caller, String strIds) {
         super(caller);
         mCaller = caller;
         m_strIds = strIds;
