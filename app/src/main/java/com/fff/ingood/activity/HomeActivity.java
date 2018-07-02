@@ -22,6 +22,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.ActivityLogic;
 import com.fff.ingood.logic.ActivityLogicExecutor;
 import com.fff.ingood.tools.StringTool;
@@ -260,6 +261,11 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                 //TODO - enter publish flow
             }
         });
+    }
+
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_HOME).setSystemUI(this);
     }
 
     @Override

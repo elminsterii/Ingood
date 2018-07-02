@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
-import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.global.SystemUIManager;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -20,7 +19,6 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  */
 
 public class LoginActivity extends BaseActivity {
-
 
     private Button mButton_SignIn;
     private Button mButton_Register;
@@ -73,6 +71,11 @@ public class LoginActivity extends BaseActivity {
                 FlowManager.getInstance().goRegistrationFlow(mActivity);
             }
         });
+    }
+
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_LOGIN).setSystemUI(this);
     }
 
     @Override

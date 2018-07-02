@@ -22,6 +22,7 @@ import com.fff.ingood.fragment.RegistrationLocationFragment;
 import com.fff.ingood.fragment.RegistrationVerifyFragment;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.global.SystemUIManager;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -122,6 +123,11 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_REGISTRATION).setSystemUI(this);
     }
 
     public void goToNextPage() {

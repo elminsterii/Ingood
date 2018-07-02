@@ -2,15 +2,12 @@ package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
@@ -23,10 +20,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 @SuppressLint("Registered")
 public abstract class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
-    private static final int SYSTEM_UI_FLAG_INGOOD = GlobalProperty.SYSTEM_UI_FLAG_INGOOD;
-
     protected BaseActivity mActivity;
-    private int mCurAPIVersion;
 
     private CircleProgressBarDialog mWaitingDialog;
 
@@ -38,12 +32,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
 
     protected abstract void initListener();
 
+    protected abstract void initSystemUI();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setTitle(getTitle());
 
-        mCurAPIVersion = android.os.Build.VERSION.SDK_INT;
         mActivity = this;
         mWaitingDialog = new CircleProgressBarDialog();
 
@@ -51,33 +46,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
         initView();
         initData();
         initListener();
-        setSystemUI();
+        initSystemUI();
     }
 
-    private void setSystemUI() {
-        if (mCurAPIVersion >= 21) {
-            final View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
-
-            decorView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-                @Override
-                public void onSystemUiVisibilityChange(int visibility) {
-                    if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                        decorView.setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
-                    }
-                }
-            });
-        }
-    }
-
-    @SuppressLint("NewApi")
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if(mCurAPIVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
-            getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
-        }
-    }
+//    @SuppressLint("NewApi")
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if(mCurAPIVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
+//            getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
+//        }
+//    }
 
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {

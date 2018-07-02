@@ -17,6 +17,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
+import com.fff.ingood.global.SystemUIManager;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -105,6 +106,11 @@ public class LoginAccountActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_LOGINACC).setSystemUI(this);
     }
 
     @Override

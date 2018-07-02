@@ -1,7 +1,5 @@
 package com.fff.ingood.global;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -11,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fff.ingood.R;
+import com.fff.ingood.activity.MainActivity;
 import com.fff.ingood.data.IgActivity;
 
 import java.util.ArrayList;
@@ -24,18 +23,17 @@ import java.util.Map;
 public class TagManager {
     private final int GAP_TAGS = 35;
 
-    @SuppressLint("StaticFieldLeak")
     private static TagManager m_instance = null;
-    private Context mContext;
+    private MainActivity mContext;
 
     private Map<String, Integer> m_mapTagColor;
     private int mTagBarWidth;
 
-    private TagManager(Context context) {
+    private TagManager(MainActivity context) {
         mContext = context;
     }
 
-    public static TagManager getInstance(Context context) {
+    public static TagManager getInstance(MainActivity context) {
         if(m_instance == null) {
             m_instance = new TagManager(context);
             m_instance.initialize();

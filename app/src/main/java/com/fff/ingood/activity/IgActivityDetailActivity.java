@@ -18,6 +18,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
@@ -136,6 +137,11 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
                 }
             }
         });
+    }
+
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGDETAIL).setSystemUI(this);
     }
 
     private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
