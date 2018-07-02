@@ -49,6 +49,7 @@
     <dimen name="gap_action_item_and_image_hp">2dp</dimen>
 
     <!-- IgActivity detail -->
+    <dimen name="height_main_image_ig_activity">200dp</dimen>
     <dimen name="text_size_ig_activity_title">18sp</dimen>
     <dimen name="text_size_ig_activity_sub_title">12sp</dimen>
     <dimen name="text_size_button_ig_activity">17.5sp</dimen>

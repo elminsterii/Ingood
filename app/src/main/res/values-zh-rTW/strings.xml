@@ -37,6 +37,7 @@
     <string name="activity_detail_publisher">主辦人 : </string>
     <string name="activity_detail_attendees_count_1">已有</string>
     <string name="activity_detail_attendees_count_2">名參與者</string>
+    <string name="activity_detail_deem_and_comment">評價及留言</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>

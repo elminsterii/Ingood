@@ -85,7 +85,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="3dp"
-        android:src="@xml/separate_line_shape" />
+        android:src="@xml/separate_line_shape_in_activity_item" />
 
     <RelativeLayout
         android:id="@+id/layoutActivityActions"

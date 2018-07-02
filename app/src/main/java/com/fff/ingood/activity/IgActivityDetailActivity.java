@@ -2,12 +2,12 @@ package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,7 +33,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityDetailActivity extends BaseActivity implements PersonQueryLogic.PersonQueryLogicCaller {
 
-    private AppCompatImageView mImageViewBack;
+    private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
     private TextView mTextViewTitle;
     private TextView mTextViewDate;

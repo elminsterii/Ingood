@@ -36,6 +36,7 @@
     <string name="activity_detail_publisher">Publisher : </string>
     <string name="activity_detail_attendees_count_1"> </string>
     <string name="activity_detail_attendees_count_2">people have attended</string>
+    <string name="activity_detail_deem_and_comment">Deem and Comments</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>
