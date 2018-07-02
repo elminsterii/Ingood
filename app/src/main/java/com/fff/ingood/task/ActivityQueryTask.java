@@ -12,16 +12,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_ACTIVITIES_IDS;
-
-public class ActivityQueryTask extends HttpPostAccessTask<String, Integer, List<IgActivity>> {
+public class ActivityQueryTask extends HttpPostAccessTask<JsonObject, Integer, List<IgActivity>> {
 
     public ActivityQueryTask(AsyncResponder<Integer, List<IgActivity>> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(String info) {
+    protected String access(JsonObject jsonObj) {
         BufferedReader reader = null;
         StringBuilder stringBuilder;
 
@@ -43,10 +41,7 @@ public class ActivityQueryTask extends HttpPostAccessTask<String, Integer, List<
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
 
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(TAG_SERVER_RESPONSE_ACTIVITIES_IDS, info);
-
-            writer.write(jsonObject.toString().getBytes());
+            writer.write(jsonObj.toString().getBytes());
             writer.flush();
             writer.close();
             os.close();

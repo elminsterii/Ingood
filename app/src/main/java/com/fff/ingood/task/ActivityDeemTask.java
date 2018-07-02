@@ -1,6 +1,5 @@
 package com.fff.ingood.task;
 
-import com.fff.ingood.data.Person;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -10,15 +9,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-/**
- * Created by ElminsterII on 2018/6/11.
- */
+public class ActivityDeemTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
 
-public class PersonQueryTask extends HttpPostAccessTask<JsonObject, Integer, List<Person>> {
-
-    public PersonQueryTask(AsyncResponder<Integer, List<Person>> responder) {
+    public ActivityDeemTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -28,7 +22,7 @@ public class PersonQueryTask extends HttpPostAccessTask<JsonObject, Integer, Lis
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_QUERY));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_DEEM));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -44,6 +38,7 @@ public class PersonQueryTask extends HttpPostAccessTask<JsonObject, Integer, Lis
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
+
             writer.write(jsonObj.toString().getBytes());
             writer.flush();
             writer.close();

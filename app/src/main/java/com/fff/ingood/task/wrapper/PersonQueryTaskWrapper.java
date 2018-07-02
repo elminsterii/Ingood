@@ -5,6 +5,7 @@ import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.PersonQueryTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -61,12 +62,18 @@ public class PersonQueryTaskWrapper {
     }
 
     public void executeByIds(String strIds) {
-        String strInput = "{\"ids\":\"" + strIds + "\"}";
-        task.execute(strInput);
+        final String TAG_PERSON_IDS = "ids";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(TAG_PERSON_IDS, strIds);
+
+        task.execute(jsonObject);
     }
 
     public void executeByEmails(String strEmails) {
-        String strInput = "{\"emails\":\"" + strEmails + "\"}";
-        task.execute(strInput);
+        final String TAG_PERSON_EMAILS = "emails";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(TAG_PERSON_EMAILS, strEmails);
+
+        task.execute(jsonObject);
     }
 }

@@ -1,36 +1,31 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.ActivityQueryTask;
+import com.fff.ingood.task.ActivityDeemTask;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-/**
- * Created by ElminsterII on 2018/6/11.
- */
+public class ActivityDeemTaskWrapper {
 
-public class ActivityQueryTaskWrapper {
+    public enum DEEM_VALUE {DV_BAD, DV_GOOD}
 
-    public interface ActivityQueryTaskWrapperCallback {
-        void onQueryActivitiesSuccess(List<IgActivity> lsActivities);
-        void onQueryActivitiesFailure(Integer iStatusCode);
+    public interface ActivityDeemTaskWrapperCallback {
+        void onDeemSuccess();
+        void onDeemFailure(Integer iStatusCode);
     }
 
-    private ActivityQueryTask task;
-    private ActivityQueryTaskWrapperCallback mCb;
+    private ActivityDeemTask task;
+    private ActivityDeemTaskWrapperCallback mCb;
 
-    public ActivityQueryTaskWrapper(ActivityQueryTaskWrapperCallback cb) {
+    public ActivityDeemTaskWrapper(ActivityDeemTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityQueryTask(new AsyncResponder<Integer, List<IgActivity>>() {
+        task = new ActivityDeemTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -43,7 +38,6 @@ public class ActivityQueryTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getActivitiesByJson(strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -55,21 +49,30 @@ public class ActivityQueryTaskWrapper {
             }
 
             @Override
-            public void onSuccess(List<IgActivity> lsActivities) {
-                mCb.onQueryActivitiesSuccess(lsActivities);
+            public void onSuccess(Void aVoid) {
+                mCb.onDeemSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onQueryActivitiesFailure(iStatusCode);
+                mCb.onDeemFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(String strIds) {
-        final String TAG_ACTIVITY_IDS = "ids";
+    public void execute(String strEmail, String strPassword, String strActivityId, DEEM_VALUE dvDeem, boolean bIsRollBack) {
+        final String TAG_PERSON_EMAIL = "email";
+        final String TAG_PERSON_PASSWORD = "userpassword";
+        final String TAG_ACTIVITY_ID = "activityid";
+        final String TAG_ACTIVITY_DEEM = "deem";
+        final String TAG_ACTIVITY_DEEMRB = "deemrb";
+
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(TAG_ACTIVITY_IDS, strIds);
+        jsonObject.addProperty(TAG_PERSON_EMAIL, strEmail);
+        jsonObject.addProperty(TAG_PERSON_PASSWORD, strPassword);
+        jsonObject.addProperty(TAG_ACTIVITY_ID, strActivityId);
+        jsonObject.addProperty(TAG_ACTIVITY_DEEM, (dvDeem == DEEM_VALUE.DV_BAD ? "0" : "1"));
+        jsonObject.addProperty(TAG_ACTIVITY_DEEMRB, (bIsRollBack ? "1" : "0"));
 
         task.execute(jsonObject);
     }
