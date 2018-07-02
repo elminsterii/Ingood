@@ -10,6 +10,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
+import com.fff.ingood.ui.CircleImageView;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller {
@@ -24,7 +25,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private TextView mTextView_Gender;
     private TextView mTextView_Age;
     private TextView mTextView_Location;
-    private ImageView mImageView_HeadIcon;
+    private CircleImageView mImageView_HeadIcon;
 
 
     @Override

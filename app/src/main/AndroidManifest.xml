@@ -41,6 +41,11 @@
             android:label="@string/activity_page"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.PersonDataActivity"
+            android:label="@string/sign_in"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

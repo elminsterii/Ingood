@@ -1,5 +1,6 @@
 package com.fff.ingood.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -137,6 +138,8 @@ public class HomeActivity extends BaseActivity implements ActivityLogic.Activity
                         switch(menuItem.getItemId()) {
                             case R.id.menuItemPersonal :
                                 //TODO - go to personal information page
+                                mActivity.startActivity(new Intent(mActivity, PersonDataActivity.class));
+                                mActivity.finish();
                                 break;
                             case R.id.menuItemLogout :
                                 FlowManager.getInstance().goLogoutFlow(mActivity);
