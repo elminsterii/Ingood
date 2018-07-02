@@ -78,6 +78,7 @@
     <string name="missing_necessary_data">Missing necessary condition data</string>
     <string name="parsing_data_error">Parsing data error</string>
     <string name="verify_email_sent">Your verify code has been sent to your email</string>
+    <string name="deem_activity_has_been_sent">Deem has been sent</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

@@ -19,11 +19,15 @@ import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.DeemInfoManager;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.logic.ActivityDeemLogic;
+import com.fff.ingood.logic.ActivityLogicExecutor;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
+import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
 
@@ -33,7 +37,9 @@ import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class IgActivityDetailActivity extends BaseActivity implements PersonQueryLogic.PersonQueryLogicCaller {
+public class IgActivityDetailActivity extends BaseActivity implements
+        PersonQueryLogic.PersonQueryLogicCaller
+        , ActivityDeemLogic.ActivityDeemLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
@@ -149,16 +155,16 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mBtnDeemGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - run deem task
-                setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+                DeemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
             }
         });
 
         mBtnDeemBad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - run deem task
-                setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+                DeemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
             }
         });
     }
@@ -242,22 +248,52 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
             setAttendeesIconByPerson(mPublisher);
     }
 
-    private void setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO deemInfo) {
-        if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
-            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-            else
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
-        else if (deemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD)
-            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD)
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-            else
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-        else
-            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+    private void DeemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
+        Person person = PersonManager.getInstance().getPerson();
+        ActivityLogicExecutor executor = new ActivityLogicExecutor();
 
-        setUiDeemInfoByEnum(mCurDeemInfo);
-        PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
+        ActivityDeemTaskWrapper.DEEM_VALUE dvValue;
+        boolean bIsDeemRollBack;
+
+        if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
+            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = true;
+            }
+            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = false;
+            } else {
+                executor.doDeemActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD, true);
+
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = false;
+            }
+        else
+            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = true;
+            }
+            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = false;
+            } else {
+                executor.doDeemActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
+
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = false;
+            }
+
+        executor.doDeemActivity(this, person.getEmail(), person.getPassword()
+                , mIgActivity.getId(), dvValue, bIsDeemRollBack);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -293,6 +329,16 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
             mTextViewIgPublisherName.setText(mPublisher.getName());
             setPublisherIconByPerson(mPublisher);
         }
+    }
+
+    @Override
+    public void returnDeemSuccess() {
+        hideWaitingDialog();
+
+        setUiDeemInfoByEnum(mCurDeemInfo);
+        PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
+
+        Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_sent), Toast.LENGTH_SHORT).show();
     }
 
     @Override
