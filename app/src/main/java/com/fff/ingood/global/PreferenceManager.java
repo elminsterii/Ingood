@@ -16,6 +16,7 @@ public class PreferenceManager {
 
     private SharedPreferences m_prefLogin;
     private SharedPreferences m_prefRegister;
+    private SharedPreferences m_prefDeemInfo;
 
     //---------------------------------------- Preference information ----------------------------------------
     //---------------------------------------- Preference Login ----------------------------------------
@@ -31,7 +32,8 @@ public class PreferenceManager {
     private static final String PREF_KEY_REGISTER_EMAIL_VERIFY = PREF_NAME_REGISTER + "emailverify";
     private static final String PREF_KEY_REGISTER_ANONYMOUS = PREF_NAME_REGISTER + "anonymous";
 
-
+    //-------------------------------------- Preference Deem Info---------------------------------------
+    public static final String PREF_NAME_DEEM_INFO = "deeminfo";
 
     private PreferenceManager() {
 
@@ -45,6 +47,7 @@ public class PreferenceManager {
 
         m_prefLogin = context.getSharedPreferences(PREF_NAME_LOGIN, Context.MODE_PRIVATE);
         m_prefRegister = context.getSharedPreferences(PREF_NAME_LOGIN, Context.MODE_PRIVATE);
+        m_prefDeemInfo = context.getSharedPreferences(PREF_NAME_DEEM_INFO, Context.MODE_PRIVATE);
         m_logger = Logger.getLogger(PreferenceManager.class.getName());
     }
 
@@ -120,5 +123,14 @@ public class PreferenceManager {
     public void setRegisterSuccess(boolean bSuccess) {
         m_prefRegister.edit().putBoolean(PREF_KEY_REGISTER_SUCCESS, bSuccess).apply();
         m_prefRegister.edit().putBoolean(PREF_KEY_REGISTER_EMAIL_VERIFY, bSuccess).apply();
+    }
+
+    public DeemInfoManager.DEEM_INFO getDeemInfo(String strIgActivityId) {
+        int iDeemInfo = m_prefDeemInfo.getInt(strIgActivityId, 0);
+        return DeemInfoManager.DEEM_INFO.values()[iDeemInfo];
+    }
+
+    public void setDeemInfo(String strIgActivityId, DeemInfoManager.DEEM_INFO deemInfo) {
+        m_prefDeemInfo.edit().putInt(strIgActivityId, deemInfo.ordinal()).apply();
     }
 }

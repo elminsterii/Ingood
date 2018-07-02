@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.DeemInfoManager;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
@@ -44,12 +46,15 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
     private ExpandableTextView mTextViewDescription;
     private LinearLayout mLayoutTagBar;
     private TextView mTextViewAttention;
+    private ImageView mBtnDeemGood;
+    private ImageView mBtnDeemBad;
 
     private IgActivity mIgActivity;
     private Person mPublisher;
 
     private int mTagBarWidth;
     private boolean m_bIsMakeTags = false;
+    private DeemInfoManager.DEEM_INFO mCurDeemInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
         mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
         mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
+        mBtnDeemGood = findViewById(R.id.btnIgActivityDeemGood);
+        mBtnDeemBad = findViewById(R.id.btnIgActivityDeemBad);
     }
 
     @Override
@@ -93,9 +100,10 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mTextViewDescription.setMaxLine(4);
         mTextViewDescription.setText(mIgActivity.getDescription());
 
-        setIgActivityImageByIgActivity(mIgActivity);
-        setPublisherByIgActivity(mIgActivity);
-        setAttentionByIgActivity(mIgActivity);
+        setUiIgActivityImageByIgActivity(mIgActivity);
+        setUiPublisherByIgActivity(mIgActivity);
+        setUiAttentionByIgActivity(mIgActivity);
+        setUiDeemInfoByIgActivity(mIgActivity);
     }
 
     @Override
@@ -137,6 +145,22 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
                 }
             }
         });
+
+        mBtnDeemGood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - run deem task
+                setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+            }
+        });
+
+        mBtnDeemBad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - run deem task
+                setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+            }
+        });
     }
 
     @Override
@@ -165,11 +189,11 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         return layout;
     }
 
-    private void setIgActivityImageByIgActivity(IgActivity activity) {
+    private void setUiIgActivityImageByIgActivity(IgActivity activity) {
         mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
-    private void setPublisherByIgActivity(IgActivity activity) {
+    private void setUiPublisherByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -199,7 +223,7 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         mLayoutAttendeesIcons.addView(layout);
     }
 
-    private void setAttentionByIgActivity(IgActivity activity) {
+    private void setUiAttentionByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -216,6 +240,48 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
 
         for(int i=0; i<iAttention; i++)
             setAttendeesIconByPerson(mPublisher);
+    }
+
+    private void setCurDeemInfoAndWritePref(DeemInfoManager.DEEM_INFO deemInfo) {
+        if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
+            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+            else
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
+        else if (deemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD)
+            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD)
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+            else
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+        else
+            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+
+        setUiDeemInfoByEnum(mCurDeemInfo);
+        PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
+    }
+
+    private void setUiDeemInfoByIgActivity(IgActivity activity) {
+        mCurDeemInfo = PreferenceManager.getInstance().getDeemInfo(activity.getId());
+        setUiDeemInfoByEnum(mCurDeemInfo);
+    }
+
+    private void setUiDeemInfoByEnum(DeemInfoManager.DEEM_INFO deemInfo) {
+        switch(deemInfo) {
+            case DEEM_GOOD :
+                mBtnDeemGood.setImageResource(R.drawable.good_d);
+                mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                break;
+
+            case DEEM_BAD :
+                mBtnDeemGood.setImageResource(R.drawable.good_n);
+                mBtnDeemBad.setImageResource(R.drawable.bad_d);
+                break;
+
+            case DEEM_NONE :
+                mBtnDeemGood.setImageResource(R.drawable.good_n);
+                mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                break;
+        }
     }
 
     @Override
