@@ -12,11 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:scrollbars="none"
         tools:context=".activity.IgActivityDetailActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1300dp"
             android:background="@color/colorHomepageBackground">
 
             <ImageView
@@ -202,15 +203,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityAttention"
-                android:layout_marginStart="@dimen/margin_start_attendees_thumbnail_ig_activity"
+                android:layout_marginStart="6.6dp"
                 android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
                 android:layout_marginTop="13.5dp"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:foreground="@drawable/image_mask_ig_activity_attendees_icons">
                 <LinearLayout
                     android:id="@+id/layoutIgActivityAttendeesIcons"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                </LinearLayout>
             </HorizontalScrollView>
 
             <TextView
@@ -218,7 +221,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_start_attention_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_marginTop="35dp"
                 android:layout_below="@+id/scrollViewIgActivityAttendeesIcons"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_attendees_count_ig_activity"

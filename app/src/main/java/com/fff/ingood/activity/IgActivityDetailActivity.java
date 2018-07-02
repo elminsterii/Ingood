@@ -192,9 +192,9 @@ public class IgActivityDetailActivity extends BaseActivity implements PersonQuer
         ImageView imageViewIcon = (ImageView)layout.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.sample_activity);
 
-//        Bitmap bmSample = ImageHelper.loadBitmapFromResId(this, R.drawable.sample_activity);
-//        bmSample = ImageHelper.resizeBitmap(bmSample, 100, 100);
-//        imageViewIcon.setImageBitmap(bmSample);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_icons_attendees_ig_activity));
+        layout.setLayoutParams(params);
 
         mLayoutAttendeesIcons.addView(layout);
     }
