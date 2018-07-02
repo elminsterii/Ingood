@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +24,7 @@ public class LoginAccountActivity extends BaseActivity {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
-    private ImageView mImageViewBack;
+    private ImageButton mBtnBack;
     private TextView mTextViewTitle;
     private Button mButton_SignIn;
     private ImageButton mImageButton_PwdEye;
@@ -60,7 +59,7 @@ public class LoginAccountActivity extends BaseActivity {
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btnLogin);
         mImageButton_PwdEye = findViewById(R.id.pwd_eye);
-        mImageViewBack = findViewById(R.id.imgBack);
+        mBtnBack = findViewById(R.id.imgBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
     }
 
@@ -99,7 +98,7 @@ public class LoginAccountActivity extends BaseActivity {
             }
         });
 
-        mImageViewBack.setOnClickListener(new View.OnClickListener() {
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:src="@drawable/drawer_dark"/>
+                    android:src="@drawable/selector_menu_btn"/>
                 <ImageView
                     android:id="@+id/imgIngoodIcon"
                     android:layout_width="wrap_content"

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +40,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     private FragmentManager mFragmentMgr;
 
-    private ImageView mImageViewBack;
+    private ImageButton mBtnBack;
     private TextView mTextViewTitle;
     private Button mButtonNext;
 
@@ -97,7 +97,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     @Override
     protected void initView() {
-        mImageViewBack = findViewById(R.id.imgBack);
+        mBtnBack = findViewById(R.id.imgBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
         mButtonNext = findViewById(R.id.btnNext);
     }
@@ -117,7 +117,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
             }
         });
 
-        mImageViewBack.setOnClickListener(new View.OnClickListener() {
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
