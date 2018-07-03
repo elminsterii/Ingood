@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorWhite"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="13dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="10.1dp">
@@ -25,11 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/imgBack"
-            android:layout_marginStart="7.5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
             android:textSize="@dimen/title_size_registration"
             android:textColor="@color/colorSlave"
             android:textStyle="bold"
-            android:text="@string/register_title_form" />
+            android:text="@string/sign_in" />
     </RelativeLayout>
 
     <EditText
@@ -87,8 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/login_forget_pwd"/>
-
-
 
     <RelativeLayout
         android:id="@+id/layoutButtons"

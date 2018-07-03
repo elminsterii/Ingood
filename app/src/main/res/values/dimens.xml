@@ -29,6 +29,7 @@
     <dimen name="loginaccount_margin_btw_account_and_top">96dp</dimen>
 
     <!-- Login-->
+    <dimen name="text_size_login_btn">17.5sp</dimen>
     <dimen name="login_margin_btw_slogan_and_btns">172.5dp</dimen>
     <dimen name="login_margin_btw_img_and_top">152dp</dimen>
     <dimen name="login_margin_btw_slogan_and_img">15dp</dimen>
