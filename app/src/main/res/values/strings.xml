@@ -37,6 +37,8 @@
     <string name="activity_detail_attendees_count_1"> </string>
     <string name="activity_detail_attendees_count_2">people have attended</string>
     <string name="activity_detail_deem_and_comment">Deem and Comments</string>
+    <string name="activity_detail_deem_good_people"> deem good</string>
+    <string name="activity_detail_deem_bad_people"> deem bad</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>

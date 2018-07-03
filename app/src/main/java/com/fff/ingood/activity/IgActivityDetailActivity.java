@@ -54,6 +54,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private TextView mTextViewAttention;
     private ImageView mBtnDeemGood;
     private ImageView mBtnDeemBad;
+    private TextView mTextViewDeemGood;
+    private TextView mTextViewDeemBad;
 
     private IgActivity mIgActivity;
     private Person mPublisher;
@@ -88,6 +90,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
         mBtnDeemGood = findViewById(R.id.btnIgActivityDeemGood);
         mBtnDeemBad = findViewById(R.id.btnIgActivityDeemBad);
+        mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
+        mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
     }
 
     @Override
@@ -110,6 +114,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiPublisherByIgActivity(mIgActivity);
         setUiAttentionByIgActivity(mIgActivity);
         setUiDeemInfoByIgActivity(mIgActivity);
+        setUiDeemPeopleByIgActivity(mIgActivity);
     }
 
     @Override
@@ -306,18 +311,37 @@ public class IgActivityDetailActivity extends BaseActivity implements
             case DEEM_GOOD :
                 mBtnDeemGood.setImageResource(R.drawable.good_d);
                 mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorDeemGood));
+                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorTextHint));
                 break;
 
             case DEEM_BAD :
                 mBtnDeemGood.setImageResource(R.drawable.good_n);
                 mBtnDeemBad.setImageResource(R.drawable.bad_d);
+                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorTextHint));
+                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorDeemBad));
                 break;
 
             case DEEM_NONE :
                 mBtnDeemGood.setImageResource(R.drawable.good_n);
                 mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorTextHint));
+                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorTextHint));
                 break;
         }
+    }
+
+    private void setUiDeemPeopleByIgActivity(IgActivity activity) {
+        String strDeemGoodFullText;
+        String strDeemBadFullText;
+        String strDeemGoodPeople = activity.getGood();
+        String strDeemBadPeople = activity.getNoGood();
+
+        strDeemGoodFullText = strDeemGoodPeople + getResources().getText(R.string.activity_detail_deem_good_people).toString();
+        strDeemBadFullText = strDeemBadPeople + getResources().getText(R.string.activity_detail_deem_bad_people).toString();
+
+        mTextViewDeemGood.setText(strDeemGoodFullText);
+        mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
     @Override

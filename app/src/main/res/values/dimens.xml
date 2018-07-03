@@ -54,6 +54,7 @@
     <dimen name="text_size_ig_activity_sub_title">12sp</dimen>
     <dimen name="text_size_button_ig_activity">17.5sp</dimen>
     <dimen name="text_size_attendees_count_ig_activity">16sp</dimen>
+    <dimen name="text_size_deem_people_ig_activity">13sp</dimen>
     <dimen name="margin_start_ig_activity">5dp</dimen>
     <dimen name="margin_start_ig_activity_thumbnail">30dp</dimen>
     <dimen name="margin_end_ig_activity">16dp</dimen>

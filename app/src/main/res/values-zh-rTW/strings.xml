@@ -38,6 +38,8 @@
     <string name="activity_detail_attendees_count_1">已有</string>
     <string name="activity_detail_attendees_count_2">名參與者</string>
     <string name="activity_detail_deem_and_comment">評價及留言</string>
+    <string name="activity_detail_deem_good_people">個人說讚</string>
+    <string name="activity_detail_deem_bad_people">個人說差</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>

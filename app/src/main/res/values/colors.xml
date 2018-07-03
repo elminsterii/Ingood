@@ -20,6 +20,8 @@
     <color name="colorWarningRed">#FF5F5F</color>
     <color name="colorSeparateLineGray">#DDDDDD</color>
     <color name="colorPersonThumbnailBoarder">#19000000</color>
+    <color name="colorDeemGood">#07D39C</color>
+    <color name="colorDeemBad">#FF5F5F</color>
 
     <!-- Tags Color -->
     <color name="colorTagCare">#DC808A</color>
