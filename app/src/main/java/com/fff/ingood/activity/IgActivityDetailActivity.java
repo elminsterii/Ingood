@@ -25,6 +25,7 @@ import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.ActivityDeemLogic;
 import com.fff.ingood.logic.ActivityLogicExecutor;
+import com.fff.ingood.logic.ActivityQueryLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
 import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
@@ -39,7 +40,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
-        , ActivityDeemLogic.ActivityDeemLogicCaller {
+        , ActivityDeemLogic.ActivityDeemLogicCaller
+        , ActivityQueryLogic.ActivityQueryLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
@@ -177,6 +179,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     protected void initSystemUI() {
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGDETAIL).setSystemUI(this);
+    }
+
+    private void refreshUI(IgActivity activity) {
+        setUiDeemPeopleByIgActivity(activity);
     }
 
     private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
@@ -359,6 +365,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
     public void returnDeemSuccess() {
         hideWaitingDialog();
 
+        ActivityLogicExecutor executor = new ActivityLogicExecutor();
+        executor.doGetActivitiesData(this, mIgActivity.getId());
+
         setUiDeemInfoByEnum(mCurDeemInfo);
         PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
 
@@ -371,5 +380,18 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnActivities(List<IgActivity> lsActivities) {
+        if(lsActivities != null && lsActivities.size() > 0) {
+            mIgActivity = lsActivities.get(0);
+            refreshUI(mIgActivity);
+        }
+    }
+
+    @Override
+    public void returnActivitiesIds(String strActivitiesIds) {
+
     }
 }
