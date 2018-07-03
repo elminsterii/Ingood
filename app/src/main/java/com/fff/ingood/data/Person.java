@@ -2,10 +2,13 @@ package com.fff.ingood.data;
 
 
 import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Person implements Serializable {
 
+    @SerializedName("id")
+    private String m_id;
 
     @SerializedName("age")
     private String m_age;
@@ -49,7 +52,8 @@ public class Person implements Serializable {
     @SerializedName("verifycode")
     private String m_verifycode;
 
-    public Person(String sEmail, String sPwd, String sGender, String sName, String iAge){
+    public Person(String sId, String sEmail, String sPwd, String sGender, String sName, String iAge){
+        m_id = sId;
         m_email = sEmail;
         m_userpassword = sPwd;
         m_displayname = sName;
@@ -58,6 +62,13 @@ public class Person implements Serializable {
     }
 
     public Person(){
+    }
+
+    public String getId() {
+        return m_id;
+    }
+    public void setId(String m_id) {
+        this.m_id = m_id;
     }
 
     public String getEmail(){
@@ -136,8 +147,6 @@ public class Person implements Serializable {
     public void setInterests(String aInterests){
         m_interests  = aInterests;
     }
-
-
 
     public String getAnonymous(){
         return m_anonymous;

@@ -1,6 +1,7 @@
 package com.fff.ingood.logic;
 
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.task.wrapper.ActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
 
 /**
@@ -21,6 +22,12 @@ public class ActivityLogicExecutor {
     public void doDeemActivity(ActivityDeemLogic.ActivityDeemLogicCaller caller, String strEmail, String strPassword, String strActivityId
             , ActivityDeemTaskWrapper.DEEM_VALUE dvDeem, boolean bIsDeemRollBack) {
         Logic fl = new ActivityDeemLogic(caller, strEmail, strPassword, strActivityId, dvDeem, bIsDeemRollBack);
+        fl.doLogic();
+    }
+
+    public void doAttendActivity(ActivityAttendLogic.ActivityAttendLogicCaller caller, String strId, String strEmail
+            , String strPassword, String strActivityId, ActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
+        Logic fl = new ActivityAttendLogic(caller, strId, strEmail, strPassword, strActivityId, avAttend);
         fl.doLogic();
     }
 }

@@ -57,6 +57,8 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     private HomeActivity mActivity;
     private ActivityLogicExecutor mActivityMgr;
 
+    private boolean m_bIsInitialize = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_homepage);
@@ -68,6 +70,9 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(m_bIsInitialize)
+            refresh();
     }
 
     @Override
@@ -210,13 +215,10 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
             @Override
             public void onGlobalLayout() {
                 mActivityListAdapter.setTagBarWidth(mTabLayoutTagBar.getWidth());
-                if(m_lsActivities.size() == 0) {
+                if(!m_bIsInitialize) {
                     showWaitingDialog(HomeActivity.class.getName());
-
-                    //@@ test code
-                    IgActivity activityCondition = new IgActivity();
-                    activityCondition.setTags("GOGO");
-                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+                    refresh();
+                    m_bIsInitialize = true;
                 }
                 mTabLayoutTagBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -261,10 +263,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //@@ test code
-                IgActivity activityCondition = new IgActivity();
-                activityCondition.setTags("GOGO");
-                mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+                refresh();
             }
         });
 
@@ -303,6 +302,13 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     @Override
     public void returnActivitiesIds(String strActivitiesIds) {
         mActivityMgr.doGetActivitiesData(this, strActivitiesIds);
+    }
+
+    private void refresh() {
+        //@@ test code
+        IgActivity activityCondition = new IgActivity();
+        activityCondition.setTags("GOGO");
+        mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
     }
 
     private void hideSoftInput() {

@@ -84,6 +84,8 @@
     <string name="parsing_data_error">資料解析失敗</string>
     <string name="verify_email_sent">驗證碼已寄至您的信箱</string>
     <string name="deem_activity_has_been_sent">已送出評價</string>
+    <string name="attend_activity_success">參加成功</string>
+    <string name="no_attend_activity_success">已取消參加</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>

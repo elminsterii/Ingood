@@ -24,11 +24,13 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.logic.ActivityAttendLogic;
 import com.fff.ingood.logic.ActivityDeemLogic;
 import com.fff.ingood.logic.ActivityLogicExecutor;
 import com.fff.ingood.logic.ActivityQueryLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
+import com.fff.ingood.task.wrapper.ActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
@@ -42,7 +44,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
         , ActivityDeemLogic.ActivityDeemLogicCaller
-        , ActivityQueryLogic.ActivityQueryLogicCaller {
+        , ActivityQueryLogic.ActivityQueryLogicCaller
+        , ActivityAttendLogic.ActivityAttendLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
@@ -70,6 +73,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private boolean m_bIsMakeTags = false;
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
     private boolean m_bIsIgActivityOwner;
+    private boolean m_bIsAttended;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +130,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiAttentionByIgActivity(mIgActivity);
         setUiDeemInfoByIgActivity(mIgActivity);
         setUiDeemPeopleByIgActivity(mIgActivity);
-        setUiBottomButtons();
     }
 
     @Override
@@ -173,7 +176,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
-                DeemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
             }
         });
 
@@ -181,9 +184,50 @@ public class IgActivityDetailActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
-                DeemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
             }
         });
+
+        View.OnClickListener leftClickBtnListener;
+        View.OnClickListener rightClickBtnListener;
+
+        if(m_bIsIgActivityOwner) {
+            leftClickBtnListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO - delete button
+                }
+            };
+            rightClickBtnListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO - edit button
+                }
+            };
+        } else {
+            leftClickBtnListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO - report button
+                }
+            };
+            rightClickBtnListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityAttendTaskWrapper.ATTEND_VALUE avAttend;
+
+                    if(m_bIsAttended)
+                        avAttend = ActivityAttendTaskWrapper.ATTEND_VALUE.AV_CANCEL_ATTEND;
+                    else
+                        avAttend = ActivityAttendTaskWrapper.ATTEND_VALUE.AV_ATTEND;
+
+                    attendIgActivity(avAttend);
+                }
+            };
+        }
+
+        mBtnLeftBottom.setOnClickListener(leftClickBtnListener);
+        mBtnRightBottom.setOnClickListener(rightClickBtnListener);
     }
 
     @Override
@@ -192,7 +236,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void refreshUI(IgActivity activity) {
+        setUiAttentionByIgActivity(activity);
         setUiDeemPeopleByIgActivity(activity);
+        setUiBottomButtons();
     }
 
     private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
@@ -265,11 +311,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewAttention.setText(strAttention);
 
+        mLayoutAttendeesIcons.removeAllViews();
+
         for(int i=0; i<iAttention; i++)
             setAttendeesIconByPerson(mPublisher);
     }
 
-    private void DeemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
+    private void deemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
         Person person = PersonManager.getInstance().getPerson();
         ActivityLogicExecutor executor = new ActivityLogicExecutor();
 
@@ -360,14 +408,45 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
+    private void attendIgActivity(ActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
+        Person person = PersonManager.getInstance().getPerson();
+        ActivityLogicExecutor executor = new ActivityLogicExecutor();
+
+        executor.doAttendActivity(this, person.getId(), person.getEmail()
+                , person.getPassword(), mIgActivity.getId(), avAttend);
+    }
+
     private void setUiBottomButtons() {
+        m_bIsAttended = isAttended(mIgActivity, PersonManager.getInstance().getPerson());
+
         if(m_bIsIgActivityOwner) {
             mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_delete));
             mBtnRightBottom.setText(getResources().getText(R.string.activity_action_edit));
         } else {
             mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_report));
-            mBtnRightBottom.setText(getResources().getText(R.string.activity_action_attend));
+
+            if(m_bIsAttended)
+                mBtnRightBottom.setText(getResources().getText(R.string.activity_action_no_attend));
+            else
+                mBtnRightBottom.setText(getResources().getText(R.string.activity_action_attend));
         }
+    }
+
+    private boolean isAttended(IgActivity activity, Person person) {
+        boolean bRes = false;
+
+        String strAttendeesId = activity.getAttendees();
+        String strPersonId = person.getId();
+
+        String[] arrIds = strAttendeesId.split(",");
+        for(String strId : arrIds) {
+            if(strId.equals(strPersonId)) {
+                bRes = true;
+                break;
+            }
+        }
+
+        return bRes;
     }
 
     @Override
@@ -377,7 +456,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(lsPersons != null && lsPersons.size() > 0) {
             mPublisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(mPublisher.getName());
+
             setPublisherIconByPerson(mPublisher);
+            setUiBottomButtons();
         }
     }
 
@@ -400,6 +481,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnAttendSuccess() {
+        hideWaitingDialog();
+
+        if(m_bIsAttended)
+            Toast.makeText(mActivity, getResources().getText(R.string.no_attend_activity_success), Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(mActivity, getResources().getText(R.string.attend_activity_success), Toast.LENGTH_SHORT).show();
+
+        ActivityLogicExecutor executor = new ActivityLogicExecutor();
+        executor.doGetActivitiesData(this, mIgActivity.getId());
     }
 
     @Override

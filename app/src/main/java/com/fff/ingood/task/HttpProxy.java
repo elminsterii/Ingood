@@ -21,6 +21,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_ACTIVITY_UPDATE = SERVER_URL + "/updateactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY_ID_BY = SERVER_URL + "/queryactivityidby";
     public static final String HTTP_POST_API_ACTIVITY_DEEM = SERVER_URL + "/deemactivity";
+    public static final String HTTP_POST_API_ACTIVITY_ATTEND = SERVER_URL + "/attendactivity";
 
     public static final int HTTP_POST_TIMEOUT = 10;
     static final int HTTP_GET_TIMEOUT = 15;
