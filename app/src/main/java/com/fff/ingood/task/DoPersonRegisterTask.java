@@ -1,6 +1,7 @@
 package com.fff.ingood.task;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.tools.JsonUtils;
@@ -11,10 +12,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Created by yoie7 on 2018/5/16.

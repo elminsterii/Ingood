@@ -1,10 +1,7 @@
 package com.fff.ingood.task;
 
 import android.app.Activity;
-import android.text.TextUtils;
-
-import com.fff.ingood.tools.JsonUtils;
-import com.google.gson.Gson;
+import android.graphics.Bitmap;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -12,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 

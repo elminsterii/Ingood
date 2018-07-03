@@ -1,5 +1,6 @@
 package com.fff.ingood.activity;
 
+import android.app.ProgressDialog;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,7 +23,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.DoPersonLogInTask;
+import com.fff.ingood.task.DoPersonGetIconTask;
 import com.fff.ingood.task.DoPersonUploadIconTask;
 import com.fff.ingood.task.HttpProxy;
 import com.fff.ingood.tools.ParserUtils;
@@ -38,6 +40,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_TAG;
 
@@ -54,6 +57,7 @@ public class PersonIconPageActivity extends BaseActivity {
     private String account, password;
     URL uploadUrl;
     Uri uri;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,10 +166,47 @@ public class PersonIconPageActivity extends BaseActivity {
         });
 
         mButton_get.setOnClickListener(new Button.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-
+                new DownloadImage().execute(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ mEditText_Account.getText().toString() + "/icon02.jpg");
             }
         });
+    }
+
+    private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            mProgressDialog = new ProgressDialog(PersonIconPageActivity.this);
+            mProgressDialog.setTitle("Download Image Tutorial");
+            mProgressDialog.setMessage("Loading...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... URL) {
+
+            String imageURL = URL[0];
+
+            Bitmap bitmap = null;
+            try {
+                InputStream input = new java.net.URL(imageURL).openStream();
+                bitmap = BitmapFactory.decodeStream(input);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+
+            mProgressDialog.dismiss();
+            ivShow.setImageBitmap(result);
+        }
     }
 }

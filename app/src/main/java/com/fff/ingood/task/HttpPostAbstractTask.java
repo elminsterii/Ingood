@@ -1,6 +1,7 @@
 package com.fff.ingood.task;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 /**

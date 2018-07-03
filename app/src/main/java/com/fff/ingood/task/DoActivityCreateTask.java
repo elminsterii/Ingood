@@ -1,8 +1,8 @@
 package com.fff.ingood.task;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 
-import com.fff.ingood.data.Person;
 import com.fff.ingood.tools.JsonUtils;
 import com.google.gson.Gson;
 
