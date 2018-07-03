@@ -32,6 +32,8 @@
     <string name="activity_action_attend">參加</string>
     <string name="activity_action_report">檢舉</string>
     <string name="activity_action_share">分享</string>
+    <string name="activity_action_edit">編輯</string>
+    <string name="activity_action_delete">刪除</string>
 
     <!-- Activity detail -->
     <string name="activity_detail_publisher">主辦人 : </string>

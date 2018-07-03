@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,12 +60,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
 
+    private Button mBtnLeftBottom;
+    private Button mBtnRightBottom;
+
     private IgActivity mIgActivity;
     private Person mPublisher;
 
     private int mTagBarWidth;
     private boolean m_bIsMakeTags = false;
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
+    private boolean m_bIsIgActivityOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     protected void preInit() {
         mIgActivity = (IgActivity)getIntent().getSerializableExtra(TAG_IGACTIVITY);
+        m_bIsIgActivityOwner = mIgActivity.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail());
     }
 
     @Override
@@ -94,6 +100,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mBtnDeemBad = findViewById(R.id.btnIgActivityDeemBad);
         mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
+
+        mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
+        mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
     }
 
     @Override
@@ -117,6 +126,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiAttentionByIgActivity(mIgActivity);
         setUiDeemInfoByIgActivity(mIgActivity);
         setUiDeemPeopleByIgActivity(mIgActivity);
+        setUiBottomButtons();
     }
 
     @Override
@@ -348,6 +358,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewDeemGood.setText(strDeemGoodFullText);
         mTextViewDeemBad.setText(strDeemBadFullText);
+    }
+
+    private void setUiBottomButtons() {
+        if(m_bIsIgActivityOwner) {
+            mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_delete));
+            mBtnRightBottom.setText(getResources().getText(R.string.activity_action_edit));
+        } else {
+            mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_report));
+            mBtnRightBottom.setText(getResources().getText(R.string.activity_action_attend));
+        }
     }
 
     @Override

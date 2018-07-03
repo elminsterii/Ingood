@@ -31,6 +31,8 @@
     <string name="activity_action_attend">Attend</string>
     <string name="activity_action_report">Report</string>
     <string name="activity_action_share">Share</string>
+    <string name="activity_action_edit">Edit</string>
+    <string name="activity_action_delete">Delete</string>
 
     <!-- Activity detail -->
     <string name="activity_detail_publisher">Publisher : </string>

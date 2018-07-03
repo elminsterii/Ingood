@@ -206,13 +206,13 @@
                 android:layout_marginStart="6.6dp"
                 android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
                 android:layout_marginTop="13.5dp"
-                android:scrollbars="none"
-                android:foreground="@drawable/image_mask_ig_activity_attendees_icons">
+                android:scrollbars="none">
                 <LinearLayout
                     android:id="@+id/layoutIgActivityAttendeesIcons"
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:foreground="@drawable/image_mask_ig_activity_attendees_icons">
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -319,24 +319,22 @@
         app:layout_anchorGravity="bottom|center">
 
         <Button
-            android:id="@+id/btnIgActivityReport"
+            android:id="@+id/btnIgActivityLeftBottom"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:text="@string/activity_action_report"
             android:textColor="@color/colorSlave"
             android:textSize="@dimen/text_size_button_ig_activity" />
 
         <Button
-            android:id="@+id/btnIgActivityAttend"
+            android:id="@+id/btnIgActivityRightBottom"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:text="@string/activity_action_attend"
             android:textColor="@color/colorSlave"
             android:textSize="@dimen/text_size_button_ig_activity" />
     </RelativeLayout>
