@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -49,6 +50,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     private TabLayout mTabLayoutTagBar;
     private SearchView mSearchViewSearchBar;
     private FloatingActionButton mFabPublishBtn;
+    private SwipeRefreshLayout mLayoutSwipeRefresh;
 
     List<IgActivity> m_lsActivities;
 
@@ -88,6 +90,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
         mTabLayoutTagBar = findViewById(R.id.layoutTagBar);
         mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
         mFabPublishBtn = findViewById(R.id.fabPublishAction);
+        mLayoutSwipeRefresh = findViewById(R.id.layoutSwipeRefresh);
     }
 
     @Override
@@ -255,6 +258,16 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
             }
         });
 
+        mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //@@ test code
+                IgActivity activityCondition = new IgActivity();
+                activityCondition.setTags("GOGO");
+                mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+            }
+        });
+
         mFabPublishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -279,6 +292,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     @Override
     public void returnActivities(List<IgActivity> lsActivities) {
         hideWaitingDialog();
+        mLayoutSwipeRefresh.setRefreshing(false);
 
         m_lsActivities = lsActivities;
         mViewActivityList.setAdapter(null);
