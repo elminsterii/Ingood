@@ -12,7 +12,7 @@ public class IgActivityUpdateLogic extends Logic implements IgActivityUpdateTask
 
     public interface IgActivityUpdateLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnUpdateSuccess();
+        void returnUpdateIgActivitySuccess();
     }
 
     private IgActivityUpdateLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class IgActivityUpdateLogic extends Logic implements IgActivityUpdateTask
 
     @Override
     public void onUpdateIgActivitiesIdsSuccess() {
-        mCaller.returnUpdateSuccess();
+        mCaller.returnUpdateIgActivitySuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

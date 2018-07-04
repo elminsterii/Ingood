@@ -12,7 +12,7 @@ public class IgActivityCreateLogic extends Logic implements IgActivityCreateTask
 
     public interface IgActivityCreateLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void onCreateSuccess(String strId);
+        void onCreateIgActivitySuccess(String strId);
     }
 
     private IgActivityCreateLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class IgActivityCreateLogic extends Logic implements IgActivityCreateTask
 
     @Override
     public void onCreateIgActivitySuccess(String strId) {
-        mCaller.onCreateSuccess(strId);
+        mCaller.onCreateIgActivitySuccess(strId);
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

@@ -11,7 +11,7 @@ public class IgActivityAttendLogic extends Logic implements IgActivityAttendTask
 
     public interface IgActivityAttendLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnAttendSuccess();
+        void returnAttendIgActivitySuccess();
     }
 
     private IgActivityAttendLogicCaller mCaller;
@@ -40,7 +40,7 @@ public class IgActivityAttendLogic extends Logic implements IgActivityAttendTask
 
     @Override
     public void onAttendSuccess() {
-        mCaller.returnAttendSuccess();
+        mCaller.returnAttendIgActivitySuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

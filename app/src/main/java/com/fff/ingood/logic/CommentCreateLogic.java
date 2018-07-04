@@ -12,7 +12,7 @@ public class CommentCreateLogic extends Logic implements CommentCreateTaskWrappe
 
     public interface CommentCreateLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void onCreateSuccess(String strId);
+        void onCreateIgActivitySuccess(String strId);
     }
 
     private CommentCreateLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class CommentCreateLogic extends Logic implements CommentCreateTaskWrappe
 
     @Override
     public void onCreateSuccess(String strId) {
-        mCaller.onCreateSuccess(strId);
+        mCaller.onCreateIgActivitySuccess(strId);
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

@@ -12,7 +12,7 @@ public class IgActivityDeleteLogic extends Logic implements IgActivityDeleteTask
 
     public interface IgActivityDeleteLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnDeleteSuccess();
+        void returnDeleteIgActivitySuccess();
     }
 
     private IgActivityDeleteLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class IgActivityDeleteLogic extends Logic implements IgActivityDeleteTask
 
     @Override
     public void onDeleteIgActivitiesIdsSuccess() {
-        mCaller.returnDeleteSuccess();
+        mCaller.returnDeleteIgActivitySuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

@@ -463,7 +463,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnDeemSuccess() {
+    public void returnDeemIgActivitySuccess() {
         hideWaitingDialog();
 
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
@@ -484,7 +484,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnAttendSuccess() {
+    public void returnAttendIgActivitySuccess() {
         hideWaitingDialog();
 
         if(m_bIsAttended)

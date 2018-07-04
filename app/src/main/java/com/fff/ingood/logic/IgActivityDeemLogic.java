@@ -11,7 +11,7 @@ public class IgActivityDeemLogic extends Logic implements IgActivityDeemTaskWrap
 
     public interface IgActivityDeemLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnDeemSuccess();
+        void returnDeemIgActivitySuccess();
     }
 
     private IgActivityDeemLogicCaller mCaller;
@@ -40,7 +40,7 @@ public class IgActivityDeemLogic extends Logic implements IgActivityDeemTaskWrap
 
     @Override
     public void onDeemSuccess() {
-        mCaller.returnDeemSuccess();
+        mCaller.returnDeemIgActivitySuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

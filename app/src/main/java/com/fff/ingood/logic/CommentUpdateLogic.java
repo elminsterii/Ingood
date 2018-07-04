@@ -12,7 +12,7 @@ public class CommentUpdateLogic extends Logic implements CommentUpdateTaskWrappe
 
     public interface CommentUpdateLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnUpdateSuccess();
+        void returnUpdateCommentSuccess();
     }
 
     private CommentUpdateLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class CommentUpdateLogic extends Logic implements CommentUpdateTaskWrappe
 
     @Override
     public void onUpdateSuccess() {
-        mCaller.returnUpdateSuccess();
+        mCaller.returnUpdateCommentSuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 
