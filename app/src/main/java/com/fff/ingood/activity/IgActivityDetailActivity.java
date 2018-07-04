@@ -472,7 +472,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiDeemInfoByEnum(mCurDeemInfo);
         PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
 
-        Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_sent), Toast.LENGTH_SHORT).show();
+        if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE)
+            Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_recover), Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_sent), Toast.LENGTH_SHORT).show();
     }
 
     @Override

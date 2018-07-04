@@ -84,6 +84,7 @@
     <string name="parsing_data_error">Parsing data error</string>
     <string name="verify_email_sent">Your verify code has been sent to your email</string>
     <string name="deem_activity_has_been_sent">Deem has been sent</string>
+    <string name="deem_activity_has_been_recover">Deem has been recovered</string>
     <string name="attend_activity_success">Attended</string>
     <string name="no_attend_activity_success">Canceled attend</string>
 
