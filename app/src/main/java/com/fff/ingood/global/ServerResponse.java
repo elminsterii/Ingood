@@ -86,5 +86,5 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 14;
 
     //Activity tag
-    public static final String TAG_SERVER_RESPONSE_ACTIVITIES_IDS = "ids";
+    public static final String TAG_SERVER_RESPONSE_COMMON_IDS = "ids";
 }

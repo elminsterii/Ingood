@@ -22,6 +22,11 @@ public class HttpProxy {
     public static final String HTTP_POST_API_ACTIVITY_QUERY_ID_BY = SERVER_URL + "/queryactivityidby";
     public static final String HTTP_POST_API_ACTIVITY_DEEM = SERVER_URL + "/deemactivity";
     public static final String HTTP_POST_API_ACTIVITY_ATTEND = SERVER_URL + "/attendactivity";
+    public static final String HTTP_POST_API_COMMENT_CREATE = SERVER_URL + "/createcomment";
+    public static final String HTTP_POST_API_COMMENT_QUERY = SERVER_URL + "/querycomment";
+    public static final String HTTP_POST_API_COMMENT_QUERY_ID_BY = SERVER_URL + "/querycommentidby";
+    public static final String HTTP_POST_API_COMMENT_UPDATE = SERVER_URL + "/updatecomment";
+    public static final String HTTP_POST_API_COMMENT_DELETE = SERVER_URL + "/deletecomment";
 
     public static final int HTTP_POST_TIMEOUT = 10;
     static final int HTTP_GET_TIMEOUT = 15;

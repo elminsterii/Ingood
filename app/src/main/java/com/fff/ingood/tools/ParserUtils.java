@@ -1,5 +1,6 @@
 package com.fff.ingood.tools;
 
+import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.google.gson.Gson;
@@ -58,6 +59,24 @@ public class ParserUtils {
         if(jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             return gson.fromJson(jsonArray.get(1).toString(), Person.class);
+        }
+        else
+            return null;
+    }
+
+    public static List<Comment> getCommentsByJson(String Body){
+        List<Comment> result = new ArrayList<>();
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+        JsonArray jsonArray;
+        Gson gson = new Gson();
+        if(jsonElement.isJsonArray()) {
+            jsonArray = jsonElement.getAsJsonArray();
+
+            for(int i = 1; i < jsonArray.size(); i++){
+                result.add(gson.fromJson(jsonArray.get(i).toString(), Comment.class));
+            }
+            return result;
         }
         else
             return null;

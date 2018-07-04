@@ -1,8 +1,8 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.ActivityQueryIdByTask;
+import com.fff.ingood.data.Comment;
 import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.CommentQueryIdByTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -16,19 +16,19 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class ActivityQueryIdByTaskWrapper {
+public class CommentQueryIdByTaskWrapper {
 
-    public interface ActivityQueryIdByTaskWrapperCallback {
-        void onQueryActivitiesIdsSuccess(String strIds);
-        void onQueryActivitiesIdsFailure(Integer iStatusCode);
+    public interface CommentQueryIdByTaskWrapperCallback {
+        void onQueryCommentsIdsSuccess(String strIds);
+        void onQueryCommentsIdsFailure(Integer iStatusCode);
     }
 
-    private ActivityQueryIdByTask task;
-    private ActivityQueryIdByTaskWrapperCallback mCb;
+    private CommentQueryIdByTask task;
+    private CommentQueryIdByTaskWrapperCallback mCb;
 
-    public ActivityQueryIdByTaskWrapper(ActivityQueryIdByTaskWrapperCallback cb) {
+    public CommentQueryIdByTaskWrapper(CommentQueryIdByTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityQueryIdByTask(new AsyncResponder<Integer, String>() {
+        task = new CommentQueryIdByTask(new AsyncResponder<Integer, String>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -54,17 +54,17 @@ public class ActivityQueryIdByTaskWrapper {
 
             @Override
             public void onSuccess(String strIds) {
-                mCb.onQueryActivitiesIdsSuccess(strIds);
+                mCb.onQueryCommentsIdsSuccess(strIds);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onQueryActivitiesIdsFailure(iStatusCode);
+                mCb.onQueryCommentsIdsFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(IgActivity activity) {
-        task.execute(activity);
+    public void execute(Comment comment) {
+        task.execute(comment);
     }
 }
