@@ -14,6 +14,16 @@ public class IgActivityLogicExecutor {
         fl.doLogic();
     }
 
+    public void doDeleteIgActivity(IgActivityDeleteLogic.IgActivityDeleteLogicCaller caller, IgActivity activity) {
+        Logic fl = new IgActivityDeleteLogic(caller, activity);
+        fl.doLogic();
+    }
+
+    public void doUpdatecomIgActivity(IgActivityUpdateLogic.IgActivityUpdateLogicCaller caller, IgActivity activity) {
+        Logic fl = new IgActivityUpdateLogic(caller, activity);
+        fl.doLogic();
+    }
+
     public void doSearchIgActivitiesIds(IgActivityQueryLogic.IgActivityQueryLogicCaller caller, IgActivity activity) {
         Logic fl = new IgActivityQueryLogic(caller, activity);
         fl.doLogic();

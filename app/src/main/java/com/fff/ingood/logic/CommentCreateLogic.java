@@ -18,10 +18,10 @@ public class CommentCreateLogic extends Logic implements CommentCreateTaskWrappe
     private CommentCreateLogicCaller mCaller;
     private Comment mCommentNew;
 
-    CommentCreateLogic(CommentCreateLogicCaller caller, Comment igCommentNew) {
+    CommentCreateLogic(CommentCreateLogicCaller caller, Comment comment) {
         super(caller);
         mCaller = caller;
-        mCommentNew = igCommentNew;
+        mCommentNew = comment;
     }
 
     @Override

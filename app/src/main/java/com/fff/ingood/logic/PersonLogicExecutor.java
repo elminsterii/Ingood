@@ -22,6 +22,16 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
+    public void doPersonUnregister(PersonUnregisterLogic.PersonUnregisterLogicCaller caller, Person person) {
+        Logic fl = new PersonUnregisterLogic(caller, person);
+        fl.doLogic();
+    }
+
+    public void doPersonUpdate(PersonUpdateLogic.PersonUpdateLogicCaller caller, Person person) {
+        Logic fl = new PersonUpdateLogic(caller, person);
+        fl.doLogic();
+    }
+
     public void doPersonVerify(PersonVerifyLogic.PersonVerifyLogicCaller caller, Person person) {
         Logic fl = new PersonVerifyLogic(caller, person);
         fl.doLogic();
