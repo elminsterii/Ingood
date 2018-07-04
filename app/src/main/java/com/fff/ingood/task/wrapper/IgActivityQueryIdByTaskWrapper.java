@@ -1,29 +1,34 @@
 package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.ActivityDeleteTask;
 import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.IgActivityQueryIdByTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
+import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_COMMON_IDS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-public class ActivityDeleteTaskWrapper {
+/**
+ * Created by ElminsterII on 2018/6/11.
+ */
 
-    public interface ActivityDeleteTaskWrapperCallback {
-        void onDeleteActivitiesIdsSuccess();
-        void onDeleteActivitiesIdsFailure(Integer iStatusCode);
+public class IgActivityQueryIdByTaskWrapper {
+
+    public interface IgActivityQueryIdByTaskWrapperCallback {
+        void onQueryIgActivitiesIdsSuccess(String strIds);
+        void onQueryIgActivitiesIdsFailure(Integer iStatusCode);
     }
 
-    private ActivityDeleteTask task;
-    private ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback mCb;
+    private IgActivityQueryIdByTask task;
+    private IgActivityQueryIdByTaskWrapperCallback mCb;
 
-    public ActivityDeleteTaskWrapper(ActivityDeleteTaskWrapper.ActivityDeleteTaskWrapperCallback cb) {
+    public IgActivityQueryIdByTaskWrapper(IgActivityQueryIdByTaskWrapperCallback cb) {
         mCb = cb;
-        task = new ActivityDeleteTask(new AsyncResponder<Integer, Void>() {
+        task = new IgActivityQueryIdByTask(new AsyncResponder<Integer, String>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -36,6 +41,7 @@ public class ActivityDeleteTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
+                        setData(ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_COMMON_IDS, strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -47,13 +53,13 @@ public class ActivityDeleteTaskWrapper {
             }
 
             @Override
-            public void onSuccess(Void aVoid) {
-                mCb.onDeleteActivitiesIdsSuccess();
+            public void onSuccess(String strIds) {
+                mCb.onQueryIgActivitiesIdsSuccess(strIds);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onDeleteActivitiesIdsFailure(iStatusCode);
+                mCb.onQueryIgActivitiesIdsFailure(iStatusCode);
             }
         });
     }

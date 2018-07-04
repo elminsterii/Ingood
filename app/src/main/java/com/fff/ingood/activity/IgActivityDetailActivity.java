@@ -24,14 +24,14 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
-import com.fff.ingood.logic.ActivityAttendLogic;
-import com.fff.ingood.logic.ActivityDeemLogic;
-import com.fff.ingood.logic.ActivityLogicExecutor;
-import com.fff.ingood.logic.ActivityQueryLogic;
+import com.fff.ingood.logic.IgActivityAttendLogic;
+import com.fff.ingood.logic.IgActivityDeemLogic;
+import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
-import com.fff.ingood.task.wrapper.ActivityAttendTaskWrapper;
-import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
+import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
+import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
 
@@ -43,9 +43,9 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
-        , ActivityDeemLogic.ActivityDeemLogicCaller
-        , ActivityQueryLogic.ActivityQueryLogicCaller
-        , ActivityAttendLogic.ActivityAttendLogicCaller {
+        , IgActivityDeemLogic.IgActivityDeemLogicCaller
+        , IgActivityQueryLogic.IgActivityQueryLogicCaller
+        , IgActivityAttendLogic.IgActivityAttendLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
@@ -214,12 +214,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
             rightClickBtnListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityAttendTaskWrapper.ATTEND_VALUE avAttend;
+                    IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend;
 
                     if(m_bIsAttended)
-                        avAttend = ActivityAttendTaskWrapper.ATTEND_VALUE.AV_CANCEL_ATTEND;
+                        avAttend = IgActivityAttendTaskWrapper.ATTEND_VALUE.AV_CANCEL_ATTEND;
                     else
-                        avAttend = ActivityAttendTaskWrapper.ATTEND_VALUE.AV_ATTEND;
+                        avAttend = IgActivityAttendTaskWrapper.ATTEND_VALUE.AV_ATTEND;
 
                     attendIgActivity(avAttend);
                 }
@@ -319,49 +319,49 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void deemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
         Person person = PersonManager.getInstance().getPerson();
-        ActivityLogicExecutor executor = new ActivityLogicExecutor();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
 
-        ActivityDeemTaskWrapper.DEEM_VALUE dvValue;
+        IgActivityDeemTaskWrapper.DEEM_VALUE dvValue;
         boolean bIsDeemRollBack;
 
         if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
             if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD) {
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = true;
             }
             else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = false;
             } else {
-                executor.doDeemActivity(this, person.getEmail(), person.getPassword()
-                        , mIgActivity.getId(), ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD, true);
+                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD, true);
 
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = false;
             }
         else
             if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
                 bIsDeemRollBack = true;
             }
             else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
                 bIsDeemRollBack = false;
             } else {
-                executor.doDeemActivity(this, person.getEmail(), person.getPassword()
-                        , mIgActivity.getId(), ActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
+                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
 
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-                dvValue = ActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
                 bIsDeemRollBack = false;
             }
 
-        executor.doDeemActivity(this, person.getEmail(), person.getPassword()
+        executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
                 , mIgActivity.getId(), dvValue, bIsDeemRollBack);
     }
 
@@ -408,11 +408,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
-    private void attendIgActivity(ActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
+    private void attendIgActivity(IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
         Person person = PersonManager.getInstance().getPerson();
-        ActivityLogicExecutor executor = new ActivityLogicExecutor();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
 
-        executor.doAttendActivity(this, person.getId(), person.getEmail()
+        executor.doAttendIgActivity(this, person.getId(), person.getEmail()
                 , person.getPassword(), mIgActivity.getId(), avAttend);
     }
 
@@ -466,8 +466,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     public void returnDeemSuccess() {
         hideWaitingDialog();
 
-        ActivityLogicExecutor executor = new ActivityLogicExecutor();
-        executor.doGetActivitiesData(this, mIgActivity.getId());
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doGetIgActivitiesData(this, mIgActivity.getId());
 
         setUiDeemInfoByEnum(mCurDeemInfo);
         PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
@@ -492,12 +492,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
         else
             Toast.makeText(mActivity, getResources().getText(R.string.attend_activity_success), Toast.LENGTH_SHORT).show();
 
-        ActivityLogicExecutor executor = new ActivityLogicExecutor();
-        executor.doGetActivitiesData(this, mIgActivity.getId());
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doGetIgActivitiesData(this, mIgActivity.getId());
     }
 
     @Override
-    public void returnActivities(List<IgActivity> lsActivities) {
+    public void returnIgActivities(List<IgActivity> lsActivities) {
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
             refreshUI(mIgActivity);
@@ -505,7 +505,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnActivitiesIds(String strActivitiesIds) {
+    public void returnIgActivitiesIds(String strActivitiesIds) {
 
     }
 }

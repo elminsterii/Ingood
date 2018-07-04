@@ -1,6 +1,5 @@
 package com.fff.ingood.task;
 
-import com.fff.ingood.data.IgActivity;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -10,11 +9,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-public class ActivityQueryTask extends HttpPostAccessTask<JsonObject, Integer, List<IgActivity>> {
+public class IgActivityDeemTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
 
-    public ActivityQueryTask(AsyncResponder<Integer, List<IgActivity>> responder) {
+    public IgActivityDeemTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -24,7 +22,7 @@ public class ActivityQueryTask extends HttpPostAccessTask<JsonObject, Integer, L
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_QUERY));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_DEEM));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

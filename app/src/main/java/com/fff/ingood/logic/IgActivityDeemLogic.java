@@ -1,28 +1,28 @@
 package com.fff.ingood.logic;
 
-import com.fff.ingood.task.wrapper.ActivityDeemTaskWrapper;
+import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
  * Created by ElminsterII on 2018/6/8.
  */
-public class ActivityDeemLogic extends Logic implements ActivityDeemTaskWrapper.ActivityDeemTaskWrapperCallback {
+public class IgActivityDeemLogic extends Logic implements IgActivityDeemTaskWrapper.IgActivityDeemTaskWrapperCallback {
 
-    public interface ActivityDeemLogicCaller extends LogicCaller {
+    public interface IgActivityDeemLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
         void returnDeemSuccess();
     }
 
-    private ActivityDeemLogicCaller mCaller;
+    private IgActivityDeemLogicCaller mCaller;
     private String m_strEmail;
     private String m_strPassword;
     private String m_strActivityId;
-    private ActivityDeemTaskWrapper.DEEM_VALUE m_dvDeem;
+    private IgActivityDeemTaskWrapper.DEEM_VALUE m_dvDeem;
     private boolean m_bDeemRollBack;
 
-    ActivityDeemLogic(ActivityDeemLogicCaller caller, String strEmail, String strPassword, String strActivityId
-            , ActivityDeemTaskWrapper.DEEM_VALUE dvDeem, boolean bIsDeemRollBack) {
+    IgActivityDeemLogic(IgActivityDeemLogicCaller caller, String strEmail, String strPassword, String strActivityId
+            , IgActivityDeemTaskWrapper.DEEM_VALUE dvDeem, boolean bIsDeemRollBack) {
         super(caller);
         mCaller = caller;
         m_strEmail = strEmail;
@@ -34,7 +34,7 @@ public class ActivityDeemLogic extends Logic implements ActivityDeemTaskWrapper.
 
     @Override
     protected void doLogic() {
-        ActivityDeemTaskWrapper task = new ActivityDeemTaskWrapper(this);
+        IgActivityDeemTaskWrapper task = new IgActivityDeemTaskWrapper(this);
         task.execute(m_strEmail, m_strPassword, m_strActivityId, m_dvDeem, m_bDeemRollBack);
     }
 

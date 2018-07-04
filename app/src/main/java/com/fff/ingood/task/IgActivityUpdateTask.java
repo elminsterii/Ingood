@@ -11,9 +11,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ActivityDeleteTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
+public class IgActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
 
-    public ActivityDeleteTask(AsyncResponder<Integer, Void> responder) {
+    public IgActivityUpdateTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -23,7 +23,7 @@ public class ActivityDeleteTask extends HttpPostAccessTask<IgActivity, Integer, 
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_DELETE));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_UPDATE));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

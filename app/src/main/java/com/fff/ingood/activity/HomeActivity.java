@@ -24,8 +24,8 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
-import com.fff.ingood.logic.ActivityLogicExecutor;
-import com.fff.ingood.logic.ActivityQueryLogic;
+import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  * Created by yoie7 on 2018/5/24.
  */
 
-public class HomeActivity extends BaseActivity implements ActivityQueryLogic.ActivityQueryLogicCaller {
+public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;
@@ -55,7 +55,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     List<IgActivity> m_lsActivities;
 
     private HomeActivity mActivity;
-    private ActivityLogicExecutor mActivityMgr;
+    private IgActivityLogicExecutor mActivityMgr;
     private IgActivity preSearchCondition;
 
     private boolean m_bIsInitialize = false;
@@ -101,7 +101,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
 
     @Override
     protected void initData() {
-        mActivityMgr = new ActivityLogicExecutor();
+        mActivityMgr = new IgActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
         makeTodayTags();
@@ -201,7 +201,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
                     activityCondition.setTags(strTag);
 
                     showWaitingDialog(HomeActivity.class.getName());
-                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+                    mActivityMgr.doSearchIgActivitiesIds(mActivity, activityCondition);
 
                     preSearchCondition = activityCondition;
                 }
@@ -241,7 +241,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
 
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
-                    mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+                    mActivityMgr.doSearchIgActivitiesIds(mActivity, activityCondition);
                 }
                 return true;
             }
@@ -296,7 +296,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     }
 
     @Override
-    public void returnActivities(List<IgActivity> lsActivities) {
+    public void returnIgActivities(List<IgActivity> lsActivities) {
         hideWaitingDialog();
         mLayoutSwipeRefresh.setRefreshing(false);
 
@@ -307,13 +307,13 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     }
 
     @Override
-    public void returnActivitiesIds(String strActivitiesIds) {
-        mActivityMgr.doGetActivitiesData(this, strActivitiesIds);
+    public void returnIgActivitiesIds(String strActivitiesIds) {
+        mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
     }
 
     private void refresh() {
         if(preSearchCondition != null)
-            mActivityMgr.doSearchActivitiesIds(mActivity, preSearchCondition);
+            mActivityMgr.doSearchIgActivitiesIds(mActivity, preSearchCondition);
     }
 
     private void hideSoftInput() {

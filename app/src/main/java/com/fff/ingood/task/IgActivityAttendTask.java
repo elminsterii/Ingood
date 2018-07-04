@@ -1,7 +1,6 @@
 package com.fff.ingood.task;
 
-import com.fff.ingood.data.IgActivity;
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -11,19 +10,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
+public class IgActivityAttendTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
 
-    public ActivityUpdateTask(AsyncResponder<Integer, Void> responder) {
+    public IgActivityAttendTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(IgActivity info) {
+    protected String access(JsonObject jsonObj) {
         BufferedReader reader = null;
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_UPDATE));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_ATTEND));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
@@ -39,9 +38,8 @@ public class ActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, 
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
-            String jsonString;
-            jsonString = new Gson().toJson(info, IgActivity.class);
-            writer.write(jsonString.getBytes());
+
+            writer.write(jsonObj.toString().getBytes());
             writer.flush();
             writer.close();
             os.close();

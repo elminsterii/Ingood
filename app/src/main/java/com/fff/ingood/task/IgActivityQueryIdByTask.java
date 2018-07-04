@@ -11,9 +11,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ActivityCreateTask extends HttpPostAccessTask<IgActivity, Integer, String> {
+public class IgActivityQueryIdByTask extends HttpPostAccessTask<IgActivity, Integer, String> {
 
-    public ActivityCreateTask(AsyncResponder<Integer, String> responder) {
+    public IgActivityQueryIdByTask(AsyncResponder<Integer, String> responder) {
         super(responder);
     }
 
@@ -23,7 +23,7 @@ public class ActivityCreateTask extends HttpPostAccessTask<IgActivity, Integer, 
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_CREATE));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_QUERY_ID_BY));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
