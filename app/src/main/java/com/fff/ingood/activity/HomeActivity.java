@@ -56,6 +56,7 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
 
     private HomeActivity mActivity;
     private ActivityLogicExecutor mActivityMgr;
+    private IgActivity preSearchCondition;
 
     private boolean m_bIsInitialize = false;
 
@@ -114,6 +115,10 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
         mViewActivityList.setAdapter(mActivityListAdapter);
 
         mSearchViewSearchBar.setSubmitButtonEnabled(true);
+
+        //@@ test
+        preSearchCondition = new IgActivity();
+        preSearchCondition.setTags("關懷");
     }
 
     @Override
@@ -197,6 +202,8 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
 
                     showWaitingDialog(HomeActivity.class.getName());
                     mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+
+                    preSearchCondition = activityCondition;
                 }
             }
 
@@ -305,10 +312,8 @@ public class HomeActivity extends BaseActivity implements ActivityQueryLogic.Act
     }
 
     private void refresh() {
-        //@@ test code
-        IgActivity activityCondition = new IgActivity();
-        activityCondition.setTags("GOGO");
-        mActivityMgr.doSearchActivitiesIds(mActivity, activityCondition);
+        if(preSearchCondition != null)
+            mActivityMgr.doSearchActivitiesIds(mActivity, preSearchCondition);
     }
 
     private void hideSoftInput() {
