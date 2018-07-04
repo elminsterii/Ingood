@@ -37,9 +37,10 @@
 
     <!-- Activity detail -->
     <string name="activity_detail_publisher">主辦人 : </string>
-    <string name="activity_detail_attendees_count_1">已有</string>
-    <string name="activity_detail_attendees_count_2">名參與者</string>
-    <string name="activity_detail_deem_and_comment">評價及留言</string>
+    <string name="activity_detail_attendees_count_1">參與者</string>
+    <string name="activity_detail_attendees_count_2">名</string>
+    <string name="activity_detail_deem_title">活動評價</string>
+    <string name="activity_detail_comment_title">活動留言</string>
     <string name="activity_detail_deem_good_people">個人說讚</string>
     <string name="activity_detail_deem_bad_people">個人說差</string>
 

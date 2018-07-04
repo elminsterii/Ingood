@@ -41,7 +41,7 @@
                 android:layout_below="@+id/imageViewIgActivityMain"
                 android:layout_marginEnd="60dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_title"
                 android:textStyle="bold" />
@@ -63,7 +63,7 @@
                 android:layout_below="@+id/textViewIgActivityTitle"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+                android:layout_marginTop="11.5dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityDate"
@@ -90,7 +90,7 @@
                 android:layout_below="@+id/layoutIgActivityDate"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityLocation"
@@ -103,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                     android:layout_toEndOf="@+id/imageViewIgActivityLocation"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
@@ -117,7 +117,7 @@
                 android:layout_below="@+id/layoutIgActivityLocation"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+                android:layout_marginTop="7dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityPublisher"
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                     android:layout_toEndOf="@+id/imageViewIgActivityPublisher"
                     android:text="@string/activity_detail_publisher"
                     android:textColor="@color/colorBlack"
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/margin_start_ig_activity"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                     android:layout_toEndOf="@+id/textViewIgActivityPublisher"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
@@ -155,7 +155,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/layoutIgActivityPublisher"
                 android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity">
+                android:layout_marginTop="5dp">
             </include>
 
             <com.fff.ingood.ui.ExpandableTextView
@@ -165,16 +165,16 @@
                 android:layout_below="@+id/layoutIgActivityPublisherThumbnail"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/margin_end_des_ig_activity"
-                android:layout_marginStart="@dimen/margin_start_des_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="15dp"
                 android:background="@xml/igactivity_des_background"
                 android:drawablePadding="15dp"
                 android:ellipsize="end"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="10dp"
+                android:paddingEnd="14.5dp"
+                android:paddingStart="14.5dp"
+                android:paddingTop="14.5dp"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_ig_activity_sub_title" />
+                android:textSize="@dimen/text_size_ig_activity_description" />
 
             <LinearLayout
                 android:id="@+id/layoutIgActivityTags"
@@ -184,28 +184,45 @@
                 android:layout_below="@+id/textViewIgActivityDescription"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="15.5dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewIgActivityAttention"
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityAttendees"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start_attention_ig_activity"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/layoutIgActivityTags"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_attendees_count_ig_activity" />
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="35dp">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityAttendees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/people" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityAttention"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityAttendees"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
+            </RelativeLayout>
 
             <HorizontalScrollView
                 android:id="@+id/scrollViewIgActivityAttendeesIcons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewIgActivityAttention"
+                android:layout_below="@+id/layoutIgActivityAttendees"
                 android:layout_marginStart="6.6dp"
                 android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
-                android:layout_marginTop="13.5dp"
+                android:layout_marginTop="13dp"
                 android:scrollbars="none">
                 <LinearLayout
                     android:id="@+id/layoutIgActivityAttendeesIcons"
@@ -216,24 +233,42 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <TextView
-                android:id="@+id/textViewIgActivityDeemAndComment"
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityDeem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_start_attention_ig_activity"
-                android:layout_marginTop="35dp"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/scrollViewIgActivityAttendeesIcons"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_size_attendees_count_ig_activity"
-                android:text="@string/activity_detail_deem_and_comment"/>
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="44dp">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityDeem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/grade" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityDeemTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityDeem"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title"
+                    android:text="@string/activity_detail_deem_title"/>
+            </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/layoutDeem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="@dimen/gap_every_row_ig_activity"
-                android:layout_below="@+id/textViewIgActivityDeemAndComment">
+                android:layout_marginTop="11.5dp"
+                android:layout_below="@+id/layoutIgActivityDeem">
 
                 <RelativeLayout
                     android:id="@+id/layoutDeemGood"
@@ -280,6 +315,34 @@
                         android:layout_below="@+id/btnIgActivityDeemBad"
                         android:textSize="@dimen/text_size_deem_people_ig_activity"/>
                 </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutDeem"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="39dp">
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/comment" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityComment"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title"
+                    android:text="@string/activity_detail_comment_title"/>
             </RelativeLayout>
 
             <RelativeLayout
