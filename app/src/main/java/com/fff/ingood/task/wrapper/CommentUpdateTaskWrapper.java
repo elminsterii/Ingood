@@ -14,8 +14,8 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class CommentUpdateTaskWrapper {
 
     public interface CommentUpdateTaskWrapperCallback {
-        void onUpdateCommentSuccess();
-        void onUpdateCommentFailure(Integer iStatusCode);
+        void onUpdateSuccess();
+        void onUpdateFailure(Integer iStatusCode);
     }
 
     private CommentUpdateTask task;
@@ -48,12 +48,12 @@ public class CommentUpdateTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onUpdateCommentSuccess();
+                mCb.onUpdateSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onUpdateCommentFailure(iStatusCode);
+                mCb.onUpdateFailure(iStatusCode);
             }
         });
     }
