@@ -6,6 +6,8 @@ import com.fff.ingood.task.IgActivityCreateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
+import java.util.List;
+
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
@@ -40,7 +42,10 @@ public class IgActivityCreateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getActivitiesByJson(strJsonResponse).get(0).getId());
+
+                        List<IgActivity> lsActivities = ParserUtils.getActivitiesByJson(strJsonResponse);
+                        if(lsActivities != null && lsActivities.size() > 0)
+                            setData(lsActivities.get(0).getId());
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));

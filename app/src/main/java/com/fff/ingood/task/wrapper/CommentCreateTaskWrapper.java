@@ -1,10 +1,12 @@
 package com.fff.ingood.task.wrapper;
 
+import com.fff.ingood.data.Comment;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.CommentCreateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
-import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
@@ -14,8 +16,8 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class CommentCreateTaskWrapper {
 
     public interface CommentCreateTaskWrapperCallback {
-        void onCommentSuccess();
-        void onCommentFailure(Integer iStatusCode);
+        void onCreateSuccess(String strId);
+        void onCreateFailure(Integer iStatusCode);
     }
 
     private CommentCreateTask task;
@@ -23,7 +25,7 @@ public class CommentCreateTaskWrapper {
 
     public CommentCreateTaskWrapper(CommentCreateTaskWrapperCallback cb) {
         mCb = cb;
-        task = new CommentCreateTask(new AsyncResponder<Integer, Void>() {
+        task = new CommentCreateTask(new AsyncResponder<Integer, String>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -36,6 +38,10 @@ public class CommentCreateTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
+
+                        List<Comment> lsComments = ParserUtils.getCommentsByJson(strJsonResponse);
+                        if(lsComments != null && lsComments.size() > 0)
+                            setData(lsComments.get(0).getId());
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -47,29 +53,18 @@ public class CommentCreateTaskWrapper {
             }
 
             @Override
-            public void onSuccess(Void aVoid) {
-                mCb.onCommentSuccess();
+            public void onSuccess(String strId) {
+                mCb.onCreateSuccess(strId);
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onCommentFailure(iStatusCode);
+                mCb.onCreateFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(String strEmail, String strDisplayName, String strActivityId, String strContent) {
-        final String TAG_PUBLISHER_EMAIL = "publisheremail";
-        final String TAG_DISPLAY_NAME = "displayname";
-        final String TAG_ACTIVITY_ID = "activityid";
-        final String TAG_COMMENT_CONTENT = "content";
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(TAG_PUBLISHER_EMAIL, strEmail);
-        jsonObject.addProperty(TAG_DISPLAY_NAME, strDisplayName);
-        jsonObject.addProperty(TAG_ACTIVITY_ID, strActivityId);
-        jsonObject.addProperty(TAG_COMMENT_CONTENT, strContent);
-
-        task.execute(jsonObject);
+    public void execute(Comment comment) {
+        task.execute(comment);
     }
 }
