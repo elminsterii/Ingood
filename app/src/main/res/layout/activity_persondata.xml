@@ -5,26 +5,8 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:id="@+id/textview_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/textview_age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/textview_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:id="@+id/textview_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
+
 
     <com.fff.ingood.ui.CircleImageView
             android:layout_centerHorizontal ="true"
@@ -39,10 +21,111 @@
             app:ringHeadColor="@color/colorAccent"
     />
     <TextView
+        android:layout_centerHorizontal ="true"
+        android:layout_below="@+id/imageview_headicon"
+        android:text="Jimmy"
+        android:id="@+id/textview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_toRightOf="@+id/textview_name"
+        android:layout_below="@+id/imageview_headicon"
+        android:src="@drawable/view_y"/>
+    <TextView
+        android:layout_centerHorizontal ="true"
+        android:layout_below="@+id/textview_name"
+        android:text="abxxxxxx@gamil.com"
         android:id="@+id/textview_mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    />
+        />
+    <TextView
+        android:layout_centerHorizontal ="true"
+        android:layout_below="@+id/textview_mail"
+        android:text="Taipei, 30Y, M"
+        android:id="@+id/textview_location_age_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:id="@+id/imageview_icon_comment"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/textview_location_age_gender"
+        android:src="@drawable/view_y"/>
+    <TextView
+        android:id="@+id/textview_title_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="35dp"
+        android:text="@string/sign_in"
+        android:layout_toRightOf="@+id/imageview_icon_comment"
+        android:layout_below="@+id/textview_location_age_gender"
+        />
+    <ImageView
+        android:id="@+id/imageview_icon_about_me"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/imageview_icon_comment"
+        android:src="@drawable/view_y"/>
+    <TextView
+        android:id="@+id/textview_title_about_me"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="72dp"
+        android:text="@string/sign_in"
+        android:layout_toRightOf="@+id/imageview_icon_about_me"
+        android:layout_below="@+id/imageview_icon_comment"
+        />
+    <ImageView
+        android:id="@+id/imageview_edit_about_me"
+        android:layout_alignParentRight="true"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/imageview_icon_comment"
+        android:src="@drawable/view_y"/>
+
+
+    <ImageView
+        android:id="@+id/imageview_icon_tags"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/imageview_icon_about_me"
+        android:src="@drawable/view_y"/>
+    <TextView
+        android:id="@+id/textview_title_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="72dp"
+        android:text="@string/sign_in"
+        android:layout_toRightOf="@+id/imageview_icon_tags"
+        android:layout_below="@+id/imageview_icon_about_me"
+        />
+    <ImageView
+        android:id="@+id/imageview_edit_tags"
+        android:layout_alignParentRight="true"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="72dp"
+        android:layout_below="@+id/imageview_icon_about_me"
+        android:src="@drawable/view_y"/>
+
+
+
+
+
 
 
 
