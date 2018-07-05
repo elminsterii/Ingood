@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
+import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.DeemInfoManager;
@@ -24,6 +25,8 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.logic.CommentLogicExecutor;
+import com.fff.ingood.logic.CommentQueryLogic;
 import com.fff.ingood.logic.IgActivityAttendLogic;
 import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
@@ -38,6 +41,7 @@ import com.fff.ingood.ui.ExpandableTextView;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -45,7 +49,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
-        , IgActivityAttendLogic.IgActivityAttendLogicCaller {
+        , IgActivityAttendLogic.IgActivityAttendLogicCaller
+        , CommentQueryLogic.CommentQueryLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewIgActivityMain;
@@ -62,6 +67,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private ImageView mBtnDeemBad;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
+    private RelativeLayout mLayoutComments;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -74,6 +80,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
+    private String m_strCommentsIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +111,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mBtnDeemBad = findViewById(R.id.btnIgActivityDeemBad);
         mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
+        mLayoutComments = findViewById(R.id.layoutComments);
 
         mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
@@ -130,6 +138,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiAttentionByIgActivity(mIgActivity);
         setUiDeemInfoByIgActivity(mIgActivity);
         setUiDeemPeopleByIgActivity(mIgActivity);
+        setUiCommentsByIgActivity(mIgActivity);
     }
 
     @Override
@@ -432,6 +441,38 @@ public class IgActivityDetailActivity extends BaseActivity implements
         }
     }
 
+    private void setUiCommentsByIgActivity(IgActivity activity) {
+        if(activity == null)
+            return;
+
+        String strActivityId = activity.getId();
+        Comment comment = new Comment();
+        comment.setActivityId(strActivityId);
+
+        CommentLogicExecutor executor = new CommentLogicExecutor();
+        executor.doSearchCommentsIds(this, comment);
+
+        showWaitingDialog(IgActivityDetailActivity.class.getName());
+    }
+
+    private void addCommentInLayout(Comment comment) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_igactivity_comment, null, false);
+        FrameLayout frameLayout = layout.findViewById(R.id.layoutCommentPublisherThumbnail);
+        TextView textViewCommentPublisherName = layout.findViewById(R.id.textViewCommentPublisherName);
+        TextView textViewCommentPublishDate = layout.findViewById(R.id.textViewCommentPublishDate);
+        TextView textViewCommentContent = layout.findViewById(R.id.textViewCommentContent);
+
+        ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
+        imageViewIcon.setImageResource(R.drawable.sample_activity);
+
+        textViewCommentPublisherName.setText(comment.getDisplayName());
+        textViewCommentPublishDate.setText(comment.getTs());
+        textViewCommentContent.setText(comment.getContent());
+
+        mLayoutComments.addView(layout);
+    }
+
     private boolean isAttended(IgActivity activity, Person person) {
         boolean bRes = false;
 
@@ -480,10 +521,29 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnStatus(Integer iStatusCode) {
+        if(iStatusCode.equals(STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT))
+            return;
+
         hideWaitingDialog();
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnComments(List<Comment> lsComments) {
+        if(lsComments != null && lsComments.size() > 0) {
+            for (Comment comment : lsComments)
+                addCommentInLayout(comment);
+        }
+    }
+
+    @Override
+    public void returnCommentsIds(String strCommentsIds) {
+        m_strCommentsIds = strCommentsIds;
+
+        CommentLogicExecutor executor = new CommentLogicExecutor();
+        executor.doSearchComments(this, m_strCommentsIds);
     }
 
     @Override

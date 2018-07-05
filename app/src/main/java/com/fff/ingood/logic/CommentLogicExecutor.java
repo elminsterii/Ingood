@@ -27,7 +27,7 @@ public class CommentLogicExecutor {
         fl.doLogic();
     }
 
-    public void doGetCommentsData(CommentQueryLogic.CommentQueryLogicCaller caller, String strIds) {
+    public void doSearchComments(CommentQueryLogic.CommentQueryLogicCaller caller, String strIds) {
         Logic fl = new CommentQueryLogic(caller, strIds);
         fl.doLogic();
     }

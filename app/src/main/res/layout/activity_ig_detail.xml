@@ -368,6 +368,17 @@
                     android:background="@drawable/selector_share_btn" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/layoutComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutIgActivityComment">
+            </RelativeLayout>
+
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>
 
