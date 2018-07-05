@@ -80,7 +80,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
-    private String m_strCommentsIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -544,10 +543,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnCommentsIds(String strCommentsIds) {
-        m_strCommentsIds = strCommentsIds;
-
         CommentLogicExecutor executor = new CommentLogicExecutor();
-        executor.doSearchComments(this, m_strCommentsIds);
+        executor.doSearchComments(this, strCommentsIds);
     }
 
     @Override
