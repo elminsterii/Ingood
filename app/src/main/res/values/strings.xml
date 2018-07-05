@@ -31,6 +31,12 @@
     <string name="activity_action_report">Report</string>
     <string name="activity_action_share">Share</string>
 
+    <!-- PersonData -->
+    <string name="title_comment_grade">Comment Grade</string>
+    <string name="title_about_me">About Me</string>
+    <string name="title_interesting_tags">Interests</string>
+
+
     <!-- Tags -->
     <string name="tag_care">Care</string>
     <string name="tag_environmental_protection">Environmental Protection</string>

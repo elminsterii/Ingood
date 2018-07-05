@@ -54,9 +54,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     @Override
     protected void initView(){
         mTextView_Name = findViewById(R.id.textview_name);
-        mTextView_Gender = findViewById(R.id.textview_gender);
-        mTextView_Age = findViewById(R.id.textview_age);
-        mTextView_Location = findViewById(R.id.textview_location);
+//        mTextView_Gender = findViewById(R.id.textview_gender);
+//        mTextView_Age = findViewById(R.id.textview_age);
+//        mTextView_Location = findViewById(R.id.textview_location);
         mImageView_HeadIcon = findViewById(R.id.imageview_headicon);
 
     }
@@ -64,9 +64,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     @Override
     protected void initData(){
         mTextView_Name.setText(PersonManager.getInstance().getPerson().getName());
-        mTextView_Age.setText(PersonManager.getInstance().getPerson().getAge());
-        mTextView_Gender.setText(PersonManager.getInstance().getPerson().getGender());
-        mTextView_Location.setText(PersonManager.getInstance().getPerson().getLocation());
+//        mTextView_Age.setText(PersonManager.getInstance().getPerson().getAge());
+//        mTextView_Gender.setText(PersonManager.getInstance().getPerson().getGender());
+//        mTextView_Location.setText(PersonManager.getInstance().getPerson().getLocation());
 
     }
 

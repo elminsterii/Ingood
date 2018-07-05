@@ -31,6 +31,11 @@
     <string name="activity_action_report">檢舉</string>
     <string name="activity_action_share">分享</string>
 
+    <!-- PersonData -->
+    <string name="title_comment_grade">平價指數</string>
+    <string name="title_about_me">關於我</string>
+    <string name="title_interesting_tags">興趣</string>
+
     <!-- Tags -->
     <string name="tag_care">關懷</string>
     <string name="tag_environmental_protection">環保</string>

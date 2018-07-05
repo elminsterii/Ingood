@@ -9,31 +9,40 @@
 
 
     <com.fff.ingood.ui.CircleImageView
+            android:layout_marginTop="81dp"
             android:layout_centerHorizontal ="true"
             android:id="@+id/imageview_headicon"
             android:layout_gravity="center"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="97.5dp"
+            android:layout_height="97.5dp"
             android:background="@color/colorWhite"
             android:src="@drawable/sample_activity"
             app:backgroundHeadColor="@color/colorPrimary"
             app:circleBorderHeadWidth="5dp"
             app:ringHeadColor="@color/colorAccent"
     />
+    <ImageView
+        android:id="@+id/imageview_edit_photo"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_toRightOf="@+id/textview_name"
+        android:layout_above="@+id/textview_name"
+        android:src="@drawable/editphoto_n"/>
     <TextView
+        android:id="@+id/textview_name"
         android:layout_centerHorizontal ="true"
         android:layout_below="@+id/imageview_headicon"
         android:text="Jimmy"
-        android:id="@+id/textview_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
     <ImageView
+        android:id="@+id/imageview_edit_name"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_toRightOf="@+id/textview_name"
         android:layout_below="@+id/imageview_headicon"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/edit_n"/>
     <TextView
         android:layout_centerHorizontal ="true"
         android:layout_below="@+id/textview_name"
@@ -57,13 +66,13 @@
         android:layout_marginLeft="35dp"
         android:layout_marginTop="35dp"
         android:layout_below="@+id/textview_location_age_gender"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/grade"/>
     <TextView
         android:id="@+id/textview_title_comment"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="35dp"
-        android:text="@string/sign_in"
+        android:text="@string/title_comment_grade"
         android:layout_toRightOf="@+id/imageview_icon_comment"
         android:layout_below="@+id/textview_location_age_gender"
         />
@@ -74,13 +83,13 @@
         android:layout_marginLeft="35dp"
         android:layout_marginTop="72dp"
         android:layout_below="@+id/imageview_icon_comment"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/host"/>
     <TextView
         android:id="@+id/textview_title_about_me"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="72dp"
-        android:text="@string/sign_in"
+        android:text="@string/title_about_me"
         android:layout_toRightOf="@+id/imageview_icon_about_me"
         android:layout_below="@+id/imageview_icon_comment"
         />
@@ -92,23 +101,23 @@
         android:layout_marginRight="35dp"
         android:layout_marginTop="72dp"
         android:layout_below="@+id/imageview_icon_comment"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/edit_n"/>
 
 
     <ImageView
         android:id="@+id/imageview_icon_tags"
-        android:layout_width="24dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
+        android:layout_below="@+id/imageview_icon_about_me"
         android:layout_marginLeft="35dp"
         android:layout_marginTop="72dp"
-        android:layout_below="@+id/imageview_icon_about_me"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/hobby" />
     <TextView
         android:id="@+id/textview_title_tags"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="72dp"
-        android:text="@string/sign_in"
+        android:text="@string/title_interesting_tags"
         android:layout_toRightOf="@+id/imageview_icon_tags"
         android:layout_below="@+id/imageview_icon_about_me"
         />
@@ -120,7 +129,7 @@
         android:layout_marginRight="35dp"
         android:layout_marginTop="72dp"
         android:layout_below="@+id/imageview_icon_about_me"
-        android:src="@drawable/view_y"/>
+        android:src="@drawable/edit_n"/>
 
 
 
