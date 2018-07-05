@@ -67,7 +67,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private ImageView mBtnDeemBad;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
-    private RelativeLayout mLayoutComments;
+    private LinearLayout mLayoutComments;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -469,6 +469,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
         textViewCommentPublisherName.setText(comment.getDisplayName());
         textViewCommentPublishDate.setText(comment.getTs());
         textViewCommentContent.setText(comment.getContent());
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_comment_comments_ig_activity));
+        layout.setLayoutParams(params);
 
         mLayoutComments.addView(layout);
     }

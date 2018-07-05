@@ -66,6 +66,7 @@
     <dimen name="gap_icon_and_des_ig_activity">5dp</dimen>
     <dimen name="gap_tags_row_ig_activity">5dp</dimen>
     <dimen name="gap_icons_attendees_ig_activity">9.1dp</dimen>
+    <dimen name="gap_comment_comments_ig_activity">10dp</dimen>
 
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>
