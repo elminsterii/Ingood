@@ -567,6 +567,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnIgActivitiesIds(String strActivitiesIds) {
-
+        //do not enter.
     }
 }

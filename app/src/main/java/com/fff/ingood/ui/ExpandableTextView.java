@@ -65,6 +65,9 @@ public class ExpandableTextView extends TextView implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if(getLineCount() < iMaxLines)
+            return;
+
         if (getMaxLines() == Integer.MAX_VALUE) {
             super.setMaxLines(iMaxLines);
             setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResExpandIconResId);
