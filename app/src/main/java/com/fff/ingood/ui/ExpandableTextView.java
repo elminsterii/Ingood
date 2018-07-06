@@ -6,16 +6,21 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fff.ingood.R;
+
 /**
  * Created by ElminsterII on 2018/6/26.
  */
 @SuppressLint("AppCompatCustomView")
 public class ExpandableTextView extends TextView implements View.OnClickListener {
 
-    private static final int DEFAULT_MAX_LINES = 5;
+    private static final int DEFAULT_EXPAND_ICON = R.drawable.ic_arrow_drop_down;
+    private static final int DEFAULT_COLLAPSED__ICON = R.drawable.ic_arrow_drop_up;
+    private static final int DEFAULT_MAX_LINES = 4;
+
     private int iMaxLines = DEFAULT_MAX_LINES;
-    private int mResExpandIconResId;
-    private int mResCollapsedIconResId;
+    private int mResExpandIconResId = DEFAULT_EXPAND_ICON;
+    private int mResCollapsedIconResId = DEFAULT_COLLAPSED__ICON;
 
     public ExpandableTextView(Context context) {
         super(context);
