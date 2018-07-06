@@ -43,6 +43,8 @@
     <string name="activity_detail_comment_title">活動留言</string>
     <string name="activity_detail_deem_good_people">個人說讚</string>
     <string name="activity_detail_deem_bad_people">個人說差</string>
+    <string name="activity_detail_comment_publish">我要留言</string>
+    <string name="activity_detail_comment_view_all">看全部留言</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>

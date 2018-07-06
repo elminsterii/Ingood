@@ -193,6 +193,22 @@ public class IgActivityDetailActivity extends BaseActivity implements
             }
         });
 
+        mTextViewDeemGood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+            }
+        });
+
+        mTextViewDeemBad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+            }
+        });
+
         View.OnClickListener leftClickBtnListener;
         View.OnClickListener rightClickBtnListener;
 
