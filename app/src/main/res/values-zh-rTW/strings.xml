@@ -32,9 +32,11 @@
     <string name="activity_action_share">分享</string>
 
     <!-- PersonData -->
-    <string name="title_comment_grade">平價指數</string>
+    <string name="title_comment_grade">評價指數</string>
     <string name="title_about_me">關於我</string>
     <string name="title_interesting_tags">興趣</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_change_pwd">變更密碼</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>

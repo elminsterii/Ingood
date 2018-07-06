@@ -35,6 +35,8 @@
     <string name="title_comment_grade">Comment Grade</string>
     <string name="title_about_me">About Me</string>
     <string name="title_interesting_tags">Interests</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_change_pwd">Change Password</string>
 
 
     <!-- Tags -->
