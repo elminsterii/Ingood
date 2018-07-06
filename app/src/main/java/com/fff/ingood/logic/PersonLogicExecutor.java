@@ -1,6 +1,7 @@
 package com.fff.ingood.logic;
 
 import com.fff.ingood.data.Person;
+import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 
 /**
  * Created by ElminsterII on 2018/5/27.
@@ -44,6 +45,12 @@ public class PersonLogicExecutor {
 
     public void doPersonQuery(PersonQueryLogic.PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail) {
         Logic fl = new PersonQueryLogic(caller, strPersonPrimaryKey, bByEmail);
+        fl.doLogic();
+    }
+
+    public void doSaveIgActivity(PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller caller, String strEmail, String strActivityId
+            , PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE svValue) {
+        Logic fl = new PersonSaveIgActivityLogic(caller, strEmail, strActivityId, svValue);
         fl.doLogic();
     }
 }
