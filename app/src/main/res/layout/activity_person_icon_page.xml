@@ -41,6 +41,12 @@
         android:layout_height="wrap_content"
         android:text="Get" />
 
+    <Button
+        android:id="@+id/btn_getlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get List" />
+
     <ImageView
         android:id="@+id/showimg"
         android:layout_width="match_parent"

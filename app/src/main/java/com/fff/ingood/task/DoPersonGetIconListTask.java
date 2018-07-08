@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoPersonUploadIconTask<Object> extends HttpPostAbstractTask<Object>{
-    public DoPersonUploadIconTask(Activity activity, AsyncResponder<String> responder) {
+public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object>{
+    public DoPersonGetIconListTask(Activity activity, AsyncResponder<String> responder) {
         super(activity,responder);
     }
     @Override
@@ -21,17 +21,15 @@ public class DoPersonUploadIconTask<Object> extends HttpPostAbstractTask<Object>
         {
             BufferedReader reader = null;
             StringBuilder stringBuilder;
-            String list[] =null;
-            URL uploadUrl;
-
-            list = ((String)info).split("&");
-            File file = new File((list[1]));
+            String account ;
+            URL url;
+            account = (String)info;
 
             try {
-                uploadUrl = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+list[0]  + "/icon01.jpg");
-                HttpURLConnection connection = (HttpURLConnection) uploadUrl.openConnection();
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+account+"/" );
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                connection.setRequestMethod("POST");
+                connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Charset", "UTF_8");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
@@ -41,19 +39,6 @@ public class DoPersonUploadIconTask<Object> extends HttpPostAbstractTask<Object>
                 connection.setUseCaches(false);
                 connection.connect();
 
-                if (file != null) {
-
-                    DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                    FileInputStream is = new FileInputStream(file);
-                    int read = 0;
-                    byte[] bytes = new byte[1024000];
-                    while ((read = is.read(bytes)) != -1) {
-                        out.write(bytes, 0, read);
-                    }
-                    is.close();
-                    out.flush();
-                    out.close();
-
                     //response body
                     reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                     stringBuilder = new StringBuilder();
@@ -62,7 +47,6 @@ public class DoPersonUploadIconTask<Object> extends HttpPostAbstractTask<Object>
                     {
                         stringBuilder.append(line + "\n");
                     }
-                }
             }catch(IOException e){
                 e.printStackTrace();
             }

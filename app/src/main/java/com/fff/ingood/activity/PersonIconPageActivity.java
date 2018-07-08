@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.DoPersonGetIconListTask;
 import com.fff.ingood.task.DoPersonGetIconTask;
 import com.fff.ingood.task.DoPersonUploadIconTask;
 import com.fff.ingood.task.HttpProxy;
@@ -48,16 +50,14 @@ import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_T
 public class PersonIconPageActivity extends BaseActivity {
 
     private Button mButton_upLoad;
-    private Button mButton_get, mButton_choose;
+    private Button mButton_get, mButton_choose, mButton_getList;
     private ImageView ivShow;
     private Bitmap photoBmp;
     private EditText mEditText_Account;
     private EditText mEditText_Pwd;
     private String img_src;
     private String account, password;
-    URL uploadUrl;
     Uri uri;
-    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class PersonIconPageActivity extends BaseActivity {
         mButton_upLoad = findViewById(R.id.btn_upload);
         mButton_choose = findViewById(R.id.btn_choose);
         mButton_get = findViewById(R.id.btn_get);
+        mButton_getList = findViewById(R.id.btn_getlist);
         ivShow = findViewById(R.id.showimg);
     }
 
@@ -106,7 +107,6 @@ public class PersonIconPageActivity extends BaseActivity {
                     img_src = cursor.getString(column_index); // actual image path
                 }
                 cursor.close();
-
             } catch (FileNotFoundException e){
                 e.printStackTrace();
             } catch (IOException e) {
@@ -166,10 +166,45 @@ public class PersonIconPageActivity extends BaseActivity {
         });
 
         mButton_get.setOnClickListener(new Button.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                new DownloadImage().execute(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ mEditText_Account.getText().toString() + "/icon02.jpg");
+                new DownloadImage().execute(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ mEditText_Account.getText().toString() + "/icon01.jpg");
+            }
+        });
+
+        mButton_getList.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DoPersonGetIconListTask task = new DoPersonGetIconListTask(mActivity,
+                        new AsyncResponder<String>() {
+                            @Override
+                            public void onSuccess(String strResponse) {
+
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
+                                    Toast.makeText(PersonIconPageActivity.this, "doGetlist OK", Toast.LENGTH_SHORT).show();
+
+                                    PreferenceManager.getInstance().setLoginSuccess(true);
+                                    PreferenceManager.getInstance().setKeepLogin(true);
+
+                                    Class<?> clsFlow = FlowManager.getInstance().goHomeFlow();
+
+                                    if(clsFlow != null) {
+                                        Intent intent = new Intent(mActivity, clsFlow);
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("personData", strResponse);
+                                        //bundle.putString("pwd", mEditText_Password.getText().toString());
+
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(PersonIconPageActivity.this, "doGetlist Failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                task.execute(mEditText_Account.getText().toString());
             }
         });
     }
@@ -179,23 +214,28 @@ public class PersonIconPageActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            mProgressDialog = new ProgressDialog(PersonIconPageActivity.this);
-            mProgressDialog.setTitle("Download Image Tutorial");
-            mProgressDialog.setMessage("Loading...");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.show();
         }
 
         @Override
         protected Bitmap doInBackground(String... URL) {
 
             String imageURL = URL[0];
-
             Bitmap bitmap = null;
+
             try {
                 InputStream input = new java.net.URL(imageURL).openStream();
+                ivShow.setDrawingCacheEnabled(true);
                 bitmap = BitmapFactory.decodeStream(input);
+                bitmap = ivShow.getDrawingCache();
+                File file = new File(Environment.getExternalStorageDirectory(),"NEW_Icon.jpg");
+                if (file.exists()){
+                    file.delete();
+                }
+                FileOutputStream outputStream = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                outputStream.close();
+                Log.v("mmp","File Length:"+file.length());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -204,8 +244,6 @@ public class PersonIconPageActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-
-            mProgressDialog.dismiss();
             ivShow.setImageBitmap(result);
         }
     }
