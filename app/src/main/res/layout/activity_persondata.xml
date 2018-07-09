@@ -63,7 +63,7 @@
             <Spinner
                 android:id="@+id/spinner_age"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="82.5dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
                 android:layout_marginStart="5dp"
@@ -73,7 +73,7 @@
             <Spinner
                 android:id="@+id/spinner_gender"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="82.5dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="5dp"
@@ -83,7 +83,7 @@
             <Spinner
                 android:id="@+id/spinner_location"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:layout_width="82.5dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="35dp"

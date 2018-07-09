@@ -19,6 +19,10 @@ public class Person implements Serializable {
     @SerializedName("userpassword")
     private String m_userpassword;
 
+    @SerializedName("newuserpassword")
+    private String m_newuserpassword;
+
+
     @SerializedName("displayname")
     private String m_displayname;
 
@@ -72,6 +76,13 @@ public class Person implements Serializable {
     }
     public void setPassword(String sPwd){
         m_userpassword  = sPwd;
+    }
+
+    public String getNewPassword(){
+        return  m_newuserpassword;
+    }
+    public void setNewPassword(String sPwd){
+        m_newuserpassword  = sPwd;
     }
 
     public String getName(){

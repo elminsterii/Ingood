@@ -18,6 +18,11 @@
     <dimen name="text_size_registration_tag_description">13sp</dimen>
     <dimen name="gap_registration_btw_texts">20dp</dimen>
 
+    <!-- PersonData -->
+
+    <dimen name="text_size_persondata_form_change_pwd_input">15sp</dimen>
+
+
     <!-- Activity item in Homepage -->
     <dimen name="text_size_activity_item_title_hp">20sp</dimen>
     <dimen name="text_size_activity_item_action_hp">15sp</dimen>

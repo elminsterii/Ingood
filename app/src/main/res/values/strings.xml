@@ -37,7 +37,10 @@
     <string name="title_interesting_tags">Interests</string>
     <string name="btn_save">Save</string>
     <string name="btn_change_pwd">Change Password</string>
-
+    <string name="edit_hint_new_pwd">New Password</string>
+    <string name="edit_hint_confirm_new_pwd">Confirm New Password</string>
+    <string name="btn_text_cancel">Cancel</string>
+    <string name="btn_text_ok">OK</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>
