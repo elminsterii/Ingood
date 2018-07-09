@@ -2,6 +2,7 @@ package com.fff.ingood.task;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -26,12 +27,12 @@ public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object
             account = (String)info;
 
             try {
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+account+"/" );
+                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ account );
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/json");
-                connection.setRequestProperty("Charset", "UTF_8");
+                connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
                 connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
                 connection.setReadTimeout(10000);
                 connection.setDoInput(true);
@@ -42,13 +43,31 @@ public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object
                     //response body
                     reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                     stringBuilder = new StringBuilder();
-                    String line = null;
+                    String line ;
+                    int i=0;
                     while ((line = reader.readLine()) != null)
                     {
-                        stringBuilder.append(line + "\n");
+                        Log.d("RES", line);
+                        i++;
+                        stringBuilder.append(line);
                     }
+                return stringBuilder.toString();
             }catch(IOException e){
                 e.printStackTrace();
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    try
+                    {
+                        reader.close();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         return null;

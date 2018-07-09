@@ -160,7 +160,6 @@ public class PersonIconPageActivity extends BaseActivity {
                                 }
                             }
                         });
-
                 task.execute(mEditText_Account.getText().toString()+"&"+img_src);
             }
         });
@@ -179,25 +178,8 @@ public class PersonIconPageActivity extends BaseActivity {
                         new AsyncResponder<String>() {
                             @Override
                             public void onSuccess(String strResponse) {
-
                                 if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
                                     Toast.makeText(PersonIconPageActivity.this, "doGetlist OK", Toast.LENGTH_SHORT).show();
-
-                                    PreferenceManager.getInstance().setLoginSuccess(true);
-                                    PreferenceManager.getInstance().setKeepLogin(true);
-
-                                    Class<?> clsFlow = FlowManager.getInstance().goHomeFlow();
-
-                                    if(clsFlow != null) {
-                                        Intent intent = new Intent(mActivity, clsFlow);
-
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("personData", strResponse);
-                                        //bundle.putString("pwd", mEditText_Password.getText().toString());
-
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
                                 }
                                 else {
                                     Toast.makeText(PersonIconPageActivity.this, "doGetlist Failed", Toast.LENGTH_SHORT).show();
