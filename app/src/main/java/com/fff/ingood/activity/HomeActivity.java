@@ -60,6 +60,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private boolean m_bIsInitialize = false;
 
+    private String[] m_arrIgActivitiesIdsShow;
+    private int m_curIgActivitiesShowIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_homepage);
@@ -132,6 +135,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                if(isLastItemDisplaying(mViewActivityList)) {
+                    //TODO - scroll to the bottom.
+                }
             }
         });
 
@@ -311,7 +318,15 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     @Override
     public void returnIgActivitiesIds(String strActivitiesIds) {
-        mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
+        if(!StringTool.checkStringNotNull(strActivitiesIds))
+            return;
+
+        String[] arrIgActivitiesIds = strActivitiesIds.split(",");
+
+        if(arrIgActivitiesIds.length <= 10)
+            mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
+
+        m_arrIgActivitiesIdsShow = arrIgActivitiesIds;
     }
 
     private void refresh() {
@@ -344,5 +359,13 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
+    }
+
+    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter().getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            return lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1;
+        }
+        return false;
     }
 }
