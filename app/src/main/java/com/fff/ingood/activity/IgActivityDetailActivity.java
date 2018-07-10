@@ -33,8 +33,10 @@ import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
+import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
+import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
 
@@ -47,6 +49,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
+        , PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
@@ -68,6 +71,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
     private LinearLayout mLayoutComments;
+    private ImageView mBtnSaveIgActivity;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -80,6 +84,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
+    private boolean m_bIsSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
         mLayoutComments = findViewById(R.id.layoutComments);
+        mBtnSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
 
         mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
@@ -249,6 +255,18 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mBtnLeftBottom.setOnClickListener(leftClickBtnListener);
         mBtnRightBottom.setOnClickListener(rightClickBtnListener);
+
+        mBtnSaveIgActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+
+                if(m_bIsSave)
+                    saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE.SV_CANCEL_SAVE);
+                else
+                    saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE.SV_SAVE);
+            }
+        });
     }
 
     @Override
@@ -299,7 +317,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         showWaitingDialog(IgActivityDetailActivity.class.getName());
     }
 
-    private void setPublisherIconByPerson(Person person) {
+    private void setUiPublisherIconByPerson(Person person) {
         ImageView imageViewIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.sample_activity);
     }
@@ -336,54 +354,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         for(int i=0; i<iAttention; i++)
             setAttendeesIconByPerson(mPublisher);
-    }
-
-    private void deemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
-        Person person = PersonManager.getInstance().getPerson();
-        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-
-        IgActivityDeemTaskWrapper.DEEM_VALUE dvValue;
-        boolean bIsDeemRollBack;
-
-        if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
-            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD) {
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
-                bIsDeemRollBack = true;
-            }
-            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
-                bIsDeemRollBack = false;
-            } else {
-                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
-                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD, true);
-
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
-                bIsDeemRollBack = false;
-            }
-        else
-            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-                bIsDeemRollBack = true;
-            }
-            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-                bIsDeemRollBack = false;
-            } else {
-                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
-                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
-
-                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-                bIsDeemRollBack = false;
-            }
-
-        executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
-                , mIgActivity.getId(), dvValue, bIsDeemRollBack);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -427,14 +397,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewDeemGood.setText(strDeemGoodFullText);
         mTextViewDeemBad.setText(strDeemBadFullText);
-    }
-
-    private void attendIgActivity(IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
-        Person person = PersonManager.getInstance().getPerson();
-        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-
-        executor.doAttendIgActivity(this, person.getId(), person.getEmail()
-                , person.getPassword(), mIgActivity.getId(), avAttend);
     }
 
     private void setUiBottomButtons() {
@@ -506,6 +468,92 @@ public class IgActivityDetailActivity extends BaseActivity implements
         return bRes;
     }
 
+    private void setUiSaveIgActivityByPerson(Person person) {
+        String strSaveActivities = person.getSaveActivities();
+
+        if(!StringTool.checkStringNotNull(strSaveActivities)) {
+            String[] arrSaveActivities = strSaveActivities.split(",");
+            for(String strActivityId : arrSaveActivities) {
+                if(strActivityId.equals(mIgActivity.getId()))
+                    setUiComponentSaveIgActivity(true);
+                else
+                    setUiComponentSaveIgActivity(false);
+            }
+        }
+    }
+
+    private void setUiComponentSaveIgActivity(boolean bSave) {
+        if(bSave)
+            mBtnSaveIgActivity.setImageResource(R.drawable.bookmark_d_65);
+        else
+            mBtnSaveIgActivity.setImageResource(R.drawable.bookmark_n_65);
+
+        m_bIsSave = bSave;
+    }
+
+    private void attendIgActivity(IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
+        Person person = PersonManager.getInstance().getPerson();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+
+        executor.doAttendIgActivity(this, person.getId(), person.getEmail()
+                , person.getPassword(), mIgActivity.getId(), avAttend);
+    }
+
+    private void saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE svValue) {
+        Person person = PersonManager.getInstance().getPerson();
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+
+        executor.doSaveIgActivity(this, person.getEmail(), mIgActivity.getId(), svValue);
+    }
+
+    private void deemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
+        Person person = PersonManager.getInstance().getPerson();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+
+        IgActivityDeemTaskWrapper.DEEM_VALUE dvValue;
+        boolean bIsDeemRollBack;
+
+        if(deemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD)
+            if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_GOOD) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = true;
+            }
+            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = false;
+            } else {
+                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD, true);
+
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
+                bIsDeemRollBack = false;
+            }
+        else
+        if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
+            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+            bIsDeemRollBack = true;
+        }
+        else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+            bIsDeemRollBack = false;
+        } else {
+            executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                    , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
+
+            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+            bIsDeemRollBack = false;
+        }
+
+        executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                , mIgActivity.getId(), dvValue, bIsDeemRollBack);
+    }
+
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -514,7 +562,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
             mPublisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(mPublisher.getName());
 
-            setPublisherIconByPerson(mPublisher);
+            setUiPublisherIconByPerson(mPublisher);
+            setUiSaveIgActivityByPerson(mPublisher);
             setUiBottomButtons();
         }
     }
@@ -544,6 +593,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveIgActivitySuccess() {
+        hideWaitingDialog();
+        setUiComponentSaveIgActivity(!m_bIsSave);
     }
 
     @Override

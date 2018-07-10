@@ -52,7 +52,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             mTextViewActivityActionAttention = v.findViewById(R.id.textActivityActionAttention);
             mTextViewActivityActionGoodCount = v.findViewById(R.id.textActivityActionGood);
             mLayoutTags = v.findViewById(R.id.layoutActivityTags);
-            mLayoutActivityBookmark = v.findViewById(R.id.layoutActivityBookmark);
+            mLayoutActivityBookmark = v.findViewById(R.id.layoutActivitySaveIgActivity);
         }
     }
 

@@ -6,7 +6,7 @@
     <string name="home_page">首頁</string>
     <string name="activity_page">活動內容</string>
     <!-- LoginPage -->
-    <string name="login_slogan">你  讓世界更美好</string>
+    <string name="login_slogan">活動 x 揪團 x 社交</string>
     <string name="login_account">帳號</string>
     <string name="login_pwd">密碼</string>
     <string name="login_forget_pwd">忘記密碼?</string>
@@ -27,7 +27,7 @@
     <string name="hint_for_verify">請按發送驗證碼，平台將會發送驗證碼到您的信箱</string>
 
     <!-- Activity -->
-    <string name="activity_action_bookmark">保存</string>
+    <string name="activity_action_save_ig_activity">保存</string>
     <string name="activity_action_no_attend">取消參加</string>
     <string name="activity_action_attend">參加</string>
     <string name="activity_action_report">檢舉</string>
