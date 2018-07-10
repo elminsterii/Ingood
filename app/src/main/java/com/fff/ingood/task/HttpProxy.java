@@ -32,6 +32,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_PERSON_UPDATE = SERVER_URL + "/updateperson";
     public static final String HTTP_POST_API_PERSON_ACCESS_ICON = SERVER_URL + "/accesspersonicon";
     public static final String HTTP_GET_API_PERSON_ACCESS_ICON = SERVER_URL + "/accesspersonicon";
+    public static final String HTTP_DELETE_API_PERSON_ICON = SERVER_URL +"/deletepersonicon";
     public static final String HTTP_POST_API_ACTIVITY_CREATE = SERVER_URL + "/createactivity";
     public static final String HTTP_POST_API_ACTIVITY_DELETE = SERVER_URL + "/deleteactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY = SERVER_URL + "/queryactivity";

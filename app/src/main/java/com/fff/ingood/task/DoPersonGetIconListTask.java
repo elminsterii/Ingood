@@ -27,7 +27,7 @@ public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object
             account = (String)info;
 
             try {
-                url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ account );
+                url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ACCESS_ICON) + "/"+ account );
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 connection.setRequestMethod("GET");

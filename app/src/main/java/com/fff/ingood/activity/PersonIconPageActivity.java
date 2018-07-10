@@ -24,6 +24,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.flow.PreferenceManager;
 import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.DoPersonDeleteIconTask;
 import com.fff.ingood.task.DoPersonGetIconListTask;
 import com.fff.ingood.task.DoPersonGetIconTask;
 import com.fff.ingood.task.DoPersonUploadIconTask;
@@ -50,7 +51,7 @@ import static com.fff.ingood.activity.RegisterPrimaryPageActivity.API_RESPONSE_T
 public class PersonIconPageActivity extends BaseActivity {
 
     private Button mButton_upLoad;
-    private Button mButton_get, mButton_choose, mButton_getList;
+    private Button mButton_get, mButton_choose, mButton_getList, mButton_delete;
     private ImageView ivShow;
     private Bitmap photoBmp;
     private EditText mEditText_Account;
@@ -79,6 +80,7 @@ public class PersonIconPageActivity extends BaseActivity {
         mButton_choose = findViewById(R.id.btn_choose);
         mButton_get = findViewById(R.id.btn_get);
         mButton_getList = findViewById(R.id.btn_getlist);
+        mButton_delete = findViewById(R.id.btn_delete);
         ivShow = findViewById(R.id.showimg);
     }
 
@@ -187,6 +189,28 @@ public class PersonIconPageActivity extends BaseActivity {
                             }
                         });
                 task.execute(mEditText_Account.getText().toString());
+            }
+        });
+
+        mButton_delete.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Person user = new Person();
+                user.setEmail(mEditText_Account.getText().toString());
+                user.setPassword(mEditText_Pwd.getText().toString());
+                DoPersonDeleteIconTask task = new DoPersonDeleteIconTask(mActivity,
+                        new AsyncResponder<String>() {
+                            @Override
+                            public void onSuccess(String strResponse) {
+                                if (ParserUtils.getStringByTag(API_RESPONSE_TAG, strResponse).contains("0")) {
+                                    Toast.makeText(PersonIconPageActivity.this, "doDelete OK", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(PersonIconPageActivity.this, "doDelete Failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                task.execute(user);
             }
         });
     }
