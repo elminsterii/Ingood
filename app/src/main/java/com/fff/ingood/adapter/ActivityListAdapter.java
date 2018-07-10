@@ -117,6 +117,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeTags(ViewHolder holder, IgActivity activity) {
+        holder.mLayoutTags.removeAllViews();
         TagManager.getInstance().makeTagsInLayout(holder.mLayoutTags, activity, mTagBarWidth);
     }
 

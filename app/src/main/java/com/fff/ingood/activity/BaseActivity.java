@@ -22,7 +22,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public abstract class BaseActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
     protected BaseActivity mActivity;
 
-    private CircleProgressBarDialog mWaitingDialog;
+    private static CircleProgressBarDialog mWaitingDialog;
 
     protected abstract void preInit();
 
@@ -74,7 +74,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
         if(!StringTool.checkStringNotNull(strTag))
             return;
 
-        if(mWaitingDialog.getDialog() == null) {
+        if(mWaitingDialog.getDialog() != null
+                && !mWaitingDialog.getDialog().isShowing()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingDialog.show(getSupportFragmentManager(), strTag);
+                }
+            });
+        } else if(mWaitingDialog.getDialog() == null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -87,6 +95,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
     protected void hideWaitingDialog() {
         if(mWaitingDialog.getDialog() != null
                 && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingDialog.dismiss();
+                }
+            });
     }
 }

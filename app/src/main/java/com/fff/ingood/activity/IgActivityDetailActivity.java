@@ -135,6 +135,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewDescription.setText(mIgActivity.getDescription());
 
+        showWaitingDialog(IgActivityDetailActivity.class.getName());
         setUiIgActivityImageByIgActivity(mIgActivity);
         setUiPublisherByIgActivity(mIgActivity);
         setUiAttentionByIgActivity(mIgActivity);
@@ -313,8 +314,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonQuery(this, strPublisherEmail, true);
-
-        showWaitingDialog(IgActivityDetailActivity.class.getName());
     }
 
     private void setUiPublisherIconByPerson(Person person) {
@@ -425,8 +424,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         CommentLogicExecutor executor = new CommentLogicExecutor();
         executor.doSearchCommentsIds(this, comment);
-
-        showWaitingDialog(IgActivityDetailActivity.class.getName());
     }
 
     private void addCommentInLayout(Comment comment) {

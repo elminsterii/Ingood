@@ -41,7 +41,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
-    private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 3;
+    private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
 
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;
@@ -77,8 +77,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     protected void onResume() {
         super.onResume();
 
-        if(m_bIsInitialize)
+        if(m_bIsInitialize) {
+            showWaitingDialog(HomeActivity.class.getName());
             refresh();
+        }
     }
 
     @Override
@@ -207,16 +209,13 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 if(tab.getText() == null)
                     return;
 
-                IgActivity activityCondition = new IgActivity();
                 String strTag = tab.getText().toString();
 
                 if(StringTool.checkStringNotNull(strTag)) {
-                    activityCondition.setTags(strTag);
-
                     showWaitingDialog(HomeActivity.class.getName());
-                    mActivityMgr.doSearchIgActivitiesIds(mActivity, activityCondition);
 
-                    preSearchCondition = activityCondition;
+                    preSearchCondition.setTags(strTag);
+                    refresh();
                 }
             }
 
@@ -234,9 +233,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mTabLayoutTagBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mActivityListAdapter.setTagBarWidth(mTabLayoutTagBar.getWidth());
                 if(!m_bIsInitialize) {
-                    showWaitingDialog(HomeActivity.class.getName());
+                    mActivityListAdapter.setTagBarWidth(mTabLayoutTagBar.getWidth());
                     refresh();
                     m_bIsInitialize = true;
                 }
@@ -303,6 +301,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     @Override
     public void returnStatus(Integer iStatusCode) {
         hideWaitingDialog();
+        mLayoutSwipeRefresh.setRefreshing(false);
 
         if(iStatusCode == null)
             return;
@@ -314,15 +313,12 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     @Override
     public void returnIgActivities(List<IgActivity> lsActivities) {
         hideWaitingDialog();
-        mLayoutSwipeRefresh.setRefreshing(false);
 
         if(m_lsActivities == null || m_lsActivities.size() == 0)
             m_lsActivities = lsActivities;
         else
             m_lsActivities.addAll(lsActivities);
 
-//        mViewActivityList.setAdapter(null);
-//        mViewActivityList.setAdapter(mActivityListAdapter);
         mActivityListAdapter.updateActivityList(m_lsActivities);
         mActivityListAdapter.notifyDataSetChanged();
 
@@ -334,18 +330,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strActivitiesIds))
             return;
 
-        m_lsActivities = null;
+        m_lsActivities.clear();
         m_arrIgActivitiesIds = null;
         m_curQueryIndex = 0;
 
         String[] arrIgActivitiesIds = strActivitiesIds.split(",");
+        m_arrIgActivitiesIds = arrIgActivitiesIds;
 
         if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
             mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
-        } else {
-            m_arrIgActivitiesIds = arrIgActivitiesIds;
+        } else
             queryIgActivity(0);
-        }
     }
 
     private void queryIgActivity(int startIndex) {
@@ -354,7 +349,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         int endIndex = (startIndex + MAX_QUERY_QUANTITY_IGACTIVITY_ONCE - 1);
 
-        if(endIndex > m_arrIgActivitiesIds.length)
+        if(endIndex >= m_arrIgActivitiesIds.length)
             endIndex = m_arrIgActivitiesIds.length - 1;
 
         String strIgActivitiesIds = StringTool.cutStringBySymbolAndRange(m_arrIgActivitiesIds
@@ -366,8 +361,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private void refresh() {
         if(preSearchCondition != null) {
-            mViewActivityList.setAdapter(null);
-            mViewActivityList.setAdapter(mActivityListAdapter);
+            m_lsActivities.clear();
+            mActivityListAdapter.updateActivityList(m_lsActivities);
+            mActivityListAdapter.notifyDataSetChanged();
+
             mActivityMgr.doSearchIgActivitiesIds(mActivity, preSearchCondition);
         }
     }
