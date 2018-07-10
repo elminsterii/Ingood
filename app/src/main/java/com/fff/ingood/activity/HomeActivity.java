@@ -41,6 +41,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
+    private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 3;
+
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;
     private DrawerLayout mLayoutMenu;
@@ -60,8 +62,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private boolean m_bIsInitialize = false;
 
-    private String[] m_arrIgActivitiesIdsShow;
-    private int m_curIgActivitiesShowIndex;
+    private String[] m_arrIgActivitiesIds;
+    private int m_curQueryIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +139,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 super.onScrolled(recyclerView, dx, dy);
 
                 if(isLastItemDisplaying(mViewActivityList)) {
-                    //TODO - scroll to the bottom.
+                    if(m_curQueryIndex >= m_arrIgActivitiesIds.length)
+                        return;
+
+                    showWaitingDialog(HomeActivity.class.getName());
+                    queryIgActivity(m_curQueryIndex);
                 }
             }
         });
@@ -310,10 +316,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         hideWaitingDialog();
         mLayoutSwipeRefresh.setRefreshing(false);
 
-        m_lsActivities = lsActivities;
-        mViewActivityList.setAdapter(null);
-        mViewActivityList.setAdapter(mActivityListAdapter);
-        mActivityListAdapter.updateActivityList(lsActivities);
+        if(m_lsActivities == null || m_lsActivities.size() == 0)
+            m_lsActivities = lsActivities;
+        else
+            m_lsActivities.addAll(lsActivities);
+
+//        mViewActivityList.setAdapter(null);
+//        mViewActivityList.setAdapter(mActivityListAdapter);
+        mActivityListAdapter.updateActivityList(m_lsActivities);
+        mActivityListAdapter.notifyDataSetChanged();
+
+        m_curQueryIndex += lsActivities.size();
     }
 
     @Override
@@ -321,17 +334,42 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strActivitiesIds))
             return;
 
+        m_lsActivities = null;
+        m_arrIgActivitiesIds = null;
+        m_curQueryIndex = 0;
+
         String[] arrIgActivitiesIds = strActivitiesIds.split(",");
 
-        if(arrIgActivitiesIds.length <= 10)
+        if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
             mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
+        } else {
+            m_arrIgActivitiesIds = arrIgActivitiesIds;
+            queryIgActivity(0);
+        }
+    }
 
-        m_arrIgActivitiesIdsShow = arrIgActivitiesIds;
+    private void queryIgActivity(int startIndex) {
+        if(startIndex >= m_arrIgActivitiesIds.length)
+            return;
+
+        int endIndex = (startIndex + MAX_QUERY_QUANTITY_IGACTIVITY_ONCE - 1);
+
+        if(endIndex > m_arrIgActivitiesIds.length)
+            endIndex = m_arrIgActivitiesIds.length - 1;
+
+        String strIgActivitiesIds = StringTool.cutStringBySymbolAndRange(m_arrIgActivitiesIds
+                , startIndex
+                , endIndex
+                , ",");
+        mActivityMgr.doGetIgActivitiesData(this, strIgActivitiesIds);
     }
 
     private void refresh() {
-        if(preSearchCondition != null)
+        if(preSearchCondition != null) {
+            mViewActivityList.setAdapter(null);
+            mViewActivityList.setAdapter(mActivityListAdapter);
             mActivityMgr.doSearchIgActivitiesIds(mActivity, preSearchCondition);
+        }
     }
 
     private void hideSoftInput() {

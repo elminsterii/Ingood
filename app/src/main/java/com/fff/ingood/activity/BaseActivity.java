@@ -74,8 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
         if(!StringTool.checkStringNotNull(strTag))
             return;
 
-        if(mWaitingDialog.getDialog() != null
-                && !mWaitingDialog.getDialog().isShowing()) {
+        if(mWaitingDialog.getDialog() == null) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

@@ -87,4 +87,18 @@ public class StringTool {
     public static List<String> arrayStringToListString(String[] arrString) {
         return new ArrayList<>(Arrays.asList(arrString));
     }
+
+    public static String cutStringBySymbolAndRange(String[] arrString, int startIndex, int endIndex, String strSplitSymbol) {
+        StringBuilder bRes = new StringBuilder();
+
+        for(int i=startIndex; i<=endIndex; i++) {
+            bRes.append(arrString[i]);
+            bRes.append(strSplitSymbol);
+        }
+
+        if(bRes.length() > 0)
+            bRes.deleteCharAt(bRes.length()-1);
+
+        return bRes.toString();
+    }
 }
