@@ -4,6 +4,8 @@
     <string name="sign_up">Register</string>
     <string name="home_page">Home Page</string>
     <string name="activity_page">Activity content</string>
+    <string name="activity_publish">Activity publish</string>
+
     <!-- LoginPage -->
     <string name="login_slogan">Activity / Band / Social</string>
     <string name="login_account">Account</string>
