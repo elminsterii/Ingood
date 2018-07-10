@@ -4,14 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.SpannableString;
+import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.LinkMovementMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.StyleSpan;
-import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,16 +25,13 @@ import android.widget.TextView;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
-import com.fff.ingood.logic.Logic;
 import com.fff.ingood.logic.PersonLogicExecutor;
-import com.fff.ingood.logic.PersonLoginLogic;
 import com.fff.ingood.logic.PersonUpdateLogic;
-import com.fff.ingood.ui.CircleImageView;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
-import java.util.Objects;
+import java.util.List;
 
-public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller {
+public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller{
 
 
 
@@ -73,6 +69,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageButton mImageButton_EyeNewPassword;
     private ImageButton mImageButton_EyeNewPasswordConfirm;
 
+    //for edit description dialog
+    private EditText mEditText_EditDes;
+    private TextView mTextView_DesLimitation;
 
 
     @Override
@@ -145,6 +144,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item);
         mSpinner_Location.setAdapter(spinnerLocationAdapter);
 
+        Person pp = PersonManager.getInstance().getPerson();
+
         if(PersonManager.getInstance().getPerson().getGender().equals("M"))
             mSpinner_Gender.setSelection(1);
 
@@ -156,7 +157,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         }
 
-        mSpinner_Age.setSelection(Integer.parseInt(PersonManager.getInstance().getPerson().getAge()) + 1);
+        mSpinner_Age.setSelection(Integer.parseInt(PersonManager.getInstance().getPerson().getAge()) -17);
 
 
     }
@@ -178,6 +179,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 boolean isGenderChanged = false;
                 boolean isAgeChanged = false;
                 boolean isLocationChanged = false;
+                boolean isDescriptionChanged = false;
 
                 if(!PersonManager.getInstance().getPerson().getGender().equals(String.valueOf(mSpinner_Gender.getSelectedItem()))){
                     person.setGender(String.valueOf(mSpinner_Gender.getSelectedItem()));
@@ -193,10 +195,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     person.setLocation(String.valueOf(mSpinner_Location.getSelectedItem()));
                     isLocationChanged = true;
                 }
+                if(!PersonManager.getInstance().getPerson().getDescription().equals(String.valueOf(mTextView_Description.getText()))){
+                    person.setDescription(String.valueOf(mSpinner_Age.getSelectedItem()));
+                    isDescriptionChanged = true;
+                }
 
-                if(!isAgeChanged && !isGenderChanged && !isLocationChanged)
+                if(!isAgeChanged && !isGenderChanged && !isLocationChanged && !isDescriptionChanged)
                     return;
                 else{
+                    person.setEmail(PersonManager.getInstance().getPerson().getEmail());
+                    person.setPassword(PersonManager.getInstance().getPerson().getPassword());
                     PersonLogicExecutor executor = new PersonLogicExecutor();
                     executor.doPersonUpdate(mActivity, person);
                 }
@@ -224,7 +232,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageView_EditDescription.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                editDescriptionDlg();
 
             }
         });
@@ -269,23 +277,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
 
-    @Override
-    public void returnStatus(Integer iStatusCode) {
-
-    }
-
-    @Override
-    public void onUpdateSuccess() {
-
-    }
 
     private void changePwdDlg(){
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-
         LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
+        View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_change_pwd,null);
 
-        View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_change_pwd,
-                null);
         mEditText_OldPassword = (EditText) newPlanDialog.findViewById(R.id.edit_pwd);
         mEditText_NewPassword = (EditText) newPlanDialog.findViewById(R.id.edit_pwd_new);
         mEditText_NewPasswordConfirm = (EditText) newPlanDialog.findViewById(R.id.edit_pwd_new_confirm);
@@ -379,6 +376,67 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
         builder.show();
     }
+
+    private void editDescriptionDlg(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
+        View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_edit_description,null);
+
+        mEditText_EditDes = (EditText) newPlanDialog.findViewById(R.id.edit_des);
+        mTextView_DesLimitation = (TextView) newPlanDialog.findViewById(R.id.text_edit_limit);
+
+        mEditText_EditDes.setText(mTextView_Description.getText().toString());
+
+        mEditText_EditDes.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mTextView_DesLimitation.setText(String.valueOf(150 - mEditText_EditDes.getText().toString().length()));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        builder.setView(newPlanDialog);
+        builder.setPositiveButton(getString(R.string.btn_text_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.btn_text_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mTextView_Description.setText(mEditText_EditDes.getText());
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+    }
+
+
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+
+    }
+
+    @Override
+    public void onUpdateSuccess() {
+
+    }
+
+
+
+
 
 
 }

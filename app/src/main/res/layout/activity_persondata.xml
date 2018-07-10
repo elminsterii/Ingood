@@ -9,6 +9,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+        
 
 
 
@@ -131,6 +132,7 @@
 
         <TextView
             android:id="@+id/textview_content_about_me"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="21dp"
             android:layout_below="@+id/textview_title_about_me"
