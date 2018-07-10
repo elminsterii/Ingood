@@ -25,6 +25,9 @@ public class LogoutFlow extends Flow implements PersonLogoutLogic.PersonLogoutLo
 
     @Override
     public void returnStatus(Integer iStatusCode) {
+        if(iStatusCode == null)
+            return;
+        
         mCaller.returnFlow(iStatusCode, FLOW.FL_LOGIN, LoginActivity.class);
     }
 

@@ -291,6 +291,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     public void returnStatus(Integer iStatusCode) {
         hideWaitingDialog();
 
+        if(iStatusCode == null)
+            return;
+
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
     }

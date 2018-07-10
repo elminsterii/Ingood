@@ -366,15 +366,15 @@ public class IgActivityDetailActivity extends BaseActivity implements
             case DEEM_GOOD :
                 mBtnDeemGood.setImageResource(R.drawable.good_d);
                 mBtnDeemBad.setImageResource(R.drawable.bad_n);
-                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorDeemGood));
-                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorTextHint));
+                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorSlave));
+                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorSlave));
                 break;
 
             case DEEM_BAD :
                 mBtnDeemGood.setImageResource(R.drawable.good_n);
                 mBtnDeemBad.setImageResource(R.drawable.bad_d);
-                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorTextHint));
-                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorDeemBad));
+                mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorSlave));
+                mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorSlave));
                 break;
 
             case DEEM_NONE :
@@ -586,7 +586,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        if(iStatusCode.equals(STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT))
+        if(iStatusCode == null
+                || iStatusCode.equals(STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT))
             return;
 
         hideWaitingDialog();

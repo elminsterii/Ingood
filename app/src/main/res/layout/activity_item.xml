@@ -160,8 +160,7 @@
                 android:id="@+id/imgActivityActionSaveIgActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:src="@drawable/bookmark_n_s" />
+                android:layout_alignParentStart="true"/>
             <TextView
                 android:id="@+id/textActivityActionSaveIgActivity"
                 android:layout_width="wrap_content"
