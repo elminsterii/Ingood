@@ -47,6 +47,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private TextView mTextView_Name;
     private TextView mTextView_Description;
     private TextView mTextView_ChangePwd;
+    private TextView mTextView_Mail;
 
     private Button mButton_Save;
 
@@ -101,6 +102,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextView_Name = findViewById(R.id.textview_name);
         mTextView_Description = findViewById(R.id.textview_content_about_me);
         mTextView_ChangePwd = findViewById(R.id.textview_change_pwd);
+        mTextView_Mail = findViewById(R.id.textview_mail);
 
         mSpinner_Gender = findViewById(R.id.spinner_gender);
         mSpinner_Age = findViewById(R.id.spinner_age);
@@ -126,6 +128,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mActivity = this;
 
         mTextView_Name.setText(PersonManager.getInstance().getPerson().getName());
+        mTextView_Mail.setText(PersonManager.getInstance().getPerson().getEmail());
         mTextView_Description.setText(PersonManager.getInstance().getPerson().getDescription());
         mTextView_ChangePwd.setClickable(true);
 
