@@ -392,6 +392,7 @@
                 android:layout_marginTop="6dp">
 
                 <TextView
+                    android:id="@+id/textViewIgActivityPublishComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -405,7 +406,8 @@
                     android:layout_alignParentEnd="true"
                     android:textSize="13sp"
                     android:textColor="@color/colorSlave"
-                    android:text="@string/activity_detail_comment_view_all"/>
+                    android:text="@string/activity_detail_comment_view_all"
+                    android:visibility="invisible"/>
             </RelativeLayout>
         </RelativeLayout>
     </com.fff.ingood.ui.HeadZoomScrollView>

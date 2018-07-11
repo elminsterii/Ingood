@@ -77,6 +77,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private TextView mTextViewDeemBad;
     private LinearLayout mLayoutComments;
     private ImageView mImageViewSaveIgActivity;
+    private TextView mTextViewPublishComment;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -123,6 +124,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
         mLayoutComments = findViewById(R.id.layoutComments);
         mImageViewSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
+        mTextViewPublishComment = findViewById(R.id.textViewIgActivityPublishComment);
 
         mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
@@ -200,32 +202,51 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewDeemGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(IgActivityDetailActivity.class.getName());
-                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                if(!m_bIsIgActivityOwner) {
+                    showWaitingDialog(IgActivityDetailActivity.class.getName());
+                    deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                } else
+                    Toast.makeText(mActivity, getResources().getText(R.string.deem_fail_in_your_own_igactivity), Toast.LENGTH_SHORT).show();
             }
         });
 
         mImageViewDeemBad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(IgActivityDetailActivity.class.getName());
-                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                if(!m_bIsIgActivityOwner) {
+                    showWaitingDialog(IgActivityDetailActivity.class.getName());
+                    deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                } else
+                    Toast.makeText(mActivity, getResources().getText(R.string.deem_fail_in_your_own_igactivity), Toast.LENGTH_SHORT).show();
             }
         });
 
         mTextViewDeemGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(IgActivityDetailActivity.class.getName());
-                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                if(!m_bIsIgActivityOwner) {
+                    showWaitingDialog(IgActivityDetailActivity.class.getName());
+                    deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_GOOD);
+                } else
+                    Toast.makeText(mActivity, getResources().getText(R.string.deem_fail_in_your_own_igactivity), Toast.LENGTH_SHORT).show();
             }
         });
 
         mTextViewDeemBad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showWaitingDialog(IgActivityDetailActivity.class.getName());
-                deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                if(!m_bIsIgActivityOwner) {
+                    showWaitingDialog(IgActivityDetailActivity.class.getName());
+                    deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
+                } else
+                    Toast.makeText(mActivity, getResources().getText(R.string.deem_fail_in_your_own_igactivity), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mTextViewPublishComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO - publish comment
             }
         });
 

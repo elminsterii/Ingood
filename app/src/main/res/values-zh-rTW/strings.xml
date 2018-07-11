@@ -93,6 +93,7 @@
     <string name="verify_email_sent">驗證碼已寄至您的信箱</string>
     <string name="deem_activity_has_been_sent">已送出評價</string>
     <string name="deem_activity_has_been_recover">已收回評價</string>
+    <string name="deem_fail_in_your_own_igactivity">您無法評價自己的活動</string>
     <string name="attend_activity_success">參加成功</string>
     <string name="no_attend_activity_success">已取消參加</string>
 
