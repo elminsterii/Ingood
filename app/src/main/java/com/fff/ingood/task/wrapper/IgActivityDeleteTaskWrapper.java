@@ -1,10 +1,10 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.IgActivityDeleteTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+import com.google.gson.JsonObject;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
@@ -58,7 +58,16 @@ public class IgActivityDeleteTaskWrapper {
         });
     }
 
-    public void execute(IgActivity activity) {
-        task.execute(activity);
+    public void execute(String strIgActivityId , String strPublisherEmail, String strPublisherPassword) {
+        final String TAG_ACTIVITY_ID = "id";
+        final String TAG_PUBLISHER_EMAIL = "publisheremail";
+        final String TAG_PUBLISHER_PASSWORD = "publisheruserpassword";
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(TAG_ACTIVITY_ID, strIgActivityId);
+        jsonObject.addProperty(TAG_PUBLISHER_EMAIL, strPublisherEmail);
+        jsonObject.addProperty(TAG_PUBLISHER_PASSWORD, strPublisherPassword);
+
+        task.execute(jsonObject);
     }
 }

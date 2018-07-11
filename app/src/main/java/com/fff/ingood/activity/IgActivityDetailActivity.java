@@ -1,6 +1,7 @@
 package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.fff.ingood.logic.CommentLogicExecutor;
 import com.fff.ingood.logic.CommentQueryLogic;
 import com.fff.ingood.logic.IgActivityAttendLogic;
 import com.fff.ingood.logic.IgActivityDeemLogic;
+import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
@@ -39,6 +41,7 @@ import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ExpandableTextView;
+import com.fff.ingood.ui.WarningDialog;
 
 import java.util.List;
 
@@ -53,6 +56,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
+        , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
         , CommentQueryLogic.CommentQueryLogicCaller {
 
     private ImageButton mImageViewBack;
@@ -232,7 +236,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
             leftClickBtnListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO - delete button
+                    WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
+                        @Override
+                        public void onPositiveClick(DialogInterface dialog) {
+                            showWaitingDialog(IgActivityDetailActivity.class.getName());
+                            deleteIgActivity();
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegativeClick(DialogInterface dialog) {
+                            dialog.dismiss();
+                        }
+                    }, getResources().getString(R.string.dialog_delete_confirm_message)).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
                 }
             };
             rightClickBtnListener = new View.OnClickListener() {
@@ -560,6 +576,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 , mIgActivity.getId(), dvValue, bIsDeemRollBack);
     }
 
+    private void deleteIgActivity() {
+        Person personOwner = PersonManager.getInstance().getPerson();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doDeleteIgActivity(this, mIgActivity.getId(), personOwner.getEmail(), personOwner.getPassword());
+    }
+
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -600,6 +622,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnDeleteIgActivitySuccess() {
+        hideWaitingDialog();
+        Toast.makeText(mActivity, getResources().getText(R.string.dialog_delete_igactivity_done_message), Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
     @Override

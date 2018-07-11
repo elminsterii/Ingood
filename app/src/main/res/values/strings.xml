@@ -64,6 +64,10 @@
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
     <string name="log_out">Log Out</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete_confirm_message">Are you sure delete this activity?</string>
+    <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>

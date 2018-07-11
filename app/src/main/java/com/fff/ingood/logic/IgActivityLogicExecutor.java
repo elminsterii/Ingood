@@ -14,8 +14,10 @@ public class IgActivityLogicExecutor {
         fl.doLogic();
     }
 
-    public void doDeleteIgActivity(IgActivityDeleteLogic.IgActivityDeleteLogicCaller caller, IgActivity activity) {
-        Logic fl = new IgActivityDeleteLogic(caller, activity);
+    public void doDeleteIgActivity(IgActivityDeleteLogic.IgActivityDeleteLogicCaller caller, String strIgActivityId
+            , String strPublisherEmail
+            , String strPublisherPassword) {
+        Logic fl = new IgActivityDeleteLogic(caller, strIgActivityId, strPublisherEmail, strPublisherPassword);
         fl.doLogic();
     }
 

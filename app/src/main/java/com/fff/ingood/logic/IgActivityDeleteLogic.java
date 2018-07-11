@@ -1,6 +1,5 @@
 package com.fff.ingood.logic;
 
-import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.wrapper.IgActivityDeleteTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -16,18 +15,25 @@ public class IgActivityDeleteLogic extends Logic implements IgActivityDeleteTask
     }
 
     private IgActivityDeleteLogicCaller mCaller;
-    private IgActivity mIgActivity;
+    private String m_strIgActivityId;
+    private String m_strPublisherEmail;
+    private String m_strPublisherPassword;
 
-    IgActivityDeleteLogic(IgActivityDeleteLogicCaller caller, IgActivity igActivity) {
+    IgActivityDeleteLogic(IgActivityDeleteLogicCaller caller
+            , String strIgActivityId
+            , String strPublisherEmail
+            , String strPublisherPassword) {
         super(caller);
         mCaller = caller;
-        mIgActivity = igActivity;
+        m_strIgActivityId = strIgActivityId;
+        m_strPublisherEmail = strPublisherEmail;
+        m_strPublisherPassword = strPublisherPassword;
     }
 
     @Override
     protected void doLogic() {
         IgActivityDeleteTaskWrapper task = new IgActivityDeleteTaskWrapper(this);
-        task.execute(mIgActivity);
+        task.execute(m_strIgActivityId, m_strPublisherEmail, m_strPublisherPassword);
     }
 
     @Override
