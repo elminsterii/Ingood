@@ -56,6 +56,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , CommentQueryLogic.CommentQueryLogicCaller {
 
     private ImageButton mImageViewBack;
+    private ImageView mImageViewShare;
     private ImageView mImageViewIgActivityMain;
     private TextView mTextViewTitle;
     private TextView mTextViewDate;
@@ -66,12 +67,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private ExpandableTextView mTextViewDescription;
     private LinearLayout mLayoutTagBar;
     private TextView mTextViewAttention;
-    private ImageView mBtnDeemGood;
-    private ImageView mBtnDeemBad;
+    private ImageView mImageViewDeemGood;
+    private ImageView mImageViewDeemBad;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
     private LinearLayout mLayoutComments;
-    private ImageView mBtnSaveIgActivity;
+    private ImageView mImageViewSaveIgActivity;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -101,6 +102,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     protected void initView() {
         mImageViewBack = findViewById(R.id.imageViewBack);
+        mImageViewShare = findViewById(R.id.imageViewShare);
         mImageViewIgActivityMain = findViewById(R.id.imageViewIgActivityMain);
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
@@ -111,12 +113,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDescription = findViewById(R.id.textViewIgActivityDescription);
         mLayoutTagBar = findViewById(R.id.layoutIgActivityTags);
         mTextViewAttention = findViewById(R.id.textViewIgActivityAttention);
-        mBtnDeemGood = findViewById(R.id.btnIgActivityDeemGood);
-        mBtnDeemBad = findViewById(R.id.btnIgActivityDeemBad);
+        mImageViewDeemGood = findViewById(R.id.btnIgActivityDeemGood);
+        mImageViewDeemBad = findViewById(R.id.btnIgActivityDeemBad);
         mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
         mLayoutComments = findViewById(R.id.layoutComments);
-        mBtnSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
+        mImageViewSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
 
         mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
@@ -153,6 +155,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
             }
         });
 
+        mImageViewShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         mLayoutTagBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -184,7 +193,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             }
         });
 
-        mBtnDeemGood.setOnClickListener(new View.OnClickListener() {
+        mImageViewDeemGood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
@@ -192,7 +201,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             }
         });
 
-        mBtnDeemBad.setOnClickListener(new View.OnClickListener() {
+        mImageViewDeemBad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
@@ -257,7 +266,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mBtnLeftBottom.setOnClickListener(leftClickBtnListener);
         mBtnRightBottom.setOnClickListener(rightClickBtnListener);
 
-        mBtnSaveIgActivity.setOnClickListener(new View.OnClickListener() {
+        mImageViewSaveIgActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
@@ -363,22 +372,22 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private void setUiDeemInfoByEnum(DeemInfoManager.DEEM_INFO deemInfo) {
         switch(deemInfo) {
             case DEEM_GOOD :
-                mBtnDeemGood.setImageResource(R.drawable.good_d);
-                mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                mImageViewDeemGood.setImageResource(R.drawable.good_d);
+                mImageViewDeemBad.setImageResource(R.drawable.bad_n);
                 mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorSlave));
                 mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorSlave));
                 break;
 
             case DEEM_BAD :
-                mBtnDeemGood.setImageResource(R.drawable.good_n);
-                mBtnDeemBad.setImageResource(R.drawable.bad_d);
+                mImageViewDeemGood.setImageResource(R.drawable.good_n);
+                mImageViewDeemBad.setImageResource(R.drawable.bad_d);
                 mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorSlave));
                 mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorSlave));
                 break;
 
             case DEEM_NONE :
-                mBtnDeemGood.setImageResource(R.drawable.good_n);
-                mBtnDeemBad.setImageResource(R.drawable.bad_n);
+                mImageViewDeemGood.setImageResource(R.drawable.good_n);
+                mImageViewDeemBad.setImageResource(R.drawable.bad_n);
                 mTextViewDeemGood.setTextColor(getResources().getColor(R.color.colorTextHint));
                 mTextViewDeemBad.setTextColor(getResources().getColor(R.color.colorTextHint));
                 break;
@@ -481,9 +490,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void setUiComponentSaveIgActivity(boolean bSave) {
         if(bSave)
-            mBtnSaveIgActivity.setImageResource(R.drawable.bookmark_d_65);
+            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_d_65);
         else
-            mBtnSaveIgActivity.setImageResource(R.drawable.bookmark_n_65);
+            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_n_65);
 
         m_bIsSave = bSave;
     }
