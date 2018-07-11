@@ -10,7 +10,7 @@ import android.view.WindowManager;
  */
 public class SystemUIManager {
 
-    public enum ACTIVITY_LIST {ACT_DEFAULT, ACT_MAIN, ACT_LOGIN, ACT_LOGINACC, ACT_REGISTRATION, ACT_HOME, ACT_IGDETAIL}
+    public enum ACTIVITY_LIST {ACT_DEFAULT, ACT_MAIN, ACT_LOGIN, ACT_LOGINACC, ACT_REGISTRATION, ACT_HOME, ACT_IGDETAIL, ACT_IGPUBLISH}
 
     private static SystemUIManager m_instance = null;
     private int mCurAPIVersion;
