@@ -1,7 +1,6 @@
 package com.fff.ingood.task;
 
-import com.fff.ingood.data.Comment;
-import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -11,14 +10,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CommentCreateTask extends HttpPostAccessTask<Comment, Integer, String> {
+public class CommentCreateTask extends HttpPostAccessTask<JsonObject, Integer, String> {
 
     public CommentCreateTask(AsyncResponder<Integer, String> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(Comment info) {
+    protected String access(JsonObject jsonObj) {
         BufferedReader reader = null;
         StringBuilder stringBuilder;
 
@@ -39,9 +38,8 @@ public class CommentCreateTask extends HttpPostAccessTask<Comment, Integer, Stri
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
-            String jsonString;
-            jsonString = new Gson().toJson(info, Comment.class);
-            writer.write(jsonString.getBytes());
+
+            writer.write(jsonObj.toString().getBytes());
             writer.flush();
             writer.close();
             os.close();

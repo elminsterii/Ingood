@@ -7,8 +7,9 @@ import com.fff.ingood.data.Comment;
  */
 public class CommentLogicExecutor {
 
-    public void doCreateComment(CommentCreateLogic.CommentCreateLogicCaller caller, Comment comment) {
-        Logic fl = new CommentCreateLogic(caller, comment);
+    public void doCreateComment(CommentCreateLogic.CommentCreateLogicCaller caller
+            , String strPublisherEmail, String strPublisherName, String strIgActivityId, String strCommentContent) {
+        Logic fl = new CommentCreateLogic(caller, strPublisherEmail, strPublisherName, strIgActivityId, strCommentContent);
         fl.doLogic();
     }
 

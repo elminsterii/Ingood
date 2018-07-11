@@ -5,6 +5,7 @@ import com.fff.ingood.task.AsyncResponder;
 import com.fff.ingood.task.CommentCreateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -64,7 +65,18 @@ public class CommentCreateTaskWrapper {
         });
     }
 
-    public void execute(Comment comment) {
-        task.execute(comment);
+    public void execute(String strPublisherEmail, String strPublisherName, String strIgActivityId, String strCommentContent) {
+        final String TAG_PUBLISHER_EMAIL = "publisheremail";
+        final String TAG_PUBLISHER_NAME = "displayname";
+        final String TAG_ACTIVITY_ID = "activityid";
+        final String TAG_COMMENT_CONTENT = "content";
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(TAG_PUBLISHER_EMAIL, strPublisherEmail);
+        jsonObject.addProperty(TAG_PUBLISHER_NAME, strPublisherName);
+        jsonObject.addProperty(TAG_ACTIVITY_ID, strIgActivityId);
+        jsonObject.addProperty(TAG_COMMENT_CONTENT, strCommentContent);
+
+        task.execute(jsonObject);
     }
 }

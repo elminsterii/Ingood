@@ -46,6 +46,7 @@
     <string name="activity_detail_deem_bad_people"> deem bad</string>
     <string name="activity_detail_comment_publish">Message</string>
     <string name="activity_detail_comment_view_all">All</string>
+    <string name="activity_comment_publish_description">Input your comment : </string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>
@@ -66,6 +67,7 @@
     <string name="log_out">Log Out</string>
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_publish">Publish</string>
     <string name="dialog_delete_confirm_message">Are you sure delete this activity?</string>
     <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
 
@@ -96,6 +98,7 @@
     <string name="deem_fail_in_your_own_igactivity">You can not deem your own activity</string>
     <string name="attend_activity_success">Attended</string>
     <string name="no_attend_activity_success">Canceled attend</string>
+    <string name="comment_has_been_published">Comment has been published</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

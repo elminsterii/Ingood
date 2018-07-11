@@ -1,6 +1,5 @@
 package com.fff.ingood.logic;
 
-import com.fff.ingood.data.Comment;
 import com.fff.ingood.task.wrapper.CommentCreateTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -12,27 +11,37 @@ public class CommentCreateLogic extends Logic implements CommentCreateTaskWrappe
 
     public interface CommentCreateLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void onCreateIgActivitySuccess(String strId);
+        void onCreateCommentSuccess(String strId);
     }
 
     private CommentCreateLogicCaller mCaller;
-    private Comment mCommentNew;
+    private String m_strPublisherEmail;
+    private String m_strPublisherName;
+    private String m_strIgActivityId;
+    private String m_strCommentContent;
 
-    CommentCreateLogic(CommentCreateLogicCaller caller, Comment comment) {
+    CommentCreateLogic(CommentCreateLogicCaller caller
+            , String strPublisherEmail
+            , String strPublisherName
+            , String strIgActivityId
+            , String strCommentContent) {
         super(caller);
         mCaller = caller;
-        mCommentNew = comment;
+        m_strPublisherEmail = strPublisherEmail;
+        m_strPublisherName = strPublisherName;
+        m_strIgActivityId = strIgActivityId;
+        m_strCommentContent = strCommentContent;
     }
 
     @Override
     protected void doLogic() {
         CommentCreateTaskWrapper loginWrapper = new CommentCreateTaskWrapper(this);
-        loginWrapper.execute(mCommentNew);
+        loginWrapper.execute(m_strPublisherEmail, m_strPublisherName, m_strIgActivityId, m_strCommentContent);
     }
 
     @Override
     public void onCreateSuccess(String strId) {
-        mCaller.onCreateIgActivitySuccess(strId);
+        mCaller.onCreateCommentSuccess(strId);
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

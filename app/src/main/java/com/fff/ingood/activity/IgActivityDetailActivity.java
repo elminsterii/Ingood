@@ -26,6 +26,7 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.logic.CommentCreateLogic;
 import com.fff.ingood.logic.CommentLogicExecutor;
 import com.fff.ingood.logic.CommentQueryLogic;
 import com.fff.ingood.logic.IgActivityAttendLogic;
@@ -39,7 +40,9 @@ import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
+import com.fff.ingood.tools.DateHelper;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.ui.CommentPublishDialog;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.WarningDialog;
 
@@ -57,7 +60,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
         , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
-        , CommentQueryLogic.CommentQueryLogicCaller {
+        , CommentQueryLogic.CommentQueryLogicCaller
+        , CommentCreateLogic.CommentCreateLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
@@ -246,7 +250,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewPublishComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - publish comment
+                CommentPublishDialog.newInstance(new CommentPublishDialog.CommentPublishDialogEvent() {
+                    @Override
+                    public void onPublishClick(String strCommentContent) {
+                        showWaitingDialog(IgActivityDetailActivity.class.getName());
+                        publishComment(strCommentContent);
+                    }
+                }).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
 
@@ -484,7 +494,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         imageViewIcon.setImageResource(R.drawable.sample_activity);
 
         textViewCommentPublisherName.setText(comment.getDisplayName());
-        textViewCommentPublishDate.setText(comment.getTs());
+        textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
         textViewCommentContent.setText(comment.getContent());
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -603,6 +613,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doDeleteIgActivity(this, mIgActivity.getId(), personOwner.getEmail(), personOwner.getPassword());
     }
 
+    private void publishComment(String strCommentContent) {
+        Person personPublisher = PersonManager.getInstance().getPerson();
+        CommentLogicExecutor executor = new CommentLogicExecutor();
+        executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
+    }
+
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -646,6 +662,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
+    public void onCreateCommentSuccess(String strId) {
+        setUiCommentsByIgActivity(mIgActivity);
+        Toast.makeText(mActivity, getResources().getText(R.string.comment_has_been_published), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void returnDeleteIgActivitySuccess() {
         hideWaitingDialog();
         Toast.makeText(mActivity, getResources().getText(R.string.dialog_delete_igactivity_done_message), Toast.LENGTH_SHORT).show();
@@ -661,6 +683,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     public void returnComments(List<Comment> lsComments) {
         if(lsComments != null && lsComments.size() > 0) {
+            mLayoutComments.removeAllViews();
+
             for (Comment comment : lsComments)
                 addCommentInLayout(comment);
         }

@@ -83,7 +83,6 @@ public class ImageHelper {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
 

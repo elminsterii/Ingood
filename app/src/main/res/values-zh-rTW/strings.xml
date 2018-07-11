@@ -46,6 +46,7 @@
     <string name="activity_detail_deem_bad_people">個人說差</string>
     <string name="activity_detail_comment_publish">我要留言</string>
     <string name="activity_detail_comment_view_all">看全部留言</string>
+    <string name="activity_comment_publish_description">請在下方輸入您的留言 : </string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>
@@ -66,6 +67,7 @@
     <string name="log_out">登出</string>
     <string name="dialog_confirm">確定</string>
     <string name="dialog_cancel">取消</string>
+    <string name="dialog_publish">發佈</string>
     <string name="dialog_delete_confirm_message">您確定要刪除此活動嗎?</string>
     <string name="dialog_delete_igactivity_done_message">活動已刪除</string>
 
@@ -96,6 +98,7 @@
     <string name="deem_fail_in_your_own_igactivity">您無法評價自己的活動</string>
     <string name="attend_activity_success">參加成功</string>
     <string name="no_attend_activity_success">已取消參加</string>
+    <string name="comment_has_been_published">留言已發佈</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>
