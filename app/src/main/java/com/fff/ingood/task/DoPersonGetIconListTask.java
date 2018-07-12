@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -21,7 +22,7 @@ public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object
     protected String access(Activity activity, Object info) {
         {
             BufferedReader reader = null;
-            StringBuilder stringBuilder;
+
             String account ;
             URL url;
             account = (String)info;
@@ -33,24 +34,25 @@ public class DoPersonGetIconListTask<Object> extends HttpPostAbstractTask<Object
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
-                connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
-                connection.setReadTimeout(10000);
+                connection.setRequestProperty("Accept-Charset", "utf-8");
+                connection.setRequestProperty("contentType", "utf-8");
+                connection.setConnectTimeout(HttpProxy.HTTP_GET_TIMEOUT*1000);
+                connection.setReadTimeout(20000);
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setUseCaches(false);
                 connection.connect();
 
-                    //response body
-                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                    stringBuilder = new StringBuilder();
-                    String line ;
-                    int i=0;
-                    while ((line = reader.readLine()) != null)
-                    {
-                        Log.d("RES", line);
-                        i++;
-                        stringBuilder.append(line);
-                    }
+                //response body
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = null ;
+
+                while ((line = reader.readLine()) != null)
+                {
+                    stringBuilder.append(line);
+                }
+                reader.close();
                 return stringBuilder.toString();
             }catch(IOException e){
                 e.printStackTrace();

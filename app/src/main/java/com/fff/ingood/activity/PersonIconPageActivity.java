@@ -169,7 +169,7 @@ public class PersonIconPageActivity extends BaseActivity {
         mButton_get.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DownloadImage().execute(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ACCESS_ICON) + "/"+ mEditText_Account.getText().toString() + "/icon01.jpg");
+                new DownloadImage().execute(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ACCESS_ICON) + "/"+ mEditText_Account.getText().toString() + "/icon01.jpg");
             }
         });
 
