@@ -1,5 +1,6 @@
 package com.fff.ingood.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -288,7 +289,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mFabPublishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO - enter publish flow
+                Intent intent = new Intent(mActivity, IgActivityPublishActivity.class);
+                mActivity.startActivity(intent);
             }
         });
     }

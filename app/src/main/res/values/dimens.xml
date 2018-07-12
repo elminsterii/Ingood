@@ -37,7 +37,6 @@
     <dimen name="login_margin_signin_btn_btw_register_btn">4.5dp</dimen>
     <dimen name="login_btns_height">42.5dp</dimen>
 
-
     <!-- Activity item in Homepage -->
     <dimen name="height_igactivity_image_hp">150.8dp</dimen>
     <dimen name="margin_top_igactivity_item_hp">12.7dp</dimen>
@@ -67,6 +66,11 @@
     <dimen name="gap_tags_row_ig_activity">5dp</dimen>
     <dimen name="gap_icons_attendees_ig_activity">9.1dp</dimen>
     <dimen name="gap_comment_comments_ig_activity">10dp</dimen>
+
+    <!-- IgActivity publish -->
+    <dimen name="margin_start_igactivity_publish">10dp</dimen>
+    <dimen name="margin_end_igactivity_publish">10dp</dimen>
+    <dimen name="gap_tags_row_ig_activity_publish">5dp</dimen>
 
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>

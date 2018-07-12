@@ -21,8 +21,8 @@ public class IgActivityPublishActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ig_publish);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -33,7 +33,6 @@ public class IgActivityPublishActivity extends BaseActivity {
             if(m_igActivity != null)
                 m_bEditMode = true;
         }
-
     }
 
     @Override
@@ -52,7 +51,7 @@ public class IgActivityPublishActivity extends BaseActivity {
         mBtnLeftBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onBackPressed();
             }
         });
 
