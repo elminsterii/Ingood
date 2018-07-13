@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.SystemUIManager;
 
 import java.util.Calendar;
@@ -34,6 +35,11 @@ public class IgActivityPublishActivity extends BaseActivity {
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
+
+    private String m_strStartDate;
+    private String m_strStartTime;
+    private String m_strEndDate;
+    private String m_strEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +88,10 @@ public class IgActivityPublishActivity extends BaseActivity {
         mBtnRightBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(m_igActivity == null)
+                    m_igActivity = genEmptyIgActivity();
 
+                setIgActivityTime(m_igActivity);
             }
         });
 
@@ -96,8 +105,9 @@ public class IgActivityPublishActivity extends BaseActivity {
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format = setDateFormat(year ,month, day);
-                        mTextViewStartDateDescription.setText(format);
+                        m_strStartDate = setDateFormat(year ,month, day);
+                        mTextViewStartDateDescription.setText(m_strStartDate);
+
                     }
                 }, mYear, mMonth, mDay).show();
             }
@@ -112,8 +122,8 @@ public class IgActivityPublishActivity extends BaseActivity {
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        String format = setTimeFormat(hour ,minute);
-                        mTextViewStartTimeDescription.setText(format);
+                        m_strStartTime = setTimeFormat(hour ,minute);
+                        mTextViewStartTimeDescription.setText(m_strStartTime);
                     }
                 }, hour, minute, false).show();
             }
@@ -129,8 +139,8 @@ public class IgActivityPublishActivity extends BaseActivity {
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String format = setDateFormat(year ,month, day);
-                        mTextViewEndDateDescription.setText(format);
+                        m_strEndDate = setDateFormat(year, month, day);
+                        mTextViewEndDateDescription.setText(m_strEndDate);
                     }
                 }, mYear, mMonth, mDay).show();
             }
@@ -145,8 +155,8 @@ public class IgActivityPublishActivity extends BaseActivity {
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        String format = setTimeFormat(hour ,minute);
-                        mTextViewEndTimeDescription.setText(format);
+                        m_strEndTime = setTimeFormat(hour ,minute);
+                        mTextViewEndTimeDescription.setText(m_strEndTime);
                     }
                 }, hour, minute, false).show();
             }
@@ -158,6 +168,7 @@ public class IgActivityPublishActivity extends BaseActivity {
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGPUBLISH).setSystemUI(this);
     }
 
+    //"yyyy-MM-dd HH:mm:ss";
     private String setDateFormat(int year, int month, int day) {
         StringBuilder strRes = new StringBuilder();
         strRes.append(year).append("-").append(month).append("-").append(day);
@@ -168,5 +179,19 @@ public class IgActivityPublishActivity extends BaseActivity {
         StringBuilder strRes = new StringBuilder();
         strRes.append(hour).append(":").append(minute);
         return strRes.toString();
+    }
+
+    private IgActivity genEmptyIgActivity() {
+        return new IgActivity();
+    }
+
+    private void setIgActivityTime(IgActivity activity) {
+        if(activity == null)
+            return;
+
+        String strStartDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strStartDate + " " + m_strStartTime);
+        String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strEndDate + " " + m_strEndTime);
+        activity.setDateBegin(strStartDateTime);
+        activity.setDateEnd(strEndDateTime);
     }
 }

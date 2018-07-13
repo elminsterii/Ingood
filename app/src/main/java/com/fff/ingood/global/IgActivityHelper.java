@@ -42,4 +42,27 @@ public class IgActivityHelper {
 
         return strTimeBegin + " ~ " + strTimeEnd;
     }
+
+    public static String makeIgActivityDateStringByUI(String strUIDate) {
+        if(!StringTool.checkStringNotNull(strUIDate))
+            return "";
+
+        String bRes = "";
+
+        String strOriginPattern = "yyyy-MM-dd HH:mm";
+        String strNewPattern = "yyyy-MM-dd HH:mm:ss";
+
+        DateFormat dateOriginFormat = new SimpleDateFormat(strOriginPattern, Locale.getDefault());
+        DateFormat dateNewFormat = new SimpleDateFormat(strNewPattern, Locale.getDefault());
+
+        try {
+            Date date = dateOriginFormat.parse(strUIDate);
+            bRes = dateNewFormat.format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return bRes;
+    }
 }
