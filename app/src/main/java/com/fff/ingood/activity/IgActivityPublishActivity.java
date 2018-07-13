@@ -27,6 +27,10 @@ public class IgActivityPublishActivity extends BaseActivity {
     private TextView mTextViewStartTimeDescription;
     private ImageButton mBtnStartDatePicker;
     private ImageButton mBtnStartTimePicker;
+    private TextView mTextViewEndDateDescription;
+    private TextView mTextViewEndTimeDescription;
+    private ImageButton mBtnEndDatePicker;
+    private ImageButton mBtnEndTimePicker;
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
@@ -55,6 +59,10 @@ public class IgActivityPublishActivity extends BaseActivity {
         mBtnStartTimePicker = findViewById(R.id.btnIgActivityPublishStartTimePicker);
         mTextViewStartDateDescription = findViewById(R.id.textViewIgActivityPublishStartDateDescription);
         mTextViewStartTimeDescription = findViewById(R.id.textViewIgActivityPublishStartTimeDescription);
+        mBtnEndDatePicker = findViewById(R.id.btnIgActivityPublishEndDatePicker);
+        mBtnEndTimePicker = findViewById(R.id.btnIgActivityPublishEndTimePicker);
+        mTextViewEndDateDescription = findViewById(R.id.textViewIgActivityPublishEndDateDescription);
+        mTextViewEndTimeDescription = findViewById(R.id.textViewIgActivityPublishEndTimeDescription);
     }
 
     @Override
@@ -106,6 +114,39 @@ public class IgActivityPublishActivity extends BaseActivity {
                     public void onTimeSet(TimePicker view, int hour, int minute) {
                         String format = setTimeFormat(hour ,minute);
                         mTextViewStartTimeDescription.setText(format);
+                    }
+                }, hour, minute, false).show();
+            }
+        });
+
+        mBtnEndDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH);
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        String format = setDateFormat(year ,month, day);
+                        mTextViewEndDateDescription.setText(format);
+                    }
+                }, mYear, mMonth, mDay).show();
+            }
+        });
+
+        mBtnEndTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar c = Calendar.getInstance();
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+                new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hour, int minute) {
+                        String format = setTimeFormat(hour ,minute);
+                        mTextViewEndTimeDescription.setText(format);
                     }
                 }, hour, minute, false).show();
             }
