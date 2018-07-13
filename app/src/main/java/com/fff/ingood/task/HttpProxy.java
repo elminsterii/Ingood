@@ -32,7 +32,6 @@ public class HttpProxy {
 
 
     public static final int HTTP_POST_TIMEOUT = 10;
-    static final int HTTP_GET_TIMEOUT = 15;
 }
 
 
