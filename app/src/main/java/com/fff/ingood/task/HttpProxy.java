@@ -30,7 +30,6 @@ public class HttpProxy {
     public static final String HTTP_POST_API_COMMENT_DELETE = SERVER_URL + "/deletecomment";
 
     public static final int HTTP_POST_TIMEOUT = 10;
-    static final int HTTP_GET_TIMEOUT = 15;
 }
 
 

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -18,14 +17,12 @@ public class IgActivityDeemTask extends HttpPostAccessTask<JsonObject, Integer, 
 
     @Override
     protected String access(JsonObject jsonObj) {
-        BufferedReader reader = null;
-        StringBuilder stringBuilder;
+        HttpURLConnection connection = null;
 
         try {
             URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_DEEM));
 
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
+            connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestMethod("POST");
@@ -34,7 +31,6 @@ public class IgActivityDeemTask extends HttpPostAccessTask<JsonObject, Integer, 
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
-            connection.connect();
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
@@ -44,24 +40,20 @@ public class IgActivityDeemTask extends HttpPostAccessTask<JsonObject, Integer, 
             writer.close();
             os.close();
 
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-            stringBuilder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+            StringBuilder stringBuilder = new StringBuilder();
 
             String line;
             while ((line = reader.readLine()) != null)
                 stringBuilder.append(line).append("\n");
+            reader.close();
 
             return stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            if(connection != null)
+                connection.disconnect();
         }
         return  null;
     }

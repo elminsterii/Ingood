@@ -278,6 +278,14 @@
         tools:ignore="RtlSymmetry"
         android:ems="10" />
 
+    <RelativeLayout
+        android:id="@+id/layoutIgActivityPublishTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/editTextIgActivityPublishDescription">
+
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btnIgActivityPublishLeftBottom"
         android:layout_width="160dp"
