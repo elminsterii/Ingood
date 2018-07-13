@@ -28,6 +28,8 @@ public class HttpProxy {
     public static final String HTTP_POST_API_COMMENT_QUERY_ID_BY = SERVER_URL + "/querycommentidby";
     public static final String HTTP_POST_API_COMMENT_UPDATE = SERVER_URL + "/updatecomment";
     public static final String HTTP_POST_API_COMMENT_DELETE = SERVER_URL + "/deletecomment";
+    public static final String HTTP_GET_API_PERSON_ICON_LIST = SERVER_URL + "/";
+
 
     public static final int HTTP_POST_TIMEOUT = 10;
     static final int HTTP_GET_TIMEOUT = 15;
