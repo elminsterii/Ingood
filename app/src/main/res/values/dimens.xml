@@ -70,7 +70,10 @@
     <!-- IgActivity publish -->
     <dimen name="margin_start_igactivity_publish">10dp</dimen>
     <dimen name="margin_end_igactivity_publish">10dp</dimen>
-    <dimen name="gap_tags_row_ig_activity_publish">5dp</dimen>
+    <dimen name="gap_tags_row_ig_activity_publish">30dp</dimen>
+    <dimen name="title_size_ig_activity_publish">20sp</dimen>
+    <dimen name="text_size_ig_activity_publish_sub_title">17.5sp</dimen>
+    <dimen name="text_size_ig_activity_publish_description">15sp</dimen>
 
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>

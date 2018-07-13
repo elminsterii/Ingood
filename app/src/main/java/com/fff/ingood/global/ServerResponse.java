@@ -33,11 +33,13 @@ public class ServerResponse {
     @SuppressLint("UseSparseArrays")
     private void initialize(Context context) {
         m_mapServerResponseDescriptions = new HashMap<>();
+
+        //response from server
         m_mapServerResponseDescriptions.put(STATUS_CODE_SUCCESS_INT, context.getResources().getText(R.string.server_res_0_success).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_NOT_FOUND_INT, context.getResources().getText(R.string.server_res_1_user_not_found).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT, context.getResources().getText(R.string.server_res_2_user_already_exist).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_INVALID_USER_INT, context.getResources().getText(R.string.server_res_3_invalid_user).toString());
-        m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_NOT_OWNER_INT, context.getResources().getText(R.string.server_res_4_not_owner).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_ACTIVITY_NOT_FOUND_INT, context.getResources().getText(R.string.server_res_4_activity_not_found).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_MISSING_DATA_INT, context.getResources().getText(R.string.server_res_5_missing_data).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_JSON_WRONG_INT, context.getResources().getText(R.string.server_res_6_json_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_INVALID_DATA_INT, context.getResources().getText(R.string.server_res_7_invalid_data).toString());
@@ -48,6 +50,11 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT, context.getResources().getText(R.string.server_res_12_verify_code_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT, context.getResources().getText(R.string.server_res_13_time_format_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_UNKNOWN_ERROR_INT, context.getResources().getText(R.string.server_res_14_unknown_error).toString());
+
+        //response from client
+        m_mapServerResponseDescriptions.put(STATUS_CODE_NWK_FAIL_INT, context.getResources().getText(R.string.nwk_connection_fail).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_LOGIC_MISSING_DATA_INT, context.getResources().getText(R.string.missing_necessary_data).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_PARSING_ERROR, context.getResources().getText(R.string.parsing_data_error).toString());
     }
 
     public static Map<Integer, String> getServerResponseDescriptions() {
@@ -55,7 +62,8 @@ public class ServerResponse {
     }
 
     public static final Integer STATUS_CODE_NWK_FAIL_INT = -1;
-    public static final Integer STATUS_CODE_FLOW_REJECT_INT = -2;
+    public static final Integer STATUS_CODE_LOGIC_MISSING_DATA_INT = -2;
+    public static final Integer STATUS_CODE_PARSING_ERROR = -3;
 
     public static final String TAG_SERVER_RESPONSE_STATUS_CODE = "status_code";
     public static final String TAG_SERVER_RESPONSE_STATUS_DESCRIPTION = "status_description";
@@ -63,17 +71,20 @@ public class ServerResponse {
 
     public static final Integer STATUS_CODE_SUCCESS_INT = 0;
     private static final Integer STATUS_CODE_FAIL_USER_NOT_FOUND_INT = 1;
-    private static final Integer STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT = 2;
+    public static final Integer STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT = 2;
     private static final Integer STATUS_CODE_FAIL_INVALID_USER_INT = 3;
-    private static final Integer STATUS_CODE_FAIL_NOT_OWNER_INT = 4;
+    private static final Integer STATUS_CODE_FAIL_ACTIVITY_NOT_FOUND_INT = 4;
     private static final Integer STATUS_CODE_FAIL_MISSING_DATA_INT = 5;
     private static final Integer STATUS_CODE_FAIL_JSON_WRONG_INT = 6;
     private static final Integer STATUS_CODE_FAIL_INVALID_DATA_INT = 7;
     private static final Integer STATUS_CODE_FAIL_IO_ERROR_INT = 8;
     private static final Integer STATUS_CODE_FAIL_FILE_NOT_FOUND_INT = 9;
-    private static final Integer STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT = 10;
+    public static final Integer STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT = 10;
     private static final Integer STATUS_CODE_FAIL_ALREADT_ATTEND_INT = 11;
     private static final Integer STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT = 12;
     private static final Integer STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT = 13;
     private static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 14;
+
+    //Activity tag
+    public static final String TAG_SERVER_RESPONSE_COMMON_IDS = "ids";
 }

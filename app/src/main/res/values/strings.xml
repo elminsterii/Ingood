@@ -1,26 +1,88 @@
 <resources>
     <string name="app_name">Ingood</string>
-    <string name="action_settings">Post</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
+    <string name="home_page">Home Page</string>
+    <string name="activity_page">Activity content</string>
+    <string name="activity_publish">Activity publish</string>
+
+    <!-- LoginPage -->
+    <string name="login_slogan">Activity / Band / Social</string>
+    <string name="login_account">Account</string>
+    <string name="login_pwd">Password</string>
+    <string name="login_forget_pwd">Forget Password?</string>
+
+    <!-- Registration -->
+    <string name="register_title_form">Registration</string>
+    <string name="register_title_verify">Verification</string>
+    <string name="register_title_location">Location</string>
+    <string name="register_title_interest">Interest</string>
     <string name="user_data_email">E-mail</string>
     <string name="user_data_pwd">Password</string>
-    <string name="user_data_pwd_confirm">Password Again</string>
-    <string name="user_data_name">Display Name</string>
+    <string name="user_data_pwd_confirm">Confirm password</string>
+    <string name="user_data_name">Name</string>
     <string name="done">Done</string>
     <string name="next">Next</string>
-    <string name="home_page">Home Page</string>
-    <string name="send">Send</string>
-    <string name="hint_for_verify">Please push send to send verify code to your email.</string>
+    <string name="send_verify_code">Send Code</string>
+    <string name="input_verify_code_hint">Input verify code please</string>
+    <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>
+
+    <!-- Activity -->
+    <string name="activity_action_save_ig_activity">Save</string>
+    <string name="activity_action_no_attend">Cancel</string>
+    <string name="activity_action_attend">Attend</string>
+    <string name="activity_action_report">Report</string>
+    <string name="activity_action_share">Share</string>
+    <string name="activity_action_edit">Edit</string>
+    <string name="activity_action_delete">Delete</string>
+
+    <!-- Activity detail -->
+    <string name="activity_detail_publisher">Publisher : </string>
+    <string name="activity_detail_attendees_count_1"> </string>
+    <string name="activity_detail_attendees_count_2">people have attended</string>
+    <string name="activity_detail_deem_title">Activity deems</string>
+    <string name="activity_detail_comment_title">Activity comments</string>
+    <string name="activity_detail_deem_good_people"> deem good</string>
+    <string name="activity_detail_deem_bad_people"> deem bad</string>
+    <string name="activity_detail_comment_publish">Message</string>
+    <string name="activity_detail_comment_view_all">All</string>
+    <string name="activity_comment_publish_description">Input your comment : </string>
+
+    <!-- Activity publish -->
+    <string name="activity_publish_name">Activity name</string>
+    <string name="activity_publish_location">Activity location</string>
+    <string name="activity_publish_description">Activity description</string>
+    <string name="activity_publish_date_begin">Activity begin</string>
+    <string name="activity_publish_date_end">Activity end</string>
+    <string name="activity_publish_date_description">Choose date</string>
+    <string name="activity_publish_time_description">Choose time</string>
+
+    <!-- Tags -->
+    <string name="tag_care">Care</string>
+    <string name="tag_environmental_protection">Environmental Protection</string>
+    <string name="tag_education">Education</string>
+    <string name="tag_manpower">Manpower</string>
+    <string name="tag_animal">Animal</string>
+
+    <!-- Tags Description-->
+    <string name="tag_care_description">Human care</string>
+    <string name="tag_environmental_protection_description">Environmental protection</string>
+    <string name="tag_education_description">Education</string>
+    <string name="tag_manpower_description">Manpower</string>
+    <string name="tag_animal_description">Animal care</string>
 
     <!-- Dialog -->
     <string name="loading_wait">Loading…</string>
     <string name="log_out">Log Out</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_publish">Publish</string>
+    <string name="dialog_delete_confirm_message">Are you sure delete this activity?</string>
+    <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
     <string name="search_bar_hint">locations, tags…</string>
-    <string name="description_search_bar_menu_btn">this is a btn for open menu in search bar</string>
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>
@@ -28,19 +90,31 @@
 
     <!-- Toast -->
     <string name="register_email_format_wrong">Email format wrong</string>
+    <string name="register_email_was_exist">The email was exist</string>
     <string name="register_password_format_wrong">Password format wrong</string>
+    <string name="register_confirm_password_format_wrong">Confirm password format wrong</string>
+    <string name="register_password_not_consistent">Password and confirm password are not consistent</string>
     <string name="register_displayname_format_wrong">Display name format wrong</string>
     <string name="register_gender_choose">Choose your gender please</string>
     <string name="register_age_choose">Choose your age please</string>
     <string name="register_location_choose">Choose your location please</string>
     <string name="nwk_connection_fail">Network connection fail?</string>
+    <string name="missing_necessary_data">Missing necessary condition data</string>
+    <string name="parsing_data_error">Parsing data error</string>
+    <string name="verify_email_sent">Your verify code has been sent to your email</string>
+    <string name="deem_activity_has_been_sent">Deem has been sent</string>
+    <string name="deem_activity_has_been_recover">Deem has been recovered</string>
+    <string name="deem_fail_in_your_own_igactivity">You can not deem your own activity</string>
+    <string name="attend_activity_success">Attended</string>
+    <string name="no_attend_activity_success">Canceled attend</string>
+    <string name="comment_has_been_published">Comment has been published</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>
     <string name="server_res_1_user_not_found">Fail, user was not found</string>
     <string name="server_res_2_user_already_exist">Fail, user was already exist</string>
     <string name="server_res_3_invalid_user">Fail, invalid user or user was not exist</string>
-    <string name="server_res_4_not_owner">Fail, activity was not found or you are not owner</string>
+    <string name="server_res_4_activity_not_found">Activity was not found</string>
     <string name="server_res_5_missing_data">Fail, missing necessary data?</string>
     <string name="server_res_6_json_wrong">Fail, json format wrong?</string>
     <string name="server_res_7_invalid_data">Fail, invalid data input</string>
@@ -87,6 +161,17 @@
         <item>48</item>
         <item>49</item>
         <item>50</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
     </string-array>
 
     <string-array name="user_gender_list">
@@ -122,37 +207,15 @@
     </string-array>
 
 
-    <item type="id" name="tag_0"></item>
-    <item type="id" name="tag_1"></item>
-    <item type="id" name="tag_2"></item>
-    <item type="id" name="tag_3"></item>
-    <item type="id" name="tag_4"></item>
-    <item type="id" name="tag_5"></item>
-    <item type="id" name="tag_6"></item>
-    <item type="id" name="tag_7"></item>
-    <item type="id" name="tag_8"></item>
-    <item type="id" name="tag_9"></item>
-    <item type="id" name="tag_10"></item>
+    <item name="tag_0" type="id" />
+    <item name="tag_1" type="id" />
+    <item name="tag_2" type="id" />
+    <item name="tag_3" type="id" />
+    <item name="tag_4" type="id" />
+    <item name="tag_5" type="id" />
+    <item name="tag_6" type="id" />
+    <item name="tag_7" type="id" />
+    <item name="tag_8" type="id" />
+    <item name="tag_9" type="id" />
+    <item name="tag_10" type="id" />
 </resources>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

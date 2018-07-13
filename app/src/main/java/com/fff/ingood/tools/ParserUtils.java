@@ -1,6 +1,7 @@
 package com.fff.ingood.tools;
 
-import com.fff.ingood.data.Activity;
+import com.fff.ingood.data.Comment;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -11,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yoie7 on 2018/5/16.
@@ -19,14 +21,18 @@ import java.util.ArrayList;
 public class ParserUtils {
 
     public static String getStringByTag(String tag, String Body){
-        String result;
+        String result = null;
 
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
 
         if(jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
-            result = jsonArray.get(0).getAsJsonObject().get(tag).getAsString();
+            for(int i = 0; i < jsonArray.size(); i++){
+                if(jsonArray.get(i).getAsJsonObject().has(tag))
+                    result = jsonArray.get(i).getAsJsonObject().get(tag).getAsString();
+
+            }
         } else {
             result = jsonElement.getAsJsonObject().get(tag).getAsString();
         }
@@ -46,32 +52,29 @@ public class ParserUtils {
         return result;
     }
 
-    public static Person getPersonAttr(String Body){
-        Person result = new Person();
+    public static Person getPersonByJson(String Body){
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
-        JsonArray jsonArray = new JsonArray();
         Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
-            jsonArray = jsonElement.getAsJsonArray();
-            result = gson.fromJson(jsonArray.get(1).toString(), Person.class);
-            return result;
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            return gson.fromJson(jsonArray.get(1).toString(), Person.class);
         }
         else
             return null;
     }
 
-    public static ArrayList<Activity> getActivitiyAttrList(String Body){
-        ArrayList<Activity> result = new ArrayList<>();
+    public static List<Comment> getCommentsByJson(String Body){
+        List<Comment> result = new ArrayList<>();
         JsonParser parser = new JsonParser();
         JsonElement jsonElement = parser.parse(Body);
-        JsonArray jsonArray = new JsonArray();
+        JsonArray jsonArray;
         Gson gson = new Gson();
         if(jsonElement.isJsonArray()) {
             jsonArray = jsonElement.getAsJsonArray();
 
             for(int i = 1; i < jsonArray.size(); i++){
-                result.add(gson.fromJson(jsonArray.get(i).toString(), Activity.class));
+                result.add(gson.fromJson(jsonArray.get(i).toString(), Comment.class));
             }
             return result;
         }
@@ -79,7 +82,42 @@ public class ParserUtils {
             return null;
     }
 
-    public static String listStringToString(ArrayList<String> lsString, char splitChar) {
+    public static List<IgActivity> getActivitiesByJson(String Body){
+        List<IgActivity> result = new ArrayList<>();
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+        JsonArray jsonArray;
+        Gson gson = new Gson();
+        if(jsonElement.isJsonArray()) {
+            jsonArray = jsonElement.getAsJsonArray();
+
+            for(int i = 1; i < jsonArray.size(); i++){
+                result.add(gson.fromJson(jsonArray.get(i).toString(), IgActivity.class));
+            }
+            return result;
+        }
+        else
+            return null;
+    }
+
+    public static List<Person> getPersonsByJson(String Body){
+        List<Person> result = new ArrayList<>();
+        JsonParser parser = new JsonParser();
+        JsonElement jsonElement = parser.parse(Body);
+        Gson gson = new Gson();
+        if(jsonElement.isJsonArray()) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+            for(int i = 1; i < jsonArray.size(); i++){
+                result.add(gson.fromJson(jsonArray.get(i).toString(), Person.class));
+            }
+            return result;
+        }
+        else
+            return null;
+    }
+
+    public static String listStringToString(List<String> lsString, char splitChar) {
         if(lsString == null || lsString.isEmpty())
             return "";
 
@@ -110,6 +148,4 @@ public class ParserUtils {
 
         return strBuilder.toString();
     }
-
-
 }

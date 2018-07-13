@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FFD02B</color>
+    <color name="colorPrimaryPressed">#E5BA26</color>
     <color name="colorPrimaryLight">#FFEBA4</color>
     <color name="colorSlave">#4F4E4C</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorSlaveLight">#9F9E9C</color>
+    <color name="colorSlaveUltraLight">#CFCECC</color>
+    <color name="colorPrimaryDark">#4F4E4C</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorWhiteButton">#E6FFFFFF</color>
+    <color name="colorWhiteButtonPressed">#CCE5E5E5</color>
+    <color name="colorPrimaryStrokeButton">#FFFFFFFF</color>
+    <color name="colorPrimaryStrokeButtonPressed">#E5E5E5</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorTextHint">#A8A7A8</color>
+    <color name="colorHomepageBackground">#FAFAFA</color>
+    <color name="colorWarningRed">#FF5F5F</color>
+    <color name="colorSeparateLineGray">#DDDDDD</color>
+    <color name="colorPersonThumbnailBoarder">#19000000</color>
+    <color name="colorDeemGood">#07D39C</color>
+    <color name="colorDeemBad">#FF5F5F</color>
+
+    <!-- Tags Color -->
+    <color name="colorTagCare">#DC808A</color>
+    <color name="colorTagEnvironmentalProtection">#14803A</color>
+    <color name="colorTagEducation">#3C5071</color>
+    <color name="colorTagManpower">#CF5044</color>
+    <color name="colorTagAnimal">#664536</color>
 </resources>
