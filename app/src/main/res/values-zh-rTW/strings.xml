@@ -48,6 +48,13 @@
     <string name="activity_detail_comment_view_all">看全部留言</string>
     <string name="activity_comment_publish_description">請在下方輸入您的留言 : </string>
 
+    <!-- Activity publish -->
+    <string name="activity_publish_name">活動名稱</string>
+    <string name="activity_publish_date_begin">開始時間</string>
+    <string name="activity_publish_date_end">結束時間</string>
+    <string name="activity_publish_date_description">請選擇日期</string>
+    <string name="activity_publish_time_description">請選擇時間</string>
+
     <!-- Tags -->
     <string name="tag_care">關懷</string>
     <string name="tag_environmental_protection">環保</string>

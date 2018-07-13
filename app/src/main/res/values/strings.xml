@@ -48,6 +48,13 @@
     <string name="activity_detail_comment_view_all">All</string>
     <string name="activity_comment_publish_description">Input your comment : </string>
 
+    <!-- Activity publish -->
+    <string name="activity_publish_name">Activity name</string>
+    <string name="activity_publish_date_begin">Activity begin</string>
+    <string name="activity_publish_date_end">Activity end</string>
+    <string name="activity_publish_date_description">Choose date</string>
+    <string name="activity_publish_time_description">Choose time</string>
+
     <!-- Tags -->
     <string name="tag_care">Care</string>
     <string name="tag_environmental_protection">Environmental Protection</string>

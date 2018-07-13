@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IgActivityPublishActivity">
+    tools:context=".activity.IgActivityPublishActivity"
+    android:background="@color/colorHomepageBackground">
 
     <RelativeLayout
         android:id="@+id/layoutIgActivityPublishTitle"
@@ -18,7 +19,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            tools:ignore="UselessParent">
 
             <ImageButton
                 android:id="@+id/imgBack"
@@ -33,7 +35,7 @@
                 android:layout_toEndOf="@+id/imgBack"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
-                android:textSize="@dimen/title_size_registration"
+                android:textSize="@dimen/title_size_ig_activity_publish"
                 android:textColor="@color/colorSlave"
                 android:textStyle="bold"
                 android:text="@string/activity_publish" />
@@ -53,11 +55,81 @@
         android:textCursorDrawable="@null"
         android:lineSpacingExtra="0.8sp"
         android:inputType="textPersonName"
-        android:hint="@string/user_data_name"
+        android:hint="@string/activity_publish_name"
         android:paddingStart="@dimen/padding_start_registration_form_input_text"
         android:textColorHighlight="@color/colorSlaveUltraLight"
         tools:ignore="RtlSymmetry"
         android:ems="10" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_igactivity_publish"
+        android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+        app:layout_constraintTop_toBottomOf="@+id/editTextIgActivityPublishName">
+
+        <TextView
+            android:id="@+id/textViewIgActivityPublishStartDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorSlave"
+            android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+            android:text="@string/activity_publish_date_begin"/>
+
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewIgActivityPublishStartDateTime"
+            android:layout_marginStart="13dp">
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishStartDateDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/text_size_ig_activity_publish_description"
+                android:text="@string/activity_publish_date_description"/>
+
+            <ImageButton
+                android:id="@+id/btnIgActivityPublishStartDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/textViewIgActivityPublishStartDateDescription"
+                android:background="@color/colorHomepageBackground"
+                android:src="@drawable/date"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewIgActivityPublishStartDateTime"
+            android:layout_toEndOf="@+id/layoutIgActivityPublishDate"
+            android:layout_marginStart="25dp">
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishStartTimeDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/text_size_ig_activity_publish_description"
+                android:text="@string/activity_publish_time_description"/>
+
+            <ImageButton
+                android:id="@+id/btnIgActivityPublishStartTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/textViewIgActivityPublishStartTimeDescription"
+                android:background="@color/colorHomepageBackground"
+                android:src="@drawable/date"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btnIgActivityPublishLeftBottom"
