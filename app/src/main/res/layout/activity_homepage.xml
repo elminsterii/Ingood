@@ -1,6 +1,6 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/layoutMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
@@ -9,64 +9,90 @@
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/coordinator"
+        android:id="@+id/layoutCoordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycleViewActivityList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/colorHomepageBackground">
 
         <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
             android:id="@+id/search_edit_frame"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/search_bar_height"
-                app:layout_scrollFlags="scroll|enterAlways">
+                android:background="@color/colorWhite"
+                app:layout_scrollFlags="scroll">
                 <ImageView
-                    android:id="@+id/imageViewMenuBtn"
+                    android:id="@+id/imgMenuBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:src="@drawable/circle_loading_4"
-                    android:contentDescription="@string/description_search_bar_menu_btn" />
+                    android:src="@drawable/selector_menu_btn"/>
+                <ImageView
+                    android:id="@+id/imgIngoodIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ingood_logo_s"/>
                 <android.support.v7.widget.SearchView
+                    style="@style/IngoodSearchViewStyle"
                     android:id="@+id/searchViewSearchBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:iconifiedByDefault="false"
                     app:defaultQueryHint="@string/search_bar_hint"
-                    android:layout_gravity="end" />
+                    android:layout_gravity="end"/>
             </android.support.v7.widget.Toolbar>
 
             <android.support.design.widget.TabLayout
-                app:layout_scrollFlags="scroll|enterAlways"
-                android:id="@+id/tabLayout_TagBar"
+                android:id="@+id/layoutTagBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tag_bar_height"
-                app:tabIndicatorColor="@android:color/background_light"
-                app:tabSelectedTextColor="@android:color/background_light"
-                app:tabTextColor="@android:color/background_light">
+                android:background="@color/colorWhite"
+                app:tabTextAppearance="@style/IngoodTagBarText"
+                app:layout_scrollFlags="exitUntilCollapsed"
+                app:tabMode="scrollable"
+                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorColor="@color/colorSlave"
+                app:tabSelectedTextColor="@color/colorSlave"
+                app:tabTextColor="@color/colorTextHint">
             </android.support.design.widget.TabLayout>
 
         </android.support.design.widget.AppBarLayout>
 
-        <include
-            android:id="@+id/fabSet_Home"
-            layout="@layout/fab_set"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/layoutSwipeRefresh"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@color/colorHomepageBackground"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/viewActivityList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPublishAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/colorSlave"
+            app:borderWidth="0dp"
+            app:elevation="6dp"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nvView"
+        android:id="@+id/nvMenu"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

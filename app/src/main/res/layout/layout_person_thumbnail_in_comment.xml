@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewThumbnailInComment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/imageViewThumbnailMaskInComment"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:src="@xml/mask_circle_person_thumbnail_in_comment" />
+
+</FrameLayout>

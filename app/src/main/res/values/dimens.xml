@@ -4,6 +4,74 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="search_bar_height">40dp</dimen>
-    <dimen name="tag_bar_height">35dp</dimen>
+    <dimen name="search_bar_height">47dp</dimen>
+    <dimen name="tag_bar_height">42.5dp</dimen>
+    <dimen name="tag_bar_text_size">12sp</dimen>
+
+    <!-- Registration -->
+    <dimen name="title_size_registration">20sp</dimen>
+    <dimen name="text_size_registration_form_input">17.5sp</dimen>
+    <dimen name="text_size_registration_verify_code_input">17.5sp</dimen>
+    <dimen name="text_size_registration_verify_code_width">60dp</dimen>
+    <dimen name="text_size_registration_description">13sp</dimen>
+    <dimen name="subtitle_size_registration_tag">18sp</dimen>
+    <dimen name="text_size_registration_tag_description">13sp</dimen>
+    <dimen name="gap_registration_btw_texts">18dp</dimen>
+    <dimen name="margin_start_registration_form">23dp</dimen>
+    <dimen name="margin_end_registration_form">23dp</dimen>
+    <dimen name="padding_start_registration_form_input_text">14.6dp</dimen>
+    <dimen name="padding_start_registration_form_spinner">12dp</dimen>
+
+    <!-- Login Accoount-->
+    <dimen name="loginaccount_margin_start_login_form">23dp</dimen>
+    <dimen name="loginaccount_margin_end_login_form">23dp</dimen>
+    <dimen name="loginaccount_margin_btw_forget_and_pwd">32.5dp</dimen>
+    <dimen name="loginaccount_margin_btw_account_and_top">96dp</dimen>
+
+    <!-- Login-->
+    <dimen name="text_size_login_btn">17.5sp</dimen>
+    <dimen name="login_margin_btw_slogan_and_btns">172.5dp</dimen>
+    <dimen name="login_margin_btw_img_and_top">152dp</dimen>
+    <dimen name="login_margin_btw_slogan_and_img">15dp</dimen>
+    <dimen name="login_margin_btns_btw_edge">10dp</dimen>
+    <dimen name="login_margin_signin_btn_btw_register_btn">4.5dp</dimen>
+    <dimen name="login_btns_height">42.5dp</dimen>
+
+    <!-- Activity item in Homepage -->
+    <dimen name="height_igactivity_image_hp">150.8dp</dimen>
+    <dimen name="margin_top_igactivity_item_hp">12.7dp</dimen>
+    <dimen name="margin_start_igactivity_item_hp">12dp</dimen>
+    <dimen name="margin_end_igactivity_item_hp">13dp</dimen>
+    <dimen name="text_size_activity_item_title_hp">17.5sp</dimen>
+    <dimen name="text_size_activity_item_time_hp">13sp</dimen>
+    <dimen name="text_size_activity_item_action_hp">15sp</dimen>
+    <dimen name="margin_edge_action_item_hp">25dp</dimen>
+    <dimen name="gap_action_item_and_image_hp">2dp</dimen>
+
+    <!-- IgActivity detail -->
+    <dimen name="height_main_image_ig_activity">200dp</dimen>
+    <dimen name="text_size_ig_activity_title">20sp</dimen>
+    <dimen name="text_size_ig_activity_sub_title">15sp</dimen>
+    <dimen name="text_size_ig_activity_description">13sp</dimen>
+    <dimen name="text_size_button_ig_activity">17.5sp</dimen>
+    <dimen name="text_size_deem_people_ig_activity">13sp</dimen>
+    <dimen name="margin_start_ig_activity">10dp</dimen>
+    <dimen name="margin_start_ig_activity_thumbnail">39dp</dimen>
+    <dimen name="margin_end_ig_activity">16dp</dimen>
+    <dimen name="margin_end_des_ig_activity">10dp</dimen>
+    <dimen name="margin_start_attention_ig_activity">12.5dp</dimen>
+    <dimen name="margin_start_attendees_thumbnail_ig_activity">15.7dp</dimen>
+    <dimen name="margin_end_attendees_thumbnail_ig_activity">16.1dp</dimen>
+    <dimen name="gap_icon_and_des_ig_activity">5dp</dimen>
+    <dimen name="gap_tags_row_ig_activity">5dp</dimen>
+    <dimen name="gap_icons_attendees_ig_activity">9.1dp</dimen>
+    <dimen name="gap_comment_comments_ig_activity">10dp</dimen>
+
+    <!-- IgActivity publish -->
+    <dimen name="margin_start_igactivity_publish">10dp</dimen>
+    <dimen name="margin_end_igactivity_publish">10dp</dimen>
+    <dimen name="gap_tags_row_ig_activity_publish">5dp</dimen>
+
+    <!-- Global -->
+    <dimen name="button_radius">40dip</dimen>
 </resources>

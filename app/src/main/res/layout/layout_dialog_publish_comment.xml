@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@xml/igactivity_des_background">
+
+    <TextView
+        android:id="@+id/textViewPublishCommentDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="14sp"
+        android:textColor="@color/colorSlave"
+        android:text="@string/activity_comment_publish_description" />
+
+    <EditText
+        android:id="@+id/editTextPublishCommentContent"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textViewPublishCommentDescription"
+        android:textColor="@color/colorSlave"
+        android:textSize="@dimen/text_size_ig_activity_description"
+        android:inputType="text"
+        android:maxLength="500"
+        tools:ignore="LabelFor" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextPublishCommentContent"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:id="@+id/btnCommentPublishLeftBottom"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/selector_register_next"
+            android:textColor="@color/colorSlave"
+            android:textSize="14sp"
+            android:text="@string/dialog_cancel"/>
+
+        <Button
+            android:id="@+id/btnCommentPublishRightBottom"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/selector_register_next"
+            android:textColor="@color/colorSlave"
+            android:textSize="14sp"
+            android:text="@string/dialog_publish"/>
+    </RelativeLayout>
+</RelativeLayout>

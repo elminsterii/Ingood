@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10.1dp">
+
+        <ImageButton
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_arrow_btn_dark" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgBack"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:textSize="@dimen/title_size_registration"
+            android:textColor="@color/colorSlave"
+            android:textStyle="bold"
+            android:text="@string/sign_in" />
+    </RelativeLayout>
+
+    <EditText
+        android:theme="@style/IngoodEditTextStyle"
+        android:id="@+id/edit_account"
+        android:layout_marginStart="@dimen/loginaccount_margin_start_login_form"
+        android:layout_marginEnd="@dimen/loginaccount_margin_end_login_form"
+        android:layout_marginTop="@dimen/loginaccount_margin_btw_account_and_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_registration_form_input"
+        android:textCursorDrawable="@null"
+        android:lineSpacingExtra="0.8sp"
+        android:inputType="textEmailAddress"
+        android:hint="@string/user_data_email"
+        android:paddingStart="@dimen/padding_start_registration_form_input_text"
+        android:textColorHighlight="@color/colorSlaveUltraLight"
+        tools:ignore="RtlSymmetry"
+        android:ems="10"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/loginaccount_margin_start_login_form"
+        android:layout_marginEnd="@dimen/loginaccount_margin_end_login_form"
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_registration_form_input"
+            android:textCursorDrawable="@null"
+            android:lineSpacingExtra="0.8sp"
+            android:inputType="textPassword"
+            android:hint="@string/user_data_pwd"
+            android:paddingStart="@dimen/padding_start_registration_form_input_text"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="RtlSymmetry"
+            android:ems="10"/>
+
+        <ImageButton
+            android:id="@+id/pwd_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/loginaccount_margin_btw_forget_and_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/login_forget_pwd"/>
+
+    <RelativeLayout
+        android:id="@+id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16.5dp"
+        android:layout_marginEnd="16dp">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_register_next"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10.1dp"
+            android:textSize="@dimen/text_size_button_ig_activity"
+            android:textColor="@color/colorSlave"
+            android:text="@string/sign_in"/>
+    </RelativeLayout>
+
+</LinearLayout>

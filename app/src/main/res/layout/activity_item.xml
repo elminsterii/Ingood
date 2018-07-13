@@ -1,41 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutLinearActivityItem"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp"
+    android:layout_height="wrap_content"
+    android:background="@xml/igactivity_item_background"
+    android:layout_marginTop="@dimen/margin_top_igactivity_item_hp"
+    android:layout_marginStart="@dimen/margin_start_igactivity_item_hp"
+    android:layout_marginEnd="@dimen/margin_end_igactivity_item_hp"
     tools:ignore="UseCompoundDrawables">
-
-    <ImageView
-        android:id="@+id/imgActivityItem"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:layout_gravity="top"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/circle_loading_1" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".5"
-        android:layout_gravity="bottom">
+        android:layout_weight="2"
+        android:id="@+id/layoutRelativeActivityItem"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/imgActivityItemPublisherIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/circle_loading_1" />
+            android:id="@+id/imgActivityItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_igactivity_image_hp"
+            android:layout_gravity="top"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
+
+        <ImageView
+            android:id="@+id/imgActivityItemMask"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_igactivity_image_hp"
+            android:layout_gravity="top"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_mask_home_activity"/>
 
         <TextView
-            android:id="@+id/textActivityItem"
+            android:id="@+id/textActivityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imgActivityItemPublisherIcon"
-            android:textSize="24sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/imgActivityItem"
+            android:layout_marginBottom="22.4dp"
+            android:layout_marginLeft="12.3dp"
+            android:layout_marginRight="12.3dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_activity_item_title_hp"/>
+
+        <TextView
+            android:id="@+id/textActivityTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/imgActivityItem"
+            android:layout_marginLeft="12.3dp"
+            android:layout_marginRight="12.3dp"
+            android:layout_marginBottom="4dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_activity_item_time_hp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutActivityTags"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".2"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp">
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="3dp"
+        android:src="@xml/separate_line_shape_in_activity_item" />
+
+    <RelativeLayout
+        android:id="@+id/layoutActivityActions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <ImageView
+            android:id="@+id/imgActivityActionAttention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_edge_action_item_hp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/people" />
+        <TextView
+            android:id="@+id/textActivityActionAttention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgActivityActionAttention"
+            android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorTextHint"
+            android:textSize="@dimen/text_size_activity_item_action_hp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            tools:ignore="RelativeOverlap">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp">
+
+                <ImageView
+                    android:id="@+id/imgActivityActionGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/good" />
+
+                <TextView
+                    android:id="@+id/textActivityActionGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imgActivityActionGood"
+                    android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorTextHint"
+                    android:textSize="@dimen/text_size_activity_item_action_hp"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutActivitySaveIgActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_edge_action_item_hp"
+            tools:ignore="RelativeOverlap">
+
+            <ImageView
+                android:id="@+id/imgActivityActionSaveIgActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"/>
+            <TextView
+                android:id="@+id/textActivityActionSaveIgActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imgActivityActionSaveIgActivity"
+                android:layout_marginStart="@dimen/gap_action_item_and_image_hp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_activity_item_action_hp"
+                android:text="@string/activity_action_save_ig_activity"/>
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

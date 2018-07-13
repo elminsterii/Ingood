@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.RegistrationVerifyFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="59.5dp"
+        android:layout_marginEnd="59.5dp"
+        android:layout_marginTop="79dp"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/text_size_registration_description"
+        android:text="@string/hint_for_verify"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="59.5dp"
+        android:layout_marginRight="59.5dp"
+        android:layout_marginTop="22dp">
+
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_verify_1"
+            android:layout_width="@dimen/text_size_registration_verify_code_width"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_registration_verify_code_input"
+            android:textColor="@color/colorSlave"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:maxLength="1"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_verify_2"
+            android:layout_width="@dimen/text_size_registration_verify_code_width"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/edit_verify_1"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_registration_verify_code_input"
+            android:textColor="@color/colorSlave"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:maxLength="1"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_verify_3"
+            android:layout_width="@dimen/text_size_registration_verify_code_width"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/edit_verify_2"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_registration_verify_code_input"
+            android:textColor="@color/colorSlave"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:maxLength="1"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_verify_4"
+            android:layout_width="@dimen/text_size_registration_verify_code_width"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/edit_verify_3"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_registration_verify_code_input"
+            android:textColor="@color/colorSlave"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:maxLength="1"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="LabelFor" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="115.5dp"
+        android:layout_height="43.8dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/selector_register_send_verify"
+        android:textSize="13sp"
+        android:text="@string/send_verify_code"
+        android:textColor="@color/colorPrimary" />
+</LinearLayout>

@@ -10,7 +10,6 @@ public class JsonUtils {
 
     public static String createJsonString(Object value) {
                 Gson gson = new Gson();
-                String string = gson.toJson(value);
-                return string;
+        return gson.toJson(value);
      }
 }
