@@ -50,6 +50,8 @@
 
     <!-- Activity publish -->
     <string name="activity_publish_name">活動名稱</string>
+    <string name="activity_publish_location">活動地點</string>
+    <string name="activity_publish_description">活動描述</string>
     <string name="activity_publish_date_begin">開始時間</string>
     <string name="activity_publish_date_end">結束時間</string>
     <string name="activity_publish_date_description">請選擇日期</string>

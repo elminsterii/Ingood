@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -14,6 +15,7 @@ import android.widget.TimePicker;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.global.IgActivityHelper;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 
 import java.util.Calendar;
@@ -24,6 +26,7 @@ public class IgActivityPublishActivity extends BaseActivity {
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
+    private TextView mTextViewPublisherName;
     private TextView mTextViewStartDateDescription;
     private TextView mTextViewStartTimeDescription;
     private ImageButton mBtnStartDatePicker;
@@ -32,6 +35,9 @@ public class IgActivityPublishActivity extends BaseActivity {
     private TextView mTextViewEndTimeDescription;
     private ImageButton mBtnEndDatePicker;
     private ImageButton mBtnEndTimePicker;
+    private EditText mEditTextIgActivityName;
+    private EditText mEditTextIgActivityLocation;
+    private EditText mEditTextIgActivityDescription;
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
@@ -61,6 +67,7 @@ public class IgActivityPublishActivity extends BaseActivity {
     protected void initView() {
         mBtnLeftBottom = findViewById(R.id.btnIgActivityPublishLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityPublishRightBottom);
+        mTextViewPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mBtnStartDatePicker = findViewById(R.id.btnIgActivityPublishStartDatePicker);
         mBtnStartTimePicker = findViewById(R.id.btnIgActivityPublishStartTimePicker);
         mTextViewStartDateDescription = findViewById(R.id.textViewIgActivityPublishStartDateDescription);
@@ -69,11 +76,14 @@ public class IgActivityPublishActivity extends BaseActivity {
         mBtnEndTimePicker = findViewById(R.id.btnIgActivityPublishEndTimePicker);
         mTextViewEndDateDescription = findViewById(R.id.textViewIgActivityPublishEndDateDescription);
         mTextViewEndTimeDescription = findViewById(R.id.textViewIgActivityPublishEndTimeDescription);
+        mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
+        mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
+        mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
     }
 
     @Override
     protected void initData() {
-
+        mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
     }
 
     @Override

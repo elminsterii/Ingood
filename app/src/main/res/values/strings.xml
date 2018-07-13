@@ -50,6 +50,8 @@
 
     <!-- Activity publish -->
     <string name="activity_publish_name">Activity name</string>
+    <string name="activity_publish_location">Activity location</string>
+    <string name="activity_publish_description">Activity description</string>
     <string name="activity_publish_date_begin">Activity begin</string>
     <string name="activity_publish_date_end">Activity end</string>
     <string name="activity_publish_date_description">Choose date</string>
