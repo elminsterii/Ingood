@@ -1,28 +1,41 @@
 package com.fff.ingood.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.data.Person;
 import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.IgActivityCreateLogic;
+import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.tools.StringTool;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class IgActivityPublishActivity extends BaseActivity {
+public class IgActivityPublishActivity extends BaseActivity implements IgActivityCreateLogic.IgActivityCreateLogicCaller {
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -36,8 +49,10 @@ public class IgActivityPublishActivity extends BaseActivity {
     private ImageButton mBtnEndDatePicker;
     private ImageButton mBtnEndTimePicker;
     private EditText mEditTextIgActivityName;
+    private EditText mEditTextIgActivityMaxAttention;
     private EditText mEditTextIgActivityLocation;
     private EditText mEditTextIgActivityDescription;
+    private LinearLayout mLayoutIgActivityTags;
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
@@ -46,6 +61,9 @@ public class IgActivityPublishActivity extends BaseActivity {
     private String m_strStartTime;
     private String m_strEndDate;
     private String m_strEndTime;
+
+    private List<EditText> m_lsTagsInput;
+    private ImageButton m_preBtnOfTagAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +95,17 @@ public class IgActivityPublishActivity extends BaseActivity {
         mTextViewEndDateDescription = findViewById(R.id.textViewIgActivityPublishEndDateDescription);
         mTextViewEndTimeDescription = findViewById(R.id.textViewIgActivityPublishEndTimeDescription);
         mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
+        mEditTextIgActivityMaxAttention = findViewById(R.id.editTextIgActivityPublishMaxAttention);
         mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
         mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
+        mLayoutIgActivityTags = findViewById(R.id.layoutIgActivityPublishTags);
     }
 
     @Override
     protected void initData() {
+        m_lsTagsInput = new ArrayList<>();
         mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
+        addNewEmptyTag(m_igActivity);
     }
 
     @Override
@@ -98,10 +120,25 @@ public class IgActivityPublishActivity extends BaseActivity {
         mBtnRightBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(m_igActivity == null)
-                    m_igActivity = genEmptyIgActivity();
+                if(!m_bEditMode) {
+                    if(m_igActivity == null)
+                        m_igActivity = genEmptyIgActivity();
 
-                setIgActivityTime(m_igActivity);
+                    Person person = PersonManager.getInstance().getPerson();
+                    m_igActivity.setPublisherEmail(person.getEmail());
+                    m_igActivity.setPublisherPwd(person.getPassword());
+                    m_igActivity.setName(mEditTextIgActivityName.getText().toString());
+                    m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
+                    m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
+                    m_igActivity.setLargeActivity("0");
+                    setIgActivityTags(m_igActivity);
+                    setIgActivityTime(m_igActivity);
+
+                    createIgActivity(m_igActivity);
+                    showWaitingDialog(IgActivityPublishActivity.class.getName());
+                } else {
+                    //TODO - edit mode and update IgActivity.
+                }
             }
         });
 
@@ -203,5 +240,55 @@ public class IgActivityPublishActivity extends BaseActivity {
         String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strEndDate + " " + m_strEndTime);
         activity.setDateBegin(strStartDateTime);
         activity.setDateEnd(strEndDateTime);
+        activity.setPublishBegin(strStartDateTime);
+        activity.setPublishEnd(strEndDateTime);
+    }
+
+    private void setIgActivityTags(IgActivity activity) {
+        if(m_lsTagsInput.size() > 0) {
+            String strTags = StringTool.listEditTextToString(m_lsTagsInput, ',');
+            activity.setTags(strTags);
+        }
+    }
+
+    private void addNewEmptyTag(IgActivity activity) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_puglish_igactivity, null, false);
+        EditText editTextTagInput = (EditText)layout.getChildAt(0);
+        m_lsTagsInput.add(editTextTagInput);
+
+        ImageButton btnTagAdd = (ImageButton)layout.getChildAt(1);
+
+        btnTagAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewEmptyTag(m_igActivity);
+            }
+        });
+
+        mLayoutIgActivityTags.addView(layout);
+
+        if(m_preBtnOfTagAdd != null)
+            m_preBtnOfTagAdd.setVisibility(View.INVISIBLE);
+        m_preBtnOfTagAdd = btnTagAdd;
+    }
+
+    private void createIgActivity(IgActivity activity) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doCreateIgActivity(this, activity);
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressLint("ShowToast")
+    @Override
+    public void onCreateIgActivitySuccess(String strId) {
+        hideWaitingDialog();
+        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 }
