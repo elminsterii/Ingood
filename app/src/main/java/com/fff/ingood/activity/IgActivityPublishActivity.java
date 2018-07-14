@@ -1,14 +1,18 @@
 package com.fff.ingood.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -18,7 +22,9 @@ import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 
@@ -38,6 +44,7 @@ public class IgActivityPublishActivity extends BaseActivity {
     private EditText mEditTextIgActivityName;
     private EditText mEditTextIgActivityLocation;
     private EditText mEditTextIgActivityDescription;
+    private LinearLayout mLayoutIgActivityTags;
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
@@ -46,6 +53,9 @@ public class IgActivityPublishActivity extends BaseActivity {
     private String m_strStartTime;
     private String m_strEndDate;
     private String m_strEndTime;
+
+    private List<EditText> m_lsTagsInput;
+    private ImageButton m_preBtnOfTagAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +89,14 @@ public class IgActivityPublishActivity extends BaseActivity {
         mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
         mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
         mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
+        mLayoutIgActivityTags = findViewById(R.id.layoutIgActivityPublishTags);
     }
 
     @Override
     protected void initData() {
+        m_lsTagsInput = new ArrayList<>();
         mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
+        addNewEmptyTag(m_igActivity);
     }
 
     @Override
@@ -203,5 +216,27 @@ public class IgActivityPublishActivity extends BaseActivity {
         String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strEndDate + " " + m_strEndTime);
         activity.setDateBegin(strStartDateTime);
         activity.setDateEnd(strEndDateTime);
+    }
+
+    private void addNewEmptyTag(IgActivity activity) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_puglish_igactivity, null, false);
+        EditText editTextTagInput = (EditText)layout.getChildAt(0);
+        m_lsTagsInput.add(editTextTagInput);
+
+        ImageButton btnTagAdd = (ImageButton)layout.getChildAt(1);
+
+        btnTagAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewEmptyTag(m_igActivity);
+            }
+        });
+
+        mLayoutIgActivityTags.addView(layout);
+
+        if(m_preBtnOfTagAdd != null)
+            m_preBtnOfTagAdd.setVisibility(View.INVISIBLE);
+        m_preBtnOfTagAdd = btnTagAdd;
     }
 }
