@@ -128,17 +128,17 @@ public class IgActivity implements Serializable {
         m_location  = sLocation;
     }
 
-    public String getPublisBegin(){
+    public String getPublishBegin(){
         return  m_publishbegin;
     }
-    public void setPublisBegin(String lTime){
+    public void setPublishBegin(String lTime){
         m_publishbegin  = lTime;
     }
 
-    public String getPublisEnd(){
+    public String getPublishEnd(){
         return  m_publishend;
     }
-    public void setPublisEnd(String lTime){
+    public void setPublishEnd(String lTime){
         m_publishend  = lTime;
     }
 

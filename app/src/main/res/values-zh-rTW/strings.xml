@@ -110,6 +110,7 @@
     <string name="attend_activity_success">參加成功</string>
     <string name="no_attend_activity_success">已取消參加</string>
     <string name="comment_has_been_published">留言已發佈</string>
+    <string name="activity_has_been_published">活動已發佈</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>

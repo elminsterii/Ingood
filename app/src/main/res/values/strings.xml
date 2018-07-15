@@ -110,6 +110,7 @@
     <string name="attend_activity_success">Attended</string>
     <string name="no_attend_activity_success">Canceled attend</string>
     <string name="comment_has_been_published">Comment has been published</string>
+    <string name="activity_has_been_published">Activity has been published</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>
