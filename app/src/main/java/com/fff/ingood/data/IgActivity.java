@@ -62,7 +62,11 @@ public class IgActivity implements Serializable {
     @SerializedName("attendees")
     private String m_attendees;
 
+    @SerializedName("maxattention")
+    private String m_maxattention;
+
     private String m_ts;
+
     public IgActivity(String sEmail,
                       String sPwd,
                       String pBegin,
@@ -71,8 +75,9 @@ public class IgActivity implements Serializable {
                       String sName,
                       String dBegin,
                       String dEnd,
-                      String sLocation
-                    ){
+                      String sLocation,
+                      String sMaxAttention
+                    ) {
         m_publisheremail = sEmail;
         m_publisherpwd = sPwd;
         m_displayname = sName;
@@ -82,6 +87,7 @@ public class IgActivity implements Serializable {
         m_datebegin = dBegin;
         m_dateend = dEnd;
         m_largeactivity = bLarge;
+        m_maxattention = sMaxAttention;
     }
 
     public IgActivity(){
@@ -211,5 +217,12 @@ public class IgActivity implements Serializable {
     }
     public void setAttendees(String aAttendees){
         m_attendees  = aAttendees;
+    }
+
+    public String getMaxAttention(){
+        return  m_maxattention;
+    }
+    public void setMaxAttention(String maxAttention){
+        m_maxattention  = maxAttention;
     }
 }
