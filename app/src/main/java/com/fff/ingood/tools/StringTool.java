@@ -1,5 +1,7 @@
 package com.fff.ingood.tools;
 
+import android.widget.EditText;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +47,21 @@ public class StringTool {
         for(String str : lsString) {
             if(checkStringNotNull(str))
                 strBuilder.append(str).append(splitChar);
+        }
+
+        if(strBuilder.length() > 0)
+            strBuilder.deleteCharAt(strBuilder.length()-1);
+
+        return strBuilder.toString();
+    }
+
+    public static String listEditTextToString(List<EditText> lsEditTexts, char splitChar) {
+        if(lsEditTexts == null || lsEditTexts.isEmpty())
+            return "";
+
+        StringBuilder strBuilder = new StringBuilder();
+        for(EditText editText : lsEditTexts) {
+            strBuilder.append(editText.getText().toString()).append(splitChar);
         }
 
         if(strBuilder.length() > 0)
