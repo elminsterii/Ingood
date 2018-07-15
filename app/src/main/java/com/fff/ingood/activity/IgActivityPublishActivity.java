@@ -42,6 +42,7 @@ public class IgActivityPublishActivity extends BaseActivity {
     private ImageButton mBtnEndDatePicker;
     private ImageButton mBtnEndTimePicker;
     private EditText mEditTextIgActivityName;
+    private EditText mEditTextIgActivityMaxAttention;
     private EditText mEditTextIgActivityLocation;
     private EditText mEditTextIgActivityDescription;
     private LinearLayout mLayoutIgActivityTags;
@@ -87,6 +88,7 @@ public class IgActivityPublishActivity extends BaseActivity {
         mTextViewEndDateDescription = findViewById(R.id.textViewIgActivityPublishEndDateDescription);
         mTextViewEndTimeDescription = findViewById(R.id.textViewIgActivityPublishEndTimeDescription);
         mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
+        mEditTextIgActivityMaxAttention = findViewById(R.id.editTextIgActivityPublishMaxAttention);
         mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
         mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
         mLayoutIgActivityTags = findViewById(R.id.layoutIgActivityPublishTags);

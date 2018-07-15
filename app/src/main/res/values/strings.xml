@@ -57,6 +57,7 @@
     <string name="activity_publish_date_description">Choose date</string>
     <string name="activity_publish_time_description">Choose time</string>
     <string name="activity_publish_what_kind">What kind of activity</string>
+    <string name="activity_publish_max_attention">Upper limit of attention</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>
