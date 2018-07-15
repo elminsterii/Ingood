@@ -14,8 +14,8 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class PersonGetIconListTaskWrapper {
 
     public interface PersonGetIconListTaskWrapperCallback {
-        void onUpdateIgActivitiesIdsSuccess();
-        void onUpdateIgActivitiesIdsFailure(Integer iStatusCode);
+        void onGetIconListSuccess();
+        void onGetIconListFailure(Integer iStatusCode);
     }
 
     private PersonGetIconListTask task;
@@ -48,17 +48,17 @@ public class PersonGetIconListTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onUpdateIgActivitiesIdsSuccess();
+                mCb.onGetIconListSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onUpdateIgActivitiesIdsFailure(iStatusCode);
+                mCb.onGetIconListFailure(iStatusCode);
             }
         });
     }
 
-    public void execute(Person activity) {
-        task.execute(activity);
+    public void execute(Person personData) {
+        task.execute(personData);
     }
 }
