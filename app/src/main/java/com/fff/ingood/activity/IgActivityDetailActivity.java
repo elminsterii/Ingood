@@ -2,6 +2,7 @@ package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +91,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private Person mPublisher;
 
     private int mTagBarWidth;
-    private boolean m_bIsMakeTags = false;
+    private boolean m_bIsGetTagBarWidth = false;
     private DeemInfoManager.DEEM_INFO mCurDeemInfo;
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
@@ -103,9 +104,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        showWaitingDialog(HomeActivity.class.getName());
+        refresh();
+    }
+
+    @Override
     protected void preInit() {
         mIgActivity = (IgActivity)getIntent().getSerializableExtra(TAG_IGACTIVITY);
-        m_bIsIgActivityOwner = mIgActivity.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail());
+
+        Person person = PersonManager.getInstance().getPerson();
+        m_bIsIgActivityOwner = mIgActivity.getPublisherEmail().equals(person.getEmail());
     }
 
     @Override
@@ -139,21 +150,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(mIgActivity == null)
             return;
 
-        String strDate = IgActivityHelper.makeDateStringByIgActivity(mIgActivity);
-
-        mTextViewTitle.setText(mIgActivity.getName());
-        mTextViewDate.setText(strDate);
-        mTextViewLocation.setText(mIgActivity.getLocation());
-
-        mTextViewDescription.setText(mIgActivity.getDescription());
+        refreshUIByIgActivity(mIgActivity);
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
-        setUiIgActivityImageByIgActivity(mIgActivity);
-        setUiPublisherByIgActivity(mIgActivity);
-        setUiAttentionByIgActivity(mIgActivity);
-        setUiDeemInfoByIgActivity(mIgActivity);
-        setUiDeemPeopleByIgActivity(mIgActivity);
-        setUiCommentsByIgActivity(mIgActivity);
+        getPublisherInfoByIgActivity(mIgActivity);
+        getCommentsByIgActivity(mIgActivity);
     }
 
     @Override
@@ -175,30 +176,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mLayoutTagBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(!m_bIsMakeTags) {
+                if(!m_bIsGetTagBarWidth) {
                     mTagBarWidth = mLayoutTagBar.getWidth();
-
-                    String[] arrTags = mIgActivity.getTags().split(",");
-                    List<String> lsTags = StringTool.arrayStringToListString(arrTags);
-
-                    int iRemainTags = arrTags.length;
-                    Integer resIdPreLayout = null;
-
-                    while(iRemainTags > 0) {
-                        RelativeLayout layout = makeTagBarLayout(mLayoutTagBar, resIdPreLayout);
-
-                        int iShowTags = TagManager.getInstance().makeTagsInLayout(layout, lsTags.toArray(new String[lsTags.size()]), mTagBarWidth);
-                        if(iShowTags == 0)
-                            break;
-
-                        iRemainTags -= iShowTags;
-                        resIdPreLayout = layout.getId();
-
-                        for(int i=0; i<iShowTags; i++)
-                            lsTags.remove(0);
-                    }
-
-                    m_bIsMakeTags = true;
+                    m_bIsGetTagBarWidth = true;
                 }
             }
         });
@@ -285,7 +265,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
             rightClickBtnListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO - edit button
+                    Intent intent = new Intent(mActivity, IgActivityPublishActivity.class);
+                    intent.putExtra(TAG_IGACTIVITY, mIgActivity);
+                    mActivity.startActivity(intent);
                 }
             };
         } else {
@@ -331,8 +313,20 @@ public class IgActivityDetailActivity extends BaseActivity implements
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGDETAIL).setSystemUI(this);
     }
 
-    private void refreshUI(IgActivity activity) {
+    private void refreshUIByIgActivity(IgActivity activity) {
+        String strDate = IgActivityHelper.makeDateStringByIgActivity(activity);
+
+        mTextViewTitle.setText(activity.getName());
+        mTextViewDate.setText(strDate);
+        mTextViewLocation.setText(activity.getLocation());
+        mTextViewDescription.setText(activity.getDescription());
+
+        if(m_bIsGetTagBarWidth)
+            setUiTagsByIgActivity(mIgActivity);
+
+        setUiIgActivityImageByIgActivity(activity);
         setUiAttentionByIgActivity(activity);
+        setUiDeemInfoByIgActivity(activity);
         setUiDeemPeopleByIgActivity(activity);
         setUiBottomButtons();
     }
@@ -362,7 +356,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
-    private void setUiPublisherByIgActivity(IgActivity activity) {
+    private void getPublisherInfoByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -454,6 +448,30 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
+    private void setUiTagsByIgActivity(IgActivity activity) {
+        mLayoutTagBar.removeAllViews();
+
+        String[] arrTags = activity.getTags().split(",");
+        List<String> lsTags = StringTool.arrayStringToListString(arrTags);
+
+        int iRemainTags = arrTags.length;
+        Integer resIdPreLayout = null;
+
+        while(iRemainTags > 0) {
+            RelativeLayout layout = makeTagBarLayout(mLayoutTagBar, resIdPreLayout);
+
+            int iShowTags = TagManager.getInstance().makeTagsInLayout(layout, lsTags.toArray(new String[lsTags.size()]), mTagBarWidth);
+            if(iShowTags == 0)
+                break;
+
+            iRemainTags -= iShowTags;
+            resIdPreLayout = layout.getId();
+
+            for(int i=0; i<iShowTags; i++)
+                lsTags.remove(0);
+        }
+    }
+
     private void setUiBottomButtons() {
         m_bIsAttended = isAttended(mIgActivity, PersonManager.getInstance().getPerson());
 
@@ -470,7 +488,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         }
     }
 
-    private void setUiCommentsByIgActivity(IgActivity activity) {
+    private void getCommentsByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -619,6 +637,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
     }
 
+    private void refresh() {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doGetIgActivitiesData(this, mIgActivity.getId());
+    }
+
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -663,7 +686,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void onCreateCommentSuccess(String strId) {
-        setUiCommentsByIgActivity(mIgActivity);
+        getCommentsByIgActivity(mIgActivity);
         Toast.makeText(mActivity, getResources().getText(R.string.comment_has_been_published), Toast.LENGTH_SHORT).show();
     }
 
@@ -705,15 +728,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
         else
             Toast.makeText(mActivity, getResources().getText(R.string.attend_activity_success), Toast.LENGTH_SHORT).show();
 
-        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-        executor.doGetIgActivitiesData(this, mIgActivity.getId());
+        refresh();
     }
 
     @Override
     public void returnIgActivities(List<IgActivity> lsActivities) {
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
-            refreshUI(mIgActivity);
+            refreshUIByIgActivity(mIgActivity);
         }
     }
 

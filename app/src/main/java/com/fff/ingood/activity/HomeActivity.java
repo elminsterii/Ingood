@@ -58,7 +58,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     List<IgActivity> m_lsActivities;
 
     private HomeActivity mActivity;
-    private IgActivityLogicExecutor mActivityMgr;
+    private IgActivityLogicExecutor mIgActivityExecutor;
     private IgActivity preSearchCondition;
 
     private boolean m_bIsInitialize = false;
@@ -109,7 +109,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     @Override
     protected void initData() {
-        mActivityMgr = new IgActivityLogicExecutor();
+        mIgActivityExecutor = new IgActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
         makeTodayTags();
@@ -253,7 +253,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
-                    mActivityMgr.doSearchIgActivitiesIds(mActivity, activityCondition);
+                    mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
                 }
                 return true;
             }
@@ -340,7 +340,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         m_arrIgActivitiesIds = arrIgActivitiesIds;
 
         if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
-            mActivityMgr.doGetIgActivitiesData(this, strActivitiesIds);
+            mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
         } else
             queryIgActivity(0);
     }
@@ -358,7 +358,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 , startIndex
                 , endIndex
                 , ",");
-        mActivityMgr.doGetIgActivitiesData(this, strIgActivitiesIds);
+        mIgActivityExecutor.doGetIgActivitiesData(this, strIgActivitiesIds);
     }
 
     private void refresh() {
@@ -367,7 +367,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             mActivityListAdapter.updateActivityList(m_lsActivities);
             mActivityListAdapter.notifyDataSetChanged();
 
-            mActivityMgr.doSearchIgActivitiesIds(mActivity, preSearchCondition);
+            mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, preSearchCondition);
         }
     }
 

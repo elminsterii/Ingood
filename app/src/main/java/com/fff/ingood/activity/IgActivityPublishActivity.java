@@ -43,10 +43,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
     private TextView mTextViewPublisherName;
-    private TextView mTextViewStartDateDescription;
-    private TextView mTextViewStartTimeDescription;
     private ImageButton mBtnStartDatePicker;
     private ImageButton mBtnStartTimePicker;
+    private TextView mTextViewStartDateDescription;
+    private TextView mTextViewStartTimeDescription;
     private TextView mTextViewEndDateDescription;
     private TextView mTextViewEndTimeDescription;
     private ImageButton mBtnEndDatePicker;
@@ -59,11 +59,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private boolean m_bEditMode = false;
     private IgActivity m_igActivity;
-
-    private String m_strStartDate;
-    private String m_strStartTime;
-    private String m_strEndDate;
-    private String m_strEndTime;
 
     private List<EditText> m_lsTagsInput;
     private ImageButton m_preBtnOfTagAdd;
@@ -107,13 +102,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     @Override
     protected void initData() {
         m_lsTagsInput = new ArrayList<>();
-        mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
-        if(m_bEditMode)
-            mBtnRightBottom.setText(R.string.dialog_publish);
-        else
-            mBtnRightBottom.setText(R.string.activity_publish_edit_update);
-
-        addNewEmptyTag(m_igActivity);
+        initUIData(m_igActivity, m_bEditMode);
     }
 
     @Override
@@ -128,26 +117,27 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mBtnRightBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(m_igActivity == null)
+                    m_igActivity = genEmptyIgActivity();
+
+                Person person = PersonManager.getInstance().getPerson();
+                m_igActivity.setPublisherEmail(person.getEmail());
+                m_igActivity.setPublisherPwd(person.getPassword());
+                m_igActivity.setName(mEditTextIgActivityName.getText().toString());
+                m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
+                m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
+                m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
+                setIgActivityTags(m_igActivity);
+                setIgActivityTime(m_igActivity);
+
                 if(!m_bEditMode) {
-                    if(m_igActivity == null)
-                        m_igActivity = genEmptyIgActivity();
-
-                    Person person = PersonManager.getInstance().getPerson();
-                    m_igActivity.setPublisherEmail(person.getEmail());
-                    m_igActivity.setPublisherPwd(person.getPassword());
-                    m_igActivity.setName(mEditTextIgActivityName.getText().toString());
-                    m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
-                    m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
-                    m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
                     m_igActivity.setLargeActivity("0");
-                    setIgActivityTags(m_igActivity);
-                    setIgActivityTime(m_igActivity);
-
                     createIgActivity(m_igActivity);
-                    showWaitingDialog(IgActivityPublishActivity.class.getName());
-                } else {
-                    //TODO - edit mode and update IgActivity.
                 }
+                else
+                    updateIgActivity(m_igActivity);
+
+                showWaitingDialog(IgActivityPublishActivity.class.getName());
             }
         });
 
@@ -161,8 +151,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        m_strStartDate = setDateFormat(year ,month, day);
-                        mTextViewStartDateDescription.setText(m_strStartDate);
+                        String strStartDate = setDateFormat(year ,month, day);
+                        mTextViewStartDateDescription.setText(strStartDate);
 
                     }
                 }, mYear, mMonth, mDay).show();
@@ -178,8 +168,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        m_strStartTime = setTimeFormat(hour ,minute);
-                        mTextViewStartTimeDescription.setText(m_strStartTime);
+                        String strStartTime = setTimeFormat(hour ,minute);
+                        mTextViewStartTimeDescription.setText(strStartTime);
                     }
                 }, hour, minute, false).show();
             }
@@ -195,8 +185,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        m_strEndDate = setDateFormat(year, month, day);
-                        mTextViewEndDateDescription.setText(m_strEndDate);
+                        String strEndDate = setDateFormat(year, month, day);
+                        mTextViewEndDateDescription.setText(strEndDate);
                     }
                 }, mYear, mMonth, mDay).show();
             }
@@ -211,8 +201,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        m_strEndTime = setTimeFormat(hour ,minute);
-                        mTextViewEndTimeDescription.setText(m_strEndTime);
+                        String strEndTime = setTimeFormat(hour ,minute);
+                        mTextViewEndTimeDescription.setText(strEndTime);
                     }
                 }, hour, minute, false).show();
             }
@@ -222,6 +212,27 @@ public class IgActivityPublishActivity extends BaseActivity implements
     @Override
     protected void initSystemUI() {
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGPUBLISH).setSystemUI(this);
+    }
+
+    private void initUIData(IgActivity activity, boolean bEditMode) {
+        if(bEditMode) {
+            if(activity != null) {
+                mBtnRightBottom.setText(R.string.activity_publish_edit_update);
+                mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
+                mEditTextIgActivityName.setText(activity.getName());
+                mEditTextIgActivityMaxAttention.setText(activity.getMaxAttention());
+                mEditTextIgActivityLocation.setText(activity.getLocation());
+                mEditTextIgActivityDescription.setText(activity.getDescription());
+                mEditTextIgActivityMaxAttention.setText(activity.getMaxAttention());
+                setDateByIgActivity(activity);
+                setTagsByIgActivity(activity);
+            }
+        }
+        else {
+            mBtnRightBottom.setText(R.string.dialog_publish);
+            mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
+            addNewEmptyTag();
+        }
     }
 
     //"yyyy-MM-dd HH:mm:ss";
@@ -245,8 +256,13 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(activity == null)
             return;
 
-        String strStartDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strStartDate + " " + m_strStartTime);
-        String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(m_strEndDate + " " + m_strEndTime);
+        String strStartDate = mTextViewStartDateDescription.getText().toString();
+        String strStartTime = mTextViewStartTimeDescription.getText().toString();
+        String strEndDate = mTextViewEndDateDescription.getText().toString();
+        String strEndTime = mTextViewEndTimeDescription.getText().toString();
+
+        String strStartDateTime = IgActivityHelper.makeIgActivityDateStringByUI(strStartDate + " " + strStartTime);
+        String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
         activity.setDateBegin(strStartDateTime);
         activity.setDateEnd(strEndDateTime);
         activity.setPublishBegin(strStartDateTime);
@@ -260,7 +276,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         }
     }
 
-    private void addNewEmptyTag(IgActivity activity) {
+    private EditText addNewEmptyTag() {
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_puglish_igactivity, null, false);
         EditText editTextTagInput = (EditText)layout.getChildAt(0);
@@ -271,7 +287,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         btnTagAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewEmptyTag(m_igActivity);
+                addNewEmptyTag();
             }
         });
 
@@ -280,6 +296,43 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(m_preBtnOfTagAdd != null)
             m_preBtnOfTagAdd.setVisibility(View.INVISIBLE);
         m_preBtnOfTagAdd = btnTagAdd;
+
+        return editTextTagInput;
+    }
+
+    private void setTagsByIgActivity(IgActivity activity) {
+        if(activity == null)
+            return;
+
+        String strTags = activity.getTags();
+        if(StringTool.checkStringNotNull(strTags)) {
+            String[] arrTags = strTags.split(",");
+            for(String strTag : arrTags) {
+                EditText editText = addNewEmptyTag();
+                editText.setText(strTag);
+            }
+        }
+    }
+
+    private void setDateByIgActivity(IgActivity activity) {
+        String strDateBegin = activity.getDateBegin();
+        String strDateEnd = activity.getDateEnd();
+
+        if(StringTool.checkStringNotNull(strDateBegin)) {
+            String[] arrDateBegin = strDateBegin.split(" ");
+            if(arrDateBegin.length > 1) {
+                mTextViewStartDateDescription.setText(arrDateBegin[0]);
+                mTextViewStartTimeDescription.setText(arrDateBegin[1]);
+            }
+        }
+
+        if(StringTool.checkStringNotNull(strDateEnd)) {
+            String[] arrDateEnd = strDateEnd.split(" ");
+            if(arrDateEnd.length > 1) {
+                mTextViewEndDateDescription.setText(arrDateEnd[0]);
+                mTextViewEndTimeDescription.setText(arrDateEnd[1]);
+            }
+        }
     }
 
     private void createIgActivity(IgActivity activity) {
