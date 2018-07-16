@@ -3,10 +3,12 @@ package com.fff.ingood.logic;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.wrapper.PersonGetIconListTaskWrapper;
 
+import java.util.List;
+
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
- * Created by ElminsterII on 2018/6/8.
+ * Created by ElminsterII on 2018/6/8.3
  */
 public class PersonGetIconListLogic extends Logic implements PersonGetIconListTaskWrapper.PersonGetIconListTaskWrapperCallback {
 
@@ -30,7 +32,7 @@ public class PersonGetIconListLogic extends Logic implements PersonGetIconListTa
     }
 
     @Override
-    public void onGetIconListSuccess() {
+    public void onGetIconListSuccess(String icons) {
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

@@ -2,7 +2,7 @@ package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncResponder;
-import com.fff.ingood.task.PersonGetIconListTask;
+import com.fff.ingood.task.PersonDeleteIconTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 
@@ -10,22 +10,21 @@ import com.fff.ingood.tools.StringTool;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS;
-import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_PERSON_ICONS;
 import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CODE;
 
-public class PersonGetIconListTaskWrapper {
+public class PersonDeleteIconTaskWrapper {
 
-    public interface PersonGetIconListTaskWrapperCallback {
-        void onGetIconListSuccess(String strIconsName);
-        void onGetIconListFailure(Integer iStatusCode);
+    public interface PersonDeleteIconTaskWrapperCallback {
+        void onDeleteIconSuccess();
+        void onDeleteIconFailure(Integer iStatusCode);
     }
 
-    private PersonGetIconListTask task;
-    private PersonGetIconListTaskWrapperCallback mCb;
+    private PersonDeleteIconTask task;
+    private PersonDeleteIconTaskWrapperCallback mCb;
 
-    public PersonGetIconListTaskWrapper(PersonGetIconListTaskWrapperCallback cb) {
+    public PersonDeleteIconTaskWrapper(PersonDeleteIconTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonGetIconListTask(new AsyncResponder<Integer, String>() {
+        task = new PersonDeleteIconTask(new AsyncResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {
@@ -38,7 +37,6 @@ public class PersonGetIconListTaskWrapper {
                 if(StringTool.checkStringNotNull(strStatusCode)) {
                     if (strStatusCode.equals(STATUS_CODE_SUCCESS)) {
                         setStatus(Integer.parseInt(strStatusCode));
-                        setData(ParserUtils.getStringByTag(TAG_SERVER_RESPONSE_PERSON_ICONS, strJsonResponse));
                         return true;
                     } else {
                         setStatus(Integer.parseInt(strStatusCode));
@@ -50,13 +48,13 @@ public class PersonGetIconListTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String strIconsName) {
-                mCb.onGetIconListSuccess(strIconsName);
+            public void onSuccess(Void aVoid) {
+                mCb.onDeleteIconSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onGetIconListFailure(iStatusCode);
+                mCb.onDeleteIconFailure(iStatusCode);
             }
         });
     }

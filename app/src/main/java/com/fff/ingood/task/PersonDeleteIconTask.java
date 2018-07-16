@@ -11,9 +11,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonGetIconListTask extends HttpPostAccessTask<Person, Integer, String> {
+public class PersonDeleteIconTask extends HttpPostAccessTask<Person, Integer, Void> {
 
-    public PersonGetIconListTask(AsyncResponder<Integer, String> responder) {
+    public PersonDeleteIconTask(AsyncResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -23,27 +23,27 @@ public class PersonGetIconListTask extends HttpPostAccessTask<Person, Integer, S
         StringBuilder stringBuilder;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ICON_LIST)+info.getEmail());
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_DELETE_API_PERSON_ICON));
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
             connection.setDoInput(true);
-            //connection.setDoOutput(true);
+            connection.setDoOutput(true);
             connection.setUseCaches(false);
             connection.connect();
 
-            /*OutputStream os = connection.getOutputStream();
+            OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
             String jsonString;
             jsonString = new Gson().toJson(info, Person.class);
             writer.write(jsonString.getBytes());
             writer.flush();
             writer.close();
-            os.close();*/
+            os.close();
 
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             stringBuilder = new StringBuilder();
