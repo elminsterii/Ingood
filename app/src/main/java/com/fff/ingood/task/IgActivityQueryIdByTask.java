@@ -26,10 +26,8 @@ public class IgActivityQueryIdByTask extends HttpPostAccessTask<IgActivity, Inte
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
-            connection.setRequestMethod("POST");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
-            connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
 
