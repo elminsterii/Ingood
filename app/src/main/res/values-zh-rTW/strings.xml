@@ -58,6 +58,7 @@
     <string name="activity_publish_time_description">請選擇時間</string>
     <string name="activity_publish_what_kind">何種類型的活動</string>
     <string name="activity_publish_max_attention">參加人數上限</string>
+    <string name="activity_publish_edit_update">更新</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>
@@ -111,6 +112,7 @@
     <string name="no_attend_activity_success">已取消參加</string>
     <string name="comment_has_been_published">留言已發佈</string>
     <string name="activity_has_been_published">活動已發佈</string>
+    <string name="activity_has_been_updated">活動已更新</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>

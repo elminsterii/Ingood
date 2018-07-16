@@ -58,6 +58,7 @@
     <string name="activity_publish_time_description">Choose time</string>
     <string name="activity_publish_what_kind">What kind of activity</string>
     <string name="activity_publish_max_attention">Upper limit of attention</string>
+    <string name="activity_publish_edit_update">Update</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>
@@ -111,6 +112,7 @@
     <string name="no_attend_activity_success">Canceled attend</string>
     <string name="comment_has_been_published">Comment has been published</string>
     <string name="activity_has_been_published">Activity has been published</string>
+    <string name="activity_has_been_updated">Activity has been updated</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

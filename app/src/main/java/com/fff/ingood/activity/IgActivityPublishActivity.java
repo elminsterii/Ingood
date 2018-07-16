@@ -25,6 +25,7 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.logic.IgActivityUpdateLogic;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class IgActivityPublishActivity extends BaseActivity implements IgActivityCreateLogic.IgActivityCreateLogicCaller {
+public class IgActivityPublishActivity extends BaseActivity implements
+        IgActivityCreateLogic.IgActivityCreateLogicCaller
+        , IgActivityUpdateLogic.IgActivityUpdateLogicCaller {
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -105,6 +108,11 @@ public class IgActivityPublishActivity extends BaseActivity implements IgActivit
     protected void initData() {
         m_lsTagsInput = new ArrayList<>();
         mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
+        if(m_bEditMode)
+            mBtnRightBottom.setText(R.string.dialog_publish);
+        else
+            mBtnRightBottom.setText(R.string.activity_publish_edit_update);
+
         addNewEmptyTag(m_igActivity);
     }
 
@@ -130,6 +138,7 @@ public class IgActivityPublishActivity extends BaseActivity implements IgActivit
                     m_igActivity.setName(mEditTextIgActivityName.getText().toString());
                     m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
                     m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
+                    m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
                     m_igActivity.setLargeActivity("0");
                     setIgActivityTags(m_igActivity);
                     setIgActivityTime(m_igActivity);
@@ -278,10 +287,24 @@ public class IgActivityPublishActivity extends BaseActivity implements IgActivit
         executor.doCreateIgActivity(this, activity);
     }
 
+    private void updateIgActivity(IgActivity activity) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doUpdatecomIgActivity(this, activity);
+    }
+
     @Override
     public void returnStatus(Integer iStatusCode) {
+        hideWaitingDialog();
+
         if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnUpdateIgActivitySuccess() {
+        hideWaitingDialog();
+        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_updated), Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
     @SuppressLint("ShowToast")
