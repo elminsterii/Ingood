@@ -35,6 +35,7 @@ import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
+import com.fff.ingood.logic.PersonIconGetListLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
 import com.fff.ingood.logic.PersonSaveIgActivityLogic;
@@ -57,6 +58,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
         , PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller
+        , PersonIconGetListLogic.PersonGetIconListLogicCaller
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
@@ -637,6 +639,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
     }
 
+    private void getPersonIconsNameByPerson(Person person) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonIconsGetList(this, person.getEmail());
+    }
+
     private void refresh() {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doGetIgActivitiesData(this, mIgActivity.getId());
@@ -670,6 +677,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
             Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_recover), Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_sent), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnPersonIconsName(List<String> lsIconsName) {
+        if(lsIconsName != null && lsIconsName.size() > 0) {
+            String strMainIcon = lsIconsName.get(0);
+        }
     }
 
     @Override

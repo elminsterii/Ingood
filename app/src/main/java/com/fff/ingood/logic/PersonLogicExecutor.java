@@ -3,6 +3,8 @@ package com.fff.ingood.logic;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 
+import java.util.List;
+
 /**
  * Created by ElminsterII on 2018/5/27.
  */
@@ -51,6 +53,17 @@ public class PersonLogicExecutor {
     public void doSaveIgActivity(PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller caller, String strEmail, String strActivityId
             , PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE svValue) {
         Logic fl = new PersonSaveIgActivityLogic(caller, strEmail, strActivityId, svValue);
+        fl.doLogic();
+    }
+
+    public void doPersonIconsGetList(PersonIconGetListLogic.PersonGetIconListLogicCaller caller, String strEmail) {
+        Logic fl = new PersonIconGetListLogic(caller, strEmail);
+        fl.doLogic();
+    }
+
+    public void doPersonIconsDelete(PersonIconDeleteLogic.PersonIconDeleteLogicCaller caller
+            , String strEmail, String strPassword, List<String> lsIconsName) {
+        Logic fl = new PersonIconDeleteLogic(caller, strEmail, strPassword, lsIconsName);
         fl.doLogic();
     }
 }
