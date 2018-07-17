@@ -87,4 +87,5 @@ public class ServerResponse {
 
     //Activity tag
     public static final String TAG_SERVER_RESPONSE_COMMON_IDS = "ids";
+    public static final String TAG_SERVER_RESPONSE_PERSON_ICONS = "icons";
 }
