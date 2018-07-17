@@ -39,12 +39,6 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_MAIN).setSystemUI(this);
     }
 
-    private void initApplication() {
-        TagManager.getInstance(this);
-        PreferenceManager.getInstance(this);
-        ServerResponse.getInstance(this);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -52,23 +46,12 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     }
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 
-    @Override
-    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
-        hideWaitingDialog();
-
-        FlowManager.getInstance().setCurFlow(flow);
-
-        if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
-            if(clsFlow != null
-                    && !clsFlow.isInstance(MainActivity.class)) {
-                mActivity.startActivity(new Intent(this, clsFlow));
-            }
-        } else {
-            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
-        }
+    private void initApplication() {
+        TagManager.getInstance(this);
+        PreferenceManager.getInstance(this);
+        ServerResponse.getInstance(this);
     }
 
     private void startStartupAnimation() {
@@ -117,5 +100,19 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         if(mWaitingDialog.getDialog() != null
                 && mWaitingDialog.getDialog().isShowing())
             mWaitingDialog.dismiss();
+    }
+
+    @Override
+    public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
+        hideWaitingDialog();
+
+        FlowManager.getInstance().setCurFlow(flow);
+
+        if(!iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT))
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+
+        if(clsFlow != null
+                && !clsFlow.isInstance(MainActivity.class))
+            mActivity.startActivity(new Intent(this, clsFlow));
     }
 }
