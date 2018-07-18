@@ -36,6 +36,7 @@ import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
+import com.fff.ingood.logic.PersonIconComboLogic_IgActivityPublisherIconDownload;
 import com.fff.ingood.logic.PersonIconDownloadLogic;
 import com.fff.ingood.logic.PersonIconGetListLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
@@ -50,6 +51,7 @@ import com.fff.ingood.ui.CommentPublishDialog;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.WarningDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
@@ -67,11 +69,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
         , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
         , CommentQueryLogic.CommentQueryLogicCaller
-        , CommentCreateLogic.CommentCreateLogicCaller {
+        , CommentCreateLogic.CommentCreateLogicCaller, PersonIconComboLogic_IgActivityPublisherIconDownload.IgActivityPublisherIconDownloadLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
-    private ImageView mImageViewIgActivityMain;
     private TextView mTextViewTitle;
     private TextView mTextViewDate;
     private TextView mTextViewLocation;
@@ -93,7 +94,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private Button mBtnRightBottom;
 
     private IgActivity mIgActivity;
+    private ImageView mImageViewIgActivityMain;
+
     private Person mPublisher;
+    private ImageView mImageViewPublisherIcon;
+
+    private List<Person> m_lsAttendees;
+    private List<ImageView> m_lsImageViewAttendeeIcons;
+
+    private List<Comment> m_lsComments;
+    private List<ImageView> m_lsImageViewCommentIcons;
 
     private int mTagBarWidth;
     private boolean m_bIsGetTagBarWidth = false;
@@ -154,6 +164,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
     protected void initData() {
         if(mIgActivity == null)
             return;
+
+        setUiPublisherDefaultIcon();
+        setUiIgActivityDefaultImage();
 
         refreshUIByIgActivity(mIgActivity);
 
@@ -329,7 +342,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(m_bIsGetTagBarWidth)
             setUiTagsByIgActivity(mIgActivity);
 
-        setUiIgActivityImageByIgActivity(activity);
         setUiAttentionByIgActivity(activity);
         setUiDeemInfoByIgActivity(activity);
         setUiDeemPeopleByIgActivity(activity);
@@ -357,10 +369,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         return layout;
     }
 
-    private void setUiIgActivityImageByIgActivity(IgActivity activity) {
-        mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
-    }
-
     private void getPublisherInfoByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
@@ -371,20 +379,37 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doPersonQuery(this, strPublisherEmail, true);
     }
 
-    private void setUiPublisherIconByPerson(Bitmap bmPersonIcon) {
-        ImageView imageViewIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
-
-        if(bmPersonIcon != null)
-            imageViewIcon.setImageBitmap(bmPersonIcon);
-        else
-            imageViewIcon.setImageResource(R.drawable.sample_activity);
+    private void setUiIgActivityDefaultImage() {
+        mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
-    private void setAttendeesIconByPerson(Person person) {
+    private void setUiPublisherDefaultIcon() {
+        mImageViewPublisherIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
+        mImageViewPublisherIcon.setImageResource(R.drawable.sample_activity);
+    }
+
+    private void downloadIcon_IgActivityPublisher(Person igActivityPublisher) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doIgActivityPublisherIconDownload(this, igActivityPublisher.getEmail());
+    }
+
+    private void setUiAttendeesDefaultIcons(int iAttention) {
+        mLayoutAttendeesIcons.removeAllViews();
+
+        if(m_lsImageViewAttendeeIcons == null)
+            m_lsImageViewAttendeeIcons = new ArrayList<>();
+        m_lsImageViewAttendeeIcons.clear();
+
+        for(int i=0; i<iAttention; i++)
+            setAttendeesDefaultIcons();
+    }
+
+    private void setAttendeesDefaultIcons() {
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") FrameLayout layout = (FrameLayout)inflater.inflate(R.layout.layout_person_thumbnail, null, false);
         ImageView imageViewIcon = (ImageView)layout.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.sample_activity);
+        m_lsImageViewAttendeeIcons.add(imageViewIcon);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_icons_attendees_ig_activity));
@@ -408,10 +433,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewAttention.setText(strAttention);
 
-        mLayoutAttendeesIcons.removeAllViews();
-
-        for(int i=0; i<iAttention; i++)
-            setAttendeesIconByPerson(mPublisher);
+        setUiAttendeesDefaultIcons(iAttention);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -519,6 +541,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.sample_activity);
+        m_lsImageViewCommentIcons.add(imageViewIcon);
 
         textViewCommentPublisherName.setText(comment.getDisplayName());
         textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
@@ -673,6 +696,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             setUiBottomButtons();
             
             getPersonIconsNameByPerson(mPublisher);
+            downloadIcon_IgActivityPublisher(mPublisher);
         }
     }
 
@@ -702,8 +726,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnPersonIcon(Bitmap bmPersonIcon) {
+
+    }
+
+    @Override
+    public void returnIgActivityPublisherIcon(Bitmap bmPersonIcon) {
         if(bmPersonIcon != null)
-            setUiPublisherIconByPerson(bmPersonIcon);
+            mImageViewPublisherIcon.setImageBitmap(bmPersonIcon);
     }
 
     @Override
@@ -739,10 +768,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnComments(List<Comment> lsComments) {
-        if(lsComments != null && lsComments.size() > 0) {
+        m_lsComments = lsComments;
+
+        if(m_lsComments != null && m_lsComments.size() > 0) {
             mLayoutComments.removeAllViews();
 
-            for (Comment comment : lsComments)
+            if(m_lsImageViewCommentIcons == null)
+                m_lsImageViewCommentIcons = new ArrayList<>();
+            m_lsImageViewCommentIcons.clear();
+
+            for (Comment comment : m_lsComments)
                 addCommentInLayout(comment);
         }
     }
