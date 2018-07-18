@@ -14,9 +14,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonLogoutTask extends HttpPostAccessTask<Person, Integer, Void> {
+public class PersonLogoutTask extends HttpRequestTask<Person, Integer, Void> {
 
-    public PersonLogoutTask(AsyncResponder<Integer, Void> responder) {
+    public PersonLogoutTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

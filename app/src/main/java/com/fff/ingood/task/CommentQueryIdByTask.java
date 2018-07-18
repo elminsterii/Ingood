@@ -10,9 +10,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CommentQueryIdByTask extends HttpPostAccessTask<Comment, Integer, String> {
+public class CommentQueryIdByTask extends HttpRequestTask<Comment, Integer, String> {
 
-    public CommentQueryIdByTask(AsyncResponder<Integer, String> responder) {
+    public CommentQueryIdByTask(AsyncHttpRequestResponder<Integer, String> responder) {
         super(responder);
     }
 

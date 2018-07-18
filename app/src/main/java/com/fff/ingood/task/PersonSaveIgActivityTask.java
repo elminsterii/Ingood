@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonSaveIgActivityTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
+public class PersonSaveIgActivityTask extends HttpRequestTask<JsonObject, Integer, Void> {
 
-    public PersonSaveIgActivityTask(AsyncResponder<Integer, Void> responder) {
+    public PersonSaveIgActivityTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

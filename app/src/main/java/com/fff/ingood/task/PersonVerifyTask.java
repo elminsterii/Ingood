@@ -14,9 +14,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonVerifyTask extends HttpPostAccessTask<Person, Integer, String> {
+public class PersonVerifyTask extends HttpRequestTask<Person, Integer, String> {
 
-    public PersonVerifyTask(AsyncResponder<Integer, String> responder) {
+    public PersonVerifyTask(AsyncHttpRequestResponder<Integer, String> responder) {
         super(responder);
     }
 

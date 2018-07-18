@@ -11,9 +11,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-public class CommentQueryTask extends HttpPostAccessTask<JsonObject, Integer, List<Comment>> {
+public class CommentQueryTask extends HttpRequestTask<JsonObject, Integer, List<Comment>> {
 
-    public CommentQueryTask(AsyncResponder<Integer, List<Comment>> responder) {
+    public CommentQueryTask(AsyncHttpRequestResponder<Integer, List<Comment>> responder) {
         super(responder);
     }
 

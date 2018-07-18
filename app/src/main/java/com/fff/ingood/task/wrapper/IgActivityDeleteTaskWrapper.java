@@ -1,6 +1,6 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.IgActivityDeleteTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -23,7 +23,7 @@ public class IgActivityDeleteTaskWrapper {
 
     public IgActivityDeleteTaskWrapper(IgActivityDeleteTaskWrapperCallback cb) {
         mCb = cb;
-        task = new IgActivityDeleteTask(new AsyncResponder<Integer, Void>() {
+        task = new IgActivityDeleteTask(new AsyncHttpRequestResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

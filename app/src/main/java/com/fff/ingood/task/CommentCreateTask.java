@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CommentCreateTask extends HttpPostAccessTask<JsonObject, Integer, String> {
+public class CommentCreateTask extends HttpRequestTask<JsonObject, Integer, String> {
 
-    public CommentCreateTask(AsyncResponder<Integer, String> responder) {
+    public CommentCreateTask(AsyncHttpRequestResponder<Integer, String> responder) {
         super(responder);
     }
 

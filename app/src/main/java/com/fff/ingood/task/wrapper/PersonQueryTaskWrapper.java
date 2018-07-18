@@ -1,7 +1,7 @@
 package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.PersonQueryTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -29,7 +29,7 @@ public class PersonQueryTaskWrapper {
 
     public PersonQueryTaskWrapper(PersonQueryTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonQueryTask(new AsyncResponder<Integer, List<Person>>() {
+        task = new PersonQueryTask(new AsyncHttpRequestResponder<Integer, List<Person>>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

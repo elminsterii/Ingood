@@ -15,9 +15,9 @@ import java.util.List;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonQueryTask extends HttpPostAccessTask<JsonObject, Integer, List<Person>> {
+public class PersonQueryTask extends HttpRequestTask<JsonObject, Integer, List<Person>> {
 
-    public PersonQueryTask(AsyncResponder<Integer, List<Person>> responder) {
+    public PersonQueryTask(AsyncHttpRequestResponder<Integer, List<Person>> responder) {
         super(responder);
     }
 

@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class IgActivityDeleteTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
+public class IgActivityDeleteTask extends HttpRequestTask<JsonObject, Integer, Void> {
 
-    public IgActivityDeleteTask(AsyncResponder<Integer, Void> responder) {
+    public IgActivityDeleteTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

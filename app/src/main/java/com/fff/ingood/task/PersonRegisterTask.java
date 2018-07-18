@@ -14,9 +14,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonRegisterTask extends HttpPostAccessTask<Person, Integer, Void> {
+public class PersonRegisterTask extends HttpRequestTask<Person, Integer, Void> {
 
-    public PersonRegisterTask(AsyncResponder<Integer, Void> responder) {
+    public PersonRegisterTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

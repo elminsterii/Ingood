@@ -7,11 +7,11 @@ import android.os.AsyncTask;
  */
 
 
-public abstract class HttpPostAccessTask<VIN, VOUT_STATUS, VOUT_DATA> extends AsyncTask<VIN, Void, String> {
+public abstract class HttpRequestTask<VIN, VOUT_STATUS, VOUT_DATA> extends AsyncTask<VIN, Void, String> {
 
-    private AsyncResponder<VOUT_STATUS, VOUT_DATA> mResponder;
+    private AsyncHttpRequestResponder<VOUT_STATUS, VOUT_DATA> mResponder;
 
-    HttpPostAccessTask(AsyncResponder<VOUT_STATUS, VOUT_DATA> responder) {
+    HttpRequestTask(AsyncHttpRequestResponder<VOUT_STATUS, VOUT_DATA> responder) {
         mResponder = responder;
     }
 

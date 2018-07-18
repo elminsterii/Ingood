@@ -78,7 +78,7 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_JSON_WRONG_INT = 6;
     private static final Integer STATUS_CODE_FAIL_INVALID_DATA_INT = 7;
     private static final Integer STATUS_CODE_FAIL_IO_ERROR_INT = 8;
-    private static final Integer STATUS_CODE_FAIL_FILE_NOT_FOUND_INT = 9;
+    public static final Integer STATUS_CODE_FAIL_FILE_NOT_FOUND_INT = 9;
     public static final Integer STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT = 10;
     private static final Integer STATUS_CODE_FAIL_ALREADT_ATTEND_INT = 11;
     private static final Integer STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT = 12;

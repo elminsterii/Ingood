@@ -5,9 +5,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonIconGetListTask extends HttpPostAccessTask<String, Integer, String> {
+public class PersonIconGetListTask extends HttpRequestTask<String, Integer, String> {
 
-    public PersonIconGetListTask(AsyncResponder<Integer, String> responder) {
+    public PersonIconGetListTask(AsyncHttpRequestResponder<Integer, String> responder) {
         super(responder);
     }
 
@@ -23,7 +23,6 @@ public class PersonIconGetListTask extends HttpPostAccessTask<String, Integer, S
             connection.setRequestProperty("Accept", "application/json");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
-            connection.setDoInput(true);
             connection.setUseCaches(false);
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));

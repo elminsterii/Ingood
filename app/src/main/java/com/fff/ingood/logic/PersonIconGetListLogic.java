@@ -12,15 +12,15 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
  */
 public class PersonIconGetListLogic extends Logic implements PersonIconGetListTaskWrapper.PersonIconGetListTaskWrapperCallback {
 
-    public interface PersonGetIconListLogicCaller extends LogicCaller {
+    public interface PersonIconGetListLogicCaller extends LogicCaller {
         void returnPersonIconsName(List<String> lsIconsName);
         void returnStatus(Integer iStatusCode);
     }
 
-    private PersonGetIconListLogicCaller mCaller;
+    private PersonIconGetListLogicCaller mCaller;
     private String m_strEmail;
 
-    PersonIconGetListLogic(PersonGetIconListLogicCaller caller, String strEmail) {
+    PersonIconGetListLogic(PersonIconGetListLogicCaller caller, String strEmail) {
         super(caller);
         mCaller = caller;
         m_strEmail = strEmail;
@@ -34,11 +34,9 @@ public class PersonIconGetListLogic extends Logic implements PersonIconGetListTa
 
     @Override
     public void onGetIconListSuccess(String strIconsName) {
-        if(StringTool.checkStringNotNull(strIconsName)) {
-            List<String> lsIconsName = StringTool.arrayStringToListString(strIconsName.split(","));
-            mCaller.returnPersonIconsName(lsIconsName);
-            mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
-        }
+        List<String> lsIconsName = StringTool.arrayStringToListString(strIconsName.split(","));
+        mCaller.returnPersonIconsName(lsIconsName);
+        mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 
     @Override

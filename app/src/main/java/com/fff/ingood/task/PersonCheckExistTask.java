@@ -14,9 +14,9 @@ import java.net.URL;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public class PersonCheckExistTask extends HttpPostAccessTask<Person, Integer, Void> {
+public class PersonCheckExistTask extends HttpRequestTask<Person, Integer, Void> {
 
-    public PersonCheckExistTask(AsyncResponder<Integer, Void> responder) {
+    public PersonCheckExistTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

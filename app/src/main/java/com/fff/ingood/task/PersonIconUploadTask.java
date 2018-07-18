@@ -1,7 +1,8 @@
 package com.fff.ingood.task;
 
-import com.fff.ingood.data.IgActivity;
-import com.google.gson.JsonObject;
+import android.graphics.Bitmap;
+
+import com.fff.ingood.tools.ImageHelper;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -9,33 +10,35 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
-public class IgActivityQueryTask extends HttpRequestTask<JsonObject, Integer, List<IgActivity>> {
+public class PersonIconUploadTask extends HttpStreamTask<String, Integer, String> {
 
-    public IgActivityQueryTask(AsyncHttpRequestResponder<Integer, List<IgActivity>> responder) {
+    private Bitmap m_bmUpload;
+
+    public PersonIconUploadTask(AsyncHttpStreamResponder<Integer, String> responder, Bitmap bmUpload) {
         super(responder);
+        m_bmUpload = bmUpload;
     }
 
     @Override
-    protected String access(JsonObject jsonObj) {
+    protected String access(String strEmailAndIcon) {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_ACTIVITY_QUERY));
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ICON_ACCESS) + "/" + strEmailAndIcon);
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
-            connection.setDoOutput(true);
             connection.setUseCaches(false);
+            connection.setDoOutput(true);
 
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
 
-            writer.write(jsonObj.toString().getBytes());
+            writer.write(ImageHelper.bitmapToByteArray(m_bmUpload));
             writer.flush();
             writer.close();
             os.close();

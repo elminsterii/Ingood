@@ -10,9 +10,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class IgActivityUpdateTask extends HttpPostAccessTask<IgActivity, Integer, Void> {
+public class IgActivityUpdateTask extends HttpRequestTask<IgActivity, Integer, Void> {
 
-    public IgActivityUpdateTask(AsyncResponder<Integer, Void> responder) {
+    public IgActivityUpdateTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

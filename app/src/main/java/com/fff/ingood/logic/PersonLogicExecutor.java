@@ -56,7 +56,7 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
-    public void doPersonIconsGetList(PersonIconGetListLogic.PersonGetIconListLogicCaller caller, String strEmail) {
+    public void doPersonIconsGetList(PersonIconGetListLogic.PersonIconGetListLogicCaller caller, String strEmail) {
         Logic fl = new PersonIconGetListLogic(caller, strEmail);
         fl.doLogic();
     }
@@ -64,6 +64,11 @@ public class PersonLogicExecutor {
     public void doPersonIconsDelete(PersonIconDeleteLogic.PersonIconDeleteLogicCaller caller
             , String strEmail, String strPassword, List<String> lsIconsName) {
         Logic fl = new PersonIconDeleteLogic(caller, strEmail, strPassword, lsIconsName);
+        fl.doLogic();
+    }
+
+    public void doPersonIconDownload(PersonIconDownloadLogic.PersonIconDownloadLogicCaller caller, String strIconName) {
+        Logic fl = new PersonIconDownloadLogic(caller, strIconName);
         fl.doLogic();
     }
 }

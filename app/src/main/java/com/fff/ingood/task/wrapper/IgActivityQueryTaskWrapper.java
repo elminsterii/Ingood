@@ -1,7 +1,7 @@
 package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.IgActivityQueryTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -30,7 +30,7 @@ public class IgActivityQueryTaskWrapper {
 
     public IgActivityQueryTaskWrapper(IgActivityQueryTaskWrapperCallback cb) {
         mCb = cb;
-        task = new IgActivityQueryTask(new AsyncResponder<Integer, List<IgActivity>>() {
+        task = new IgActivityQueryTask(new AsyncHttpRequestResponder<Integer, List<IgActivity>>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

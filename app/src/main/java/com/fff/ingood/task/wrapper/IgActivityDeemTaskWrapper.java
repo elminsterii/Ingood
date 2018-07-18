@@ -1,6 +1,6 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.IgActivityDeemTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -25,7 +25,7 @@ public class IgActivityDeemTaskWrapper {
 
     public IgActivityDeemTaskWrapper(IgActivityDeemTaskWrapperCallback cb) {
         mCb = cb;
-        task = new IgActivityDeemTask(new AsyncResponder<Integer, Void>() {
+        task = new IgActivityDeemTask(new AsyncHttpRequestResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

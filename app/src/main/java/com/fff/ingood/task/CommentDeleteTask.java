@@ -10,9 +10,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CommentDeleteTask extends HttpPostAccessTask<Comment, Integer, Void> {
+public class CommentDeleteTask extends HttpRequestTask<Comment, Integer, Void> {
 
-    public CommentDeleteTask(AsyncResponder<Integer, Void> responder) {
+    public CommentDeleteTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

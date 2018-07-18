@@ -1,7 +1,7 @@
 package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Comment;
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.CommentUpdateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -23,7 +23,7 @@ public class CommentUpdateTaskWrapper {
 
     public CommentUpdateTaskWrapper(CommentUpdateTaskWrapperCallback cb) {
         mCb = cb;
-        task = new CommentUpdateTask(new AsyncResponder<Integer, Void>() {
+        task = new CommentUpdateTask(new AsyncHttpRequestResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

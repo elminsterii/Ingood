@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 
@@ -100,5 +101,12 @@ public class ImageHelper {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public String bitmapToBase64(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 }

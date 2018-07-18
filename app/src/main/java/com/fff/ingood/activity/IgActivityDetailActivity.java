@@ -3,6 +3,7 @@ package com.fff.ingood.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
+import com.fff.ingood.logic.PersonIconDownloadLogic;
 import com.fff.ingood.logic.PersonIconGetListLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
@@ -58,7 +60,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
         , PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller
-        , PersonIconGetListLogic.PersonGetIconListLogicCaller
+        , PersonIconGetListLogic.PersonIconGetListLogicCaller
+        , PersonIconDownloadLogic.PersonIconDownloadLogicCaller
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
@@ -368,9 +371,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doPersonQuery(this, strPublisherEmail, true);
     }
 
-    private void setUiPublisherIconByPerson(Person person) {
+    private void setUiPublisherIconByPerson(Bitmap bmPersonIcon) {
         ImageView imageViewIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
-        imageViewIcon.setImageResource(R.drawable.sample_activity);
+
+        if(bmPersonIcon != null)
+            imageViewIcon.setImageBitmap(bmPersonIcon);
+        else
+            imageViewIcon.setImageResource(R.drawable.sample_activity);
     }
 
     private void setAttendeesIconByPerson(Person person) {
@@ -644,6 +651,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doPersonIconsGetList(this, person.getEmail());
     }
 
+    private void getPersonIcon(String strIconName) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonIconDownload(this, strIconName);
+    }
+
     private void refresh() {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doGetIgActivitiesData(this, mIgActivity.getId());
@@ -657,9 +669,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
             mPublisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(mPublisher.getName());
 
-            setUiPublisherIconByPerson(mPublisher);
             setUiSaveIgActivityByPerson(mPublisher);
             setUiBottomButtons();
+            
+            getPersonIconsNameByPerson(mPublisher);
         }
     }
 
@@ -682,8 +695,15 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     public void returnPersonIconsName(List<String> lsIconsName) {
         if(lsIconsName != null && lsIconsName.size() > 0) {
-            String strMainIcon = lsIconsName.get(0);
+            String strMainIconName = lsIconsName.get(0);
+            getPersonIcon(strMainIconName);
         }
+    }
+
+    @Override
+    public void returnPersonIcon(Bitmap bmPersonIcon) {
+        if(bmPersonIcon != null)
+            setUiPublisherIconByPerson(bmPersonIcon);
     }
 
     @Override

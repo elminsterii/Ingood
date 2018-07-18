@@ -10,9 +10,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CommentUpdateTask extends HttpPostAccessTask<Comment, Integer, Void> {
+public class CommentUpdateTask extends HttpRequestTask<Comment, Integer, Void> {
 
-    public CommentUpdateTask(AsyncResponder<Integer, Void> responder) {
+    public CommentUpdateTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 

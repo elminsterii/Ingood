@@ -1,7 +1,7 @@
 package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.IgActivity;
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.IgActivityUpdateTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -23,7 +23,7 @@ public class IgActivityUpdateTaskWrapper {
 
     public IgActivityUpdateTaskWrapper(IgActivityUpdateTaskWrapperCallback cb) {
         mCb = cb;
-        task = new IgActivityUpdateTask(new AsyncResponder<Integer, Void>() {
+        task = new IgActivityUpdateTask(new AsyncHttpRequestResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

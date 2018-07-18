@@ -4,11 +4,10 @@ package com.fff.ingood.task;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public abstract class AsyncResponder<VOUT_STATUS, VOUT_DATA> {
+public abstract class AsyncHttpStreamResponder<VOUT_STATUS, VOUT_DATA> {
     private VOUT_STATUS mStatus = null;
     private VOUT_DATA mData = null;
 
-    public abstract boolean parseResponse(String strJsonResponse);
     public abstract void onSuccess(VOUT_DATA data);
     public abstract void onFailure(VOUT_STATUS status);
 

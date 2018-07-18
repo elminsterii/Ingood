@@ -1,6 +1,6 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.task.AsyncResponder;
+import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.PersonIconDeleteTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -25,7 +25,7 @@ public class PersonIconDeleteTaskWrapper {
 
     public PersonIconDeleteTaskWrapper(PersonIconDeleteTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonIconDeleteTask(new AsyncResponder<Integer, Void>() {
+        task = new PersonIconDeleteTask(new AsyncHttpRequestResponder<Integer, Void>() {
             @Override
             public boolean parseResponse(String strJsonResponse) {
                 if(!StringTool.checkStringNotNull(strJsonResponse)) {

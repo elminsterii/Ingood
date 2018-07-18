@@ -9,9 +9,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonIconDeleteTask extends HttpPostAccessTask<JsonObject, Integer, Void> {
+public class PersonIconDeleteTask extends HttpRequestTask<JsonObject, Integer, Void> {
 
-    public PersonIconDeleteTask(AsyncResponder<Integer, Void> responder) {
+    public PersonIconDeleteTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 
@@ -23,12 +23,10 @@ public class PersonIconDeleteTask extends HttpPostAccessTask<JsonObject, Integer
             URL url = new URL(String.valueOf(HttpProxy.HTTP_POST_API_PERSON_ICON_DELETE));
 
             connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             connection.setRequestProperty("Accept", "application/json");
             connection.setConnectTimeout(HttpProxy.HTTP_POST_TIMEOUT*1000);
             connection.setReadTimeout(10000);
-            connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
 
