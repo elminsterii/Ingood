@@ -12,22 +12,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
+
 import com.fff.ingood.data.IgActivity;
+
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
-import com.fff.ingood.task.wrapper.IgActivityCreateTaskWrapper;
+
 import com.fff.ingood.task.wrapper.IgActivityImageGetListTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityQueryIdByTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonIconDeleteTaskWrapper;
-import com.google.gson.JsonObject;
+
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
-import static com.fff.ingood.global.ServerResponse.TAG_ACTIVITY_ID;
+
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 public class Test extends BaseActivity implements IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback, IgActivityQueryIdByTaskWrapper.IgActivityQueryIdByTaskWrapperCallback {
+
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
@@ -37,8 +40,9 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
     private ImageButton mImageButton_PwdEye;
     private Boolean mIsPwdEyeCheck = true;
     private Test mActivity;
-    private  IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback cb =  this;
-    private  IgActivityQueryIdByTaskWrapper.IgActivityQueryIdByTaskWrapperCallback cb1 =  this;
+
+    private IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback cb = this;
+    private IgActivityQueryIdByTaskWrapper.IgActivityQueryIdByTaskWrapperCallback cb1 = this;
 
 
     @Override
@@ -48,7 +52,7 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
     }
 
     @Override
-    protected  void onResume() {
+    protected void onResume() {
         super.onResume();
     }
 
@@ -64,7 +68,7 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
     }
 
     @Override
-    protected void initView(){
+    protected void initView() {
         mEditText_Account = findViewById(R.id.edit_account);
         mEditText_Password = findViewById(R.id.edit_pwd);
         mButton_SignIn = findViewById(R.id.btnLogin);
@@ -74,17 +78,18 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
     }
 
     @Override
-    protected void initData(){
+    protected void initData() {
         mTextViewTitle.setText(R.string.sign_in);
     }
 
     @Override
-    protected void initListener(){
+    protected void initListener() {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showWaitingDialog(LoginActivity.class.getName());
-                String strIds=null;
+
+                String strIds = null;
 
                 IgActivityQueryIdByTaskWrapper igQueryid = new IgActivityQueryIdByTaskWrapper(cb1);
                 IgActivity igactiv = new IgActivity();
@@ -96,13 +101,14 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
                 igactiv.setId(strIds);
                 task.execute(igactiv);
                 igQueryid.execute(igactiv);
+
             }
         });
 
         mImageButton_PwdEye.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mIsPwdEyeCheck) {
+                if (mIsPwdEyeCheck) {
                     mIsPwdEyeCheck = false;
                     mImageButton_PwdEye.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
                     mEditText_Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
@@ -135,8 +141,8 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
 
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
-            if(clsFlow != null
+        if (iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
+            if (clsFlow != null
                     && !clsFlow.isInstance(LoginActivity.class)) {
                 mActivity.startActivity(new Intent(this, clsFlow));
                 mActivity.finish();
@@ -161,9 +167,7 @@ public class Test extends BaseActivity implements IgActivityImageGetListTaskWrap
     public void onQueryIgActivitiesIdsSuccess(String strIds) {
 
     }
-
-    @Override
-    public void onQueryIgActivitiesIdsFailure(Integer iStatusCode) {
-
-    }
 }
+
+
+
