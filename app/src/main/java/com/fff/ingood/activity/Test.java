@@ -12,16 +12,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.task.wrapper.IgActivityCreateTaskWrapper;
+import com.fff.ingood.task.wrapper.IgActivityImageGetListTaskWrapper;
+import com.fff.ingood.task.wrapper.IgActivityQueryIdByTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonIconDeleteTaskWrapper;
+import com.google.gson.JsonObject;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.TAG_ACTIVITY_ID;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class Test extends BaseActivity implements PersonIconDeleteTaskWrapper.PersonIconDeleteTaskWrapperCallback {
+public class Test extends BaseActivity implements IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback, IgActivityQueryIdByTaskWrapper.IgActivityQueryIdByTaskWrapperCallback {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
@@ -31,7 +37,9 @@ public class Test extends BaseActivity implements PersonIconDeleteTaskWrapper.Pe
     private ImageButton mImageButton_PwdEye;
     private Boolean mIsPwdEyeCheck = true;
     private Test mActivity;
-    private PersonIconDeleteTaskWrapper.PersonIconDeleteTaskWrapperCallback cb=  this;
+    private  IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback cb =  this;
+    private  IgActivityQueryIdByTaskWrapper.IgActivityQueryIdByTaskWrapperCallback cb1 =  this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +84,18 @@ public class Test extends BaseActivity implements PersonIconDeleteTaskWrapper.Pe
             @Override
             public void onClick(View v) {
                 showWaitingDialog(LoginActivity.class.getName());
+                String strIds=null;
 
-                Person person = new Person();
-                person.setEmail(mEditText_Account.getText().toString());
-                person.setPassword(mEditText_Password.getText().toString());
+                IgActivityQueryIdByTaskWrapper igQueryid = new IgActivityQueryIdByTaskWrapper(cb1);
+                IgActivity igactiv = new IgActivity();
+                igactiv.setPublisherEmail(mEditText_Account.getText().toString());
+                igactiv.setTags(mEditText_Password.getText().toString());
 
-                PersonIconDeleteTaskWrapper task = new PersonIconDeleteTaskWrapper(cb);
-                task.execute("jsonObject");
+                IgActivityImageGetListTaskWrapper task = new IgActivityImageGetListTaskWrapper(cb);
+                cb1.onQueryIgActivitiesIdsSuccess(strIds);
+                igactiv.setId(strIds);
+                task.execute(igactiv);
+                igQueryid.execute(igactiv);
             }
         });
 
@@ -133,13 +146,24 @@ public class Test extends BaseActivity implements PersonIconDeleteTaskWrapper.Pe
         }
     }
 
+
     @Override
-    public void onDeleteIconSuccess() {
+    public void onGetIgActivitiesImageListSuccess(String s) {
 
     }
 
     @Override
-    public void onDeleteIconFailure(Integer iStatusCode) {
+    public void onGetIgActivitiesImageListFailure(Integer iStatusCode) {
+
+    }
+
+    @Override
+    public void onQueryIgActivitiesIdsSuccess(String strIds) {
+
+    }
+
+    @Override
+    public void onQueryIgActivitiesIdsFailure(Integer iStatusCode) {
 
     }
 }
