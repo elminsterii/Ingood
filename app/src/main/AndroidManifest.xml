@@ -19,7 +19,7 @@
             android:stopWithTask="false" />
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.Test"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
