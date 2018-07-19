@@ -18,18 +18,18 @@ public class PersonIconGetListLogic extends Logic implements PersonIconGetListTa
     }
 
     private PersonIconGetListLogicCaller mCaller;
-    private String m_strEmail;
+    private String m_strEmailOrId;
 
-    PersonIconGetListLogic(PersonIconGetListLogicCaller caller, String strEmail) {
+    PersonIconGetListLogic(PersonIconGetListLogicCaller caller, String strEmailOrId) {
         super(caller);
         mCaller = caller;
-        m_strEmail = strEmail;
+        m_strEmailOrId = strEmailOrId;
     }
 
     @Override
     protected void doLogic() {
         PersonIconGetListTaskWrapper task = new PersonIconGetListTaskWrapper(this);
-        task.execute(m_strEmail);
+        task.execute(m_strEmailOrId);
     }
 
     @Override

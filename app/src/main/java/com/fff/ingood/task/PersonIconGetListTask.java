@@ -12,11 +12,11 @@ public class PersonIconGetListTask extends HttpRequestTask<String, Integer, Stri
     }
 
     @Override
-    protected String access(String strEmail) {
+    protected String access(String strEmailOrId) {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ICON_ACCESS) + "/" + strEmail);
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ICON_ACCESS) + "/" + strEmailOrId);
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");

@@ -56,8 +56,8 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
-    public void doPersonIconsGetList(PersonIconGetListLogic.PersonIconGetListLogicCaller caller, String strEmail) {
-        Logic fl = new PersonIconGetListLogic(caller, strEmail);
+    public void doPersonIconsGetList(PersonIconGetListLogic.PersonIconGetListLogicCaller caller, String strEmailOrId) {
+        Logic fl = new PersonIconGetListLogic(caller, strEmailOrId);
         fl.doLogic();
     }
 
@@ -72,8 +72,8 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
-    public void doIgActivityPublisherIconDownload(PersonIconComboLogic_IgActivityPublisherIconDownload.IgActivityPublisherIconDownloadLogicCaller caller, String strEmail) {
-        Logic fl = new PersonIconComboLogic_IgActivityPublisherIconDownload(caller, strEmail);
+    public void doPersonMainIconDownload(PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller caller, String strEmail) {
+        Logic fl = new PersonIconComboLogic_PersonMainIconDownload(caller, strEmail);
         fl.doLogic();
     }
 }

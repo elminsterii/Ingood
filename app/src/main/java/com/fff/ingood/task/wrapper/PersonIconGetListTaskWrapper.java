@@ -59,7 +59,7 @@ public class PersonIconGetListTaskWrapper {
         });
     }
 
-    public void execute(String strEmail) {
-        task.execute(strEmail);
+    public void execute(String strEmailOrId) {
+        task.execute(strEmailOrId);
     }
 }
