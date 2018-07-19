@@ -50,7 +50,7 @@ public class PersonIconComboLogic_PersonMainIconDownload extends Logic implement
 
     @Override
     public void onPersonIconDownloadFailure(Integer iStatusCode) {
-        mCaller.returnStatus(iStatusCode);
+        //do nothing
     }
 
     @Override
@@ -59,13 +59,11 @@ public class PersonIconComboLogic_PersonMainIconDownload extends Logic implement
         if(lsIconsName.size() > 0) {
             PersonIconDownloadTaskWrapper task = new PersonIconDownloadTaskWrapper(this);
             task.execute(lsIconsName.get(0));
-        } else {
-            mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);
         }
     }
 
     @Override
     public void onGetIconListFailure(Integer iStatusCode) {
-        mCaller.returnStatus(iStatusCode);
+        //do nothing
     }
 }

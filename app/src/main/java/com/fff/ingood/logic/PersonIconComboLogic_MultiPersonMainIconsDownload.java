@@ -2,7 +2,8 @@ package com.fff.ingood.logic;
 
 import android.graphics.Bitmap;
 
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
+import com.fff.ingood.tools.StringTool;
+
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
@@ -25,20 +26,25 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
     PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds) {
         super(caller);
         mCaller = caller;
-        m_arrEmailsOrIds = strEmailsOrIds.split(",");
-        m_arrPersonsIcons = new Bitmap[m_arrEmailsOrIds.length];
+
+        if(StringTool.checkStringNotNull(strEmailsOrIds)) {
+            m_arrEmailsOrIds = strEmailsOrIds.split(",");
+            m_arrPersonsIcons = new Bitmap[m_arrEmailsOrIds.length];
+        }
         m_curIndex = 0;
     }
 
     @Override
     protected void doLogic() {
-        if(!queryNextPersonMainIcon())
-            mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);
+        queryNextPersonMainIcon();
     }
 
     @Override
     public void returnPersonMainIcon(Bitmap bmPersonIcon) {
-        m_arrPersonsIcons[--m_curIndex] = bmPersonIcon;
+        if(m_arrPersonsIcons == null)
+            return;
+
+        m_arrPersonsIcons[(m_curIndex-1)] = bmPersonIcon;
 
         if(!queryNextPersonMainIcon()) {
             mCaller.returnPersonMainIcons(m_arrPersonsIcons);
@@ -48,11 +54,12 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-
+        //do nothing
     }
 
     private boolean queryNextPersonMainIcon() {
-        if(m_curIndex >= m_arrEmailsOrIds.length)
+        if(m_arrEmailsOrIds == null
+                || m_curIndex >= m_arrEmailsOrIds.length)
             return false;
 
         PersonIconComboLogic_PersonMainIconDownload logic = new PersonIconComboLogic_PersonMainIconDownload(this, m_arrEmailsOrIds[m_curIndex]);

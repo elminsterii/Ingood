@@ -38,8 +38,6 @@ import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonIconComboLogic_MultiPersonMainIconsDownload;
 import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
-import com.fff.ingood.logic.PersonIconDownloadLogic;
-import com.fff.ingood.logic.PersonIconGetListLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
 import com.fff.ingood.logic.PersonSaveIgActivityLogic;
@@ -63,14 +61,14 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class IgActivityDetailActivity extends BaseActivity implements
         PersonQueryLogic.PersonQueryLogicCaller
         , PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller
-        , PersonIconGetListLogic.PersonIconGetListLogicCaller
-        , PersonIconDownloadLogic.PersonIconDownloadLogicCaller
+        , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller
+        , PersonIconComboLogic_MultiPersonMainIconsDownload.MultiPersonMainIconsDownloadLogicCaller
         , IgActivityDeemLogic.IgActivityDeemLogicCaller
         , IgActivityQueryLogic.IgActivityQueryLogicCaller
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
         , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
         , CommentQueryLogic.CommentQueryLogicCaller
-        , CommentCreateLogic.CommentCreateLogicCaller, PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller, PersonIconComboLogic_MultiPersonMainIconsDownload.MultiPersonMainIconsDownloadLogicCaller {
+        , CommentCreateLogic.CommentCreateLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
@@ -97,10 +95,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private IgActivity mIgActivity;
     private ImageView mImageViewIgActivityMain;
 
-    private Person mPublisher;
     private ImageView mImageViewPublisherIcon;
 
-    private List<Person> m_lsAttendees;
     private List<ImageView> m_lsImageViewAttendeeIcons;
 
     private List<Comment> m_lsComments;
@@ -169,11 +165,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiPublisherDefaultIcon();
         setUiIgActivityDefaultImage();
 
-        refreshUIByIgActivity(mIgActivity);
-
         showWaitingDialog(IgActivityDetailActivity.class.getName());
-        getPublisherInfoByIgActivity(mIgActivity);
-        getCommentsByIgActivity(mIgActivity);
+        getPublisherInfo();
     }
 
     @Override
@@ -341,9 +334,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewDescription.setText(activity.getDescription());
 
         if(m_bIsGetTagBarWidth)
-            setUiTagsByIgActivity(mIgActivity);
+            setUiTagsByIgActivity(activity);
 
-        setUiAttentionByIgActivity(activity);
+        setUiAttendeesWithDefaultIconByIgActivity(activity);
+        downloadIcon_IgActivityAttendees(activity);
+
         setUiDeemInfoByIgActivity(activity);
         setUiDeemPeopleByIgActivity(activity);
         setUiBottomButtons();
@@ -370,11 +365,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         return layout;
     }
 
-    private void getPublisherInfoByIgActivity(IgActivity activity) {
-        if(activity == null)
+    private void getPublisherInfo() {
+        if(mIgActivity == null)
             return;
 
-        String strPublisherEmail = activity.getPublisherEmail();
+        String strPublisherEmail = mIgActivity.getPublisherEmail();
 
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonQuery(this, strPublisherEmail, true);
@@ -424,7 +419,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mLayoutAttendeesIcons.addView(layout);
     }
 
-    private void setUiAttentionByIgActivity(IgActivity activity) {
+    private void setUiAttendeesWithDefaultIconByIgActivity(IgActivity activity) {
         if(activity == null)
             return;
 
@@ -440,7 +435,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewAttention.setText(strAttention);
 
         setUiAttendeesDefaultIcons(iAttention);
-        downloadIcon_IgActivityAttendees(mIgActivity);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -676,16 +670,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
     }
 
-    private void getPersonIconsNameByPerson(Person person) {
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonIconsGetList(this, person.getEmail());
-    }
-
-    private void getPersonIcon(String strIconName) {
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonIconDownload(this, strIconName);
-    }
-
     private void refresh() {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doGetIgActivitiesData(this, mIgActivity.getId());
@@ -696,14 +680,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
         hideWaitingDialog();
 
         if(lsPersons != null && lsPersons.size() > 0) {
-            mPublisher = lsPersons.get(0);
-            mTextViewIgPublisherName.setText(mPublisher.getName());
+            Person publisher = lsPersons.get(0);
+            mTextViewIgPublisherName.setText(publisher.getName());
 
-            setUiSaveIgActivityByPerson(mPublisher);
+            setUiSaveIgActivityByPerson(publisher);
             setUiBottomButtons();
-            
-            getPersonIconsNameByPerson(mPublisher);
-            downloadIcon_IgActivityPublisher(mPublisher);
+
+            downloadIcon_IgActivityPublisher(publisher);
         }
     }
 
@@ -721,19 +704,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
             Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_recover), Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(mActivity, getResources().getText(R.string.deem_activity_has_been_sent), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void returnPersonIconsName(List<String> lsIconsName) {
-        if(lsIconsName != null && lsIconsName.size() > 0) {
-            String strMainIconName = lsIconsName.get(0);
-            getPersonIcon(strMainIconName);
-        }
-    }
-
-    @Override
-    public void returnPersonIcon(Bitmap bmPersonIcon) {
-
     }
 
     @Override
@@ -824,6 +794,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
             refreshUIByIgActivity(mIgActivity);
+            getCommentsByIgActivity(mIgActivity);
         }
     }
 
