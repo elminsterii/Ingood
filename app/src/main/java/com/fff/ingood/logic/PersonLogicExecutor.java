@@ -76,4 +76,9 @@ public class PersonLogicExecutor {
         Logic fl = new PersonIconComboLogic_PersonMainIconDownload(caller, strEmail);
         fl.doLogic();
     }
+
+    public void doMultiPersonMainIconsDownload(PersonIconComboLogic_MultiPersonMainIconsDownload.MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds) {
+        Logic fl = new PersonIconComboLogic_MultiPersonMainIconsDownload(caller, strEmailsOrIds);
+        fl.doLogic();
+    }
 }

@@ -36,7 +36,8 @@ import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
-import com.fff.ingood.logic.PersonIconComboLogic_IgActivityPublisherIconDownload;
+import com.fff.ingood.logic.PersonIconComboLogic_MultiPersonMainIconsDownload;
+import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
 import com.fff.ingood.logic.PersonIconDownloadLogic;
 import com.fff.ingood.logic.PersonIconGetListLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
@@ -69,7 +70,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
         , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
         , CommentQueryLogic.CommentQueryLogicCaller
-        , CommentCreateLogic.CommentCreateLogicCaller, PersonIconComboLogic_IgActivityPublisherIconDownload.IgActivityPublisherIconDownloadLogicCaller {
+        , CommentCreateLogic.CommentCreateLogicCaller, PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller, PersonIconComboLogic_MultiPersonMainIconsDownload.MultiPersonMainIconsDownloadLogicCaller {
 
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
@@ -390,7 +391,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void downloadIcon_IgActivityPublisher(Person igActivityPublisher) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doIgActivityPublisherIconDownload(this, igActivityPublisher.getEmail());
+        executor.doPersonMainIconDownload(this, igActivityPublisher.getEmail());
     }
 
     private void setUiAttendeesDefaultIcons(int iAttention) {
@@ -402,6 +403,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         for(int i=0; i<iAttention; i++)
             setAttendeesDefaultIcons();
+    }
+
+    private void downloadIcon_IgActivityAttendees(IgActivity activity) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doMultiPersonMainIconsDownload(this, activity.getAttendees());
     }
 
     private void setAttendeesDefaultIcons() {
@@ -434,6 +440,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewAttention.setText(strAttention);
 
         setUiAttendeesDefaultIcons(iAttention);
+        downloadIcon_IgActivityAttendees(mIgActivity);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -730,9 +737,21 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnIgActivityPublisherIcon(Bitmap bmPersonIcon) {
+    public void returnPersonMainIcon(Bitmap bmPersonIcon) {
         if(bmPersonIcon != null)
             mImageViewPublisherIcon.setImageBitmap(bmPersonIcon);
+    }
+
+    @Override
+    public void returnPersonMainIcons(Bitmap[] arrPersonMainIcons) {
+        if(arrPersonMainIcons.length != m_lsImageViewAttendeeIcons.size())
+            return;
+
+        for(int i=0; i<arrPersonMainIcons.length; i++) {
+            Bitmap bitmap = arrPersonMainIcons[i];
+            if(bitmap != null)
+                m_lsImageViewAttendeeIcons.get(i).setImageBitmap(bitmap);
+        }
     }
 
     @Override
