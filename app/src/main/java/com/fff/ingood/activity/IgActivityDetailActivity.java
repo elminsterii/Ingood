@@ -109,6 +109,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private boolean m_bIsAttended;
     private boolean m_bIsSave;
 
+    private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ig_detail);
@@ -402,7 +404,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void downloadIcon_IgActivityAttendees(IgActivity activity) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doMultiPersonMainIconsDownload(this, activity.getAttendees());
+        executor.doMultiPersonMainIconsDownload(this, activity.getAttendees(), LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS);
     }
 
     private void setAttendeesDefaultIcons() {
@@ -713,14 +715,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnPersonMainIcons(Bitmap[] arrPersonMainIcons) {
-        if(arrPersonMainIcons.length != m_lsImageViewAttendeeIcons.size())
+    public void returnPersonMainIcons(Bitmap[] arrPersonMainIcons, String strTag) {
+        if(arrPersonMainIcons.length != m_lsImageViewAttendeeIcons.size()
+                || !StringTool.checkStringNotNull(strTag))
             return;
 
         for(int i=0; i<arrPersonMainIcons.length; i++) {
             Bitmap bitmap = arrPersonMainIcons[i];
             if(bitmap != null)
-                m_lsImageViewAttendeeIcons.get(i).setImageBitmap(bitmap);
+                if(strTag.equals(LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS))
+                    m_lsImageViewAttendeeIcons.get(i).setImageBitmap(bitmap);
         }
     }
 

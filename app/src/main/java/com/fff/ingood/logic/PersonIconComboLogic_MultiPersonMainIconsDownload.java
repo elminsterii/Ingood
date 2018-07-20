@@ -13,7 +13,7 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
         PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller{
 
     public interface MultiPersonMainIconsDownloadLogicCaller extends LogicCaller {
-        void returnPersonMainIcons(Bitmap[] arrPersonMainIcons);
+        void returnPersonMainIcons(Bitmap[] arrPersonMainIcons, String strTag);
         void returnStatus(Integer iStatusCode);
     }
 
@@ -25,6 +25,16 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
 
     PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds) {
         super(caller);
+        initialize(caller, strEmailsOrIds);
+    }
+
+    PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller
+            , String strEmailsOrIds, String strTag) {
+        super(caller, strTag);
+        initialize(caller, strEmailsOrIds);
+    }
+
+    private void initialize(MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds) {
         mCaller = caller;
 
         if(StringTool.checkStringNotNull(strEmailsOrIds)) {
@@ -47,7 +57,7 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
         m_arrPersonsIcons[(m_curIndex-1)] = bmPersonIcon;
 
         if(!queryNextPersonMainIcon()) {
-            mCaller.returnPersonMainIcons(m_arrPersonsIcons);
+            mCaller.returnPersonMainIcons(m_arrPersonsIcons, getTag());
             mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
         }
     }
