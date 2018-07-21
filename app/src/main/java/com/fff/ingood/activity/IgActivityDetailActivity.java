@@ -55,6 +55,7 @@ import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -98,8 +99,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private ImageView mImageViewPublisherIcon;
 
     private List<ImageView> m_lsImageViewAttendeeIcons;
-
-    private List<Comment> m_lsComments;
     private List<ImageView> m_lsImageViewCommentIcons;
 
     private int mTagBarWidth;
@@ -110,6 +109,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private boolean m_bIsSave;
 
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
+    private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -407,6 +407,23 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doMultiPersonMainIconsDownload(this, activity.getAttendees(), LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS);
     }
 
+    private void downloadIcon_IgActivityCommentPublishers(List<Comment> lsComments) {
+        if(lsComments != null && lsComments.size() > 0) {
+            StringBuilder strBuilder = new StringBuilder();
+
+            for(Comment comment : lsComments) {
+                strBuilder.append(comment.getPublisherEmail());
+                strBuilder.append(",");
+            }
+
+            if(strBuilder.length() > 0)
+                strBuilder.deleteCharAt(strBuilder.length()-1);
+
+            PersonLogicExecutor executor = new PersonLogicExecutor();
+            executor.doMultiPersonMainIconsDownload(this, strBuilder.toString(), LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS);
+        }
+    }
+
     private void setAttendeesDefaultIcons() {
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") FrameLayout layout = (FrameLayout)inflater.inflate(R.layout.layout_person_thumbnail, null, false);
@@ -437,6 +454,29 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewAttention.setText(strAttention);
 
         setUiAttendeesDefaultIcons(iAttention);
+    }
+
+    private void addCommentInLayoutWithDefaultIcon(Comment comment) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_igactivity_comment, null, false);
+        FrameLayout frameLayout = layout.findViewById(R.id.layoutCommentPublisherThumbnail);
+        TextView textViewCommentPublisherName = layout.findViewById(R.id.textViewCommentPublisherName);
+        TextView textViewCommentPublishDate = layout.findViewById(R.id.textViewCommentPublishDate);
+        TextView textViewCommentContent = layout.findViewById(R.id.textViewCommentContent);
+
+        ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
+        imageViewIcon.setImageResource(R.drawable.sample_activity);
+        m_lsImageViewCommentIcons.add(imageViewIcon);
+
+        textViewCommentPublisherName.setText(comment.getDisplayName());
+        textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
+        textViewCommentContent.setText(comment.getContent());
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_comment_comments_ig_activity));
+        layout.setLayoutParams(params);
+
+        mLayoutComments.addView(layout);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -532,29 +572,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         CommentLogicExecutor executor = new CommentLogicExecutor();
         executor.doSearchCommentsIds(this, comment);
-    }
-
-    private void addCommentInLayout(Comment comment) {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_igactivity_comment, null, false);
-        FrameLayout frameLayout = layout.findViewById(R.id.layoutCommentPublisherThumbnail);
-        TextView textViewCommentPublisherName = layout.findViewById(R.id.textViewCommentPublisherName);
-        TextView textViewCommentPublishDate = layout.findViewById(R.id.textViewCommentPublishDate);
-        TextView textViewCommentContent = layout.findViewById(R.id.textViewCommentContent);
-
-        ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
-        imageViewIcon.setImageResource(R.drawable.sample_activity);
-        m_lsImageViewCommentIcons.add(imageViewIcon);
-
-        textViewCommentPublisherName.setText(comment.getDisplayName());
-        textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
-        textViewCommentContent.setText(comment.getContent());
-
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_comment_comments_ig_activity));
-        layout.setLayoutParams(params);
-
-        mLayoutComments.addView(layout);
     }
 
     private boolean isAttended(IgActivity activity, Person person) {
@@ -716,22 +733,32 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnPersonMainIcons(Bitmap[] arrPersonMainIcons, String strTag) {
-        if(arrPersonMainIcons.length != m_lsImageViewAttendeeIcons.size()
-                || !StringTool.checkStringNotNull(strTag))
-            return;
-
-        for(int i=0; i<arrPersonMainIcons.length; i++) {
-            Bitmap bitmap = arrPersonMainIcons[i];
-            if(bitmap != null)
-                if(strTag.equals(LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS))
-                    m_lsImageViewAttendeeIcons.get(i).setImageBitmap(bitmap);
+        if(StringTool.checkStringNotNull(strTag)) {
+            if(strTag.equals(LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS)) {
+                if (arrPersonMainIcons.length == m_lsImageViewAttendeeIcons.size()) {
+                    for (int i = 0; i < arrPersonMainIcons.length; i++) {
+                        Bitmap bitmap = arrPersonMainIcons[i];
+                        if (bitmap != null)
+                            m_lsImageViewAttendeeIcons.get(i).setImageBitmap(bitmap);
+                    }
+                }
+            } else if(strTag.equals(LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS)) {
+                if (arrPersonMainIcons.length == m_lsImageViewCommentIcons.size()) {
+                    for (int i = 0; i < arrPersonMainIcons.length; i++) {
+                        Bitmap bitmap = arrPersonMainIcons[i];
+                        if (bitmap != null)
+                            m_lsImageViewCommentIcons.get(i).setImageBitmap(bitmap);
+                    }
+                }
+            }
         }
     }
 
     @Override
     public void returnStatus(Integer iStatusCode) {
         if(iStatusCode == null
-                || iStatusCode.equals(STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT))
+                || iStatusCode.equals(STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT)
+                || iStatusCode.equals(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT))
             return;
 
         hideWaitingDialog();
@@ -761,17 +788,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnComments(List<Comment> lsComments) {
-        m_lsComments = lsComments;
-
-        if(m_lsComments != null && m_lsComments.size() > 0) {
+        if(lsComments != null && lsComments.size() > 0) {
             mLayoutComments.removeAllViews();
 
             if(m_lsImageViewCommentIcons == null)
                 m_lsImageViewCommentIcons = new ArrayList<>();
             m_lsImageViewCommentIcons.clear();
 
-            for (Comment comment : m_lsComments)
-                addCommentInLayout(comment);
+            for (Comment comment : lsComments)
+                addCommentInLayoutWithDefaultIcon(comment);
+
+            downloadIcon_IgActivityCommentPublishers(lsComments);
         }
     }
 

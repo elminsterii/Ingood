@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import com.fff.ingood.tools.StringTool;
 
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
@@ -64,7 +65,8 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        //do nothing
+        queryNextPersonMainIcon();
+        mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);
     }
 
     private boolean queryNextPersonMainIcon() {
