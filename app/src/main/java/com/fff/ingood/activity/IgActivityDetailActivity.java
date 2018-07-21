@@ -71,6 +71,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , CommentQueryLogic.CommentQueryLogicCaller
         , CommentCreateLogic.CommentCreateLogicCaller {
 
+    private enum UPDATE_IGACTIVITY_UI_SECTION {
+        uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
+    }
+
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
     private TextView mTextViewTitle;
@@ -111,6 +115,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
     private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
 
+    private UPDATE_IGACTIVITY_UI_SECTION m_updateUiScetion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ig_detail);
@@ -122,7 +128,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         super.onResume();
 
         showWaitingDialog(HomeActivity.class.getName());
-        refresh();
+        refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
     }
 
     @Override
@@ -327,23 +333,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_IGDETAIL).setSystemUI(this);
     }
 
-    private void refreshUIByIgActivity(IgActivity activity) {
-        String strDate = IgActivityHelper.makeDateStringByIgActivity(activity);
-
-        mTextViewTitle.setText(activity.getName());
-        mTextViewDate.setText(strDate);
-        mTextViewLocation.setText(activity.getLocation());
-        mTextViewDescription.setText(activity.getDescription());
-
-        if(m_bIsGetTagBarWidth)
-            setUiTagsByIgActivity(activity);
-
-        setUiAttendeesWithDefaultIconByIgActivity(activity);
-        downloadIcon_IgActivityAttendees(activity);
-
-        setUiDeemInfoByIgActivity(activity);
-        setUiDeemPeopleByIgActivity(activity);
-        setUiBottomButtons();
+    private void refresh(UPDATE_IGACTIVITY_UI_SECTION updateUiSection) {
+        m_updateUiScetion = updateUiSection;
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doGetIgActivitiesData(this, mIgActivity.getId());
     }
 
     private RelativeLayout makeTagBarLayout(ViewGroup parent, Integer resIdBelowView) {
@@ -477,6 +470,18 @@ public class IgActivityDetailActivity extends BaseActivity implements
         layout.setLayoutParams(params);
 
         mLayoutComments.addView(layout);
+    }
+
+    private void setUiBasicInfoByIgActivity(IgActivity activity) {
+        String strDate = IgActivityHelper.makeDateStringByIgActivity(activity);
+
+        mTextViewTitle.setText(activity.getName());
+        mTextViewDate.setText(strDate);
+        mTextViewLocation.setText(activity.getLocation());
+        mTextViewDescription.setText(activity.getDescription());
+
+        if(m_bIsGetTagBarWidth)
+            setUiTagsByIgActivity(activity);
     }
 
     private void setUiDeemInfoByIgActivity(IgActivity activity) {
@@ -689,11 +694,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
     }
 
-    private void refresh() {
-        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-        executor.doGetIgActivitiesData(this, mIgActivity.getId());
-    }
-
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -713,8 +713,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     public void returnDeemIgActivitySuccess() {
         hideWaitingDialog();
 
-        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-        executor.doGetIgActivitiesData(this, mIgActivity.getId());
+        refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecDeem);
 
         setUiDeemInfoByEnum(mCurDeemInfo);
         PreferenceManager.getInstance().setDeemInfo(mIgActivity.getId(), mCurDeemInfo);
@@ -817,16 +816,40 @@ public class IgActivityDetailActivity extends BaseActivity implements
         else
             Toast.makeText(mActivity, getResources().getText(R.string.attend_activity_success), Toast.LENGTH_SHORT).show();
 
-        refresh();
+        refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAttendees);
     }
 
     @Override
     public void returnIgActivities(List<IgActivity> lsActivities) {
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
-            refreshUIByIgActivity(mIgActivity);
-            getCommentsByIgActivity(mIgActivity);
+
+            switch(m_updateUiScetion) {
+                case uiSecAll :
+                    setUiBasicInfoByIgActivity(mIgActivity);
+                    setUiDeemInfoByIgActivity(mIgActivity);
+                    setUiDeemPeopleByIgActivity(mIgActivity);
+                    setUiAttendeesWithDefaultIconByIgActivity(mIgActivity);
+                    downloadIcon_IgActivityAttendees(mIgActivity);
+                    getCommentsByIgActivity(mIgActivity);
+                    break;
+
+                case uiSecBasic :
+                    setUiBasicInfoByIgActivity(mIgActivity);
+                    break;
+
+                case uiSecDeem :
+                    setUiDeemInfoByIgActivity(mIgActivity);
+                    setUiDeemPeopleByIgActivity(mIgActivity);
+                    break;
+
+                case uiSecAttendees :
+                    setUiAttendeesWithDefaultIconByIgActivity(mIgActivity);
+                    downloadIcon_IgActivityAttendees(mIgActivity);
+                    break;
+            }
         }
+        setUiBottomButtons();
     }
 
     @Override

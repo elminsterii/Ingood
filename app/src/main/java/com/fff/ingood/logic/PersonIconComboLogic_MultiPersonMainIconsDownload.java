@@ -56,17 +56,16 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
             return;
 
         m_arrPersonsIcons[(m_curIndex-1)] = bmPersonIcon;
-
-        if(!queryNextPersonMainIcon()) {
-            mCaller.returnPersonMainIcons(m_arrPersonsIcons, getTag());
-            mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
-        }
     }
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        queryNextPersonMainIcon();
-        mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);
+        if(!queryNextPersonMainIcon()) {
+            mCaller.returnPersonMainIcons(m_arrPersonsIcons, getTag());
+            mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
+        } else {
+            mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);
+        }
     }
 
     private boolean queryNextPersonMainIcon() {
