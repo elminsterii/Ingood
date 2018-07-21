@@ -129,7 +129,8 @@
     <string name="server_res_11_already_attend">Fail, already attend or cancel fail?</string>
     <string name="server_res_12_verify_code_wrong">Fail, input verify code wrong</string>
     <string name="server_res_13_time_format_wrong">Fail, time format wrong</string>
-    <string name="server_res_14_unknown_error">Fail, unknown fail happen</string>
+    <string name="server_res_14_save_igactivity_wrong">Fail, save activity wrong</string>
+    <string name="server_res_99_unknown_error">Fail, unknown fail happen</string>
 
     <string-array name="user_age_list">
         <item>Age</item>

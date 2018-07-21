@@ -129,7 +129,8 @@
     <string name="server_res_11_already_attend">您已參與了此次活動</string>
     <string name="server_res_12_verify_code_wrong">驗證碼輸入錯誤</string>
     <string name="server_res_13_time_format_wrong">時間格式錯誤</string>
-    <string name="server_res_14_unknown_error">未知錯誤</string>
+    <string name="server_res_14_save_igactivity_wrong">保存活動錯誤</string>
+    <string name="server_res_99_unknown_error">未知錯誤</string>
 
     <string-array name="user_age_list">
         <item>年齡</item>
