@@ -155,10 +155,10 @@ public class Person implements Serializable {
         m_anonymous = aActivities;
     }
 
-    public String getSaveActivities(){
+    public String getSaveIgActivities(){
         return  m_saveactivities;
     }
-    public void setSaveActivities(String aActivities){
+    public void setSaveIgActivities(String aActivities){
         m_saveactivities  = aActivities;
     }
 

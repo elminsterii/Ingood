@@ -115,7 +115,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
     private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
 
-    private UPDATE_IGACTIVITY_UI_SECTION m_updateUiScetion;
+    private UPDATE_IGACTIVITY_UI_SECTION m_updateUiSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +172,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         setUiPublisherDefaultIcon();
         setUiIgActivityDefaultImage();
+        setUiSaveIgActivity();
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
         getPublisherInfo();
@@ -334,7 +335,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void refresh(UPDATE_IGACTIVITY_UI_SECTION updateUiSection) {
-        m_updateUiScetion = updateUiSection;
+        m_updateUiSection = updateUiSection;
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doGetIgActivitiesData(this, mIgActivity.getId());
     }
@@ -596,25 +597,25 @@ public class IgActivityDetailActivity extends BaseActivity implements
         return bRes;
     }
 
-    private void setUiSaveIgActivityByPerson(Person person) {
-        String strSaveActivities = person.getSaveActivities();
+    private void setUiSaveIgActivity() {
+        boolean bIsSave = false;
+        String strSaveActivities = PersonManager.getInstance().getPerson().getSaveIgActivities();
 
-        if(!StringTool.checkStringNotNull(strSaveActivities)) {
-            String[] arrSaveActivities = strSaveActivities.split(",");
-            for(String strActivityId : arrSaveActivities) {
-                if(strActivityId.equals(mIgActivity.getId()))
-                    setUiComponentSaveIgActivity(true);
-                else
-                    setUiComponentSaveIgActivity(false);
+        if(StringTool.checkStringNotNull(strSaveActivities)) {
+            String[] arrSaveIgActivitiesIds = strSaveActivities.split(",");
+            for(String strSaveIgActivityId : arrSaveIgActivitiesIds) {
+                if(strSaveIgActivityId.equals(mIgActivity.getId()))
+                    bIsSave = true;
             }
         }
+        setUiComponentSaveIgActivity(bIsSave);
     }
 
     private void setUiComponentSaveIgActivity(boolean bSave) {
         if(bSave)
-            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_d_65);
+            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_d_l);
         else
-            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_n_65);
+            mImageViewSaveIgActivity.setImageResource(R.drawable.bookmark_n_l);
 
         m_bIsSave = bSave;
     }
@@ -701,10 +702,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(lsPersons != null && lsPersons.size() > 0) {
             Person publisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(publisher.getName());
-
-            setUiSaveIgActivityByPerson(publisher);
-            setUiBottomButtons();
-
             downloadIcon_IgActivityPublisher(publisher);
         }
     }
@@ -782,7 +779,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     public void saveIgActivitySuccess() {
         hideWaitingDialog();
-        setUiComponentSaveIgActivity(!m_bIsSave);
+
+        m_bIsSave = !m_bIsSave;
+        setUiComponentSaveIgActivity(m_bIsSave);
+        PersonManager.getInstance().refresh();
     }
 
     @Override
@@ -824,7 +824,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
 
-            switch(m_updateUiScetion) {
+            switch(m_updateUiSection) {
                 case uiSecAll :
                     setUiBasicInfoByIgActivity(mIgActivity);
                     setUiDeemInfoByIgActivity(mIgActivity);

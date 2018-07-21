@@ -48,7 +48,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         TextView mTextViewActivityActionGoodCount;
         RelativeLayout mLayoutTags;
         RelativeLayout mLayoutSaveIgActivity;
-        boolean mbIsSave;
+        boolean m_bIsSave;
 
         ViewHolder(View v) {
             super(v);
@@ -59,7 +59,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             mTextViewActivityActionGoodCount = v.findViewById(R.id.textActivityActionGood);
             mLayoutTags = v.findViewById(R.id.layoutActivityTags);
             mLayoutSaveIgActivity = v.findViewById(R.id.layoutActivitySaveIgActivity);
-            mbIsSave = false;
+            m_bIsSave = false;
         }
     }
 
@@ -164,7 +164,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 int position = (int)v.getTag();
                 IgActivity activity = m_lsActivity.get(position);
 
-                if(holder.mbIsSave) {
+                if(holder.m_bIsSave) {
                     saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE.SV_CANCEL_SAVE, activity.getId());
                     setUiComponentSaveIgActivity(holder, false);
                 }
@@ -177,22 +177,18 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeSaveActivityButtonState(ViewHolder holder, IgActivity activity) {
-        Person person = PersonManager.getInstance().getPerson();
-        String strSaveActivities = person.getSaveActivities();
+        boolean bIsSave = false;
+        String strSaveActivities = PersonManager.getInstance().getPerson().getSaveIgActivities();
 
-        if(!StringTool.checkStringNotNull(strSaveActivities)) {
-            String[] arrSaveActivities = strSaveActivities.split(",");
-            for(String strActivityId : arrSaveActivities) {
-                if(strActivityId.equals(activity.getId())) {
-                    holder.mbIsSave = true;
-                    setUiComponentSaveIgActivity(holder, true);
-                }
-                else {
-                    holder.mbIsSave = false;
-                    setUiComponentSaveIgActivity(holder, false);
-                }
+        if(StringTool.checkStringNotNull(strSaveActivities)) {
+            String[] arrSaveIgActivitiesIds = strSaveActivities.split(",");
+            for(String strSaveIgActivityId : arrSaveIgActivitiesIds) {
+                if(strSaveIgActivityId.equals(activity.getId()))
+                    bIsSave = true;
             }
         }
+        holder.m_bIsSave = bIsSave;
+        setUiComponentSaveIgActivity(holder, bIsSave);
     }
 
     private void setUiComponentSaveIgActivity(ViewHolder holder, boolean bSave) {
@@ -203,7 +199,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         else
             imgViewSaveIgActivity.setImageResource(R.drawable.bookmark_n_s);
 
-        holder.mbIsSave = bSave;
+        holder.m_bIsSave = bSave;
     }
 
     private void saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE svValue, String strActivityId) {
@@ -220,6 +216,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void saveIgActivitySuccess() {
-        //do nothing
+        PersonManager.getInstance().refresh();
     }
 }
