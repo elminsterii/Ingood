@@ -6,8 +6,8 @@ android {
         applicationId "com.fff.ingood"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 27
-        versionName "0.3.2"
+        versionCode 28
+        versionName "0.4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
