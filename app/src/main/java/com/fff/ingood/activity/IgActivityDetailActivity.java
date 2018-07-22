@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -556,10 +558,18 @@ public class IgActivityDetailActivity extends BaseActivity implements
         m_bIsAttended = isAttended(mIgActivity, PersonManager.getInstance().getPerson());
 
         if(m_bIsIgActivityOwner) {
+            mBtnLeftBottom.setVisibility(View.VISIBLE);
+            mBtnRightBottom.setVisibility(View.VISIBLE);
             mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_delete));
             mBtnRightBottom.setText(getResources().getText(R.string.activity_action_edit));
         } else {
             mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_report));
+
+            //@@ invisible and reserved function
+            mBtnRightBottom.setVisibility(View.VISIBLE);
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)mBtnRightBottom.getLayoutParams();
+            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            mBtnRightBottom.setLayoutParams(params);
 
             if(m_bIsAttended)
                 mBtnRightBottom.setText(getResources().getText(R.string.activity_action_no_attend));
