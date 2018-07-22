@@ -464,6 +464,32 @@ public class IgActivityDetailActivity extends BaseActivity implements
         imageViewIcon.setImageResource(R.drawable.sample_activity);
         m_lsImageViewCommentIcons.add(imageViewIcon);
 
+        if(comment.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail())) {
+            LinearLayout linerLayout = layout.findViewById(R.id.layoutCommentAction);
+            ImageButton imageBtnCommentActionDelete = linerLayout.findViewById(R.id.imageBtnCommentActionDelete);
+            ImageButton imageBtnCommentActionEdit = linerLayout.findViewById(R.id.imageBtnCommentActionEdit);
+
+            imageBtnCommentActionDelete.setVisibility(View.VISIBLE);
+            imageBtnCommentActionDelete.setTag(comment.getId());
+            imageBtnCommentActionDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String strCommentId = (String)v.getTag();
+                    //TODO - delete
+                }
+            });
+
+            imageBtnCommentActionEdit.setVisibility(View.VISIBLE);
+            imageBtnCommentActionEdit.setTag(comment.getId());
+            imageBtnCommentActionEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String strCommentId = (String)v.getTag();
+                    //TODO - Edit
+                }
+            });
+        }
+
         textViewCommentPublisherName.setText(comment.getDisplayName());
         textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
         textViewCommentContent.setText(comment.getContent());
