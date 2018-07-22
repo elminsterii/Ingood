@@ -263,7 +263,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                         showWaitingDialog(IgActivityDetailActivity.class.getName());
                         publishComment(strTextContent);
                     }
-                }, getResources().getText(R.string.activity_comment_publish_description).toString())
+                }, getResources().getText(R.string.activity_comment_publish_description).toString(), null)
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
@@ -482,9 +482,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
                         @Override
                         public void onPositiveClick(DialogInterface dialog) {
+                            showWaitingDialog(IgActivityDetailActivity.class.getName());
                             Comment comment = (Comment)v.getTag();
                             deleteComment(comment);
-                            showWaitingDialog(IgActivityDetailActivity.class.getName());
                             dialog.dismiss();
                         }
 
@@ -502,8 +502,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
             imageBtnCommentActionEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Comment comment = (Comment)v.getTag();
-                    //editComment(comment);
+                    final Comment comment = (Comment)v.getTag();
+                    ConfirmDialogWithTextContent.newInstance(new ConfirmDialogWithTextContent.TextContentEventCB() {
+                        @Override
+                        public void onPositiveClick(String strTextContent) {
+                            showWaitingDialog(IgActivityDetailActivity.class.getName());
+                            comment.setContent(strTextContent);
+                            editComment(comment);
+                        }
+                    }, getResources().getText(R.string.activity_comment_edit_description).toString(), comment.getContent())
+                            .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
                 }
             });
         }
@@ -837,7 +845,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnUpdateCommentSuccess() {
-
+        hideWaitingDialog();
+        getCommentsByIgActivity(mIgActivity);
+        Toast.makeText(mActivity, getResources().getText(R.string.dialog_update_comment_done_message), Toast.LENGTH_SHORT).show();
     }
 
     @Override

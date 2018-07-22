@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.fff.ingood.flow.Flow;
@@ -11,6 +12,8 @@ import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
+
+import java.util.Objects;
 
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -101,5 +104,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
                     mWaitingDialog.dismiss();
                 }
             });
+    }
+
+    protected void hideSoftInput() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
     }
 }

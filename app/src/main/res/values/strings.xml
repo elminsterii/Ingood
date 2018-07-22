@@ -47,6 +47,7 @@
     <string name="activity_detail_comment_publish">Message</string>
     <string name="activity_detail_comment_view_all">All</string>
     <string name="activity_comment_publish_description">Input your comment : </string>
+    <string name="activity_comment_edit_description">Edit your comment : </string>
 
     <!-- Activity publish -->
     <string name="activity_publish_name">Activity name</string>

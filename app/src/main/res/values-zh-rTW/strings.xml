@@ -47,6 +47,7 @@
     <string name="activity_detail_comment_publish">我要留言</string>
     <string name="activity_detail_comment_view_all">看全部留言</string>
     <string name="activity_comment_publish_description">請在下方輸入您的留言 : </string>
+    <string name="activity_comment_edit_description">請在下方編輯您的留言 : </string>
 
     <!-- Activity publish -->
     <string name="activity_publish_name">活動名稱</string>

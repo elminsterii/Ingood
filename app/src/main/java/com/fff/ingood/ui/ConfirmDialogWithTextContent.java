@@ -11,10 +11,12 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fff.ingood.R;
+import com.fff.ingood.tools.StringTool;
 
 import java.util.Objects;
 
@@ -24,21 +26,31 @@ import java.util.Objects;
 public class ConfirmDialogWithTextContent extends DialogFragment {
 
     private String m_strTextTitle;
+    private String m_strDefaultTextContent;
     private TextContentEventCB m_eventCB = null;
 
     public interface TextContentEventCB {
         void onPositiveClick(String strTextContent);
     }
 
-    private void initialize(TextContentEventCB cb, String strTextTitle) {
+    private void initialize(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent) {
         m_eventCB = cb;
         m_strTextTitle = strTextTitle;
+        m_strDefaultTextContent = strDefaultTextContent;
     }
 
-    public static ConfirmDialogWithTextContent newInstance(TextContentEventCB cb, String strTextTitle) {
+    public static ConfirmDialogWithTextContent newInstance(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent) {
         ConfirmDialogWithTextContent dialog = new ConfirmDialogWithTextContent();
-        dialog.initialize(cb, strTextTitle);
+        dialog.initialize(cb, strTextTitle, strDefaultTextContent);
         return dialog;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //show keyboard always.
+        Objects.requireNonNull(getDialog().getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     @NonNull
@@ -60,6 +72,10 @@ public class ConfirmDialogWithTextContent extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final EditText editTextCommentContent = view.findViewById(R.id.editTextContent);
+        if(StringTool.checkStringNotNull(m_strDefaultTextContent)) {
+            editTextCommentContent.setText(m_strDefaultTextContent);
+            editTextCommentContent.setSelection(editTextCommentContent.getText().length());
+        }
 
         TextView textViewTextContentTitle = view.findViewById(R.id.textViewTextContentTitle);
         textViewTextContentTitle.setText(m_strTextTitle);

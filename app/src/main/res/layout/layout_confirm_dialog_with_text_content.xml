@@ -56,6 +56,6 @@
             android:background="@drawable/selector_register_next"
             android:textColor="@color/colorSlave"
             android:textSize="14sp"
-            android:text="@string/dialog_publish"/>
+            android:text="@string/dialog_confirm"/>
     </RelativeLayout>
 </RelativeLayout>

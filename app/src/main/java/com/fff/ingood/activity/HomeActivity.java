@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,7 +30,6 @@ import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
@@ -369,12 +367,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
             mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, preSearchCondition);
         }
-    }
-
-    private void hideSoftInput() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        assert inputMethodManager != null;
-        inputMethodManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), 0);
     }
 
     private void closeSearchView() {
