@@ -6,24 +6,23 @@
     android:background="@xml/igactivity_des_background">
 
     <TextView
-        android:id="@+id/textViewPublishCommentDescription"
+        android:id="@+id/textViewTextContentTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:textSize="14sp"
-        android:textColor="@color/colorSlave"
-        android:text="@string/activity_comment_publish_description" />
+        android:textColor="@color/colorSlave" />
 
     <EditText
-        android:id="@+id/editTextPublishCommentContent"
+        android:id="@+id/editTextContent"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/textViewPublishCommentDescription"
+        android:layout_below="@+id/textViewTextContentTitle"
         android:textColor="@color/colorSlave"
         android:textSize="@dimen/text_size_ig_activity_description"
         android:inputType="text"
@@ -33,7 +32,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPublishCommentContent"
+        android:layout_below="@+id/editTextContent"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="40dp"

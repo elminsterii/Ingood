@@ -84,6 +84,7 @@
     <string name="dialog_delete_comment_confirm_message">Are you sure delete this comment?</string>
     <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
     <string name="dialog_delete_comment_done_message">Comment has been deleted</string>
+    <string name="dialog_update_comment_done_message">Comment has been updated</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>

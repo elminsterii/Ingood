@@ -84,6 +84,7 @@
     <string name="dialog_delete_comment_confirm_message">您確定要刪除留言嗎?</string>
     <string name="dialog_delete_igactivity_done_message">活動已刪除</string>
     <string name="dialog_delete_comment_done_message">留言已刪除</string>
+    <string name="dialog_update_comment_done_message">留言已更新</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">搜尋</string>

@@ -50,7 +50,7 @@ import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 import com.fff.ingood.tools.DateHelper;
 import com.fff.ingood.tools.StringTool;
-import com.fff.ingood.ui.CommentPublishDialog;
+import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.WarningDialog;
 
@@ -257,13 +257,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewPublishComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentPublishDialog.newInstance(new CommentPublishDialog.CommentPublishDialogEvent() {
+                ConfirmDialogWithTextContent.newInstance(new ConfirmDialogWithTextContent.TextContentEventCB() {
                     @Override
-                    public void onPublishClick(String strCommentContent) {
+                    public void onPositiveClick(String strTextContent) {
                         showWaitingDialog(IgActivityDetailActivity.class.getName());
-                        publishComment(strCommentContent);
+                        publishComment(strTextContent);
                     }
-                }).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
+                }, getResources().getText(R.string.activity_comment_publish_description).toString())
+                        .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
 
