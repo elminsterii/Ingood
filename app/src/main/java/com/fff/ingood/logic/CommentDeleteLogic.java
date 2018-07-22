@@ -12,7 +12,7 @@ public class CommentDeleteLogic extends Logic implements CommentDeleteTaskWrappe
 
     public interface CommentDeleteLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void returnDeleteIgActivitySuccess();
+        void returnDeleteCommentSuccess();
     }
 
     private CommentDeleteLogicCaller mCaller;
@@ -32,7 +32,7 @@ public class CommentDeleteLogic extends Logic implements CommentDeleteTaskWrappe
 
     @Override
     public void onDeleteSuccess() {
-        mCaller.returnDeleteIgActivitySuccess();
+        mCaller.returnDeleteCommentSuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

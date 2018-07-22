@@ -31,8 +31,10 @@ import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.CommentCreateLogic;
+import com.fff.ingood.logic.CommentDeleteLogic;
 import com.fff.ingood.logic.CommentLogicExecutor;
 import com.fff.ingood.logic.CommentQueryLogic;
+import com.fff.ingood.logic.CommentUpdateLogic;
 import com.fff.ingood.logic.IgActivityAttendLogic;
 import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
@@ -71,7 +73,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , IgActivityAttendLogic.IgActivityAttendLogicCaller
         , IgActivityDeleteLogic.IgActivityDeleteLogicCaller
         , CommentQueryLogic.CommentQueryLogicCaller
-        , CommentCreateLogic.CommentCreateLogicCaller {
+        , CommentCreateLogic.CommentCreateLogicCaller
+        , CommentDeleteLogic.CommentDeleteLogicCaller
+        , CommentUpdateLogic.CommentUpdateLogicCaller {
 
     private enum UPDATE_IGACTIVITY_UI_SECTION {
         uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
@@ -282,7 +286,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                         public void onNegativeClick(DialogInterface dialog) {
                             dialog.dismiss();
                         }
-                    }, getResources().getString(R.string.dialog_delete_confirm_message)).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
+                    }, getResources().getString(R.string.dialog_delete_igactivity_confirm_message)).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
                 }
             };
             rightClickBtnListener = new View.OnClickListener() {
@@ -470,22 +474,35 @@ public class IgActivityDetailActivity extends BaseActivity implements
             ImageButton imageBtnCommentActionEdit = linerLayout.findViewById(R.id.imageBtnCommentActionEdit);
 
             imageBtnCommentActionDelete.setVisibility(View.VISIBLE);
-            imageBtnCommentActionDelete.setTag(comment.getId());
+            imageBtnCommentActionDelete.setTag(comment);
             imageBtnCommentActionDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    String strCommentId = (String)v.getTag();
-                    //TODO - delete
+                public void onClick(final View v) {
+                    WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
+                        @Override
+                        public void onPositiveClick(DialogInterface dialog) {
+                            Comment comment = (Comment)v.getTag();
+                            deleteComment(comment);
+                            showWaitingDialog(IgActivityDetailActivity.class.getName());
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegativeClick(DialogInterface dialog) {
+                            dialog.dismiss();
+                        }
+                    }, getResources().getString(R.string.dialog_delete_comment_confirm_message)).show(getSupportFragmentManager()
+                            , IgActivityDetailActivity.class.getName());
                 }
             });
 
             imageBtnCommentActionEdit.setVisibility(View.VISIBLE);
-            imageBtnCommentActionEdit.setTag(comment.getId());
+            imageBtnCommentActionEdit.setTag(comment);
             imageBtnCommentActionEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String strCommentId = (String)v.getTag();
-                    //TODO - Edit
+                    //Comment comment = (Comment)v.getTag();
+                    //editComment(comment);
                 }
             });
         }
@@ -731,6 +748,16 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doCreateComment(this, personPublisher.getEmail(), personPublisher.getName(), mIgActivity.getId(), strCommentContent);
     }
 
+    private void deleteComment(Comment comment) {
+        CommentLogicExecutor executor = new CommentLogicExecutor();
+        executor.doDeleteComment(this, comment);
+    }
+
+    private void editComment(Comment comment) {
+        CommentLogicExecutor executor = new CommentLogicExecutor();
+        executor.doUpdateComment(this, comment);
+}
+
     @Override
     public void returnPersons(List<Person> lsPersons) {
         hideWaitingDialog();
@@ -800,7 +827,21 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     @Override
-    public void onCreateCommentSuccess(String strId) {
+    public void returnDeleteCommentSuccess() {
+        hideWaitingDialog();
+        getCommentsByIgActivity(mIgActivity);
+        Toast.makeText(mActivity, getResources().getText(R.string.dialog_delete_comment_done_message), Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void returnUpdateCommentSuccess() {
+
+    }
+
+    @Override
+    public void returnCreateCommentSuccess(String strId) {
+        hideWaitingDialog();
         getCommentsByIgActivity(mIgActivity);
         Toast.makeText(mActivity, getResources().getText(R.string.comment_has_been_published), Toast.LENGTH_SHORT).show();
     }

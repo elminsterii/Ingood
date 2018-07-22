@@ -80,8 +80,10 @@
     <string name="dialog_confirm">Confirm</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_publish">Publish</string>
-    <string name="dialog_delete_confirm_message">Are you sure delete this activity?</string>
+    <string name="dialog_delete_igactivity_confirm_message">Are you sure delete this activity?</string>
+    <string name="dialog_delete_comment_confirm_message">Are you sure delete this comment?</string>
     <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
+    <string name="dialog_delete_comment_done_message">Comment has been deleted</string>
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
