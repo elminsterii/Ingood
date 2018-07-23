@@ -1,7 +1,11 @@
 package com.fff.ingood.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -23,6 +27,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
 
+    private static final int REQUEST_CODE_PERMISSION = 101;
+
     private MainActivity mActivity;
     private CircleProgressBarDialog mWaitingDialog;
 
@@ -37,12 +43,13 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         mActivity = this;
 
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_MAIN).setSystemUI(this);
+
+        requestPermission();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        startStartupAnimation();
     }
 
     @Override
@@ -102,6 +109,21 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
             mWaitingDialog.dismiss();
     }
 
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+
+            for (String str : permissions) {
+                if (checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(permissions, REQUEST_CODE_PERMISSION);
+                } else {
+                    startStartupAnimation();
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         hideWaitingDialog();
@@ -114,5 +136,19 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         if(clsFlow != null
                 && !clsFlow.isInstance(MainActivity.class))
             mActivity.startActivity(new Intent(this, clsFlow));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startStartupAnimation();
+                } else {
+                    finish();
+                }
+            }
+        }
     }
 }

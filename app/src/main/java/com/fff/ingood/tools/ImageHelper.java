@@ -5,14 +5,17 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.media.ExifInterface;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * Created by ElminsterII on 2018/6/20.
@@ -108,5 +111,56 @@ public class ImageHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    public static Bitmap makeBitmapCorrectOrientation(Bitmap srcBitmap, String strPath) {
+        Bitmap bmRes = srcBitmap;
+        ExifInterface exif = null;
+
+        try {
+            exif = new ExifInterface(strPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int orientation = ExifInterface.ORIENTATION_NORMAL;
+
+        if (exif != null)
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                bmRes = rotateBitmap(srcBitmap, 90);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                bmRes = rotateBitmap(srcBitmap, 180);
+                break;
+
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                bmRes = rotateBitmap(srcBitmap, 270);
+                break;
+
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                bmRes = flipBitmap(srcBitmap, true, false);
+                break;
+
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                bmRes = flipBitmap(srcBitmap, false, true);
+                break;
+        }
+        return bmRes;
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+    }
+
+    public static Bitmap flipBitmap(Bitmap bitmap, boolean horizontal, boolean vertical) {
+        Matrix matrix = new Matrix();
+        matrix.preScale(horizontal ? -1 : 1, vertical ? -1 : 1);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 }

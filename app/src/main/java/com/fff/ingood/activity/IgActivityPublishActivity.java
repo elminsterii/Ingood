@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +33,11 @@ import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
+import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 
 import java.io.BufferedInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -379,6 +382,9 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     private void addImageToLayout(Bitmap bm) {
+        if(bm == null)
+            return;
+
         final int SIZE_DP = 70;
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
@@ -440,8 +446,18 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
                     Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
+
+                    String[] filePath = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(data.getData(), filePath, null, null, null);
+                    if(cursor != null) {
+                        cursor.moveToFirst();
+                        String mImagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, mImagePath);
+                    }
+
+                    inputStream.close();
                     addImageToLayout(bm);
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
