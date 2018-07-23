@@ -43,8 +43,9 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
-import static com.fff.ingood.global.GlobalProperty.HEIGHT_IGACTIVITY_IMAGE;
-import static com.fff.ingood.global.GlobalProperty.WIDTH_IGACTIVITY_IMAGE;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_HEIGHT;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_WIDTH;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -53,7 +54,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
         , IgActivityUpdateLogic.IgActivityUpdateLogicCaller {
 
     private static final int RESULT_CODE_PICK_IMAGE = 1;
-    private static final int UPPER_LIMIT_UPLOAD_IMAGES = 3;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -446,7 +446,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     private void checkUpperLimitUploadImages() {
-        if(m_lsUploadImages.size() >= UPPER_LIMIT_UPLOAD_IMAGES)
+        if(m_lsUploadImages.size() >= IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT)
             mBtnImageUpload.setVisibility(View.INVISIBLE);
         else
             mBtnImageUpload.setVisibility(View.VISIBLE);
@@ -485,7 +485,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
                     Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
                     bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
-                    bm = ImageHelper.resizeBitmap(bm, WIDTH_IGACTIVITY_IMAGE, HEIGHT_IGACTIVITY_IMAGE);
+                    bm = ImageHelper.resizeBitmap(bm, IGACTIVITY_IMAGE_WIDTH, IGACTIVITY_IMAGE_HEIGHT);
 
                     inputStream.close();
                     addImageIntoLayout(bm);
