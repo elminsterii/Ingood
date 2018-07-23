@@ -401,17 +401,19 @@ public class IgActivityPublishActivity extends BaseActivity implements
         int iLeftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_DP, getResources().getDisplayMetrics());
 
         ImageView preImageViewImageUpload = null;
-        for(Bitmap bm : lsBitmaps) {
+        for(int i=0; i<lsBitmaps.size(); i++) {
+            Bitmap bm = lsBitmaps.get(i);
             ImageView imageView = new ImageView(this);
             imageView.setId(View.generateViewId());
+            imageView.setTag(i);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setImageBitmap(bm);
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    int index =  (int)v.getTag();
-//                    m_lsUploadImages.remove(index);
-//                    makeUploadImageLayout(m_lsUploadImages);
+                    int index =  (int)v.getTag();
+                    m_lsUploadImages.remove(index);
+                    makeUploadImageLayout(m_lsUploadImages);
                 }
             });
 
@@ -439,7 +441,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     public void returnStatus(Integer iStatusCode) {
         hideWaitingDialog();
 
-        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+        if(iStatusCode != null && !iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
     }
 
