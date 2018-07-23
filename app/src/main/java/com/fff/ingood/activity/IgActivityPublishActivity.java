@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -262,15 +263,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     //"yyyy-MM-dd HH:mm:ss";
     private String setDateFormat(int year, int month, int day) {
-        StringBuilder strRes = new StringBuilder();
-        strRes.append(year).append("-").append(month).append("-").append(day);
-        return strRes.toString();
+        return String.valueOf(year) + "-" + month + "-" + day;
     }
 
     private String setTimeFormat(int hour, int minute) {
-        StringBuilder strRes = new StringBuilder();
-        strRes.append(hour).append(":").append(minute);
-        return strRes.toString();
+        return String.valueOf(hour) + ":" + minute;
     }
 
     private IgActivity genEmptyIgActivity() {
@@ -443,16 +440,17 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
                 try {
-                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
                     Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
 
                     String[] filePath = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver().query(data.getData(), filePath, null, null, null);
+                    @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(data.getData(), filePath, null, null, null);
                     if(cursor != null) {
                         cursor.moveToFirst();
                         String mImagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
                         bm = ImageHelper.makeBitmapCorrectOrientation(bm, mImagePath);
+                        cursor.close();
                     }
 
                     inputStream.close();
