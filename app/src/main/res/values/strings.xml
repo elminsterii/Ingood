@@ -5,6 +5,7 @@
     <string name="home_page">Home Page</string>
     <string name="activity_page">Activity content</string>
     <string name="activity_publish">Activity publish</string>
+    <string name="activity_edit">Activity Edit</string>
 
     <!-- LoginPage -->
     <string name="login_slogan">Activity / Band / Social</string>

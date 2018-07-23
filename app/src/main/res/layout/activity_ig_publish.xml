@@ -27,22 +27,21 @@
                 tools:ignore="UselessParent">
 
                 <ImageButton
-                    android:id="@+id/imgBack"
+                    android:id="@+id/imgBackIgActivityPublish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_arrow_btn_dark" />
 
                 <TextView
-                    android:id="@+id/textViewTitle"
+                    android:id="@+id/textViewIgActivityPublishTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/imgBack"
+                    android:layout_toEndOf="@+id/imgBackIgActivityPublish"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:textSize="@dimen/title_size_ig_activity_publish"
                     android:textColor="@color/colorSlave"
-                    android:textStyle="bold"
-                    android:text="@string/activity_publish" />
+                    android:textStyle="bold"/>
             </RelativeLayout>
         </RelativeLayout>
 

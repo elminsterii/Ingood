@@ -57,6 +57,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
+    private ImageButton mBtnBack;
+    private TextView mTextViewTitle;
     private TextView mTextViewPublisherName;
     private RelativeLayout mLayoutIgActivityPublishImages;
     private ImageButton mBtnImageUpload;
@@ -102,6 +104,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
     protected void initView() {
         mBtnLeftBottom = findViewById(R.id.btnIgActivityPublishLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityPublishRightBottom);
+        mBtnBack = findViewById(R.id.imgBackIgActivityPublish);
+        mTextViewTitle = findViewById(R.id.textViewIgActivityPublishTitle);
         mTextViewPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mLayoutIgActivityPublishImages = findViewById(R.id.layoutIgActivityPublishImages);
         mBtnImageUpload = findViewById(R.id.imageBtnIgActivityPublishImageUpload);
@@ -129,6 +133,14 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     protected void initListener() {
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                finish();
+            }
+        });
+
         mBtnLeftBottom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,6 +259,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(bEditMode) {
             if(activity != null) {
                 mBtnRightBottom.setText(R.string.activity_publish_edit_update);
+                mTextViewTitle.setText(R.string.activity_edit);
                 mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
                 mEditTextIgActivityName.setText(activity.getName());
                 mEditTextIgActivityMaxAttention.setText(activity.getMaxAttention());
@@ -255,10 +268,13 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 mEditTextIgActivityMaxAttention.setText(activity.getMaxAttention());
                 setDateByIgActivity(activity);
                 setTagsByIgActivity(activity);
+
+                //TODO - download images and init views.
             }
         }
         else {
             mBtnRightBottom.setText(R.string.dialog_publish);
+            mTextViewTitle.setText(R.string.activity_publish);
             mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
             addNewEmptyTag();
         }
