@@ -2,6 +2,7 @@ package com.fff.ingood.tools;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -12,6 +13,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -113,12 +116,21 @@ public class ImageHelper {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    public static Bitmap makeBitmapCorrectOrientation(Bitmap srcBitmap, String strPath) {
+    public static Bitmap makeBitmapCorrectOrientation(Bitmap srcBitmap, Uri uri, Context context) {
         Bitmap bmRes = srcBitmap;
         ExifInterface exif = null;
+        String strImagePath = null;
+
+        String[] filePath = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, filePath, null, null, null);
+        if(cursor != null) {
+            cursor.moveToFirst();
+            strImagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+            cursor.close();
+        }
 
         try {
-            exif = new ExifInterface(strPath);
+            exif = new ExifInterface(strImagePath);
         } catch (IOException e) {
             e.printStackTrace();
         }

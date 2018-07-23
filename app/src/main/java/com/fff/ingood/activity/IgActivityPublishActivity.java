@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +43,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.HEIGHT_IGACTIVITY_IMAGE;
+import static com.fff.ingood.global.GlobalProperty.WIDTH_IGACTIVITY_IMAGE;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -386,9 +386,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             return;
 
         m_lsUploadImages.add(bm);
-
         makeUploadImageLayout(m_lsUploadImages);
-        checkUpperLimitUploadImages();
     }
 
     private void makeUploadImageLayout(List<Bitmap> lsBitmaps) {
@@ -428,6 +426,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             mLayoutIgActivityPublishImages.addView(imageView);
             preImageViewImageUpload = imageView;
         }
+        checkUpperLimitUploadImages();
     }
 
     private void checkUpperLimitUploadImages() {
@@ -469,15 +468,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
                     BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
                     Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
-
-                    String[] filePath = {MediaStore.Images.Media.DATA};
-                    @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(data.getData(), filePath, null, null, null);
-                    if(cursor != null) {
-                        cursor.moveToFirst();
-                        String mImagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, mImagePath);
-                        cursor.close();
-                    }
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
+                    bm = ImageHelper.resizeBitmap(bm, WIDTH_IGACTIVITY_IMAGE, HEIGHT_IGACTIVITY_IMAGE);
 
                     inputStream.close();
                     addImageIntoLayout(bm);
