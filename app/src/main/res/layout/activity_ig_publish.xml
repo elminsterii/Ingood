@@ -83,12 +83,44 @@
                 android:textSize="@dimen/text_size_ig_activity_publish_description" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishImageUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutIgActivityPublisher"
+            android:layout_marginStart="@dimen/margin_start_igactivity_publish"
+            android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishImageUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_images_upload"/>
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityPublishImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewIgActivityPublishImageUpload"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageBtnIgActivityPublishImageUpload"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/add"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
         <EditText
             android:theme="@style/IngoodEditTextStyle"
             android:id="@+id/editTextIgActivityPublishName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutIgActivityPublisher"
+            android:layout_below="@+id/layoutIgActivityPublishImageUpload"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
             android:layout_marginTop="30dp"

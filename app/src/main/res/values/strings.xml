@@ -60,6 +60,7 @@
     <string name="activity_publish_what_kind">What kind of activity</string>
     <string name="activity_publish_max_attention">Upper limit of attention</string>
     <string name="activity_publish_edit_update">Update</string>
+    <string name="activity_publish_images_upload">Upload Images</string>
 
     <!-- Tags -->
     <string name="tag_care">Care</string>

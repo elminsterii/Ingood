@@ -110,7 +110,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layoutIgActivityPublisher"
+                android:id="@+id/layoutIgActivityPublisherAndIgActivityImageUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/layoutIgActivityPublisher"
+                android:layout_below="@+id/layoutIgActivityPublisherAndIgActivityImageUpload"
                 android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
                 android:layout_marginTop="5dp">
             </include>
