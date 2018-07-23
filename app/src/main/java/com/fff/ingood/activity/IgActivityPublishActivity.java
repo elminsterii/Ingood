@@ -1,16 +1,21 @@
 package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +33,9 @@ import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
 import com.fff.ingood.tools.StringTool;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,9 +48,13 @@ public class IgActivityPublishActivity extends BaseActivity implements
         IgActivityCreateLogic.IgActivityCreateLogicCaller
         , IgActivityUpdateLogic.IgActivityUpdateLogicCaller {
 
+    private static final int RESULT_CODE_PICK_IMAGE = 1;
+
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
     private TextView mTextViewPublisherName;
+    private RelativeLayout mLayoutIgActivityPublishImages;
+    private ImageButton mBtnImageUpload;
     private ImageButton mBtnStartDatePicker;
     private ImageButton mBtnStartTimePicker;
     private TextView mTextViewStartDateDescription;
@@ -62,6 +74,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private List<EditText> m_lsTagsInput;
     private ImageButton m_preBtnOfTagAdd;
+    private ImageView m_preImageViewImageUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +97,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mBtnLeftBottom = findViewById(R.id.btnIgActivityPublishLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityPublishRightBottom);
         mTextViewPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
+        mLayoutIgActivityPublishImages = findViewById(R.id.layoutIgActivityPublishImages);
+        mBtnImageUpload = findViewById(R.id.imageBtnIgActivityPublishImageUpload);
         mBtnStartDatePicker = findViewById(R.id.btnIgActivityPublishStartDatePicker);
         mBtnStartTimePicker = findViewById(R.id.btnIgActivityPublishStartTimePicker);
         mTextViewStartDateDescription = findViewById(R.id.textViewIgActivityPublishStartDateDescription);
@@ -138,6 +153,13 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     updateIgActivity(m_igActivity);
 
                 showWaitingDialog(IgActivityPublishActivity.class.getName());
+            }
+        });
+
+        mBtnImageUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImageByGallery();
             }
         });
 
@@ -345,6 +367,47 @@ public class IgActivityPublishActivity extends BaseActivity implements
         executor.doUpdatecomIgActivity(this, activity);
     }
 
+    private void pickImageByGallery() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
+    }
+
+    private void addImageToLayout(Bitmap bm) {
+        final int SIZE_DP = 70;
+        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
+        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
+
+        ImageView imageView = new ImageView(this);
+        imageView.setId(View.generateViewId());
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setImageBitmap(bm);
+
+        final int MARGIN_DP = 15;
+        int iLeftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_DP, getResources().getDisplayMetrics());
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+        if(m_preImageViewImageUpload != null) {
+            params.addRule(RelativeLayout.END_OF, m_preImageViewImageUpload.getId());
+            params.setMargins(iLeftMargin, 0, 0, 0);
+        }
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+
+        imageView.setLayoutParams(params);
+        mLayoutIgActivityPublishImages.addView(imageView);
+        m_preImageViewImageUpload = imageView;
+
+        RelativeLayout.LayoutParams paramsUploadBtn = (RelativeLayout.LayoutParams)mBtnImageUpload.getLayoutParams();
+        paramsUploadBtn.addRule(RelativeLayout.END_OF, imageView.getId());
+        paramsUploadBtn.setMargins(iLeftMargin-11, 0, 0, 0);
+        mBtnImageUpload.setLayoutParams(paramsUploadBtn);
+    }
+
     @Override
     public void returnStatus(Integer iStatusCode) {
         hideWaitingDialog();
@@ -366,5 +429,22 @@ public class IgActivityPublishActivity extends BaseActivity implements
         hideWaitingDialog();
         Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
         onBackPressed();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
+                    addImageToLayout(bm);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
