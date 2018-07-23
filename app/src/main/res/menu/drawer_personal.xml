@@ -3,19 +3,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menuItemPersonal"
-            android:icon="@drawable/circle_loading_1"
+            android:icon="@drawable/profile_g"
             android:title="@string/menu_personal_detail" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/circle_loading_2"
-            android:title="@string/app_name" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/circle_loading_3"
-            android:title="@string/app_name" />
-        <item
             android:id="@+id/menuItemLogout"
-            android:icon="@drawable/circle_loading_4"
+            android:icon="@drawable/logout_g"
             android:title="@string/menu_personal_logout" />
     </group>
 </menu>
