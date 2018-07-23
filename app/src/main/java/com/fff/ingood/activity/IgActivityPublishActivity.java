@@ -53,6 +53,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         , IgActivityUpdateLogic.IgActivityUpdateLogicCaller {
 
     private static final int RESULT_CODE_PICK_IMAGE = 1;
+    private static final int UPPER_LIMIT_UPLOAD_IMAGES = 3;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -78,7 +79,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private List<EditText> m_lsTagsInput;
     private ImageButton m_preBtnOfTagAdd;
-    private ImageView m_preImageViewImageUpload;
+
+    private List<Bitmap> m_lsUploadImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     protected void initData() {
+        m_lsUploadImages = new ArrayList<>();
         m_lsTagsInput = new ArrayList<>();
         initUIData(m_igActivity, m_bEditMode);
     }
@@ -373,42 +376,63 @@ public class IgActivityPublishActivity extends BaseActivity implements
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        Intent chooserIntent = Intent.createChooser(getIntent, getResources().getText(R.string.activity_publish_images_select));
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
         startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
     }
 
-    private void addImageToLayout(Bitmap bm) {
+    private void addImageIntoLayout(Bitmap bm) {
         if(bm == null)
             return;
 
-        final int SIZE_DP = 70;
+        m_lsUploadImages.add(bm);
+
+        makeUploadImageLayout(m_lsUploadImages);
+        checkUpperLimitUploadImages();
+    }
+
+    private void makeUploadImageLayout(List<Bitmap> lsBitmaps) {
+        mLayoutIgActivityPublishImages.removeAllViews();
+
+        final int SIZE_DP = 71;
+        final int MARGIN_DP = 15;
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, SIZE_DP, getResources().getDisplayMetrics());
-
-        ImageView imageView = new ImageView(this);
-        imageView.setId(View.generateViewId());
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setImageBitmap(bm);
-
-        final int MARGIN_DP = 15;
         int iLeftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN_DP, getResources().getDisplayMetrics());
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
-        if(m_preImageViewImageUpload != null) {
-            params.addRule(RelativeLayout.END_OF, m_preImageViewImageUpload.getId());
-            params.setMargins(iLeftMargin, 0, 0, 0);
+        ImageView preImageViewImageUpload = null;
+        for(Bitmap bm : lsBitmaps) {
+            ImageView imageView = new ImageView(this);
+            imageView.setId(View.generateViewId());
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setImageBitmap(bm);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    int index =  (int)v.getTag();
+//                    m_lsUploadImages.remove(index);
+//                    makeUploadImageLayout(m_lsUploadImages);
+                }
+            });
+
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+            if(preImageViewImageUpload != null) {
+                params.addRule(RelativeLayout.END_OF, preImageViewImageUpload.getId());
+                params.setMargins(iLeftMargin, 0, 0, 0);
+            }
+            params.addRule(RelativeLayout.CENTER_VERTICAL);
+
+            imageView.setLayoutParams(params);
+            mLayoutIgActivityPublishImages.addView(imageView);
+            preImageViewImageUpload = imageView;
         }
-        params.addRule(RelativeLayout.CENTER_VERTICAL);
+    }
 
-        imageView.setLayoutParams(params);
-        mLayoutIgActivityPublishImages.addView(imageView);
-        m_preImageViewImageUpload = imageView;
-
-        RelativeLayout.LayoutParams paramsUploadBtn = (RelativeLayout.LayoutParams)mBtnImageUpload.getLayoutParams();
-        paramsUploadBtn.addRule(RelativeLayout.END_OF, imageView.getId());
-        paramsUploadBtn.setMargins(iLeftMargin-11, 0, 0, 0);
-        mBtnImageUpload.setLayoutParams(paramsUploadBtn);
+    private void checkUpperLimitUploadImages() {
+        if(m_lsUploadImages.size() >= UPPER_LIMIT_UPLOAD_IMAGES)
+            mBtnImageUpload.setVisibility(View.INVISIBLE);
+        else
+            mBtnImageUpload.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -454,7 +478,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
 
                     inputStream.close();
-                    addImageToLayout(bm);
+                    addImageIntoLayout(bm);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

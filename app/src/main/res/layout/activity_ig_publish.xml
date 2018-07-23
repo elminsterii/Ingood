@@ -107,13 +107,17 @@
                 android:layout_below="@+id/textViewIgActivityPublishImageUpload"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/imageBtnIgActivityPublishImageUpload"
-                    android:layout_width="83dp"
-                    android:layout_height="83dp"
-                    android:src="@drawable/add"/>
             </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/imageBtnIgActivityPublishImageUpload"
+                android:layout_width="83dp"
+                android:layout_height="83dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/layoutIgActivityPublishImages"
+                android:layout_below="@+id/textViewIgActivityPublishImageUpload"
+                android:layout_marginStart="11dp"
+                android:src="@drawable/add"/>
         </RelativeLayout>
 
         <EditText

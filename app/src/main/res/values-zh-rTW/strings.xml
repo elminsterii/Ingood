@@ -61,6 +61,7 @@
     <string name="activity_publish_max_attention">參加人數上限</string>
     <string name="activity_publish_edit_update">更新</string>
     <string name="activity_publish_images_upload">上傳活動圖片</string>
+    <string name="activity_publish_images_select">選擇圖片</string>
 
     <!-- Tags -->
     <string name="tag_care">關懷</string>
