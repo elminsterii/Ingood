@@ -23,6 +23,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
@@ -41,7 +42,11 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
-    private static final String DEFAULT_TAG_IN_TAGBAR = "default_tag";
+    private static final String DEFAULT_TAG_IN_TAG_BAR = "default_tag";
+
+    private static final String GOOD_IGACTIVITY_THRESHOLD = "10";
+    private static final String POPULARITY_IGACTIVITY_THRESHOLD = "5";
+
     private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
 
     private RecyclerView mViewActivityList;
@@ -390,22 +395,22 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     private void makeDefaultTags() {
 
         TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
-        tabRecently.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabRecently.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabRecently.setText(R.string.tag_recently);
         mTabLayoutTagBar.addTab(tabRecently);
 
         TabLayout.Tab tabPopularity = mTabLayoutTagBar.newTab();
-        tabPopularity.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabPopularity.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabPopularity.setText(R.string.tag_popularity);
         mTabLayoutTagBar.addTab(tabPopularity);
 
         TabLayout.Tab tabGood = mTabLayoutTagBar.newTab();
-        tabGood.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabGood.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabGood.setText(R.string.tag_good);
         mTabLayoutTagBar.addTab(tabGood);
 
         TabLayout.Tab tabNearly = mTabLayoutTagBar.newTab();
-        tabNearly.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabNearly.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabNearly.setText(R.string.tag_nearly);
         mTabLayoutTagBar.addTab(tabNearly);
 
@@ -426,12 +431,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             return;
 
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
-
             String strCurTime = TimeHelper.getCurTime();
             String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
 
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
+            igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_good))) {
+            igCondition.setGood(GOOD_IGACTIVITY_THRESHOLD);
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_nearly))) {
+            igCondition.setLocation(PersonManager.getInstance().getPerson().getLocation());
         }
     }
 }
