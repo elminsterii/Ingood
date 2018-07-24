@@ -150,7 +150,10 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
             if(strLocation != null) {
                 PersonManager.getInstance().getPerson().setLocation(strLocation);
-                showFragment(mFragmentRegistrationInterest, TAG_FRAGMENT_REGISTRATION_INTEREST);
+
+                //ignore interest in registration.
+                //showFragment(mFragmentRegistrationInterest, TAG_FRAGMENT_REGISTRATION_INTEREST);
+                FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
                 hideKeyboard();
             }
         } else if(mCurFragment instanceof RegistrationInterestFragment) {
