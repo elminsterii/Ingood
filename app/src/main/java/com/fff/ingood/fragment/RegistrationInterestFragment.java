@@ -63,13 +63,13 @@ public class RegistrationInterestFragment extends BaseFragment {
 
         InterestTagListAdapter.InterestData interestDataCare = new InterestTagListAdapter.InterestData();
         interestDataCare.setInterestItemIconResId(R.drawable.add_dark);
-        interestDataCare.setInterestItemTitle(getResources().getString(R.string.tag_care));
+        interestDataCare.setInterestItemTitle(getResources().getString(R.string.tag_recently));
         interestDataCare.setInterestItemDescription(getResources().getString(R.string.tag_care_description));
         lsInterestData.add(interestDataCare);
 
         InterestTagListAdapter.InterestData interestDataEducation = new InterestTagListAdapter.InterestData();
         interestDataEducation.setInterestItemIconResId(R.drawable.add_dark);
-        interestDataEducation.setInterestItemTitle(getResources().getString(R.string.tag_education));
+        interestDataEducation.setInterestItemTitle(getResources().getString(R.string.tag_good));
         interestDataEducation.setInterestItemDescription(getResources().getString(R.string.tag_education_description));
         lsInterestData.add(interestDataEducation);
 

@@ -24,9 +24,8 @@
     <color name="colorDeemBad">#FF5F5F</color>
 
     <!-- Tags Color -->
-    <color name="colorTagCare">#DC808A</color>
-    <color name="colorTagEnvironmentalProtection">#14803A</color>
-    <color name="colorTagEducation">#3C5071</color>
-    <color name="colorTagManpower">#CF5044</color>
-    <color name="colorTagAnimal">#664536</color>
+    <color name="colorTagRecently">#3C5071</color>
+    <color name="colorTagPopularity">#CF5044</color>
+    <color name="colorTagGood">#14803A</color>
+    <color name="colorTagNearly">#664536</color>
 </resources>

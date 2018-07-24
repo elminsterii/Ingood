@@ -65,11 +65,10 @@
     <string name="activity_publish_images_select">Select Image</string>
 
     <!-- Tags -->
-    <string name="tag_care">Care</string>
-    <string name="tag_environmental_protection">Environmental Protection</string>
-    <string name="tag_education">Education</string>
-    <string name="tag_manpower">Manpower</string>
-    <string name="tag_animal">Animal</string>
+    <string name="tag_recently">Recently</string>
+    <string name="tag_popularity">Popularity</string>
+    <string name="tag_good">Good</string>
+    <string name="tag_nearly">Nearly</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">Human care</string>

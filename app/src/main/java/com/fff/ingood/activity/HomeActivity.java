@@ -26,6 +26,7 @@ import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
+import com.fff.ingood.tools.DateHelper;
 import com.fff.ingood.tools.StringTool;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
+    private static final String DEFAULT_TAG_IN_TAGBAR = "default_tag";
     private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
 
     private RecyclerView mViewActivityList;
@@ -110,7 +112,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mIgActivityExecutor = new IgActivityLogicExecutor();
         m_lsActivities = new ArrayList<>();
 
-        makeTodayTags();
+        makeDefaultTags();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mActivityListAdapter = new ActivityListAdapter(m_lsActivities, this);
@@ -122,9 +124,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         mSearchViewSearchBar.setSubmitButtonEnabled(true);
 
-        //@@ test
         preSearchCondition = new IgActivity();
-        preSearchCondition.setTags("關懷");
+        setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_recently).toString());
     }
 
     @Override
@@ -208,14 +209,23 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 if(tab.getText() == null)
                     return;
 
-                String strTag = tab.getText().toString();
-
-                if(StringTool.checkStringNotNull(strTag)) {
-                    showWaitingDialog(HomeActivity.class.getName());
-
-                    preSearchCondition.setTags(strTag);
-                    refresh();
+                boolean bIsDefaultTag = false;
+                if(tab.getTag() != null) {
+                    String strTag = (String)tab.getTag();
+                    if(StringTool.checkStringNotNull(strTag))
+                        bIsDefaultTag = true;
                 }
+
+                preSearchCondition = new IgActivity();
+                String strTabText = tab.getText().toString();
+
+                if(bIsDefaultTag)
+                    setConditionByDefaultTab(preSearchCondition, strTabText);
+                else
+                    preSearchCondition.setTags(strTabText);
+
+                showWaitingDialog(HomeActivity.class.getName());
+                refresh();
             }
 
             @Override
@@ -377,16 +387,29 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             mImgIngoodIcon.setVisibility(View.VISIBLE);
     }
 
-    private void makeTodayTags() {
+    private void makeDefaultTags() {
+
+        TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
+        tabRecently.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabRecently.setText(R.string.tag_recently);
+        mTabLayoutTagBar.addTab(tabRecently);
+
+        TabLayout.Tab tabPopularity = mTabLayoutTagBar.newTab();
+        tabPopularity.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabPopularity.setText(R.string.tag_popularity);
+        mTabLayoutTagBar.addTab(tabPopularity);
+
+        TabLayout.Tab tabGood = mTabLayoutTagBar.newTab();
+        tabGood.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabGood.setText(R.string.tag_good);
+        mTabLayoutTagBar.addTab(tabGood);
+
+        TabLayout.Tab tabNearly = mTabLayoutTagBar.newTab();
+        tabNearly.setTag(DEFAULT_TAG_IN_TAGBAR);
+        tabNearly.setText(R.string.tag_nearly);
+        mTabLayoutTagBar.addTab(tabNearly);
+
         //@@ test
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_care));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_environmental_protection));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_education));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_manpower));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText(R.string.tag_animal));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Sport"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Music"));
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Culture"));
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
     }
 
@@ -396,5 +419,19 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             return lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1;
         }
         return false;
+    }
+
+    private void setConditionByDefaultTab(IgActivity igCondition, String strTabContext) {
+        if(!StringTool.checkStringNotNull(strTabContext))
+            return;
+
+        if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
+
+            String strCurTime = DateHelper.getCurTime();
+            String strTimeAfterOneWeek = DateHelper.getTimeByDaysBasedCurrent(7);
+
+            igCondition.setDateBegin(strCurTime);
+            igCondition.setDateEnd(strTimeAfterOneWeek);
+        }
     }
 }

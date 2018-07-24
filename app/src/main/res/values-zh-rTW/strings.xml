@@ -66,11 +66,10 @@
     <string name="activity_publish_images_select">選擇圖片</string>
 
     <!-- Tags -->
-    <string name="tag_care">關懷</string>
-    <string name="tag_environmental_protection">環保</string>
-    <string name="tag_education">教育</string>
-    <string name="tag_manpower">人力</string>
-    <string name="tag_animal">動物</string>
+    <string name="tag_recently">近期</string>
+    <string name="tag_popularity">熱門</string>
+    <string name="tag_good">優質</string>
+    <string name="tag_nearly">附近</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">關心社會上的弱勢族群。\n例如街友、街賣者、憨兒、獨居老人等等。</string>

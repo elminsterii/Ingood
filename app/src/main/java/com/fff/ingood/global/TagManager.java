@@ -54,22 +54,19 @@ public class TagManager {
     private void initialize() {
         m_mapTagColor = new HashMap<>();
 
-        String strTagCare = mContext.getResources().getText(R.string.tag_care).toString();
-        int colTagCare = mContext.getResources().getColor(R.color.colorTagCare);
-        String strTagEnvironmentalProtection = mContext.getResources().getText(R.string.tag_environmental_protection).toString();
-        int colTagEnvironmentalProtection = mContext.getResources().getColor(R.color.colorTagEnvironmentalProtection);
-        String strTagEducation = mContext.getResources().getText(R.string.tag_education).toString();
-        int colTagEducation = mContext.getResources().getColor(R.color.colorTagEducation);
-        String strTagManpower = mContext.getResources().getText(R.string.tag_manpower).toString();
-        int colTagManpower = mContext.getResources().getColor(R.color.colorTagManpower);
-        String strTagAnimal = mContext.getResources().getText(R.string.tag_animal).toString();
-        int colTagAnimal = mContext.getResources().getColor(R.color.colorTagAnimal);
+        String strTagRecently = mContext.getResources().getText(R.string.tag_recently).toString();
+        int colTagRecently = mContext.getResources().getColor(R.color.colorTagRecently);
+        String strTagPopularity = mContext.getResources().getText(R.string.tag_popularity).toString();
+        int colTagPopularity = mContext.getResources().getColor(R.color.colorTagPopularity);
+        String strTagGood = mContext.getResources().getText(R.string.tag_good).toString();
+        int colTagGood = mContext.getResources().getColor(R.color.colorTagGood);
+        String strTagNearly = mContext.getResources().getText(R.string.tag_nearly).toString();
+        int colTagNearly = mContext.getResources().getColor(R.color.colorTagNearly);
 
-        m_mapTagColor.put(strTagCare, colTagCare);
-        m_mapTagColor.put(strTagEnvironmentalProtection, colTagEnvironmentalProtection);
-        m_mapTagColor.put(strTagEducation, colTagEducation);
-        m_mapTagColor.put(strTagManpower, colTagManpower);
-        m_mapTagColor.put(strTagAnimal, colTagAnimal);
+        m_mapTagColor.put(strTagRecently, colTagRecently);
+        m_mapTagColor.put(strTagPopularity, colTagPopularity);
+        m_mapTagColor.put(strTagGood, colTagGood);
+        m_mapTagColor.put(strTagNearly, colTagNearly);
     }
 
     public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {
