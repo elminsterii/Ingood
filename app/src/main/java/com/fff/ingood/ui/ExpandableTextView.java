@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.fff.ingood.R;
@@ -24,17 +25,37 @@ public class ExpandableTextView extends TextView implements View.OnClickListener
 
     public ExpandableTextView(Context context) {
         super(context);
-        setOnClickListener(this);
+        initListener();
     }
 
     public ExpandableTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setOnClickListener(this);
+        initListener();
     }
 
     public ExpandableTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initListener();
+    }
+
+    private void initListener() {
         setOnClickListener(this);
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (getLineCount() > 1) {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    if (getLineCount() > iMaxLines)
+                        setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResExpandIconResId);
+                    else
+                        setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+                    setMaxLines(iMaxLines);
+                }
+            }
+        });
     }
 
     public void setExpandIcon(int resExpandIconResId) {
@@ -43,20 +64,6 @@ public class ExpandableTextView extends TextView implements View.OnClickListener
 
     public void setCollapsedIcon(int resCollapsedIconResId) {
         mResCollapsedIconResId = resCollapsedIconResId;
-    }
-
-    @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
-        post(new Runnable() {
-            public void run() {
-                if (getLineCount() > iMaxLines)
-                    setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, mResExpandIconResId);
-                else
-                    setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-
-                setMaxLines(iMaxLines);
-            }
-        });
     }
 
     public void setMaxLine(int maxLines) {
