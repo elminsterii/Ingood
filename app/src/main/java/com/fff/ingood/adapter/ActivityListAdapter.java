@@ -17,7 +17,6 @@ import com.fff.ingood.R;
 import com.fff.ingood.activity.IgActivityDetailActivity;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
@@ -25,6 +24,7 @@ import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.tools.TimeHelper;
 
 import java.util.List;
 
@@ -141,7 +141,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeTime(ViewHolder holder, IgActivity activity) {
-        String strTime = IgActivityHelper.makeDateStringByIgActivity(activity);
+        String strTime = TimeHelper.makeDateStringByIgActivity(activity);
         holder.mTextViewActivityTime.setText(strTime);
     }
 

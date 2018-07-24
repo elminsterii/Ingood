@@ -26,8 +26,8 @@ import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
-import com.fff.ingood.tools.DateHelper;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.tools.TimeHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -427,8 +427,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
 
-            String strCurTime = DateHelper.getCurTime();
-            String strTimeAfterOneWeek = DateHelper.getTimeByDaysBasedCurrent(7);
+            String strCurTime = TimeHelper.getCurTime();
+            String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
 
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);

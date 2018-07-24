@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
@@ -33,6 +32,7 @@ import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.tools.TimeHelper;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
@@ -185,14 +186,14 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mBtnStartDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
+                final Calendar c = Calendar.getInstance(Locale.getDefault());
                 int mYear = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH);
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String strStartDate = setDateFormat(year ,month, day);
+                        String strStartDate = setDateFormat(year, month+1, day);
                         mTextViewStartDateDescription.setText(strStartDate);
 
                     }
@@ -209,7 +210,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        String strStartTime = setTimeFormat(hour ,minute);
+                        String strStartTime = setTimeFormat(hour, minute);
                         mTextViewStartTimeDescription.setText(strStartTime);
                     }
                 }, hour, minute, false).show();
@@ -226,7 +227,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new DatePickerDialog(IgActivityPublishActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        String strEndDate = setDateFormat(year, month, day);
+                        String strEndDate = setDateFormat(year, month+1, day);
                         mTextViewEndDateDescription.setText(strEndDate);
                     }
                 }, mYear, mMonth, mDay).show();
@@ -242,7 +243,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hour, int minute) {
-                        String strEndTime = setTimeFormat(hour ,minute);
+                        String strEndTime = setTimeFormat(hour, minute);
                         mTextViewEndTimeDescription.setText(strEndTime);
                     }
                 }, hour, minute, false).show();
@@ -302,8 +303,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
         String strEndDate = mTextViewEndDateDescription.getText().toString();
         String strEndTime = mTextViewEndTimeDescription.getText().toString();
 
-        String strStartDateTime = IgActivityHelper.makeIgActivityDateStringByUI(strStartDate + " " + strStartTime);
-        String strEndDateTime = IgActivityHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
+        String strStartDateTime = TimeHelper.makeIgActivityDateStringByUI(strStartDate + " " + strStartTime);
+        String strEndDateTime = TimeHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
         activity.setDateBegin(strStartDateTime);
         activity.setDateEnd(strEndDateTime);
         activity.setPublishBegin(strStartDateTime);

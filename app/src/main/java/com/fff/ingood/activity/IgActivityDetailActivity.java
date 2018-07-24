@@ -25,7 +25,6 @@ import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.DeemInfoManager;
-import com.fff.ingood.global.IgActivityHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
@@ -48,8 +47,8 @@ import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
-import com.fff.ingood.tools.DateHelper;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.WarningDialog;
@@ -517,7 +516,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         }
 
         textViewCommentPublisherName.setText(comment.getDisplayName());
-        textViewCommentPublishDate.setText(DateHelper.gmtToLocalTime(comment.getTs()));
+        textViewCommentPublishDate.setText(TimeHelper.gmtToLocalTime(comment.getTs()));
         textViewCommentContent.setText(comment.getContent());
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -528,7 +527,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiBasicInfoByIgActivity(IgActivity activity) {
-        String strDate = IgActivityHelper.makeDateStringByIgActivity(activity);
+        String strDate = TimeHelper.makeDateStringByIgActivity(activity);
 
         mTextViewTitle.setText(activity.getName());
         mTextViewDate.setText(strDate);
