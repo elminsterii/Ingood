@@ -67,6 +67,26 @@ public class TimeHelper {
         return bRes;
     }
 
+    public static boolean checkBeginTimeBeforeEndTime(String strBeginTime, String strEndTime) {
+        boolean bRes = false;
+
+        if(StringTool.checkStringNotNull(strBeginTime)
+            && StringTool.checkStringNotNull(strEndTime)) {
+
+            String strPattern = "yyyy-MM-dd HH:mm:ss";
+            DateFormat dateFormat = new SimpleDateFormat(strPattern, Locale.getDefault());
+
+            try {
+                Date dateBegin = dateFormat.parse(strBeginTime);
+                Date dateEnd = dateFormat.parse(strEndTime);
+                bRes = dateBegin.before(dateEnd);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return bRes;
+    }
+
     public static String gmtToLocalTime(String strGMT) {
         String strDatePattern = "yyyy-MM-dd HH:mm:ss";
         DateFormat dateFormat = new SimpleDateFormat(strDatePattern, Locale.US);

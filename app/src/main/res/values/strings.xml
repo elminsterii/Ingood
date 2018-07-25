@@ -119,6 +119,15 @@
     <string name="comment_has_been_published">Comment has been published</string>
     <string name="activity_has_been_published">Activity has been published</string>
     <string name="activity_has_been_updated">Activity has been updated</string>
+    <string name="publish_igactivity_name_format_wrong">Activity name format wrong</string>
+    <string name="publish_igactivity_max_attention_zero">Upper limit of attention can not be zero</string>
+    <string name="publish_igactivity_max_attention_format_wrong">Upper limit of attention is format wrong</string>
+    <string name="publish_igactivity_location_format_wrong">Activity location format wrong</string>
+    <string name="publish_igactivity_description_format_wrong">Activity description format wrong</string>
+    <string name="publish_igactivity_tags_format_wrong">Input one type of activity at least</string>
+    <string name="publish_igactivity_images_format_wrong">Upload one activity image at least</string>
+    <string name="publish_igactivity_time_format_wrong">Determine time for activity</string>
+    <string name="publish_igactivity_begin_end_time_wrong">Begin can not after end time</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">Success, request has been done</string>

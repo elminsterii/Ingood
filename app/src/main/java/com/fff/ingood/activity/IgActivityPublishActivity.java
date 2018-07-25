@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,24 +157,26 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 if(m_igActivity == null)
                     m_igActivity = genEmptyIgActivity();
 
-                Person person = PersonManager.getInstance().getPerson();
-                m_igActivity.setPublisherEmail(person.getEmail());
-                m_igActivity.setPublisherPwd(person.getPassword());
-                m_igActivity.setName(mEditTextIgActivityName.getText().toString());
-                m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
-                m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
-                m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
-                setIgActivityTags(m_igActivity);
-                setIgActivityTime(m_igActivity);
+                if(isDataValid()) {
+                    Person person = PersonManager.getInstance().getPerson();
+                    m_igActivity.setPublisherEmail(person.getEmail());
+                    m_igActivity.setPublisherPwd(person.getPassword());
+                    m_igActivity.setName(mEditTextIgActivityName.getText().toString());
+                    m_igActivity.setLocation(mEditTextIgActivityLocation.getText().toString());
+                    m_igActivity.setDescription(mEditTextIgActivityDescription.getText().toString());
+                    m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
+                    setIgActivityTags(m_igActivity);
+                    setIgActivityTime(m_igActivity);
 
-                if(!m_bEditMode) {
-                    m_igActivity.setLargeActivity("0");
-                    createIgActivity(m_igActivity);
+                    if(!m_bEditMode) {
+                        m_igActivity.setLargeActivity("0");
+                        createIgActivity(m_igActivity);
+                    }
+                    else
+                        updateIgActivity(m_igActivity);
+
+                    showWaitingDialog(IgActivityPublishActivity.class.getName());
                 }
-                else
-                    updateIgActivity(m_igActivity);
-
-                showWaitingDialog(IgActivityPublishActivity.class.getName());
             }
         });
 
@@ -451,6 +455,149 @@ public class IgActivityPublishActivity extends BaseActivity implements
             mBtnImageUpload.setVisibility(View.INVISIBLE);
         else
             mBtnImageUpload.setVisibility(View.VISIBLE);
+    }
+
+    private boolean isDataValid() {
+        return checkIgActivityNameValid()
+                && checkIgActivityAttentionValid()
+                && checkIgActivityLocationValid()
+                && checkIgActivityDescriptionValid()
+                && checkIgActivityTagsValid()
+                && checkIgActivityDateAndTimeValid()
+                && checkIgActivityImagesValid();
+    }
+
+    private boolean checkIgActivityImagesValid() {
+        boolean bRes = false;
+
+        if(m_lsUploadImages != null && m_lsUploadImages.size() >= 1)
+            bRes = true;
+        else
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_images_format_wrong), Toast.LENGTH_SHORT).show();
+        return bRes;
+    }
+
+    private boolean checkIgActivityDateAndTimeValid() {
+        boolean bRes = false;
+
+        String strStartDate = mTextViewStartDateDescription.getText().toString();
+        String strStartTime = mTextViewStartTimeDescription.getText().toString();
+        String strEndDate = mTextViewEndDateDescription.getText().toString();
+        String strEndTime = mTextViewEndTimeDescription.getText().toString();
+
+        strStartDate = strStartDate.contentEquals(getResources().getText(R.string.activity_publish_date_description)) ? "" : strStartDate;
+        strStartTime = strStartTime.contentEquals(getResources().getText(R.string.activity_publish_time_description)) ? "" : strStartTime;
+        strEndDate = strEndDate.contentEquals(getResources().getText(R.string.activity_publish_date_description)) ? "" : strEndDate;
+        strEndTime = strEndTime.contentEquals(getResources().getText(R.string.activity_publish_time_description)) ? "" : strEndTime;
+
+        if(StringTool.checkStringNotNull(strStartDate)
+                && StringTool.checkStringNotNull(strStartTime)
+                && StringTool.checkStringNotNull(strEndDate)
+                && StringTool.checkStringNotNull(strEndTime)) {
+            String strStartDateTime = TimeHelper.makeIgActivityDateStringByUI(strStartDate + " " + strStartTime);
+            String strEndDateTime = TimeHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
+
+            if(TimeHelper.checkBeginTimeBeforeEndTime(strStartDateTime, strEndDateTime))
+                bRes = true;
+            else
+                Toast.makeText(this, getResources().getText(R.string.publish_igactivity_begin_end_time_wrong), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_time_format_wrong), Toast.LENGTH_SHORT).show();
+        }
+        return bRes;
+    }
+
+    private boolean checkIgActivityNameValid() {
+        boolean bRes = false;
+        String strIgActivityName = mEditTextIgActivityName.getText().toString();
+
+        if(StringTool.checkStringNotNull(strIgActivityName)) {
+            setViewUnderlineColor(mEditTextIgActivityName, getResources().getColor(R.color.colorTextHint));
+            bRes = true;
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_name_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextIgActivityName, getResources().getColor(R.color.colorWarningRed));
+        }
+        return bRes;
+    }
+
+    private boolean checkIgActivityAttentionValid() {
+        boolean bRes = false;
+        String strMaxAttention = mEditTextIgActivityMaxAttention.getText().toString();
+
+        if(StringTool.checkStringNotNull(strMaxAttention)) {
+            int iMaxAttention = Integer.parseInt(strMaxAttention);
+            if(iMaxAttention <= 0) {
+                Toast.makeText(this, getResources().getText(R.string.publish_igactivity_max_attention_zero), Toast.LENGTH_SHORT).show();
+                setViewUnderlineColor(mEditTextIgActivityMaxAttention, getResources().getColor(R.color.colorWarningRed));
+            } else {
+                setViewUnderlineColor(mEditTextIgActivityMaxAttention, getResources().getColor(R.color.colorTextHint));
+                bRes = true;
+            }
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_max_attention_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextIgActivityMaxAttention, getResources().getColor(R.color.colorWarningRed));
+        }
+        return bRes;
+    }
+
+    private boolean checkIgActivityLocationValid() {
+        boolean bRes = false;
+        String strIgActivityLocation = mEditTextIgActivityLocation.getText().toString();
+
+        if(StringTool.checkStringNotNull(strIgActivityLocation)) {
+            setViewUnderlineColor(mEditTextIgActivityLocation, getResources().getColor(R.color.colorTextHint));
+            bRes = true;
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_name_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextIgActivityLocation, getResources().getColor(R.color.colorWarningRed));
+        }
+        return bRes;
+    }
+
+    private boolean checkIgActivityDescriptionValid() {
+        boolean bRes = false;
+        String strIgActivityDescription = mEditTextIgActivityDescription.getText().toString();
+
+        if(StringTool.checkStringNotNull(strIgActivityDescription)) {
+            setViewUnderlineColor(mEditTextIgActivityDescription, getResources().getColor(R.color.colorTextHint));
+            bRes = true;
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_description_format_wrong), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mEditTextIgActivityDescription, getResources().getColor(R.color.colorWarningRed));
+        }
+        return bRes;
+    }
+
+    private boolean checkIgActivityTagsValid() {
+        boolean bRes = false;
+        TextView textViewFocusAndHighLight = null;
+
+        if(m_lsTagsInput != null && m_lsTagsInput.size() >= 1) {
+            for (TextView textView : m_lsTagsInput) {
+                setViewUnderlineColor(textView, getResources().getColor(R.color.colorTextHint));
+
+                String strTag = textView.getText().toString();
+                if (StringTool.checkStringNotNull(strTag)) {
+                    bRes = true;
+                    break;
+                } else {
+                    if(textViewFocusAndHighLight == null)
+                        textViewFocusAndHighLight = textView;
+                }
+            }
+        }
+        if(!bRes) {
+            Toast.makeText(this, getResources().getText(R.string.publish_igactivity_tags_format_wrong), Toast.LENGTH_SHORT).show();
+            if(textViewFocusAndHighLight != null)
+                setViewUnderlineColor(textViewFocusAndHighLight, getResources().getColor(R.color.colorWarningRed));
+        }
+        return bRes;
+    }
+
+    private void setViewUnderlineColor(View view, int iColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(iColor);
+        ViewCompat.setBackgroundTintList(view, colorStateList);
     }
 
     @Override

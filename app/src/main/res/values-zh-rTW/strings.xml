@@ -54,7 +54,7 @@
     <!-- Activity publish -->
     <string name="activity_publish_name">活動名稱</string>
     <string name="activity_publish_location">活動地點</string>
-    <string name="activity_publish_description">活動描述</string>
+    <string name="activity_publish_description">活動介紹</string>
     <string name="activity_publish_date_begin">開始時間</string>
     <string name="activity_publish_date_end">結束時間</string>
     <string name="activity_publish_date_description">請選擇日期</string>
@@ -120,6 +120,15 @@
     <string name="comment_has_been_published">留言已發佈</string>
     <string name="activity_has_been_published">活動已發佈</string>
     <string name="activity_has_been_updated">活動已更新</string>
+    <string name="publish_igactivity_name_format_wrong">請輸入活動名稱</string>
+    <string name="publish_igactivity_max_attention_zero">人數上限不可為零</string>
+    <string name="publish_igactivity_max_attention_format_wrong">請輸入人數上限</string>
+    <string name="publish_igactivity_location_format_wrong">請輸入活動地點</string>
+    <string name="publish_igactivity_description_format_wrong">請輸入活動介紹</string>
+    <string name="publish_igactivity_tags_format_wrong">請至少輸入一種類型</string>
+    <string name="publish_igactivity_images_format_wrong">請至少上傳一張活動圖片</string>
+    <string name="publish_igactivity_time_format_wrong">請選擇活動時間</string>
+    <string name="publish_igactivity_begin_end_time_wrong">開始時間不可超過結束時間</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>
