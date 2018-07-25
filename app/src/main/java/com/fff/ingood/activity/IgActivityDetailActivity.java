@@ -47,6 +47,7 @@ import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
+import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
@@ -109,6 +110,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private List<ImageView> m_lsImageViewAttendeeIcons;
     private List<ImageView> m_lsImageViewCommentIcons;
+    private List<Bitmap> m_lsIgActivityMainImages;
 
     private int mTagBarWidth;
     private boolean m_bIsGetTagBarWidth = false;
@@ -116,6 +118,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
     private boolean m_bIsSave;
+    private int curIndexMainImage;
 
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
     private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
@@ -176,15 +179,34 @@ public class IgActivityDetailActivity extends BaseActivity implements
             return;
 
         setUiPublisherDefaultIcon();
-        setUiIgActivityDefaultImage();
         setUiSaveIgActivity();
+
+        setUiIgActivityDefaultImage();
+        downloadImages_IgActivityMainImages(null);
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
         getPublisherInfo();
     }
 
+    private void changeMainImage(int index) {
+        if(index < m_lsIgActivityMainImages.size()) {
+            Bitmap bm = m_lsIgActivityMainImages.get(index);
+            mImageViewIgActivityMain.setImageBitmap(bm);
+        }
+    }
+
     @Override
     protected void initListener() {
+        mImageViewIgActivityMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(curIndexMainImage >= m_lsIgActivityMainImages.size())
+                    curIndexMainImage = 0;
+                changeMainImage(curIndexMainImage);
+                curIndexMainImage++;
+            }
+        });
+
         mImageViewBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -378,6 +400,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiIgActivityDefaultImage() {
+        if(m_lsIgActivityMainImages == null)
+            m_lsIgActivityMainImages = new ArrayList<>();
+        curIndexMainImage = 0;
         mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
@@ -389,6 +414,20 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private void downloadIcon_IgActivityPublisher(Person igActivityPublisher) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonMainIconDownload(this, igActivityPublisher.getEmail());
+    }
+
+    private void downloadImages_IgActivityMainImages(IgActivity activity) {
+        m_lsIgActivityMainImages.clear();
+
+        //@@ test
+        Bitmap bm = ImageHelper.loadBitmapFromResId(this, R.drawable.sample_activity);
+        m_lsIgActivityMainImages.add(bm);
+
+        Bitmap bm1 = ImageHelper.loadBitmapFromResId(this, R.drawable.facebook);
+        m_lsIgActivityMainImages.add(bm1);
+
+        Bitmap bm2 = ImageHelper.loadBitmapFromResId(this, R.drawable.google);
+        m_lsIgActivityMainImages.add(bm2);
     }
 
     private void setUiAttendeesDefaultIcons(int iAttention) {
