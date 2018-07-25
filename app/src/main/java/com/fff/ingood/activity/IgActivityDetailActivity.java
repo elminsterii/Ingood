@@ -402,7 +402,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private void setUiIgActivityDefaultImage() {
         if(m_lsIgActivityMainImages == null)
             m_lsIgActivityMainImages = new ArrayList<>();
-        curIndexMainImage = 0;
+        curIndexMainImage = 1;
         mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
     }
 
