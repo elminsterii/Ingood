@@ -40,7 +40,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageView mImageView_EditName;
     private ImageView mImageView_EditDescription;
     private ImageView mImageView_EditPhoto;
-    private ImageView mImageView_EditInterests;
+    //private ImageView mImageView_EditInterests;
 
     private PersonDataActivity mActivity;
 
@@ -111,7 +111,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageView_EditPhoto = findViewById(R.id.imageview_edit_photo);
         mImageView_EditName = findViewById(R.id.imageview_edit_name);
         mImageView_EditDescription = findViewById(R.id.imageview_edit_about_me);
-        mImageView_EditInterests = findViewById(R.id.imageview_edit_tags);
+        //mImageView_EditInterests = findViewById(R.id.imageview_edit_tags);
 
 
         mButton_Save = findViewById(R.id.btn_save);
@@ -240,13 +240,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mImageView_EditInterests.setOnClickListener(new ImageView.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
+//        mImageView_EditInterests.setOnClickListener(new ImageView.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
 
         mSpinner_Location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
