@@ -48,6 +48,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activity.PersonDataActivity"
+            android:label="@string/sign_in"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".activity.IgActivityPublishActivity"
             android:label="@string/activity_publish"
             android:screenOrientation="portrait"

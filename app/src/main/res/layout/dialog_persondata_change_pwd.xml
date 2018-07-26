@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="270dp"
+    android:layout_height="261dp"
+    android:orientation="vertical"
+    tools:context=".fragment.RegistrationFormFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
+
+        <EditText
+            android:id="@+id/edit_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:hint="@string/user_data_pwd"
+            android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:theme="@style/IngoodEditTextStyle"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageButton
+            android:id="@+id/pwd_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_pwd_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textCursorDrawable="@null"
+            android:inputType="textPassword"
+            android:hint="@string/edit_hint_new_pwd"
+            android:paddingStart="12dp"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="RtlSymmetry"
+            android:ems="10"/>
+
+        <ImageButton
+            android:id="@+id/pwd_new_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd_new"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31.5dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="@dimen/gap_registration_btw_texts">
+        <EditText
+            android:theme="@style/IngoodEditTextStyle"
+            android:id="@+id/edit_pwd_new_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textCursorDrawable="@null"
+            android:inputType="textPassword"
+            android:hint="@string/edit_hint_confirm_new_pwd"
+            android:paddingStart="12dp"
+            android:textColorHighlight="@color/colorSlaveUltraLight"
+            tools:ignore="RtlSymmetry"
+            android:ems="10"/>
+
+        <ImageButton
+            android:id="@+id/pwd_new_confirm_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/edit_pwd_new_confirm"
+            android:layout_centerVertical="true"
+            android:background="@color/colorTransparent"
+            android:src="@drawable/view_g"/>
+    </RelativeLayout>
+
+</LinearLayout>

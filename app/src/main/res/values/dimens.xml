@@ -37,6 +37,11 @@
     <dimen name="login_margin_signin_btn_btw_register_btn">4.5dp</dimen>
     <dimen name="login_btns_height">42.5dp</dimen>
 
+    <!-- PersonData -->
+
+    <dimen name="text_size_persondata_form_change_pwd_input">15sp</dimen>
+
+
     <!-- Activity item in Homepage -->
     <dimen name="height_igactivity_image_hp">150.8dp</dimen>
     <dimen name="margin_top_igactivity_item_hp">12.7dp</dimen>

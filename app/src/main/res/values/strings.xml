@@ -37,7 +37,16 @@
     <string name="activity_action_edit">Edit</string>
     <string name="activity_action_delete">Delete</string>
 
-    <!-- Activity detail -->
+    <!-- PersonData -->
+    <string name="title_comment_grade">Comment Grade</string>
+    <string name="title_about_me">About Me</string>
+    <string name="title_interesting_tags">Interests</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_change_pwd">Change Password</string>
+    <string name="edit_hint_new_pwd">New Password</string>
+    <string name="edit_hint_confirm_new_pwd">Confirm New Password</string>
+    <string name="btn_text_cancel">Cancel</string>
+    <string name="btn_text_ok">OK</string>    <!-- Activity detail -->
     <string name="activity_detail_publisher">Publisher : </string>
     <string name="activity_detail_attendees_count_1"> </string>
     <string name="activity_detail_attendees_count_2">people have attended</string>

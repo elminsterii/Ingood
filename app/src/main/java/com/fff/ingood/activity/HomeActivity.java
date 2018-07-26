@@ -166,6 +166,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                         switch(menuItem.getItemId()) {
                             case R.id.menuItemPersonal :
                                 //TODO - go to personal information page
+                                mActivity.startActivity(new Intent(mActivity, PersonDataActivity.class));
+                                mActivity.finish();
                                 break;
                             case R.id.menuItemLogout :
                                 FlowManager.getInstance().goLogoutFlow(mActivity);
