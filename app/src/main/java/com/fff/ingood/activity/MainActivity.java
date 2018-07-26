@@ -19,6 +19,7 @@ import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.service.IngoodService;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startService(new Intent(this, IngoodService.class));
         initApplication();
 
         mWaitingDialog = new CircleProgressBarDialog();
