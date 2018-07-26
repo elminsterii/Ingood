@@ -74,11 +74,16 @@
     <string name="tag_sport">Sport</string>
     <string name="tag_casual">Casual</string>
     <string name="tag_literary">Literary</string>
+    <string name="tag_literary2">Literary</string>
+    <string name="tag_literary3">Literary</string>
     <string name="tag_social">Social</string>
+    <string name="tag_social2">Social</string>
     <string name="tag_mind">Mind</string>
     <string name="tag_research">Research</string>
     <string name="tag_care">Care</string>
     <string name="tag_env">Environment</string>
+    <string name="tag_outdoor">Outdoor</string>
+    <string name="tag_outdoor2">Outdoor</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">Human care</string>

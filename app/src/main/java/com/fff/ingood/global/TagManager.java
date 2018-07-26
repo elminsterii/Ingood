@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by ElminsterII on 2018/6/20.
@@ -46,9 +47,15 @@ public class TagManager {
     }
 
     private int getTagColor(String strTag) {
-        if(!m_mapTagColor.containsKey(strTag))
-            return mContext.getResources().getColor(R.color.colorPrimary);
-        return m_mapTagColor.get(strTag);
+        int iColor = mContext.getResources().getColor(R.color.colorPrimary);
+        Set<String> keys = m_mapTagColor.keySet();
+        for(String key : keys) {
+            if(strTag.contains(key)) {
+                iColor = m_mapTagColor.get(key);
+                break;
+            }
+        }
+        return iColor;
     }
 
     private void initialize() {
@@ -60,8 +67,14 @@ public class TagManager {
         int colTagCasual = mContext.getResources().getColor(R.color.colorTagLiteGreen);
         String strTagLiterary = mContext.getResources().getText(R.string.tag_literary).toString();
         int colTagLiterary = mContext.getResources().getColor(R.color.colorTagBrown);
+        String strTagLiterary2 = mContext.getResources().getText(R.string.tag_literary2).toString();
+        int colTagLiterary2 = mContext.getResources().getColor(R.color.colorTagBrown);
+        String strTagLiterary3 = mContext.getResources().getText(R.string.tag_literary3).toString();
+        int colTagLiterary3 = mContext.getResources().getColor(R.color.colorTagBrown);
         String strTagSocial = mContext.getResources().getText(R.string.tag_social).toString();
         int colTagSocial = mContext.getResources().getColor(R.color.colorTagPurple);
+        String strTagSocial2 = mContext.getResources().getText(R.string.tag_social2).toString();
+        int colTagSocial2 = mContext.getResources().getColor(R.color.colorTagPurple);
         String strTagMind = mContext.getResources().getText(R.string.tag_mind).toString();
         int colTagMind = mContext.getResources().getColor(R.color.colorTagPink);
         String strTagResearch = mContext.getResources().getText(R.string.tag_research).toString();
@@ -70,15 +83,24 @@ public class TagManager {
         int colTagCare = mContext.getResources().getColor(R.color.colorTagPink);
         String strTagEnv = mContext.getResources().getText(R.string.tag_env).toString();
         int colTagEnv = mContext.getResources().getColor(R.color.colorTagGreen);
+        String strTagOutdoor = mContext.getResources().getText(R.string.tag_outdoor).toString();
+        int colTagOutdoor = mContext.getResources().getColor(R.color.colorTagGreen);
+        String strTagOutdoor2 = mContext.getResources().getText(R.string.tag_outdoor2).toString();
+        int colTagOutdoor2 = mContext.getResources().getColor(R.color.colorTagGreen);
 
         m_mapTagColor.put(strTagSport, colTagSport);
         m_mapTagColor.put(strTagCasual, colTagCasual);
         m_mapTagColor.put(strTagLiterary, colTagLiterary);
+        m_mapTagColor.put(strTagLiterary2, colTagLiterary2);
+        m_mapTagColor.put(strTagLiterary3, colTagLiterary3);
         m_mapTagColor.put(strTagSocial, colTagSocial);
+        m_mapTagColor.put(strTagSocial2, colTagSocial2);
         m_mapTagColor.put(strTagMind, colTagMind);
         m_mapTagColor.put(strTagResearch, colTagResearch);
         m_mapTagColor.put(strTagCare, colTagCare);
         m_mapTagColor.put(strTagEnv, colTagEnv);
+        m_mapTagColor.put(strTagOutdoor, colTagOutdoor);
+        m_mapTagColor.put(strTagOutdoor2, colTagOutdoor2);
     }
 
     public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {
