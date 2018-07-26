@@ -54,19 +54,31 @@ public class TagManager {
     private void initialize() {
         m_mapTagColor = new HashMap<>();
 
-        String strTagRecently = mContext.getResources().getText(R.string.tag_recently).toString();
-        int colTagRecently = mContext.getResources().getColor(R.color.colorTagRecently);
-        String strTagPopularity = mContext.getResources().getText(R.string.tag_popularity).toString();
-        int colTagPopularity = mContext.getResources().getColor(R.color.colorTagPopularity);
-        String strTagGood = mContext.getResources().getText(R.string.tag_good).toString();
-        int colTagGood = mContext.getResources().getColor(R.color.colorTagGood);
-        String strTagNearly = mContext.getResources().getText(R.string.tag_nearly).toString();
-        int colTagNearly = mContext.getResources().getColor(R.color.colorTagNearly);
+        String strTagSport = mContext.getResources().getText(R.string.tag_sport).toString();
+        int colTagSport = mContext.getResources().getColor(R.color.colorTagBlue);
+        String strTagCasual = mContext.getResources().getText(R.string.tag_casual).toString();
+        int colTagCasual = mContext.getResources().getColor(R.color.colorTagLiteGreen);
+        String strTagLiterary = mContext.getResources().getText(R.string.tag_literary).toString();
+        int colTagLiterary = mContext.getResources().getColor(R.color.colorTagBrown);
+        String strTagSocial = mContext.getResources().getText(R.string.tag_social).toString();
+        int colTagSocial = mContext.getResources().getColor(R.color.colorTagPurple);
+        String strTagMind = mContext.getResources().getText(R.string.tag_mind).toString();
+        int colTagMind = mContext.getResources().getColor(R.color.colorTagPink);
+        String strTagResearch = mContext.getResources().getText(R.string.tag_research).toString();
+        int colTagResearch = mContext.getResources().getColor(R.color.colorTagBlue);
+        String strTagCare = mContext.getResources().getText(R.string.tag_care).toString();
+        int colTagCare = mContext.getResources().getColor(R.color.colorTagPink);
+        String strTagEnv = mContext.getResources().getText(R.string.tag_env).toString();
+        int colTagEnv = mContext.getResources().getColor(R.color.colorTagGreen);
 
-        m_mapTagColor.put(strTagRecently, colTagRecently);
-        m_mapTagColor.put(strTagPopularity, colTagPopularity);
-        m_mapTagColor.put(strTagGood, colTagGood);
-        m_mapTagColor.put(strTagNearly, colTagNearly);
+        m_mapTagColor.put(strTagSport, colTagSport);
+        m_mapTagColor.put(strTagCasual, colTagCasual);
+        m_mapTagColor.put(strTagLiterary, colTagLiterary);
+        m_mapTagColor.put(strTagSocial, colTagSocial);
+        m_mapTagColor.put(strTagMind, colTagMind);
+        m_mapTagColor.put(strTagResearch, colTagResearch);
+        m_mapTagColor.put(strTagCare, colTagCare);
+        m_mapTagColor.put(strTagEnv, colTagEnv);
     }
 
     public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {

@@ -65,11 +65,21 @@
     <string name="activity_publish_images_upload">上傳活動圖片</string>
     <string name="activity_publish_images_select">選擇圖片</string>
 
-    <!-- Tags -->
+    <!-- Default Tags -->
     <string name="tag_recently">近期</string>
     <string name="tag_popularity">熱門</string>
     <string name="tag_good">優質</string>
     <string name="tag_nearly">附近</string>
+
+    <!-- Custom Tags -->
+    <string name="tag_sport">運動</string>
+    <string name="tag_casual">休閒</string>
+    <string name="tag_literary">文藝</string>
+    <string name="tag_social">社交</string>
+    <string name="tag_mind">心靈</string>
+    <string name="tag_research">研討</string>
+    <string name="tag_care">關懷</string>
+    <string name="tag_env">環境</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">關心社會上的弱勢族群。\n例如街友、街賣者、憨兒、獨居老人等等。</string>

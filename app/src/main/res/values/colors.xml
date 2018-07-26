@@ -24,8 +24,11 @@
     <color name="colorDeemBad">#FF5F5F</color>
 
     <!-- Tags Color -->
-    <color name="colorTagRecently">#3C5071</color>
-    <color name="colorTagPopularity">#CF5044</color>
-    <color name="colorTagGood">#14803A</color>
-    <color name="colorTagNearly">#664536</color>
+    <color name="colorTagBlue">#3C5071</color>
+    <color name="colorTagRed">#DF5044</color>
+    <color name="colorTagGreen">#34a05A</color>
+    <color name="colorTagLiteGreen">#64a05A</color>
+    <color name="colorTagBrown">#664536</color>
+    <color name="colorTagPurple">#504060</color>
+    <color name="colorTagPink">#EE909B</color>
 </resources>
