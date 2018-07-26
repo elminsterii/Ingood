@@ -22,14 +22,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
 import com.fff.ingood.ui.CircleProgressBarDialog;
-
-import java.util.List;
 
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller{
 
@@ -51,8 +50,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     private Button mButton_Save;
 
-    private Spinner mSpinner_Gender;
     private Spinner mSpinner_Age;
+    private Spinner mSpinner_Gender;
     private Spinner mSpinner_Location;
     private ImageView mImageView_HeadIcon;
 
@@ -125,11 +124,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     @Override
     protected void initData(){
 
+        Person person = PersonManager.getInstance().getPerson();
         mActivity = this;
 
-        mTextView_Name.setText(PersonManager.getInstance().getPerson().getName());
-        mTextView_Mail.setText(PersonManager.getInstance().getPerson().getEmail());
-        mTextView_Description.setText(PersonManager.getInstance().getPerson().getDescription());
+        mTextView_Name.setText(person.getName());
+        mTextView_Mail.setText(person.getEmail());
+        mTextView_Description.setText(person.getDescription());
         mTextView_ChangePwd.setClickable(true);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
@@ -147,22 +147,26 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item);
         mSpinner_Location.setAdapter(spinnerLocationAdapter);
 
-        Person pp = PersonManager.getInstance().getPerson();
+        int index = 0;
+        String strPersonAge = person.getAge();
+        for(int i=0; i<arrAges.length; i++)
+            if(strPersonAge.equals(arrAges[i]))
+                index = i;
+        mSpinner_Age.setSelection(index);
 
-        if(PersonManager.getInstance().getPerson().getGender().equals("M"))
-            mSpinner_Gender.setSelection(1);
+        index = 0;
+        String strGender = person.getGender();
+        for(int i=0; i<arrGender.length; i++)
+            if(strGender.equals(arrGender[i]))
+                index = i;
+        mSpinner_Gender.setSelection(index);
 
-        String sLocation = PersonManager.getInstance().getPerson().getLocation();
-        for(int i = 0; i< arrLocation.length; i++){
-            if(sLocation.equals(arrLocation[i])){
-                mSpinner_Location.setSelection(i+1);
-                break;
-            }
-        }
-
-        mSpinner_Age.setSelection(Integer.parseInt(PersonManager.getInstance().getPerson().getAge()) -17);
-
-
+        index = 0;
+        String strLocation = person.getLocation();
+        for(int i=0; i<arrLocation.length; i++)
+            if(strLocation.equals(arrLocation[i]))
+                index = i;
+        mSpinner_Location.setSelection(index);
     }
 
     @Override
