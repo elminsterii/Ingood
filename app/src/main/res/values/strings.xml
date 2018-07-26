@@ -38,6 +38,7 @@
     <string name="activity_action_delete">Delete</string>
 
     <!-- PersonData -->
+    <string name="title_person_data">Person Data</string>
     <string name="title_comment_grade">Comment Grade</string>
     <string name="title_about_me">About Me</string>
     <string name="title_interesting_tags">Interests</string>

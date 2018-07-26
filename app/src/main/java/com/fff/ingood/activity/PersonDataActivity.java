@@ -2,6 +2,7 @@ package com.fff.ingood.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -74,6 +75,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private EditText mEditText_EditDes;
     private TextView mTextView_DesLimitation;
 
+    private ImageButton mBtnBack;
+    private TextView mTextViewTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +94,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -115,6 +120,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
 
         mButton_Save = findViewById(R.id.btn_save);
+        mBtnBack = findViewById(R.id.imgBack);
+        mTextViewTitle = findViewById(R.id.textViewTitle);
 
 
         FrameLayout frameLayout = findViewById(R.id.flayour_headicon);
@@ -148,6 +155,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item);
         mSpinner_Location.setAdapter(spinnerLocationAdapter);
 
+
         int index = 0;
         String strPersonAge = person.getAge();
         for(int i=0; i<arrAges.length; i++)
@@ -172,6 +180,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initListener() {
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         mTextView_ChangePwd.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +193,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
             }
         });
+
 
         mButton_Save.setOnClickListener(new Button.OnClickListener() {
             @Override
