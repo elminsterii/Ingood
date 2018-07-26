@@ -33,6 +33,8 @@ import com.fff.ingood.tools.TimeHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fff.ingood.data.IgActivity.IGA_STATUS_CLOSED;
+import static com.fff.ingood.global.GlobalProperty.IS_SHOW_CLOSED_IGACTIVITY;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -313,51 +315,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_HOME).setSystemUI(this);
     }
 
-    @Override
-    public void returnStatus(Integer iStatusCode) {
-        hideWaitingDialog();
-        mLayoutSwipeRefresh.setRefreshing(false);
-
-        if(iStatusCode == null)
-            return;
-
-        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
-            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void returnIgActivities(List<IgActivity> lsActivities) {
-        hideWaitingDialog();
-
-        if(m_lsActivities == null || m_lsActivities.size() == 0)
-            m_lsActivities = lsActivities;
-        else
-            m_lsActivities.addAll(lsActivities);
-
-        mActivityListAdapter.updateActivityList(m_lsActivities);
-        mActivityListAdapter.notifyDataSetChanged();
-
-        m_curQueryIndex += lsActivities.size();
-    }
-
-    @Override
-    public void returnIgActivitiesIds(String strActivitiesIds) {
-        if(!StringTool.checkStringNotNull(strActivitiesIds))
-            return;
-
-        m_lsActivities.clear();
-        m_arrIgActivitiesIds = null;
-        m_curQueryIndex = 0;
-
-        String[] arrIgActivitiesIds = strActivitiesIds.split(",");
-        m_arrIgActivitiesIds = arrIgActivitiesIds;
-
-        if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
-            mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
-        } else
-            queryIgActivity(0);
-    }
-
     private void queryIgActivity(int startIndex) {
         if(startIndex >= m_arrIgActivitiesIds.length)
             return;
@@ -443,5 +400,54 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_nearly))) {
             igCondition.setLocation(PersonManager.getInstance().getPerson().getLocation());
         }
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        hideWaitingDialog();
+        mLayoutSwipeRefresh.setRefreshing(false);
+
+        if(iStatusCode == null)
+            return;
+
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnIgActivities(List<IgActivity> lsActivities) {
+        hideWaitingDialog();
+
+        if(IS_SHOW_CLOSED_IGACTIVITY) {
+            m_lsActivities.addAll(lsActivities);
+        } else {
+            for(IgActivity activity : lsActivities) {
+                if(!activity.getStatus().equals(IGA_STATUS_CLOSED))
+                    m_lsActivities.add(activity);
+            }
+        }
+
+        mActivityListAdapter.updateActivityList(m_lsActivities);
+        mActivityListAdapter.notifyDataSetChanged();
+
+        m_curQueryIndex += lsActivities.size();
+    }
+
+    @Override
+    public void returnIgActivitiesIds(String strActivitiesIds) {
+        if(!StringTool.checkStringNotNull(strActivitiesIds))
+            return;
+
+        m_lsActivities.clear();
+        m_arrIgActivitiesIds = null;
+        m_curQueryIndex = 0;
+
+        String[] arrIgActivitiesIds = strActivitiesIds.split(",");
+        m_arrIgActivitiesIds = arrIgActivitiesIds;
+
+        if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
+            mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
+        } else
+            queryIgActivity(0);
     }
 }

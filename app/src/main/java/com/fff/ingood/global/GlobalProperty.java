@@ -4,7 +4,11 @@ package com.fff.ingood.global;
  * Created by ElminsterII on 2018/6/15.
  */
 public class GlobalProperty {
+    //Start animation
     public static final int STARTUP_ANIMATION_DURATION = 1500;
+
+    //Homepage
+    public static final boolean IS_SHOW_CLOSED_IGACTIVITY = false;
 
     //IgActivity image
     public static final int IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT = 3;

@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public class IgActivity implements Serializable {
 
+    public static final String IGA_STATUS_START_YET = "0";
+    public static final String IGA_STATUS_START_TODAY = "1";
+    public static final String IGA_STATUS_START = "2";
+    public static final String IGA_STATUS_CLOSED = "3";
     public static final String TAG_IGACTIVITY = "igactivity";
 
     @SerializedName("id")
