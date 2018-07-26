@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
+import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
 import com.fff.ingood.ui.CircleProgressBarDialog;
@@ -244,6 +245,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
+
+
 //        mImageView_EditInterests.setOnClickListener(new ImageView.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -283,7 +286,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         });
     }
 
-
+    @Override
+    protected void initSystemUI() {
+        SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_PERSONDATA).setSystemUI(this);
+    }
 
     private void changePwdDlg(){
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
@@ -437,7 +443,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
-    public void onUpdateSuccess() {
+    public void returnUpdatePersonSuccess() {
 
     }
 
