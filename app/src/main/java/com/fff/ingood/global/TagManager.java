@@ -71,6 +71,10 @@ public class TagManager {
         int colTagLiterary2 = mContext.getResources().getColor(R.color.colorTagBrown);
         String strTagLiterary3 = mContext.getResources().getText(R.string.tag_literary3).toString();
         int colTagLiterary3 = mContext.getResources().getColor(R.color.colorTagBrown);
+        String strTagArt = mContext.getResources().getText(R.string.tag_art).toString();
+        int colTagArt = mContext.getResources().getColor(R.color.colorTagPurple);
+        String strTagHumanities = mContext.getResources().getText(R.string.tag_humanities).toString();
+        int colTagHumanities = mContext.getResources().getColor(R.color.colorTagBrown);
         String strTagSocial = mContext.getResources().getText(R.string.tag_social).toString();
         int colTagSocial = mContext.getResources().getColor(R.color.colorTagPurple);
         String strTagSocial2 = mContext.getResources().getText(R.string.tag_social2).toString();
@@ -87,12 +91,16 @@ public class TagManager {
         int colTagOutdoor = mContext.getResources().getColor(R.color.colorTagGreen);
         String strTagOutdoor2 = mContext.getResources().getText(R.string.tag_outdoor2).toString();
         int colTagOutdoor2 = mContext.getResources().getColor(R.color.colorTagGreen);
+        String strTagEducation = mContext.getResources().getText(R.string.tag_edu).toString();
+        int colTagEducation = mContext.getResources().getColor(R.color.colorTagRed);
 
         m_mapTagColor.put(strTagSport, colTagSport);
         m_mapTagColor.put(strTagCasual, colTagCasual);
         m_mapTagColor.put(strTagLiterary, colTagLiterary);
         m_mapTagColor.put(strTagLiterary2, colTagLiterary2);
         m_mapTagColor.put(strTagLiterary3, colTagLiterary3);
+        m_mapTagColor.put(strTagArt, colTagArt);
+        m_mapTagColor.put(strTagHumanities, colTagHumanities);
         m_mapTagColor.put(strTagSocial, colTagSocial);
         m_mapTagColor.put(strTagSocial2, colTagSocial2);
         m_mapTagColor.put(strTagMind, colTagMind);
@@ -101,6 +109,7 @@ public class TagManager {
         m_mapTagColor.put(strTagEnv, colTagEnv);
         m_mapTagColor.put(strTagOutdoor, colTagOutdoor);
         m_mapTagColor.put(strTagOutdoor2, colTagOutdoor2);
+        m_mapTagColor.put(strTagEducation, colTagEducation);
     }
 
     public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {
