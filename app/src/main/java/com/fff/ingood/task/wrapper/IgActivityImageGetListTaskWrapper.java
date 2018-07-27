@@ -14,7 +14,7 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class IgActivityImageGetListTaskWrapper {
 
     public interface IgActivityImageGetListTaskWrapperCallback {
-        void onGetIgActivitiesImageListSuccess(String s);
+        void onGetIgActivitiesImageListSuccess(String strIgActivityImagesName);
         void onGetIgActivitiesImageListFailure(Integer iStatusCode);
     }
 

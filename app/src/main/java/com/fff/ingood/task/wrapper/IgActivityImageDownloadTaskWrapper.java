@@ -8,15 +8,15 @@ import com.fff.ingood.task.IgActivityImageDownloadTask;
 
 public class IgActivityImageDownloadTaskWrapper {
 
-    public interface IgActivityDownloadTaskWrapperCallback {
-        void onIgActivityImageDownloadSuccess(Bitmap bitmap);
+    public interface IgActivityImageDownloadTaskWrapperCallback {
+        void onIgActivityImageDownloadSuccess(Bitmap bmIgActivityImage);
         void onIgActivityImageDownloadFailure(Integer iStatusCode);
     }
 
     private IgActivityImageDownloadTask task;
-    private IgActivityDownloadTaskWrapperCallback mCb;
+    private IgActivityImageDownloadTaskWrapperCallback mCb;
 
-    public IgActivityImageDownloadTaskWrapper(IgActivityDownloadTaskWrapperCallback cb) {
+    public IgActivityImageDownloadTaskWrapper(IgActivityImageDownloadTaskWrapperCallback cb) {
         mCb = cb;
         task = new IgActivityImageDownloadTask(new AsyncHttpDownloadResponder<Integer, Bitmap>() {
             @Override

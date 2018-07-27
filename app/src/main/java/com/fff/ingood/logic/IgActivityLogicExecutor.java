@@ -73,4 +73,10 @@ public class IgActivityLogicExecutor {
         Logic fl = new IgActivityImageUploadLogic(caller, strImagesName, bmUploadImage);
         fl.doLogic();
     }
+
+    public void doIgActivityImagesDownloadAll(IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller caller
+            , String strIgActivityId) {
+        Logic fl = new IgActivityImageComboLogic_IgActivityImagesDownload(caller, strIgActivityId);
+        fl.doLogic();
+    }
 }

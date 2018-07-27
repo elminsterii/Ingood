@@ -11,7 +11,7 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
  * Created by ElminsterII on 2018/6/8.3
  */
 public class IgActivityImageDownloadLogic extends Logic
-        implements IgActivityImageDownloadTaskWrapper.IgActivityDownloadTaskWrapperCallback {
+        implements IgActivityImageDownloadTaskWrapper.IgActivityImageDownloadTaskWrapperCallback {
 
     public interface IgActivityImageDownloadLogicCaller extends LogicCaller {
         void returnIgActivityImage(Bitmap bmIgActivityImage);
@@ -34,9 +34,9 @@ public class IgActivityImageDownloadLogic extends Logic
     }
 
     @Override
-    public void onIgActivityImageDownloadSuccess(Bitmap bitmap) {
-        if(bitmap != null) {
-            mCaller.returnIgActivityImage(bitmap);
+    public void onIgActivityImageDownloadSuccess(Bitmap bmIgActivityImage) {
+        if(bmIgActivityImage != null) {
+            mCaller.returnIgActivityImage(bmIgActivityImage);
             mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
         } else {
             mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);

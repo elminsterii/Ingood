@@ -34,8 +34,8 @@ public class IgActivityImageGetListLogic extends Logic
     }
 
     @Override
-    public void onGetIgActivitiesImageListSuccess(String strImagesList) {
-        List<String> lsImagesName = StringTool.arrayStringToListString(strImagesList.split(","));
+    public void onGetIgActivitiesImageListSuccess(String strIgActivityImagesName) {
+        List<String> lsImagesName = StringTool.arrayStringToListString(strIgActivityImagesName.split(","));
         mCaller.returnIgActivityImagesName(lsImagesName);
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
