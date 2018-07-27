@@ -69,8 +69,14 @@ public class IgActivityLogicExecutor {
     }
 
     public void doIgActivityImageUpload(IgActivityImageUploadLogic.IgActivityImageUploadLogicCaller caller
-            , String strImagesName, Bitmap bmUploadImage) {
-        Logic fl = new IgActivityImageUploadLogic(caller, strImagesName, bmUploadImage);
+             , String strIgActivityId, String strImagesName, Bitmap bmUploadImage) {
+        Logic fl = new IgActivityImageUploadLogic(caller, strIgActivityId, strImagesName, bmUploadImage);
+        fl.doLogic();
+    }
+
+    public void doIgActivityImagesUploadAll(IgActivityImagesUploadLogic.IgActivityImagesUploadLogicCaller caller
+            , String strIgActivityId, List<Bitmap> lsUploadImage) {
+        Logic fl = new IgActivityImagesUploadLogic(caller, strIgActivityId, lsUploadImage);
         fl.doLogic();
     }
 

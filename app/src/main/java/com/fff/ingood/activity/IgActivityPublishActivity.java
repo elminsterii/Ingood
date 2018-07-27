@@ -30,6 +30,7 @@ import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
+import com.fff.ingood.logic.IgActivityImagesUploadLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
 import com.fff.ingood.tools.ImageHelper;
@@ -40,12 +41,14 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY_IMAGES;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_WIDTH;
@@ -54,7 +57,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityPublishActivity extends BaseActivity implements
         IgActivityCreateLogic.IgActivityCreateLogicCaller
-        , IgActivityUpdateLogic.IgActivityUpdateLogicCaller {
+        , IgActivityUpdateLogic.IgActivityUpdateLogicCaller, IgActivityImagesUploadLogic.IgActivityImagesUploadLogicCaller {
 
     private static final int RESULT_CODE_PICK_IMAGE = 1;
 
@@ -98,8 +101,14 @@ public class IgActivityPublishActivity extends BaseActivity implements
         Intent intent = getIntent();
         if(intent != null) {
             m_igActivity = (IgActivity)intent.getSerializableExtra(TAG_IGACTIVITY);
+            Bitmap[] arrIgActivityImages = (Bitmap[])intent.getParcelableArrayExtra(TAG_IGACTIVITY_IMAGES);
+
             if(m_igActivity != null)
                 m_bEditMode = true;
+
+            m_lsUploadImages = new ArrayList<>();
+            if(arrIgActivityImages != null)
+                m_lsUploadImages.addAll(Arrays.asList(arrIgActivityImages));
         }
     }
 
@@ -129,7 +138,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     protected void initData() {
-        m_lsUploadImages = new ArrayList<>();
         m_lsTagsInput = new ArrayList<>();
         initUIData(m_igActivity, m_bEditMode);
     }
@@ -391,6 +399,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
         executor.doUpdateIgActivity(this, activity);
     }
 
+    private void uploadIgActivityImage(String strIgActivityId, List<Bitmap> lsIgActivityImages) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doIgActivityImagesUploadAll(this, strIgActivityId, lsIgActivityImages);
+    }
+
     private void pickImageByGallery() {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
@@ -601,6 +614,13 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     @Override
+    public void returnUploadIgActivityImagesSuccess() {
+        hideWaitingDialog();
+        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
+        onBackPressed();
+    }
+
+    @Override
     public void returnStatus(Integer iStatusCode) {
         hideWaitingDialog();
 
@@ -618,9 +638,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     @SuppressLint("ShowToast")
     @Override
     public void onCreateIgActivitySuccess(String strId) {
-        hideWaitingDialog();
-        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
-        onBackPressed();
+        uploadIgActivityImage(strId, m_lsUploadImages);
     }
 
     @Override

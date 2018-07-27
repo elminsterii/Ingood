@@ -19,19 +19,21 @@ public class IgActivityImageUploadLogic extends Logic
 
     private IgActivityImageUploadLogicCaller mCaller;
     private String m_strImageName;
+    private String m_strIgActivityId;
     private Bitmap m_bmUploadImage;
 
-    IgActivityImageUploadLogic(IgActivityImageUploadLogicCaller caller, String strImageName, Bitmap bmUploadImage) {
+    IgActivityImageUploadLogic(IgActivityImageUploadLogicCaller caller, String strIgActivityId, String strImageName, Bitmap bmUploadImage) {
         super(caller);
         mCaller = caller;
         m_strImageName = strImageName;
+        m_strIgActivityId = strIgActivityId;
         m_bmUploadImage = bmUploadImage;
     }
 
     @Override
     protected void doLogic() {
         IgActivityImageUploadTaskWrapper task = new IgActivityImageUploadTaskWrapper(this, m_bmUploadImage);
-        task.execute(m_strImageName);
+        task.execute(m_strIgActivityId, m_strImageName);
     }
 
     @Override

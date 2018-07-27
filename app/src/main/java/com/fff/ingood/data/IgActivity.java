@@ -11,6 +11,7 @@ public class IgActivity implements Serializable {
     public static final String IGA_STATUS_START = "2";
     public static final String IGA_STATUS_CLOSED = "3";
     public static final String TAG_IGACTIVITY = "igactivity";
+    public static final String TAG_IGACTIVITY_IMAGES = "igactivity_images";
 
     @SerializedName("id")
     private String m_id;

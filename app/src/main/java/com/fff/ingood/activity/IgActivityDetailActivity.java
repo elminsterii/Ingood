@@ -37,6 +37,7 @@ import com.fff.ingood.logic.CommentUpdateLogic;
 import com.fff.ingood.logic.IgActivityAttendLogic;
 import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
+import com.fff.ingood.logic.IgActivityImageComboLogic_IgActivityImagesDownload;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonIconComboLogic_MultiPersonMainIconsDownload;
@@ -47,7 +48,6 @@ import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
-import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
@@ -75,7 +75,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , CommentQueryLogic.CommentQueryLogicCaller
         , CommentCreateLogic.CommentCreateLogicCaller
         , CommentDeleteLogic.CommentDeleteLogicCaller
-        , CommentUpdateLogic.CommentUpdateLogicCaller {
+        , CommentUpdateLogic.CommentUpdateLogicCaller, IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller {
 
     private enum UPDATE_IGACTIVITY_UI_SECTION {
         uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
@@ -182,7 +182,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiSaveIgActivity();
 
         setUiIgActivityDefaultImage();
-        downloadImages_IgActivityMainImages(null);
+        downloadImages_IgActivityMainImages(mIgActivity);
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
         getPublisherInfo();
@@ -417,17 +417,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void downloadImages_IgActivityMainImages(IgActivity activity) {
-        m_lsIgActivityMainImages.clear();
-
-        //@@ test
-        Bitmap bm = ImageHelper.loadBitmapFromResId(this, R.drawable.ic_image_black_72dp);
-        m_lsIgActivityMainImages.add(bm);
-
-        Bitmap bm1 = ImageHelper.loadBitmapFromResId(this, R.drawable.facebook);
-        m_lsIgActivityMainImages.add(bm1);
-
-        Bitmap bm2 = ImageHelper.loadBitmapFromResId(this, R.drawable.google);
-        m_lsIgActivityMainImages.add(bm2);
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doIgActivityImagesDownloadAll(this, activity.getId());
     }
 
     private void setUiAttendeesDefaultIcons(int iAttention) {
@@ -857,6 +848,15 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void returnIgActivityImages(List<Bitmap> bmIgActivityImages) {
+        if(bmIgActivityImages != null && bmIgActivityImages.size() > 0) {
+            mImageViewIgActivityMain.setImageBitmap(bmIgActivityImages.get(0));
+            m_lsIgActivityMainImages.clear();
+            m_lsIgActivityMainImages.addAll(bmIgActivityImages);
         }
     }
 
