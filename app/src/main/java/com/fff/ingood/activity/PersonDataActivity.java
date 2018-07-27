@@ -2,7 +2,6 @@ package com.fff.ingood.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -126,7 +125,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
         FrameLayout frameLayout = findViewById(R.id.flayour_headicon);
         mImageView_HeadIcon = (ImageView)frameLayout.getChildAt(0);
-        mImageView_HeadIcon.setImageResource(R.drawable.sample_activity);
+        mImageView_HeadIcon.setImageResource(R.drawable.ic_person_black_36dp);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.fff.ingood.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -110,7 +109,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private void makeImage(ViewHolder holder, IgActivity activity) {
         final int CORNER_LEVEL_VALUE = 100;
-        Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_activity);
+        //Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_activity);
+        Bitmap bm = ImageHelper.getBitmapFromVectorDrawable(mContext, R.drawable.ic_image_black_72dp);
         bm = ImageHelper.getRoundedCornerBitmap(bm, CORNER_LEVEL_VALUE);
 
         holder.mImageViewActivity.setImageBitmap(bm);

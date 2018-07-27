@@ -403,12 +403,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(m_lsIgActivityMainImages == null)
             m_lsIgActivityMainImages = new ArrayList<>();
         curIndexMainImage = 1;
-        mImageViewIgActivityMain.setImageResource(R.drawable.sample_activity);
+        mImageViewIgActivityMain.setImageResource(R.drawable.ic_image_black_72dp);
     }
 
     private void setUiPublisherDefaultIcon() {
         mImageViewPublisherIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
-        mImageViewPublisherIcon.setImageResource(R.drawable.sample_activity);
+        mImageViewPublisherIcon.setImageResource(R.drawable.ic_person_black_36dp);
     }
 
     private void downloadIcon_IgActivityPublisher(Person igActivityPublisher) {
@@ -420,7 +420,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         m_lsIgActivityMainImages.clear();
 
         //@@ test
-        Bitmap bm = ImageHelper.loadBitmapFromResId(this, R.drawable.sample_activity);
+        Bitmap bm = ImageHelper.loadBitmapFromResId(this, R.drawable.ic_image_black_72dp);
         m_lsIgActivityMainImages.add(bm);
 
         Bitmap bm1 = ImageHelper.loadBitmapFromResId(this, R.drawable.facebook);
@@ -467,7 +467,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") FrameLayout layout = (FrameLayout)inflater.inflate(R.layout.layout_person_thumbnail, null, false);
         ImageView imageViewIcon = (ImageView)layout.getChildAt(0);
-        imageViewIcon.setImageResource(R.drawable.sample_activity);
+        imageViewIcon.setImageResource(R.drawable.ic_person_black_36dp);
         m_lsImageViewAttendeeIcons.add(imageViewIcon);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -504,7 +504,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         TextView textViewCommentContent = layout.findViewById(R.id.textViewCommentContent);
 
         ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
-        imageViewIcon.setImageResource(R.drawable.sample_activity);
+        imageViewIcon.setImageResource(R.drawable.ic_person_black_36dp);
         m_lsImageViewCommentIcons.add(imageViewIcon);
 
         if(comment.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail())) {
