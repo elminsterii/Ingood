@@ -60,18 +60,20 @@ public class IgActivityImageDeleteTaskWrapper {
         });
     }
 
-    public void execute(String strEmail, String strPassword, List<String> lsIconsName) {
+    public void execute(String strEmail, String strPassword, String strIgActivityId, List<String> lsImagesName) {
         final String TAG_EMAIL = "email";
         final String TAG_PASSWORD = "userpassword";
-        final String TAG_ICONS = "icons";
+        final String TAG_IGACTIVITY_ID = "id";
+        final String TAG_IMAGES = "images";
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(TAG_EMAIL, strEmail);
         jsonObject.addProperty(TAG_PASSWORD, strPassword);
+        jsonObject.addProperty(TAG_IGACTIVITY_ID, strIgActivityId);
 
-        if(lsIconsName != null && lsIconsName.size() > 0) {
-            String strIconsName = StringTool.listStringToString(lsIconsName, ',');
-            jsonObject.addProperty(TAG_ICONS, strIconsName);
+        if(lsImagesName != null && lsImagesName.size() > 0) {
+            String strImagesName = StringTool.listStringToString(lsImagesName, ',');
+            jsonObject.addProperty(TAG_IMAGES, strImagesName);
         }
         task.execute(jsonObject);
     }

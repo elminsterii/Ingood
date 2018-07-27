@@ -59,7 +59,7 @@ public class IgActivityImageUploadTaskWrapper {
         }, bmUpload);
     }
 
-    public void execute(String strActivityIdAndIconName) {
-        task.execute(strActivityIdAndIconName);
+    public void execute(String strActivityIdAndImageName) {
+        task.execute(strActivityIdAndImageName);
     }
 }

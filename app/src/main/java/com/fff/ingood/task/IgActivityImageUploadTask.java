@@ -22,11 +22,11 @@ public class IgActivityImageUploadTask extends HttpRequestTask<String, Integer, 
 
 
     @Override
-    protected String access(String strActivityIdAndIconName) {
+    protected String access(String strActivityIdAndImageName) {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS) + "/" + strActivityIdAndIconName);
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS) + "/" + strActivityIdAndImageName);
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");

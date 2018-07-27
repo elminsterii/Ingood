@@ -1,5 +1,7 @@
 package com.fff.ingood.logic;
 
+import android.graphics.Bitmap;
+
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
 
@@ -69,6 +71,11 @@ public class PersonLogicExecutor {
 
     public void doPersonIconDownload(PersonIconDownloadLogic.PersonIconDownloadLogicCaller caller, String strIconName) {
         Logic fl = new PersonIconDownloadLogic(caller, strIconName);
+        fl.doLogic();
+    }
+
+    public void doPersonIconUpload(PersonIconUploadLogic.PersonIconUploadLogicCaller caller, String strIconName, Bitmap bmUploadIcon) {
+        Logic fl = new PersonIconUploadLogic(caller, strIconName, bmUploadIcon);
         fl.doLogic();
     }
 

@@ -1,8 +1,12 @@
 package com.fff.ingood.logic;
 
+import android.graphics.Bitmap;
+
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
+
+import java.util.List;
 
 /**
  * Created by ElminsterII on 2018/5/27.
@@ -21,7 +25,7 @@ public class IgActivityLogicExecutor {
         fl.doLogic();
     }
 
-    public void doUpdatecomIgActivity(IgActivityUpdateLogic.IgActivityUpdateLogicCaller caller, IgActivity activity) {
+    public void doUpdateIgActivity(IgActivityUpdateLogic.IgActivityUpdateLogicCaller caller, IgActivity activity) {
         Logic fl = new IgActivityUpdateLogic(caller, activity);
         fl.doLogic();
     }
@@ -45,6 +49,28 @@ public class IgActivityLogicExecutor {
     public void doAttendIgActivity(IgActivityAttendLogic.IgActivityAttendLogicCaller caller, String strId, String strEmail
             , String strPassword, String strActivityId, IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
         Logic fl = new IgActivityAttendLogic(caller, strId, strEmail, strPassword, strActivityId, avAttend);
+        fl.doLogic();
+    }
+
+    public void doIgActivityImageGetList(IgActivityImageGetListLogic.IgActivityImageGetListLogicCaller caller, String strIgActivityId) {
+        Logic fl = new IgActivityImageGetListLogic(caller, strIgActivityId);
+        fl.doLogic();
+    }
+
+    public void doIgActivityImageDelete(IgActivityImageDeleteLogic.IgActivityImageDeleteLogicCaller caller
+            , String strEmail, String strPassword, String strIgActivityId, List<String> lsImagesName) {
+        Logic fl = new IgActivityImageDeleteLogic(caller, strEmail, strPassword, strIgActivityId, lsImagesName);
+        fl.doLogic();
+    }
+
+    public void doIgActivityImageDownload(IgActivityImageDownloadLogic.IgActivityImageDownloadLogicCaller caller, String strImagesName) {
+        Logic fl = new IgActivityImageDownloadLogic(caller, strImagesName);
+        fl.doLogic();
+    }
+
+    public void doIgActivityImageUpload(IgActivityImageUploadLogic.IgActivityImageUploadLogicCaller caller
+            , String strImagesName, Bitmap bmUploadImage) {
+        Logic fl = new IgActivityImageUploadLogic(caller, strImagesName, bmUploadImage);
         fl.doLogic();
     }
 }

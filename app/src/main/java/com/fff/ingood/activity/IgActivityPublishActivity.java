@@ -388,7 +388,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private void updateIgActivity(IgActivity activity) {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
-        executor.doUpdatecomIgActivity(this, activity);
+        executor.doUpdateIgActivity(this, activity);
     }
 
     private void pickImageByGallery() {

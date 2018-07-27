@@ -1,6 +1,5 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.IgActivityImageGetListTask;
 import com.fff.ingood.tools.ParserUtils;
@@ -49,8 +48,8 @@ public class IgActivityImageGetListTaskWrapper {
             }
 
             @Override
-            public void onSuccess(String s) {
-                mCb.onGetIgActivitiesImageListSuccess(s);
+            public void onSuccess(String strImagesList) {
+                mCb.onGetIgActivitiesImageListSuccess(strImagesList);
             }
 
             @Override
@@ -60,7 +59,7 @@ public class IgActivityImageGetListTaskWrapper {
         });
     }
 
-    public void execute(IgActivity activity ) {
-        task.execute(activity);
+    public void execute(String strIgActivityId) {
+        task.execute(strIgActivityId);
     }
 }
