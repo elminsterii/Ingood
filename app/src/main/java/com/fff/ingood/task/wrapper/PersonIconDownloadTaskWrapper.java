@@ -2,7 +2,7 @@ package com.fff.ingood.task.wrapper;
 
 import android.graphics.Bitmap;
 
-import com.fff.ingood.task.AsyncHttpStreamResponder;
+import com.fff.ingood.task.AsyncHttpDownloadResponder;
 import com.fff.ingood.task.PersonIconDownloadTask;
 
 public class PersonIconDownloadTaskWrapper {
@@ -17,7 +17,7 @@ public class PersonIconDownloadTaskWrapper {
 
     public PersonIconDownloadTaskWrapper(PersonIconDownloadTaskWrapperCallback cb) {
         mCb = cb;
-        task = new PersonIconDownloadTask(new AsyncHttpStreamResponder<Integer, Bitmap>() {
+        task = new PersonIconDownloadTask(new AsyncHttpDownloadResponder<Integer, Bitmap>() {
             @Override
             public void onSuccess(Bitmap bmPersonIcon) {
                 mCb.onPersonIconDownloadSuccess(bmPersonIcon);

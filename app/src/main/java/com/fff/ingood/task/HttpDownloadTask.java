@@ -7,11 +7,11 @@ import android.os.AsyncTask;
  */
 
 
-public abstract class HttpStreamTask<VIN, VOUT_STATUS, VOUT_DATA> extends AsyncTask<VIN, Void, VOUT_DATA> {
+public abstract class HttpDownloadTask<VIN, VOUT_STATUS, VOUT_DATA> extends AsyncTask<VIN, Void, VOUT_DATA> {
 
-    private AsyncHttpStreamResponder<VOUT_STATUS, VOUT_DATA> mResponder;
+    private AsyncHttpDownloadResponder<VOUT_STATUS, VOUT_DATA> mResponder;
 
-    HttpStreamTask(AsyncHttpStreamResponder<VOUT_STATUS, VOUT_DATA> responder) {
+    HttpDownloadTask(AsyncHttpDownloadResponder<VOUT_STATUS, VOUT_DATA> responder) {
         mResponder = responder;
     }
 

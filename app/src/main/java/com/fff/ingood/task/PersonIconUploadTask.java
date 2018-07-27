@@ -11,11 +11,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonIconUploadTask extends HttpStreamTask<String, Integer, String> {
+public class PersonIconUploadTask extends HttpRequestTask<String, Integer, Void> {
 
     private Bitmap m_bmUpload;
 
-    public PersonIconUploadTask(AsyncHttpStreamResponder<Integer, String> responder, Bitmap bmUpload) {
+    public PersonIconUploadTask(AsyncHttpRequestResponder<Integer, Void> responder, Bitmap bmUpload) {
         super(responder);
         m_bmUpload = bmUpload;
     }

@@ -56,6 +56,7 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_NWK_FAIL_INT, context.getResources().getText(R.string.nwk_connection_fail).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_LOGIC_MISSING_DATA_INT, context.getResources().getText(R.string.missing_necessary_data).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_PARSING_ERROR, context.getResources().getText(R.string.parsing_data_error).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_DOWNLOAD_RESOURCE_ERROR, context.getResources().getText(R.string.download_data_error).toString());
     }
 
     public static Map<Integer, String> getServerResponseDescriptions() {
@@ -65,6 +66,7 @@ public class ServerResponse {
     public static final Integer STATUS_CODE_NWK_FAIL_INT = -1;
     public static final Integer STATUS_CODE_LOGIC_MISSING_DATA_INT = -2;
     public static final Integer STATUS_CODE_PARSING_ERROR = -3;
+    public static final Integer STATUS_CODE_DOWNLOAD_RESOURCE_ERROR = -4;
 
     public static final String TAG_SERVER_RESPONSE_STATUS_CODE = "status_code";
     public static final String TAG_SERVER_RESPONSE_STATUS_DESCRIPTION = "status_description";

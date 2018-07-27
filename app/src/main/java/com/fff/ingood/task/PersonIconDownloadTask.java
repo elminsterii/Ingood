@@ -6,9 +6,9 @@ import android.graphics.BitmapFactory;
 import java.io.InputStream;
 import java.net.URL;
 
-public class PersonIconDownloadTask extends HttpStreamTask<String, Integer, Bitmap> {
+public class PersonIconDownloadTask extends HttpDownloadTask<String, Integer, Bitmap> {
 
-    public PersonIconDownloadTask(AsyncHttpStreamResponder<Integer, Bitmap> responder) {
+    public PersonIconDownloadTask(AsyncHttpDownloadResponder<Integer, Bitmap> responder) {
         super(responder);
     }
 

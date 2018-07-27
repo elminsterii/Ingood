@@ -139,6 +139,7 @@
     <string name="nwk_connection_fail">網路連線失敗</string>
     <string name="missing_necessary_data">缺少必要條件資訊</string>
     <string name="parsing_data_error">資料解析失敗</string>
+    <string name="download_data_error">資源下載失敗</string>
     <string name="verify_email_sent">驗證碼已寄至您的信箱</string>
     <string name="deem_activity_has_been_sent">已送出評價</string>
     <string name="deem_activity_has_been_recover">已收回評價</string>

@@ -4,7 +4,7 @@ package com.fff.ingood.task;
  * Created by ElminsterII on 2018/6/11.
  */
 
-public abstract class AsyncHttpStreamResponder<VOUT_STATUS, VOUT_DATA> {
+public abstract class AsyncHttpDownloadResponder<VOUT_STATUS, VOUT_DATA> {
     private VOUT_STATUS mStatus = null;
     private VOUT_DATA mData = null;
 
