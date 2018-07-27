@@ -1,22 +1,24 @@
 package com.fff.ingood.task;
 
+import com.fff.ingood.data.IgActivity;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PersonIconGetListTask extends HttpRequestTask<String, Integer, String> {
+public class IgActivityImageGetListTask extends HttpRequestTask<IgActivity, Integer, String> {
 
-    public PersonIconGetListTask(AsyncHttpRequestResponder<Integer, String> responder) {
+    public IgActivityImageGetListTask(AsyncHttpRequestResponder<Integer, String> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(String strEmailOrId) {
+    protected String access(IgActivity activity) {
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_API_PERSON_ICON_ACCESS) + "/" + strEmailOrId);
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS) + activity.getId());
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");

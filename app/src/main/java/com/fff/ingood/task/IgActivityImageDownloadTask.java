@@ -6,19 +6,19 @@ import android.graphics.BitmapFactory;
 import java.io.InputStream;
 import java.net.URL;
 
-public class PersonIconDownloadTask extends HttpDownloadTask<String, Integer, Bitmap> {
+public class IgActivityImageDownloadTask extends HttpDownloadTask<String, Integer, Bitmap> {
 
-    public PersonIconDownloadTask(AsyncHttpDownloadResponder<Integer, Bitmap> responder) {
+    public IgActivityImageDownloadTask(AsyncHttpDownloadResponder<Integer, Bitmap> responder) {
         super(responder);
     }
 
     @Override
-    protected Bitmap access(String strEmailAndIcon) {
+    protected Bitmap access(String strIgActivityIdAndIconName) {
 
         Bitmap bitmap;
-        String strURL = String.valueOf(HttpProxy.HTTP_API_PERSON_ICON_ACCESS);
+        String strURL = String.valueOf(HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS);
         strURL += "/";
-        strURL += strEmailAndIcon;
+        strURL += strIgActivityIdAndIconName;
 
         try {
             URL url = new URL(strURL);

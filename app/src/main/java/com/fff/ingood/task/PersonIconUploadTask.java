@@ -25,7 +25,7 @@ public class PersonIconUploadTask extends HttpRequestTask<String, Integer, Void>
         HttpURLConnection connection = null;
 
         try {
-            URL url = new URL(String.valueOf(HttpProxy.HTTP_GET_API_PERSON_ICON_ACCESS) + "/" + strEmailAndIcon);
+            URL url = new URL(String.valueOf(HttpProxy.HTTP_API_PERSON_ICON_ACCESS) + "/" + strEmailAndIcon);
 
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type","application/json; charset=UTF-8");

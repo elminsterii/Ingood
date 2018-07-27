@@ -89,7 +89,8 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_SAVE_IGACTIVITY_WRONG = 14;
     private static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 99;
 
-    //Activity tag
+    //Server response tag
     public static final String TAG_SERVER_RESPONSE_COMMON_IDS = "ids";
     public static final String TAG_SERVER_RESPONSE_PERSON_ICONS = "icons";
+    public static final String TAG_SERVER_RESPONSE_IGACTIVITY_IMAGES = "images";
 }
