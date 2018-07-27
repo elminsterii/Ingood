@@ -6,7 +6,7 @@ package com.fff.ingood.task;
 
 public class HttpProxy {
 
-    private static final String SERVER_URL = "https://ingoodtw.appspot.com";
+    private static final String SERVER_URL = "https://hangouttw.appspot.com";
     public static final String HTTP_POST_API_REGISTER = SERVER_URL + "/register";
     public static final String HTTP_POST_API_UNREGISTER = SERVER_URL + "/unregister";
     public static final String HTTP_POST_API_LOGIN = SERVER_URL + "/login";
@@ -27,6 +27,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_ACTIVITY_ATTEND = SERVER_URL + "/attendactivity";
     public static final String HTTP_POST_API_ACTIVITY_IMAGE = SERVER_URL + "/accessactivityimage";
     public static final String HTTP_GET_API_ACTIVITY_IMAGE = SERVER_URL + "/accessactivityimage";
+    public static final String HTTP_POST_API_ACTIVITY_IMAGE_DELETE = SERVER_URL + "/deleteactivityimage";
     public static final String HTTP_POST_API_COMMENT_CREATE = SERVER_URL + "/createcomment";
     public static final String HTTP_POST_API_COMMENT_QUERY = SERVER_URL + "/querycomment";
     public static final String HTTP_POST_API_COMMENT_QUERY_ID_BY = SERVER_URL + "/querycommentidby";
