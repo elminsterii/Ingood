@@ -40,6 +40,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        RelativeLayout mLayoutIgactivityItem;
         ImageView mImageViewActivity;
         TextView mTextViewActivityName;
         TextView mTextViewActivityTime;
@@ -51,6 +52,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         ViewHolder(View v) {
             super(v);
+            mLayoutIgactivityItem = v.findViewById(R.id.layoutRelativeIgActivityItem);
             mImageViewActivity = v.findViewById(R.id.imgActivityItem);
             mTextViewActivityName = v.findViewById(R.id.textActivityName);
             mTextViewActivityTime = v.findViewById(R.id.textActivityTime);
@@ -80,7 +82,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         IgActivity activity = m_lsActivity.get(position);
-        holder.mImageViewActivity.setTag(position);
+        holder.mLayoutIgactivityItem.setTag(position);
         holder.mLayoutSaveIgActivity.setTag(position);
 
         makeDefaultImage(holder);
@@ -145,7 +147,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeListener(final ViewHolder holder) {
-        holder.mImageViewActivity.setOnClickListener(new View.OnClickListener() {
+        holder.mLayoutIgactivityItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = (int)v.getTag();
