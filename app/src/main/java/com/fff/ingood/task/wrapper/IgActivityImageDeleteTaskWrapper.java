@@ -6,6 +6,7 @@ import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
@@ -69,11 +70,16 @@ public class IgActivityImageDeleteTaskWrapper {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(TAG_EMAIL, strEmail);
         jsonObject.addProperty(TAG_PASSWORD, strPassword);
-        jsonObject.addProperty(TAG_IGACTIVITY_ID, strIgActivityId);
 
         if(lsImagesName != null && lsImagesName.size() > 0) {
-            String strImagesName = StringTool.listStringToString(lsImagesName, ',');
+            List<String> lsImagesNameWithId = new ArrayList<>();
+            for(String strImageName : lsImagesName)
+                lsImagesNameWithId.add(strIgActivityId + "/" + strImageName);
+
+            String strImagesName = StringTool.listStringToString(lsImagesNameWithId, ',');
             jsonObject.addProperty(TAG_IMAGES, strImagesName);
+        } else {
+            jsonObject.addProperty(TAG_IGACTIVITY_ID, strIgActivityId);
         }
         task.execute(jsonObject);
     }

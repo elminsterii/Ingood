@@ -12,7 +12,7 @@ public class GlobalProperty {
 
     //IgActivity image
     public static final int IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT = 3;
-    public static final int IGACTIVITY_IMAGE_WIDTH = 1920;
-    public static final int IGACTIVITY_IMAGE_HEIGHT = 1024;
+    public static final int IGACTIVITY_IMAGE_WIDTH = 1024;
+    public static final int IGACTIVITY_IMAGE_HEIGHT = 768;
     public static final String[] ARRAY_IGACTIVITY_IMAGE_NAMES = {"image00","image01","image02"};
 }

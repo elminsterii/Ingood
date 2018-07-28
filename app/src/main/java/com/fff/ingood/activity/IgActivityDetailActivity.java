@@ -959,6 +959,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     setUiDeemPeopleByIgActivity(mIgActivity);
                     setUiAttendeesWithDefaultIconByIgActivity(mIgActivity);
                     downloadIcon_IgActivityAttendees(mIgActivity);
+                    downloadImages_IgActivityMainImages(mIgActivity);
                     getCommentsByIgActivity(mIgActivity);
                     break;
 
