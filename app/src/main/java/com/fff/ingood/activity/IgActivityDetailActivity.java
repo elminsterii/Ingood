@@ -796,12 +796,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private void editComment(Comment comment) {
         CommentLogicExecutor executor = new CommentLogicExecutor();
         executor.doUpdateComment(this, comment);
-}
+    }
 
     @Override
     public void returnPersons(List<Person> lsPersons) {
-        hideWaitingDialog();
-
         if(lsPersons != null && lsPersons.size() > 0) {
             Person publisher = lsPersons.get(0);
             mTextViewIgPublisherName.setText(publisher.getName());
@@ -855,6 +853,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnIgActivityImages(List<Bitmap> bmIgActivityImages) {
+        hideWaitingDialog();
+
         if(bmIgActivityImages != null && bmIgActivityImages.size() > 0) {
             mImageViewIgActivityMain.setImageBitmap(bmIgActivityImages.get(0));
             m_lsIgActivityImages.clear();
@@ -869,10 +869,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 || iStatusCode.equals(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT))
             return;
 
-        hideWaitingDialog();
-
-        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
+            hideWaitingDialog();
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
