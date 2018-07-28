@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.ImageCache;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
@@ -41,14 +42,12 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
-import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY_IMAGES;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_WIDTH;
@@ -101,14 +100,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
         Intent intent = getIntent();
         if(intent != null) {
             m_igActivity = (IgActivity)intent.getSerializableExtra(TAG_IGACTIVITY);
-            Bitmap[] arrIgActivityImages = (Bitmap[])intent.getParcelableArrayExtra(TAG_IGACTIVITY_IMAGES);
-
             if(m_igActivity != null)
                 m_bEditMode = true;
-
-            m_lsUploadImages = new ArrayList<>();
-            if(arrIgActivityImages != null)
-                m_lsUploadImages.addAll(Arrays.asList(arrIgActivityImages));
         }
     }
 
@@ -138,6 +131,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     protected void initData() {
+        m_lsUploadImages = new ArrayList<>();
         m_lsTagsInput = new ArrayList<>();
         initUIData(m_igActivity, m_bEditMode);
     }
@@ -282,7 +276,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 setDateByIgActivity(activity);
                 setTagsByIgActivity(activity);
 
-                //TODO - download images and init views.
+                if(ImageCache.getInstance().isCacheExist()) {
+                    m_lsUploadImages = ImageCache.getInstance().getCacheImages();
+                    makeUploadImageLayout(m_lsUploadImages);
+                }
             }
         }
         else {

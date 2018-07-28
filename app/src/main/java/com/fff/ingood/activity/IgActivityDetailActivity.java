@@ -25,6 +25,7 @@ import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.DeemInfoManager;
+import com.fff.ingood.global.ImageCache;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
@@ -110,7 +111,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private List<ImageView> m_lsImageViewAttendeeIcons;
     private List<ImageView> m_lsImageViewCommentIcons;
-    private List<Bitmap> m_lsIgActivityMainImages;
+    private ArrayList<Bitmap> m_lsIgActivityImages;
 
     private int mTagBarWidth;
     private boolean m_bIsGetTagBarWidth = false;
@@ -189,8 +190,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void changeMainImage(int index) {
-        if(index < m_lsIgActivityMainImages.size()) {
-            Bitmap bm = m_lsIgActivityMainImages.get(index);
+        if(index < m_lsIgActivityImages.size()) {
+            Bitmap bm = m_lsIgActivityImages.get(index);
             mImageViewIgActivityMain.setImageBitmap(bm);
         }
     }
@@ -200,7 +201,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewIgActivityMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(curIndexMainImage >= m_lsIgActivityMainImages.size())
+                if(curIndexMainImage >= m_lsIgActivityImages.size())
                     curIndexMainImage = 0;
                 changeMainImage(curIndexMainImage);
                 curIndexMainImage++;
@@ -316,6 +317,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 public void onClick(View v) {
                     Intent intent = new Intent(mActivity, IgActivityPublishActivity.class);
                     intent.putExtra(TAG_IGACTIVITY, mIgActivity);
+                    ImageCache.getInstance().cachingImages(m_lsIgActivityImages);
                     mActivity.startActivity(intent);
                 }
             };
@@ -400,8 +402,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiIgActivityDefaultImage() {
-        if(m_lsIgActivityMainImages == null)
-            m_lsIgActivityMainImages = new ArrayList<>();
+        if(m_lsIgActivityImages == null)
+            m_lsIgActivityImages = new ArrayList<>();
         curIndexMainImage = 1;
         mImageViewIgActivityMain.setImageResource(R.drawable.ic_image_black_72dp);
     }
@@ -855,8 +857,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     public void returnIgActivityImages(List<Bitmap> bmIgActivityImages) {
         if(bmIgActivityImages != null && bmIgActivityImages.size() > 0) {
             mImageViewIgActivityMain.setImageBitmap(bmIgActivityImages.get(0));
-            m_lsIgActivityMainImages.clear();
-            m_lsIgActivityMainImages.addAll(bmIgActivityImages);
+            m_lsIgActivityImages.clear();
+            m_lsIgActivityImages.addAll(bmIgActivityImages);
         }
     }
 
