@@ -189,7 +189,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             }
         });
 
-        mBtnStartDatePicker.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickListenerDatePickerStartDate = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance(Locale.getDefault());
@@ -205,9 +205,12 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                 }, mYear, mMonth, mDay).show();
             }
-        });
+        };
 
-        mBtnStartTimePicker.setOnClickListener(new View.OnClickListener() {
+        mBtnStartDatePicker.setOnClickListener(clickListenerDatePickerStartDate);
+        mTextViewStartDateDescription.setOnClickListener(clickListenerDatePickerStartDate);
+
+        View.OnClickListener clickListenerTimePickerStartTime = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -221,9 +224,12 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                 }, hour, minute, false).show();
             }
-        });
+        };
 
-        mBtnEndDatePicker.setOnClickListener(new View.OnClickListener() {
+        mBtnStartTimePicker.setOnClickListener(clickListenerTimePickerStartTime);
+        mTextViewStartTimeDescription.setOnClickListener(clickListenerTimePickerStartTime);
+
+        View.OnClickListener clickListenerDatePickerEndDate = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -238,9 +244,12 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                 }, mYear, mMonth, mDay).show();
             }
-        });
+        };
 
-        mBtnEndTimePicker.setOnClickListener(new View.OnClickListener() {
+        mBtnEndDatePicker.setOnClickListener(clickListenerDatePickerEndDate);
+        mTextViewEndDateDescription.setOnClickListener(clickListenerDatePickerEndDate);
+
+        View.OnClickListener clickListenerTimePickerEndTime = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -254,7 +263,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                 }, hour, minute, false).show();
             }
-        });
+        };
+
+        mBtnEndTimePicker.setOnClickListener(clickListenerTimePickerEndTime);
+        mTextViewEndTimeDescription.setOnClickListener(clickListenerTimePickerEndTime);
     }
 
     @Override

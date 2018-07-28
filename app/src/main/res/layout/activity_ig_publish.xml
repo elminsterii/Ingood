@@ -159,7 +159,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityPublishStartDateTime"
-                android:layout_marginStart="13dp">
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/textViewIgActivityPublishStartDateDescription"
@@ -186,7 +187,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityPublishStartDateTime"
                 android:layout_toEndOf="@+id/layoutIgActivityPublishStartDate"
-                android:layout_marginStart="25dp">
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/textViewIgActivityPublishStartTimeDescription"
@@ -230,7 +232,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityPublishEndDateTime"
-                android:layout_marginStart="13dp">
+                android:layout_marginStart="13dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/textViewIgActivityPublishEndDateDescription"
@@ -257,7 +260,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityPublishEndDateTime"
                 android:layout_toEndOf="@+id/layoutIgActivityPublishEndDate"
-                android:layout_marginStart="25dp">
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/textViewIgActivityPublishEndTimeDescription"
