@@ -69,10 +69,7 @@ public class ImageHelper {
     public static byte[] bitmapToByteArray(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        bmp.recycle();
-
-        return byteArray;
+        return stream.toByteArray();
     }
 
     public static int calculateInSampleSize(
