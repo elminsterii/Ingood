@@ -34,7 +34,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.IGA_STATUS_CLOSED;
+import static com.fff.ingood.global.GlobalProperty.GOOD_IGACTIVITY_THRESHOLD;
 import static com.fff.ingood.global.GlobalProperty.IS_SHOW_CLOSED_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.MAX_QUERY_QUANTITY_IGACTIVITY_ONCE;
+import static com.fff.ingood.global.GlobalProperty.POPULARITY_IGACTIVITY_THRESHOLD;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -45,11 +48,6 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
     private static final String DEFAULT_TAG_IN_TAG_BAR = "default_tag";
-
-    private static final String GOOD_IGACTIVITY_THRESHOLD = "10";
-    private static final String POPULARITY_IGACTIVITY_THRESHOLD = "5";
-
-    private static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
 
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;
@@ -62,7 +60,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     private FloatingActionButton mFabPublishBtn;
     private SwipeRefreshLayout mLayoutSwipeRefresh;
 
-    List<IgActivity> m_lsActivities;
+    List<IgActivity> m_lsIgActivities;
 
     private HomeActivity mActivity;
     private IgActivityLogicExecutor mIgActivityExecutor;
@@ -117,12 +115,12 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     @Override
     protected void initData() {
         mIgActivityExecutor = new IgActivityLogicExecutor();
-        m_lsActivities = new ArrayList<>();
+        m_lsIgActivities = new ArrayList<>();
 
         makeDefaultTags();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mActivityListAdapter = new ActivityListAdapter(m_lsActivities, this);
+        mActivityListAdapter = new ActivityListAdapter(m_lsIgActivities, this);
 
         mViewActivityList.setLayoutManager(mLayoutManager);
         mViewActivityList.setNestedScrollingEnabled(true);
@@ -333,8 +331,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private void refresh() {
         if(preSearchCondition != null) {
-            m_lsActivities.clear();
-            mActivityListAdapter.updateActivityList(m_lsActivities);
+            m_lsIgActivities.clear();
+            mActivityListAdapter.updateActivityList(m_lsIgActivities);
             mActivityListAdapter.notifyDataSetChanged();
 
             mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, preSearchCondition);
@@ -419,15 +417,15 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         hideWaitingDialog();
 
         if(IS_SHOW_CLOSED_IGACTIVITY) {
-            m_lsActivities.addAll(lsActivities);
+            m_lsIgActivities.addAll(lsActivities);
         } else {
             for(IgActivity activity : lsActivities) {
                 if(!activity.getStatus().equals(IGA_STATUS_CLOSED))
-                    m_lsActivities.add(activity);
+                    m_lsIgActivities.add(activity);
             }
         }
 
-        mActivityListAdapter.updateActivityList(m_lsActivities);
+        mActivityListAdapter.updateActivityList(m_lsIgActivities);
         mActivityListAdapter.notifyDataSetChanged();
 
         m_curQueryIndex += lsActivities.size();
@@ -438,7 +436,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strActivitiesIds))
             return;
 
-        m_lsActivities.clear();
+        m_lsIgActivities.clear();
         m_arrIgActivitiesIds = null;
         m_curQueryIndex = 0;
 

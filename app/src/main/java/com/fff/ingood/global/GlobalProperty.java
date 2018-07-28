@@ -9,8 +9,11 @@ public class GlobalProperty {
 
     //Homepage
     public static final boolean IS_SHOW_CLOSED_IGACTIVITY = false;
+    public static final String GOOD_IGACTIVITY_THRESHOLD = "10";
+    public static final String POPULARITY_IGACTIVITY_THRESHOLD = "5";
+    public static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
 
-    //IgActivity image
+    //IgActivityDetail page
     public static final int IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT = 3;
     public static final int IGACTIVITY_IMAGE_WIDTH = 1024;
     public static final int IGACTIVITY_IMAGE_HEIGHT = 768;

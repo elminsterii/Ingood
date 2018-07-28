@@ -83,7 +83,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         holder.mImageViewActivity.setTag(position);
         holder.mLayoutSaveIgActivity.setTag(position);
 
-        makeImage(holder, activity);
+        makeDefaultImage(holder);
         makeActivityName(holder, activity);
         makeTime(holder, activity);
         makeAttention(holder, activity);
@@ -107,9 +107,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         this.mTagBarWidth = mTagBarWidth;
     }
 
-    private void makeImage(ViewHolder holder, IgActivity activity) {
+    private void makeDefaultImage(ViewHolder holder) {
         final int CORNER_LEVEL_VALUE = 100;
-        //Bitmap bm = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.sample_activity);
         Bitmap bm = ImageHelper.getBitmapFromVectorDrawable(mContext, R.drawable.ic_image_black_72dp);
         bm = ImageHelper.getRoundedCornerBitmap(bm, CORNER_LEVEL_VALUE);
 
