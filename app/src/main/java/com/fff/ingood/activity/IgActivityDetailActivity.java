@@ -25,7 +25,7 @@ import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.DeemInfoManager;
-import com.fff.ingood.global.ImageCache;
+import com.fff.ingood.global.IgActivityImageCache;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
@@ -317,7 +317,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 public void onClick(View v) {
                     Intent intent = new Intent(mActivity, IgActivityPublishActivity.class);
                     intent.putExtra(TAG_IGACTIVITY, mIgActivity);
-                    ImageCache.getInstance().cachingImages(m_lsIgActivityImages);
+                    IgActivityImageCache.getInstance().cachingImages(m_lsIgActivityImages);
                     mActivity.startActivity(intent);
                 }
             };

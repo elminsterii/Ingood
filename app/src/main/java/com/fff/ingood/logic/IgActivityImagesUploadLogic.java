@@ -16,7 +16,7 @@ public class IgActivityImagesUploadLogic extends Logic
         implements IgActivityImageUploadTaskWrapper.IgActivityImageUploadTaskWrapperCallback {
 
     public interface IgActivityImagesUploadLogicCaller extends LogicCaller {
-        void returnUploadIgActivityImagesSuccess();
+        void returnUploadIgActivityImagesSuccess(int iUploadCount);
         void returnStatus(Integer iStatusCode);
     }
 
@@ -47,7 +47,7 @@ public class IgActivityImagesUploadLogic extends Logic
             uploadImage(m_lsUploadImage.get(m_curIndex), m_strIgActivityId, ARRAY_IGACTIVITY_IMAGE_NAMES[m_curIndex]);
             m_curIndex++;
         } else {
-            mCaller.returnUploadIgActivityImagesSuccess();
+            mCaller.returnUploadIgActivityImagesSuccess(m_curIndex++);
             mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
         }
     }

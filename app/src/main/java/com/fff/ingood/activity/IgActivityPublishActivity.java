@@ -27,10 +27,12 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.global.ImageCache;
+import com.fff.ingood.global.IgActivityImageCache;
+import com.fff.ingood.global.IgActivityImageManager;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
+import com.fff.ingood.logic.IgActivityImageDeleteLogic;
 import com.fff.ingood.logic.IgActivityImagesUploadLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
@@ -56,8 +58,11 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class IgActivityPublishActivity extends BaseActivity implements
         IgActivityCreateLogic.IgActivityCreateLogicCaller
-        , IgActivityUpdateLogic.IgActivityUpdateLogicCaller, IgActivityImagesUploadLogic.IgActivityImagesUploadLogicCaller {
+        , IgActivityUpdateLogic.IgActivityUpdateLogicCaller
+        , IgActivityImagesUploadLogic.IgActivityImagesUploadLogicCaller
+        , IgActivityImageDeleteLogic.IgActivityImageDeleteLogicCaller {
 
+    private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 15 * 1000;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
 
     private Button mBtnLeftBottom;
@@ -82,6 +87,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private LinearLayout mLayoutIgActivityTags;
 
     private boolean m_bEditMode = false;
+    private boolean m_bIsImageChanged = false;
     private IgActivity m_igActivity;
 
     private List<EditText> m_lsTagsInput;
@@ -103,6 +109,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
             if(m_igActivity != null)
                 m_bEditMode = true;
         }
+
+        setWaitingDialogTimeout(MAX_TIMEOUT_WAITING_DIALOG_MS);
     }
 
     @Override
@@ -288,8 +296,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 setDateByIgActivity(activity);
                 setTagsByIgActivity(activity);
 
-                if(ImageCache.getInstance().isCacheExist()) {
-                    m_lsUploadImages = ImageCache.getInstance().getCacheImages();
+                if(IgActivityImageCache.getInstance().isCacheExist()) {
+                    m_lsUploadImages = IgActivityImageCache.getInstance().getCacheImages();
                     makeUploadImageLayout(m_lsUploadImages);
                 }
             }
@@ -413,6 +421,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
         executor.doIgActivityImagesUploadAll(this, strIgActivityId, lsIgActivityImages);
     }
 
+    private void deleteIgActivityImage(Person personOwner, String strIgActivityId, List<String> lsIgActivityImagesName) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doIgActivityImageDelete(this, personOwner.getEmail(), personOwner.getPassword(), strIgActivityId, lsIgActivityImagesName);
+    }
+
     private void pickImageByGallery() {
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
@@ -455,6 +468,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     int index =  (int)v.getTag();
                     m_lsUploadImages.remove(index);
                     makeUploadImageLayout(m_lsUploadImages);
+                    m_bIsImageChanged = true;
                 }
             });
 
@@ -623,25 +637,40 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     @Override
-    public void returnUploadIgActivityImagesSuccess() {
-        hideWaitingDialog();
-        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
-        onBackPressed();
+    public void returnUploadIgActivityImagesSuccess(int iUploadCount) {
+        if(!m_bEditMode) {
+            hideWaitingDialog();
+            Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        } else {
+            //TODO - delete images
+        }
+    }
+
+    @Override
+    public void returnIgActivityImageDeleteSuccess() {
+
     }
 
     @Override
     public void returnStatus(Integer iStatusCode) {
-        hideWaitingDialog();
-
-        if(iStatusCode != null && !iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
+        if(iStatusCode != null && !iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
+            hideWaitingDialog();
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void returnUpdateIgActivitySuccess() {
-        hideWaitingDialog();
-        Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_updated), Toast.LENGTH_SHORT).show();
-        onBackPressed();
+        if(m_bIsImageChanged) {
+            List<IgActivityImageManager.IMAGE_ACTION> lsImageAction
+                    = IgActivityImageManager.getInstance()
+                    .determineImagesAction(IgActivityImageCache.getInstance().getCacheImagesByRef(), m_lsUploadImages);
+        } else {
+            hideWaitingDialog();
+            Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_updated), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     @SuppressLint("ShowToast")
@@ -664,6 +693,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
                     inputStream.close();
                     addImageIntoLayout(bm);
+                    m_bIsImageChanged = true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

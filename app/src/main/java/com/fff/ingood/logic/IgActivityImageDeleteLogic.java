@@ -13,6 +13,7 @@ public class IgActivityImageDeleteLogic extends Logic
         implements IgActivityImageDeleteTaskWrapper.IgActivityImageDeleteTaskWrapperCallback {
 
     public interface IgActivityImageDeleteLogicCaller extends LogicCaller {
+        void returnIgActivityImageDeleteSuccess();
         void returnStatus(Integer iStatusCode);
     }
 
@@ -40,6 +41,7 @@ public class IgActivityImageDeleteLogic extends Logic
 
     @Override
     public void onDeleteIgActivityImageSuccess() {
+        mCaller.returnIgActivityImageDeleteSuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

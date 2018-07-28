@@ -8,22 +8,26 @@ import java.util.List;
 /**
  * Created by ElminsterII on 2018/7/28.
  */
-public class ImageCache {
-    private static ImageCache m_instance = null;
+public class IgActivityImageCache {
+    private static IgActivityImageCache m_instance = null;
     private List<Bitmap> m_lsCacheImages;
 
-    private ImageCache() {
+    private IgActivityImageCache() {
 
     }
 
-    public static ImageCache getInstance() {
+    public static IgActivityImageCache getInstance() {
         if(m_instance == null)
-            m_instance = new ImageCache();
+            m_instance = new IgActivityImageCache();
         return m_instance;
     }
 
     public List<Bitmap> getCacheImages() {
         return new ArrayList<>(m_lsCacheImages);
+    }
+
+    public List<Bitmap> getCacheImagesByRef() {
+        return m_lsCacheImages;
     }
 
     public void cachingImages(List<Bitmap> lsCacheImages) {

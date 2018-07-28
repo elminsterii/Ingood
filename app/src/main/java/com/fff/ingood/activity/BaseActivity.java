@@ -106,6 +106,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
             });
     }
 
+    protected void setWaitingDialogTimeout(long iMillis) {
+        mWaitingDialog.setTimeout(iMillis);
+    }
+
     protected void hideSoftInput() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         assert inputMethodManager != null;
