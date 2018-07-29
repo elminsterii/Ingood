@@ -1,5 +1,6 @@
 package com.fff.ingood.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +19,8 @@ import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.TagManager;
+import com.fff.ingood.logic.IgActivityImageComboLogic_IgActivityMainImageDownload;
+import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonSaveIgActivityLogic;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
@@ -25,19 +28,23 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL;
 
 /**
  * Created by ElminsterII on 2018/5/29.
  */
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ViewHolder> implements
-        PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller {
+        PersonSaveIgActivityLogic.PersonSaveIgActivityLogicCaller
+        , IgActivityImageComboLogic_IgActivityMainImageDownload.IgActivityMainImageDownloadLogicCaller {
     private List<IgActivity> m_lsActivity;
     private int mTagBarWidth;
 
     private Context mContext;
+    private HashMap<String, ImageView> m_hashHolderImages;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout mLayoutIgactivityItem;
@@ -64,9 +71,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
     }
 
+    @SuppressLint("UseSparseArrays")
     public ActivityListAdapter(List<IgActivity> lsActivity, Context context) {
         m_lsActivity = lsActivity;
         mContext = context;
+        m_hashHolderImages = new HashMap<>();
     }
 
     @NonNull
@@ -84,8 +93,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         IgActivity activity = m_lsActivity.get(position);
         holder.mLayoutIgactivityItem.setTag(position);
         holder.mLayoutSaveIgActivity.setTag(position);
+        m_hashHolderImages.put(Integer.toString(position), holder.mImageViewActivity);
 
         makeDefaultImage(holder);
+        downloadIgActivityImage(activity, Integer.toString(position));
+
         makeActivityName(holder, activity);
         makeTime(holder, activity);
         makeAttention(holder, activity);
@@ -110,9 +122,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     private void makeDefaultImage(ViewHolder holder) {
-        final int CORNER_LEVEL_VALUE = 100;
         Bitmap bm = ImageHelper.getBitmapFromVectorDrawable(mContext, R.drawable.ic_image_black_72dp);
-        bm = ImageHelper.getRoundedCornerBitmap(bm, CORNER_LEVEL_VALUE);
+        bm = ImageHelper.getRoundedCornerBitmap(bm, IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL);
 
         holder.mImageViewActivity.setImageBitmap(bm);
     }
@@ -208,6 +219,23 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         PersonLogicExecutor executor = new PersonLogicExecutor();
 
         executor.doSaveIgActivity(this, person.getEmail(), strActivityId, svValue);
+    }
+
+    private void downloadIgActivityImage(IgActivity activity, String strTag) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doIgActivityMainImageDownload(this, activity.getId(), strTag);
+    }
+
+    @Override
+    public void returnIgActivityMainImage(Bitmap bmIgActivityImage, String strTag) {
+        if(StringTool.checkStringNotNull(strTag)
+                && m_hashHolderImages.containsKey(strTag)) {
+            if(bmIgActivityImage != null) {
+                Bitmap bm = ImageHelper.getRoundedCornerBitmap(bmIgActivityImage, IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL);
+                ImageView imageView = m_hashHolderImages.get(strTag);
+                imageView.setImageBitmap(bm);
+            }
+        }
     }
 
     @Override

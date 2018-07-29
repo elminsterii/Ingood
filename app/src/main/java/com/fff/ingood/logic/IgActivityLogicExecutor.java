@@ -85,4 +85,17 @@ public class IgActivityLogicExecutor {
         Logic fl = new IgActivityImageComboLogic_IgActivityImagesDownload(caller, strIgActivityId);
         fl.doLogic();
     }
+
+    public void doIgActivityMainImageDownload(IgActivityImageComboLogic_IgActivityMainImageDownload.IgActivityMainImageDownloadLogicCaller caller
+            , String strIgActivityId) {
+        Logic fl = new IgActivityImageComboLogic_IgActivityMainImageDownload(caller, strIgActivityId);
+        fl.doLogic();
+    }
+
+    public void doIgActivityMainImageDownload(IgActivityImageComboLogic_IgActivityMainImageDownload.IgActivityMainImageDownloadLogicCaller caller
+            , String strIgActivityId
+            , String strTag) {
+        Logic fl = new IgActivityImageComboLogic_IgActivityMainImageDownload(caller, strIgActivityId, strTag);
+        fl.doLogic();
+    }
 }

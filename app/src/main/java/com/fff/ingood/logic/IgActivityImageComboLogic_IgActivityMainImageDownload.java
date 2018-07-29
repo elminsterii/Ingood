@@ -19,7 +19,7 @@ public class IgActivityImageComboLogic_IgActivityMainImageDownload extends Logic
         , IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback {
 
     public interface IgActivityMainImageDownloadLogicCaller extends LogicCaller {
-        void returnIgActivityMainImage(Bitmap bmIgActivityImage);
+        void returnIgActivityMainImage(Bitmap bmIgActivityImage, String strTag);
         void returnStatus(Integer iStatusCode);
     }
 
@@ -28,6 +28,12 @@ public class IgActivityImageComboLogic_IgActivityMainImageDownload extends Logic
 
     IgActivityImageComboLogic_IgActivityMainImageDownload(IgActivityMainImageDownloadLogicCaller caller, String strIgActivityId) {
         super(caller);
+        mCaller = caller;
+        m_strIgActivityId = strIgActivityId;
+    }
+
+    IgActivityImageComboLogic_IgActivityMainImageDownload(IgActivityMainImageDownloadLogicCaller caller, String strIgActivityId, String strTag) {
+        super(caller, strTag);
         mCaller = caller;
         m_strIgActivityId = strIgActivityId;
     }
@@ -41,7 +47,7 @@ public class IgActivityImageComboLogic_IgActivityMainImageDownload extends Logic
     @Override
     public void onIgActivityImageDownloadSuccess(Bitmap bmIgActivityImage) {
         if(bmIgActivityImage != null) {
-            mCaller.returnIgActivityMainImage(bmIgActivityImage);
+            mCaller.returnIgActivityMainImage(bmIgActivityImage, getTag());
             mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
         } else {
             mCaller.returnStatus(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT);

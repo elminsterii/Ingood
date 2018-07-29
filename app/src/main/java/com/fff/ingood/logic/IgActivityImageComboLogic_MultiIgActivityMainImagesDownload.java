@@ -51,7 +51,7 @@ public class IgActivityImageComboLogic_MultiIgActivityMainImagesDownload extends
     }
 
     @Override
-    public void returnIgActivityMainImage(Bitmap bmIgActivityImage) {
+    public void returnIgActivityMainImage(Bitmap bmIgActivityImage, String strTag) {
         if(m_arrIgActivitiesImage == null)
             return;
 
