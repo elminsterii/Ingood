@@ -267,6 +267,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
                     mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
+                    preSearchCondition = activityCondition;
                 }
                 return true;
             }
