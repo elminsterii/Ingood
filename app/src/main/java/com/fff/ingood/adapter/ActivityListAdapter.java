@@ -60,7 +60,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         ViewHolder(View v) {
             super(v);
             mLayoutIgactivityItem = v.findViewById(R.id.layoutRelativeIgActivityItem);
-            mImageViewActivity = v.findViewById(R.id.imgActivityItem);
+            mImageViewActivity = v.findViewById(R.id.imgActivityItemImage);
             mTextViewActivityName = v.findViewById(R.id.textActivityName);
             mTextViewActivityTime = v.findViewById(R.id.textActivityTime);
             mTextViewActivityActionAttention = v.findViewById(R.id.textActivityActionAttention);
@@ -231,9 +231,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         if(StringTool.checkStringNotNull(strTag)
                 && m_hashHolderImages.containsKey(strTag)) {
             if(bmIgActivityImage != null) {
-                Bitmap bm = ImageHelper.getRoundedCornerBitmap(bmIgActivityImage, IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL);
                 ImageView imageView = m_hashHolderImages.get(strTag);
-                imageView.setImageBitmap(bm);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setImageBitmap(bmIgActivityImage);
             }
         }
     }
