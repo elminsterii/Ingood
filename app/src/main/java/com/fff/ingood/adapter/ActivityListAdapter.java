@@ -45,7 +45,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private Context mContext;
     private HashMap<String, ImageView> m_hashImageViews;
-    private HashMap<String, Bitmap> m_hashImageBitmaps;
+    private HashMap<String, Bitmap> m_hashImageBitmapsCache;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout mLayoutIgactivityItem;
@@ -77,7 +77,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         m_lsActivity = lsActivity;
         mContext = context;
         m_hashImageViews = new HashMap<>();
-        m_hashImageBitmaps = new HashMap<>();
+        m_hashImageBitmapsCache = new HashMap<>();
     }
 
     @NonNull
@@ -99,11 +99,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         String strPosition = Integer.toString(position);
         m_hashImageViews.put(strPosition, holder.mImageViewActivity);
 
-        if(!m_hashImageBitmaps.containsKey(strPosition)) {
+        if(!m_hashImageBitmapsCache.containsKey(activity.getId())) {
             makeDefaultImage(holder);
             downloadIgActivityImage(activity, strPosition);
         } else {
-            Bitmap bm = m_hashImageBitmaps.get(strPosition);
+            Bitmap bm = m_hashImageBitmapsCache.get(activity.getId());
             holder.mImageViewActivity.setScaleType(ImageView.ScaleType.CENTER_CROP);
             holder.mImageViewActivity.setImageBitmap(bm);
         }
@@ -237,10 +237,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void returnIgActivityMainImage(Bitmap bmIgActivityImage, String strTag) {
-        if(StringTool.checkStringNotNull(strTag)
-                && !m_hashImageBitmaps.containsKey(strTag)) {
+        if(StringTool.checkStringNotNull(strTag)) {
             if(bmIgActivityImage != null) {
-                m_hashImageBitmaps.put(strTag, bmIgActivityImage);
+                int index = Integer.parseInt(strTag);
+                if(index >= 0 && index < m_lsActivity.size()) {
+                    IgActivity activity = m_lsActivity.get(index);
+                    String strIgActivityId = activity.getId();
+                    if(!m_hashImageBitmapsCache.containsKey(strIgActivityId))
+                        m_hashImageBitmapsCache.put(strIgActivityId, bmIgActivityImage);
+                }
 
                 if(m_hashImageViews.containsKey(strTag)) {
                     ImageView imageView = m_hashImageViews.get(strTag);
