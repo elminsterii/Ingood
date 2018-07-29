@@ -44,7 +44,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private int mTagBarWidth;
 
     private Context mContext;
-    private HashMap<String, ImageView> m_hashHolderImages;
+    private HashMap<String, ImageView> m_hashImageViews;
+    private HashMap<String, Bitmap> m_hashImageBitmaps;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout mLayoutIgactivityItem;
@@ -75,7 +76,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public ActivityListAdapter(List<IgActivity> lsActivity, Context context) {
         m_lsActivity = lsActivity;
         mContext = context;
-        m_hashHolderImages = new HashMap<>();
+        m_hashImageViews = new HashMap<>();
+        m_hashImageBitmaps = new HashMap<>();
     }
 
     @NonNull
@@ -93,10 +95,18 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         IgActivity activity = m_lsActivity.get(position);
         holder.mLayoutIgactivityItem.setTag(position);
         holder.mLayoutSaveIgActivity.setTag(position);
-        m_hashHolderImages.put(Integer.toString(position), holder.mImageViewActivity);
 
-        makeDefaultImage(holder);
-        downloadIgActivityImage(activity, Integer.toString(position));
+        String strPosition = Integer.toString(position);
+        m_hashImageViews.put(strPosition, holder.mImageViewActivity);
+
+        if(!m_hashImageBitmaps.containsKey(strPosition)) {
+            makeDefaultImage(holder);
+            downloadIgActivityImage(activity, strPosition);
+        } else {
+            Bitmap bm = m_hashImageBitmaps.get(strPosition);
+            holder.mImageViewActivity.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.mImageViewActivity.setImageBitmap(bm);
+        }
 
         makeActivityName(holder, activity);
         makeTime(holder, activity);
@@ -114,7 +124,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     public void updateActivityList(List<IgActivity> lsActivity) {
         m_lsActivity = lsActivity;
-        notifyDataSetChanged();
     }
 
     public void setTagBarWidth(int mTagBarWidth) {
@@ -229,11 +238,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public void returnIgActivityMainImage(Bitmap bmIgActivityImage, String strTag) {
         if(StringTool.checkStringNotNull(strTag)
-                && m_hashHolderImages.containsKey(strTag)) {
+                && !m_hashImageBitmaps.containsKey(strTag)) {
             if(bmIgActivityImage != null) {
-                ImageView imageView = m_hashHolderImages.get(strTag);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setImageBitmap(bmIgActivityImage);
+                m_hashImageBitmaps.put(strTag, bmIgActivityImage);
+
+                if(m_hashImageViews.containsKey(strTag)) {
+                    ImageView imageView = m_hashImageViews.get(strTag);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageView.setImageBitmap(bmIgActivityImage);
+                }
             }
         }
     }
