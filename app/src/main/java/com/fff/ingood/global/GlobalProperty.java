@@ -8,6 +8,8 @@ public class GlobalProperty {
     public static final int STARTUP_ANIMATION_DURATION = 1500;
 
     //Homepage
+    public static final char CHAR_SEARCH_TEXT_HEAD_IS_EMAIL = '@';
+    public static final char CHAR_SEARCH_TEXT_HEAD_IS_TAG = '#';
     public static final boolean IS_SHOW_CLOSED_IGACTIVITY = false;
     public static final String GOOD_IGACTIVITY_THRESHOLD = "10";
     public static final String POPULARITY_IGACTIVITY_THRESHOLD = "5";

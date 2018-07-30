@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.IGA_STATUS_CLOSED;
+import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_EMAIL;
+import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_TAG;
 import static com.fff.ingood.global.GlobalProperty.GOOD_IGACTIVITY_THRESHOLD;
 import static com.fff.ingood.global.GlobalProperty.IS_SHOW_CLOSED_IGACTIVITY;
 import static com.fff.ingood.global.GlobalProperty.MAX_QUERY_QUANTITY_IGACTIVITY_ONCE;
@@ -281,9 +283,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 if(StringTool.checkStringNotNull(query)) {
                     showWaitingDialog(HomeActivity.class.getName());
 
-                    m_bIsShowExpireIgActivity = false;
                     IgActivity activityCondition = new IgActivity();
-                    activityCondition.setTags(query);
+                    if(isSearchByEmail(query)) {
+                        activityCondition.setPublisherEmail(query.substring(1, query.length()));
+                    } else if(isSearchByTag(query)) {
+                        activityCondition.setTags(query.substring(1, query.length()));
+                    } else {
+                        //search by IgActivity name.
+                        activityCondition.setName(query);
+                    }
+
+                    m_bIsShowExpireIgActivity = true;
                     mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
                     preSearchCondition = activityCondition;
                 }
@@ -463,6 +473,14 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
         } else
             queryIgActivity(0);
+    }
+
+    private boolean isSearchByEmail(String strSearchText) {
+        return strSearchText.charAt(0) == CHAR_SEARCH_TEXT_HEAD_IS_EMAIL;
+    }
+
+    private boolean isSearchByTag(String strSearchText) {
+        return strSearchText.charAt(0) == CHAR_SEARCH_TEXT_HEAD_IS_TAG;
     }
 
     @Override

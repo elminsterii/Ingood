@@ -128,7 +128,7 @@
 
     <!-- SearchBar -->
     <string name="search_bar_label">搜尋</string>
-    <string name="search_bar_hint">活動類型, 標籤…</string>
+    <string name="search_bar_hint">活動名 #標籤 @信箱</string>
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">個人資料</string>

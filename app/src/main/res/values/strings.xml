@@ -127,7 +127,7 @@
 
     <!-- SearchBar -->
     <string name="search_bar_label">Search</string>
-    <string name="search_bar_hint">locations, tags…</string>
+    <string name="search_bar_hint">Name #Tags @Email</string>
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>
