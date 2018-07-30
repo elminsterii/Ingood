@@ -85,6 +85,7 @@
 
     <!-- Custom Tags -->
     <string name="tag_sport">Sport</string>
+    <string name="tag_ball">Ball</string>
     <string name="tag_casual">Casual</string>
     <string name="tag_literary">Literary</string>
     <string name="tag_literary2">Literary</string>
@@ -100,6 +101,9 @@
     <string name="tag_outdoor">Outdoor</string>
     <string name="tag_outdoor2">Outdoor</string>
     <string name="tag_edu">Education</string>
+    <string name="tag_food">Food</string>
+    <string name="tag_food2">Food</string>
+    <string name="tag_food3">Eat</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">Human care</string>

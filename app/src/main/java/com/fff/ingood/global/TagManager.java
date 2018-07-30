@@ -63,6 +63,8 @@ public class TagManager {
 
         String strTagSport = mContext.getResources().getText(R.string.tag_sport).toString();
         int colTagSport = mContext.getResources().getColor(R.color.colorTagBlue);
+        String strTagBall = mContext.getResources().getText(R.string.tag_ball).toString();
+        int colTagBall = mContext.getResources().getColor(R.color.colorTagBlue);
         String strTagCasual = mContext.getResources().getText(R.string.tag_casual).toString();
         int colTagCasual = mContext.getResources().getColor(R.color.colorTagLiteGreen);
         String strTagLiterary = mContext.getResources().getText(R.string.tag_literary).toString();
@@ -93,8 +95,15 @@ public class TagManager {
         int colTagOutdoor2 = mContext.getResources().getColor(R.color.colorTagGreen);
         String strTagEducation = mContext.getResources().getText(R.string.tag_edu).toString();
         int colTagEducation = mContext.getResources().getColor(R.color.colorTagRed);
+        String strTagFood = mContext.getResources().getText(R.string.tag_food).toString();
+        int colTagFood = mContext.getResources().getColor(R.color.colorTagOrange);
+        String strTagFood2 = mContext.getResources().getText(R.string.tag_food2).toString();
+        int colTagFood2 = mContext.getResources().getColor(R.color.colorTagOrange);
+        String strTagFood3 = mContext.getResources().getText(R.string.tag_food3).toString();
+        int colTagFood3 = mContext.getResources().getColor(R.color.colorTagOrange);
 
         m_mapTagColor.put(strTagSport, colTagSport);
+        m_mapTagColor.put(strTagBall, colTagBall);
         m_mapTagColor.put(strTagCasual, colTagCasual);
         m_mapTagColor.put(strTagLiterary, colTagLiterary);
         m_mapTagColor.put(strTagLiterary2, colTagLiterary2);
@@ -110,6 +119,9 @@ public class TagManager {
         m_mapTagColor.put(strTagOutdoor, colTagOutdoor);
         m_mapTagColor.put(strTagOutdoor2, colTagOutdoor2);
         m_mapTagColor.put(strTagEducation, colTagEducation);
+        m_mapTagColor.put(strTagFood, colTagFood);
+        m_mapTagColor.put(strTagFood2, colTagFood2);
+        m_mapTagColor.put(strTagFood3, colTagFood3);
     }
 
     public int makeTagsInLayout(ViewGroup layout, String[] arrStrTags, int iTagBarWidth) {

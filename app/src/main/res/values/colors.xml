@@ -25,10 +25,11 @@
 
     <!-- Tags Color -->
     <color name="colorTagBlue">#3C5071</color>
-    <color name="colorTagRed">#DF5044</color>
+    <color name="colorTagRed">#FF5044</color>
     <color name="colorTagGreen">#34C03A</color>
     <color name="colorTagLiteGreen">#14A05A</color>
     <color name="colorTagBrown">#664536</color>
     <color name="colorTagPurple">#64205A</color>
     <color name="colorTagPink">#EE909B</color>
+    <color name="colorTagOrange">#CC6035</color>
 </resources>

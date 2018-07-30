@@ -86,6 +86,7 @@
 
     <!-- Custom Tags -->
     <string name="tag_sport">運動</string>
+    <string name="tag_ball">球</string>
     <string name="tag_casual">休閒</string>
     <string name="tag_literary">文藝</string>
     <string name="tag_literary2">藝文</string>
@@ -101,6 +102,9 @@
     <string name="tag_outdoor">戶外</string>
     <string name="tag_outdoor2">室外</string>
     <string name="tag_edu">教育</string>
+    <string name="tag_food">美食</string>
+    <string name="tag_food2">食物</string>
+    <string name="tag_food3">吃</string>
 
     <!-- Tags Description-->
     <string name="tag_care_description">關心社會上的弱勢族群。\n例如街友、街賣者、憨兒、獨居老人等等。</string>
