@@ -79,6 +79,8 @@
     <string name="tag_popularity">Popularity</string>
     <string name="tag_good">Good</string>
     <string name="tag_nearly">Nearly</string>
+    <string name="tag_my_igactivity">My</string>
+    <string name="tag_my_attend_igactivity">Attended</string>
 
     <!-- Custom Tags -->
     <string name="tag_sport">Sport</string>

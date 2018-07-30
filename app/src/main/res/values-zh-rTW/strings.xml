@@ -80,6 +80,8 @@
     <string name="tag_popularity">熱門</string>
     <string name="tag_good">優質</string>
     <string name="tag_nearly">附近</string>
+    <string name="tag_my_igactivity">我的</string>
+    <string name="tag_my_attend_igactivity">我參加的</string>
 
     <!-- Custom Tags -->
     <string name="tag_sport">運動</string>

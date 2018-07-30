@@ -64,7 +64,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private HomeActivity mActivity;
     private IgActivityLogicExecutor mIgActivityExecutor;
+
     private IgActivity preSearchCondition;
+    private boolean m_bIsShowExpireIgActivity;
 
     private boolean m_bIsInitialize = false;
 
@@ -264,6 +266,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 if(StringTool.checkStringNotNull(query)) {
                     showWaitingDialog(HomeActivity.class.getName());
 
+                    m_bIsShowExpireIgActivity = false;
                     IgActivity activityCondition = new IgActivity();
                     activityCondition.setTags(query);
                     mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
@@ -370,6 +373,16 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabNearly.setText(R.string.tag_nearly);
         mTabLayoutTagBar.addTab(tabNearly);
 
+        TabLayout.Tab tabMyIgActivity = mTabLayoutTagBar.newTab();
+        tabMyIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabMyIgActivity.setText(R.string.tag_my_igactivity);
+        mTabLayoutTagBar.addTab(tabMyIgActivity);
+
+        TabLayout.Tab tabMyAttendIgActivity = mTabLayoutTagBar.newTab();
+        tabMyAttendIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabMyAttendIgActivity.setText(R.string.tag_my_attend_igactivity);
+        mTabLayoutTagBar.addTab(tabMyAttendIgActivity);
+
         //@@ test
         mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
     }
@@ -392,12 +405,22 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);
+            m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
             igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
+            m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_good))) {
             igCondition.setGood(GOOD_IGACTIVITY_THRESHOLD);
+            m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_nearly))) {
             igCondition.setLocation(PersonManager.getInstance().getPerson().getLocation());
+            m_bIsShowExpireIgActivity = false;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_igactivity))) {
+            igCondition.setPublisherEmail(PersonManager.getInstance().getPerson().getEmail());
+            m_bIsShowExpireIgActivity = true;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_attend_igactivity))) {
+            igCondition.setAttendees(PersonManager.getInstance().getPerson().getId());
+            m_bIsShowExpireIgActivity = true;
         }
     }
 
@@ -417,7 +440,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     public void returnIgActivities(List<IgActivity> lsActivities) {
         hideWaitingDialog();
 
-        if(IS_SHOW_CLOSED_IGACTIVITY) {
+        if(IS_SHOW_CLOSED_IGACTIVITY || m_bIsShowExpireIgActivity) {
             m_lsIgActivities.addAll(lsActivities);
         } else {
             for(IgActivity activity : lsActivities) {
