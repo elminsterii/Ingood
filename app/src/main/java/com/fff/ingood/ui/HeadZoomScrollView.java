@@ -34,6 +34,11 @@ public class HeadZoomScrollView extends ScrollView {
     private int zoomViewHeight = 0;
 
     private boolean mScaling = false;
+    private boolean mScalable = true;
+
+    public void setScalable(boolean mScalable) {
+        this.mScalable = mScalable;
+    }
 
     private View zoomView;
     public void setZoomView(View zoomView) {
@@ -76,7 +81,7 @@ public class HeadZoomScrollView extends ScrollView {
             zoomViewWidth = zoomView.getMeasuredWidth();
             zoomViewHeight = zoomView.getMeasuredHeight();
         }
-        if (zoomView == null || zoomViewWidth <= 0 || zoomViewHeight <= 0) {
+        if (!mScalable || zoomView == null || zoomViewWidth <= 0 || zoomViewHeight <= 0) {
             return super.onTouchEvent(ev);
         }
         switch (ev.getAction()) {
