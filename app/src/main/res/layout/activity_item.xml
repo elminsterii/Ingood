@@ -40,8 +40,18 @@
                 android:layout_height="@dimen/height_igactivity_image_hp"
                 android:layout_gravity="top"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/image_mask_home_activity"/>
+                android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/textViewActivityItemMaskText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/text_size_activity_item_close"
+                android:text="@string/activity_closed"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/textActivityName"

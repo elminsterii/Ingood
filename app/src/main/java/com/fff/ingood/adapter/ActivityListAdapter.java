@@ -50,6 +50,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout mLayoutIgactivityItem;
         ImageView mImageViewActivity;
+        ImageView mImgActivityItemMask;
+        TextView mTextViewActivityItemMaskText;
         TextView mTextViewActivityName;
         TextView mTextViewActivityTime;
         TextView mTextViewActivityActionAttention;
@@ -62,6 +64,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             super(v);
             mLayoutIgactivityItem = v.findViewById(R.id.layoutRelativeIgActivityItem);
             mImageViewActivity = v.findViewById(R.id.imgActivityItemImage);
+            mImgActivityItemMask = v.findViewById(R.id.imgActivityItemMask);
+            mTextViewActivityItemMaskText = v.findViewById(R.id.textViewActivityItemMaskText);
             mTextViewActivityName = v.findViewById(R.id.textActivityName);
             mTextViewActivityTime = v.findViewById(R.id.textActivityTime);
             mTextViewActivityActionAttention = v.findViewById(R.id.textActivityActionAttention);
@@ -96,18 +100,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         holder.mLayoutIgactivityItem.setTag(position);
         holder.mLayoutSaveIgActivity.setTag(position);
 
-        String strPosition = Integer.toString(position);
-        m_hashImageViews.put(strPosition, holder.mImageViewActivity);
-
-        if(!m_hashImageBitmapsCache.containsKey(activity.getId())) {
-            makeDefaultImage(holder);
-            downloadIgActivityImage(activity, strPosition);
-        } else {
-            Bitmap bm = m_hashImageBitmapsCache.get(activity.getId());
-            holder.mImageViewActivity.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            holder.mImageViewActivity.setImageBitmap(bm);
-        }
-
+        makeImage(holder, activity, position);
+        makeMask(holder, activity);
         makeActivityName(holder, activity);
         makeTime(holder, activity);
         makeAttention(holder, activity);
@@ -216,6 +210,30 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         }
         holder.m_bIsSave = bIsSave;
         setUiComponentSaveIgActivity(holder, bIsSave);
+    }
+
+    private void makeMask(ViewHolder holder, IgActivity activity) {
+        if(activity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
+            holder.mTextViewActivityItemMaskText.setVisibility(View.VISIBLE);
+            holder.mImgActivityItemMask.setImageDrawable(mContext.getResources().getDrawable(R.drawable.image_mask_home_activity_close));
+        } else {
+            holder.mTextViewActivityItemMaskText.setVisibility(View.INVISIBLE);
+            holder.mImgActivityItemMask.setImageDrawable(mContext.getResources().getDrawable(R.drawable.image_mask_home_activity));
+        }
+    }
+
+    private void makeImage(ViewHolder holder, IgActivity activity, int position) {
+        String strPosition = Integer.toString(position);
+        m_hashImageViews.put(strPosition, holder.mImageViewActivity);
+
+        if(!m_hashImageBitmapsCache.containsKey(activity.getId())) {
+            makeDefaultImage(holder);
+            downloadIgActivityImage(activity, strPosition);
+        } else {
+            Bitmap bm = m_hashImageBitmapsCache.get(activity.getId());
+            holder.mImageViewActivity.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            holder.mImageViewActivity.setImageBitmap(bm);
+        }
     }
 
     private void setUiComponentSaveIgActivity(ViewHolder holder, boolean bSave) {

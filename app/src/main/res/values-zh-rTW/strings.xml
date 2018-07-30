@@ -7,6 +7,7 @@
     <string name="activity_page">活動內容</string>
     <string name="activity_publish">發佈活動</string>
     <string name="activity_edit">編輯活動</string>
+    <string name="activity_closed">已結束</string>
 
     <!-- LoginPage -->
     <string name="login_slogan">活動 x 揪團 x 社交</string>
