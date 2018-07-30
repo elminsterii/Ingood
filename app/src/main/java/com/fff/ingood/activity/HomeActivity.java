@@ -299,6 +299,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mLayoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                mActivityListAdapter.clear();
                 refresh();
             }
         });

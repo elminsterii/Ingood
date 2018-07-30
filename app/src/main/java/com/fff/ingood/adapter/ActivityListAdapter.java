@@ -130,6 +130,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         this.mTagBarWidth = mTagBarWidth;
     }
 
+    public void clear() {
+        m_hashImageBitmapsCache.clear();
+        m_hashImageViews.clear();
+        m_lsActivity.clear();
+    }
+
     private void makeDefaultImage(ViewHolder holder) {
         Bitmap bm = ImageHelper.getBitmapFromVectorDrawable(mContext, R.drawable.ic_image_black_72dp);
         bm = ImageHelper.getRoundedCornerBitmap(bm, IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL);
