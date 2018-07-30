@@ -130,6 +130,7 @@
 
     <!-- Menu Personal -->
     <string name="menu_personal_detail">Personal</string>
+    <string name="menu_personal_about">About</string>
     <string name="menu_personal_logout">Logout</string>
 
     <!-- Toast -->
@@ -275,6 +276,14 @@
     <item name="tag_8" type="id" />
     <item name="tag_9" type="id" />
     <item name="tag_10" type="id" />
+
+    <!-- About and copyright -->
+    <string name="menu_drawer_copy_right">Thank for your support, contact with us by email\n\n
+        email : fivefourfiveit@gmail.com\n\n
+        Copyright © 545 Corp\n
+        10F., No.166, Sec. 4, Zhongxiao E. Rd., Da’an Dist., Taipei City 106, Taiwan (R.O.C.)\n\n\n</string>
+
+    <string name="ingood_app_version">App version : </string>
 </resources>
 
 

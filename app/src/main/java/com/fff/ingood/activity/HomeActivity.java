@@ -1,5 +1,6 @@
 package com.fff.ingood.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.fff.ingood.BuildConfig;
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
@@ -29,6 +31,7 @@ import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
+import com.fff.ingood.ui.ConfirmDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +169,18 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                         switch(menuItem.getItemId()) {
                             case R.id.menuItemPersonal :
                                 mActivity.startActivity(new Intent(mActivity, PersonDataActivity.class));
+                                break;
+                            case R.id.menuItemAbout :
+                                String strVersion =  getResources().getText(R.string.ingood_app_version) + BuildConfig.VERSION_NAME;
+                                String strCopyright = getResources().getText(R.string.menu_drawer_copy_right).toString();
+                                String strAboutMessage = strVersion + "\n\n" + strCopyright;
+
+                                ConfirmDialog.newInstance(new ConfirmDialog.ConfirmDialogEvent() {
+                                    @Override
+                                    public void onPositiveClick(DialogInterface dialog) {
+                                        dialog.dismiss();
+                                    }
+                                }, strAboutMessage).show(getSupportFragmentManager(), HomeActivity.class.getName());
                                 break;
                             case R.id.menuItemLogout :
                                 FlowManager.getInstance().goLogoutFlow(mActivity);

@@ -6,6 +6,11 @@
             android:icon="@drawable/profile_g"
             android:title="@string/menu_personal_detail" />
         <item
+            android:id="@+id/menuItemAbout"
+            android:icon="@drawable/ic_copyright_black_36dp"
+            android:title="@string/menu_personal_about" />
+
+        <item
             android:id="@+id/menuItemLogout"
             android:icon="@drawable/logout_g"
             android:title="@string/menu_personal_logout" />
