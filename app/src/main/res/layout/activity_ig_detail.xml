@@ -29,9 +29,18 @@
             <ImageView
                 android:id="@+id/imageViewIgActivityMainMask"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_main_image_ig_activity"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image_mask_ig_activity" />
+                android:layout_height="@dimen/height_main_image_ig_activity" />
+
+            <TextView
+                android:id="@+id/textViewIgActivityMainMaskText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="97dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/colorTextHint"
+                android:textSize="@dimen/text_size_ig_activity_close"
+                android:text="@string/activity_closed"
+                android:visibility="invisible"/>
 
             <TextView
                 android:id="@+id/textViewIgActivityTitle"

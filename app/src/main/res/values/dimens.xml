@@ -56,6 +56,7 @@
 
     <!-- IgActivity detail -->
     <dimen name="height_main_image_ig_activity">250dp</dimen>
+    <dimen name="text_size_ig_activity_close">40sp</dimen>
     <dimen name="text_size_ig_activity_title">20sp</dimen>
     <dimen name="text_size_ig_activity_sub_title">15sp</dimen>
     <dimen name="text_size_ig_activity_description">13sp</dimen>

@@ -100,15 +100,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private LinearLayout mLayoutComments;
     private ImageView mImageViewSaveIgActivity;
     private TextView mTextViewPublishComment;
-
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
-
-    private IgActivity mIgActivity;
     private ImageView mImageViewIgActivityMain;
-
+    private ImageView mImageViewIgActivityMainMask;
+    private TextView mTextViewIgActivityMainMaskText;
     private ImageView mImageViewPublisherIcon;
 
+    private IgActivity mIgActivity;
     private List<ImageView> m_lsImageViewAttendeeIcons;
     private List<ImageView> m_lsImageViewCommentIcons;
     private ArrayList<Bitmap> m_lsIgActivityImages;
@@ -153,6 +152,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewBack = findViewById(R.id.imageViewBack);
         mImageViewShare = findViewById(R.id.imageViewShare);
         mImageViewIgActivityMain = findViewById(R.id.imageViewIgActivityMain);
+        mImageViewIgActivityMainMask = findViewById(R.id.imageViewIgActivityMainMask);
+        mTextViewIgActivityMainMaskText = findViewById(R.id.textViewIgActivityMainMaskText);
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
@@ -183,6 +184,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiSaveIgActivity();
 
         setUiIgActivityDefaultImage();
+        setUiIgActivityImageMask(mIgActivity);
         downloadImages_IgActivityMainImages(mIgActivity);
 
         showWaitingDialog(IgActivityDetailActivity.class.getName());
@@ -406,6 +408,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
             m_lsIgActivityImages = new ArrayList<>();
         curIndexMainImage = 1;
         mImageViewIgActivityMain.setImageResource(R.drawable.ic_image_black_72dp);
+    }
+
+    private void setUiIgActivityImageMask(IgActivity activity) {
+        if(activity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
+            mTextViewIgActivityMainMaskText.setVisibility(View.VISIBLE);
+            mTextViewIgActivityMainMaskText.bringToFront();
+            mImageViewIgActivityMainMask.setImageDrawable(getResources().getDrawable(R.drawable.image_mask_home_activity_close));
+        } else {
+            mTextViewIgActivityMainMaskText.setVisibility(View.INVISIBLE);
+            mImageViewIgActivityMainMask.setImageDrawable(getResources().getDrawable(R.drawable.image_mask_ig_activity));
+        }
     }
 
     private void setUiPublisherDefaultIcon() {
@@ -648,16 +661,20 @@ public class IgActivityDetailActivity extends BaseActivity implements
         } else {
             mBtnLeftBottom.setText(getResources().getText(R.string.activity_action_report));
 
-            //@@ invisible and reserved function
-            mBtnRightBottom.setVisibility(View.VISIBLE);
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)mBtnRightBottom.getLayoutParams();
-            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-            mBtnRightBottom.setLayoutParams(params);
+            if(mIgActivity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
+                mBtnRightBottom.setVisibility(View.INVISIBLE);
+            } else {
+                //@@ invisible and reserved function
+                mBtnRightBottom.setVisibility(View.VISIBLE);
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)mBtnRightBottom.getLayoutParams();
+                params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+                mBtnRightBottom.setLayoutParams(params);
 
-            if(m_bIsAttended)
-                mBtnRightBottom.setText(getResources().getText(R.string.activity_action_no_attend));
-            else
-                mBtnRightBottom.setText(getResources().getText(R.string.activity_action_attend));
+                if(m_bIsAttended)
+                    mBtnRightBottom.setText(getResources().getText(R.string.activity_action_no_attend));
+                else
+                    mBtnRightBottom.setText(getResources().getText(R.string.activity_action_attend));
+            }
         }
     }
 
