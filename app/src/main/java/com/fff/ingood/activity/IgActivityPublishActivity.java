@@ -233,6 +233,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
+                c.add(Calendar.MINUTE, 10);
                 int hour = c.get(Calendar.HOUR_OF_DAY);
                 int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -272,6 +273,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
+                c.add(Calendar.MINUTE, 10);
                 int hour = c.get(Calendar.HOUR_OF_DAY);
                 int minute = c.get(Calendar.MINUTE);
                 new TimePickerDialog(IgActivityPublishActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -544,9 +546,12 @@ public class IgActivityPublishActivity extends BaseActivity implements
             String strStartDateTime = TimeHelper.makeIgActivityDateStringByUI(strStartDate + " " + strStartTime);
             String strEndDateTime = TimeHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
 
-            if(TimeHelper.checkBeginTimeBeforeEndTime(strStartDateTime, strEndDateTime))
-                bRes = true;
-            else
+            if(TimeHelper.checkBeginTimeBeforeEndTime(strStartDateTime, strEndDateTime)) {
+                if(TimeHelper.checkBeginTimeBeforeEndTime(TimeHelper.getCurTime(), strStartDateTime))
+                    bRes = true;
+                else
+                    Toast.makeText(this, getResources().getText(R.string.publish_igactivity_begin_cur_time_wrong), Toast.LENGTH_SHORT).show();
+            } else
                 Toast.makeText(this, getResources().getText(R.string.publish_igactivity_begin_end_time_wrong), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, getResources().getText(R.string.publish_igactivity_time_format_wrong), Toast.LENGTH_SHORT).show();

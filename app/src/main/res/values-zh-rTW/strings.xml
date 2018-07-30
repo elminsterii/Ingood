@@ -166,6 +166,7 @@
     <string name="publish_igactivity_images_format_wrong">請至少上傳一張活動圖片</string>
     <string name="publish_igactivity_time_format_wrong">請選擇活動時間</string>
     <string name="publish_igactivity_begin_end_time_wrong">開始時間不可超過結束時間</string>
+    <string name="publish_igactivity_begin_cur_time_wrong">開始時間不可為過去時間</string>
 
     <!-- Server Response -->
     <string name="server_res_0_success">執行成功</string>
