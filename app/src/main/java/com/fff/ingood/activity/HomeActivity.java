@@ -382,9 +382,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabMyAttendIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabMyAttendIgActivity.setText(R.string.tag_my_attend_igactivity);
         mTabLayoutTagBar.addTab(tabMyAttendIgActivity);
-
-        //@@ test
-        mTabLayoutTagBar.addTab(mTabLayoutTagBar.newTab().setText("Test"));
     }
 
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
