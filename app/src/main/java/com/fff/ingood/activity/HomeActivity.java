@@ -340,7 +340,13 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             mActivityListAdapter.updateActivityList(m_lsIgActivities);
             mActivityListAdapter.notifyDataSetChanged();
 
-            mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, preSearchCondition);
+            String strIgActivitiesId = preSearchCondition.getId();
+            if(!StringTool.checkStringNotNull(strIgActivitiesId))
+                mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, preSearchCondition);
+            else {
+                resetSearchData(strIgActivitiesId);
+                queryIgActivityByIds(strIgActivitiesId);
+            }
         }
     }
 
@@ -383,6 +389,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabMyAttendIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabMyAttendIgActivity.setText(R.string.tag_my_attend_igactivity);
         mTabLayoutTagBar.addTab(tabMyAttendIgActivity);
+
+        TabLayout.Tab tabMySavedIgActivity = mTabLayoutTagBar.newTab();
+        tabMySavedIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabMySavedIgActivity.setText(R.string.tag_my_save_igactivity);
+        mTabLayoutTagBar.addTab(tabMySavedIgActivity);
     }
 
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
@@ -419,7 +430,24 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_attend_igactivity))) {
             igCondition.setAttendees(PersonManager.getInstance().getPerson().getId());
             m_bIsShowExpireIgActivity = true;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_save_igactivity))) {
+            String strSaveIgActivitiesId = PersonManager.getInstance().getPerson().getSaveIgActivities();
+            igCondition.setId(strSaveIgActivitiesId);
+            m_bIsShowExpireIgActivity = true;
         }
+    }
+
+    private void resetSearchData(String strActivitiesIds) {
+        m_lsIgActivities.clear();
+        m_arrIgActivitiesIds = strActivitiesIds.split(",");
+        m_curQueryIndex = 0;
+    }
+
+    private void queryIgActivityByIds(String strActivitiesIds) {
+        if(m_arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
+            mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
+        } else
+            queryIgActivity(0);
     }
 
     @Override
@@ -458,16 +486,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strActivitiesIds))
             return;
 
-        m_lsIgActivities.clear();
-        m_arrIgActivitiesIds = null;
-        m_curQueryIndex = 0;
-
-        String[] arrIgActivitiesIds = strActivitiesIds.split(",");
-        m_arrIgActivitiesIds = arrIgActivitiesIds;
-
-        if(arrIgActivitiesIds.length <= MAX_QUERY_QUANTITY_IGACTIVITY_ONCE) {
-            mIgActivityExecutor.doGetIgActivitiesData(this, strActivitiesIds);
-        } else
-            queryIgActivity(0);
+        resetSearchData(strActivitiesIds);
+        queryIgActivityByIds(strActivitiesIds);
     }
 }

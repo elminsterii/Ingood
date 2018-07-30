@@ -81,6 +81,7 @@
     <string name="tag_nearly">Nearly</string>
     <string name="tag_my_igactivity">My</string>
     <string name="tag_my_attend_igactivity">Attended</string>
+    <string name="tag_my_save_igactivity">Saved</string>
 
     <!-- Custom Tags -->
     <string name="tag_sport">Sport</string>

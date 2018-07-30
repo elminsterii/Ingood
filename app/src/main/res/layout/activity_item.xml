@@ -165,8 +165,7 @@
                 android:id="@+id/imgActivityActionSaveIgActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:visibility="invisible"/>
+                android:layout_alignParentStart="true"/>
             <TextView
                 android:id="@+id/textActivityActionSaveIgActivity"
                 android:layout_width="wrap_content"
@@ -176,8 +175,7 @@
                 android:layout_centerVertical="true"
                 android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_activity_item_action_hp"
-                android:text="@string/activity_action_save_ig_activity"
-                android:visibility="invisible"/>
+                android:text="@string/activity_action_save_ig_activity"/>
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>
