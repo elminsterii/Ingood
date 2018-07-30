@@ -97,7 +97,12 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/colorSlave"
+        android:theme="@style/IngoodDrawerStyle"
         app:menu="@menu/drawer_personal"
+        app:itemTextColor="@color/colorTextHint"
+        app:itemIconTint="@color/colorTextHint"
+        app:itemBackground="@color/colorTransparent"
         app:headerLayout="@layout/drawer_header_personal"/>
 
 </android.support.v4.widget.DrawerLayout>

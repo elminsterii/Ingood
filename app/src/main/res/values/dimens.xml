@@ -80,6 +80,11 @@
     <dimen name="text_size_ig_activity_publish_sub_title">17.5sp</dimen>
     <dimen name="text_size_ig_activity_publish_description">15sp</dimen>
 
+    <!-- Menu -->
+    <dimen name="text_size_menu_header_name">18sp</dimen>
+    <dimen name="text_size_menu_header_email">14sp</dimen>
+    <dimen name="text_size_menu_item">16sp</dimen>
+
     <!-- Global -->
     <dimen name="button_radius">40dip</dimen>
 </resources>
