@@ -53,6 +53,7 @@ import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 import com.fff.ingood.ui.ExpandableTextView;
+import com.fff.ingood.ui.HeadZoomScrollView;
 import com.fff.ingood.ui.WarningDialog;
 
 import java.util.ArrayList;
@@ -82,6 +83,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
     }
 
+    private HeadZoomScrollView mZoomViewIgActivity;
     private ImageButton mImageViewBack;
     private ImageView mImageViewShare;
     private TextView mTextViewTitle;
@@ -149,6 +151,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     protected void initView() {
+        mZoomViewIgActivity = findViewById(R.id.zoomViewIgActivity);
         mImageViewBack = findViewById(R.id.imageViewBack);
         mImageViewShare = findViewById(R.id.imageViewShare);
         mImageViewIgActivityMain = findViewById(R.id.imageViewIgActivityMain);
@@ -412,6 +415,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void setUiIgActivityImageMask(IgActivity activity) {
         if(activity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
+            mZoomViewIgActivity.setScalable(false);
             mTextViewIgActivityMainMaskText.setVisibility(View.VISIBLE);
             mTextViewIgActivityMainMaskText.bringToFront();
             mImageViewIgActivityMainMask.setImageDrawable(getResources().getDrawable(R.drawable.image_mask_home_activity_close));
