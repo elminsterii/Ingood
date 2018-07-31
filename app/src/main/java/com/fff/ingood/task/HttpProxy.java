@@ -19,6 +19,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_PERSON_SAVE_ACTIVITY = SERVER_URL + "/saveactivity";
     public static final String HTTP_API_PERSON_ICON_ACCESS = SERVER_URL + "/accesspersonicon";
     public static final String HTTP_POST_API_PERSON_ICON_DELETE = SERVER_URL + "/deletepersonicon";
+    public static final String HTTP_POST_API_PERSON_TEMP_PASSWORD = SERVER_URL + "/temppassword";
     public static final String HTTP_POST_API_ACTIVITY_CREATE = SERVER_URL + "/createactivity";
     public static final String HTTP_POST_API_ACTIVITY_DELETE = SERVER_URL + "/deleteactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY = SERVER_URL + "/queryactivity";
@@ -34,7 +35,6 @@ public class HttpProxy {
     public static final String HTTP_POST_API_COMMENT_UPDATE = SERVER_URL + "/updatecomment";
     public static final String HTTP_POST_API_COMMENT_DELETE = SERVER_URL + "/deletecomment";
 
+
     public static final int HTTP_POST_TIMEOUT = 10;
 }
-
-
