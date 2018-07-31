@@ -62,7 +62,7 @@ public class PersonTempPasswordTaskWrapper {
         });
     }
 
-    public void execute(Person person) {
-        task.execute(person);
+    public void execute(String strEmail) {
+        task.execute(strEmail);
     }
 }

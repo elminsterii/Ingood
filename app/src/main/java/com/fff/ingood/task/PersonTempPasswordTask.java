@@ -14,14 +14,14 @@ import java.net.URL;
  * Created by chris on 2018/7/30.
  */
 
-public class PersonTempPasswordTask extends HttpRequestTask<Person, Integer, Void> {
+public class PersonTempPasswordTask extends HttpRequestTask<String, Integer, Void> {
 
     public PersonTempPasswordTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(Person info) {
+    protected String access(String strEmail) {
         HttpURLConnection connection = null;
 
         try {
@@ -38,7 +38,7 @@ public class PersonTempPasswordTask extends HttpRequestTask<Person, Integer, Voi
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
 
-            String jsonString = new Gson().toJson(info, Person.class);
+            String jsonString = new Gson().toJson(strEmail, Person.class);
             writer.write(jsonString.getBytes());
             writer.flush();
             writer.close();
