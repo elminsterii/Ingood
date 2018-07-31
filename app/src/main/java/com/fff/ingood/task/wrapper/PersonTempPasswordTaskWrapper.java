@@ -2,7 +2,6 @@ package com.fff.ingood.task.wrapper;
 
 import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncHttpRequestResponder;
-import com.fff.ingood.task.PersonCheckExistTask;
 import com.fff.ingood.task.PersonTempPasswordTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
@@ -19,8 +18,8 @@ import static com.fff.ingood.global.ServerResponse.TAG_SERVER_RESPONSE_STATUS_CO
 public class PersonTempPasswordTaskWrapper {
 
     public interface PersonTempPasswordTaskWrapperCallback {
-        void onPersonSetTempPassword();
-        void onPersonSetTempPasswordFailure(Integer iStatusCode);
+        void onPersonTempPasswordSentSuccess();
+        void onPersonTempPasswordSentFailure(Integer iStatusCode);
     }
 
     private PersonTempPasswordTask task;
@@ -53,12 +52,12 @@ public class PersonTempPasswordTaskWrapper {
 
             @Override
             public void onSuccess(Void aVoid) {
-                mCb.onPersonSetTempPassword();
+                mCb.onPersonTempPasswordSentSuccess();
             }
 
             @Override
             public void onFailure(Integer iStatusCode) {
-                mCb.onPersonSetTempPasswordFailure(iStatusCode);
+                mCb.onPersonTempPasswordSentFailure(iStatusCode);
             }
         });
     }

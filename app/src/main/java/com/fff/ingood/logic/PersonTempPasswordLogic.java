@@ -13,7 +13,7 @@ public class PersonTempPasswordLogic extends Logic implements PersonTempPassword
 
     public interface PersonTempPasswordLogicCaller extends LogicCaller {
         void returnStatus(Integer iStatusCode);
-        void onPersonSetTempPassword();
+        void onPersonTempPasswordSentSuccess();
     }
 
     private PersonTempPasswordLogic.PersonTempPasswordLogicCaller mCaller;
@@ -32,14 +32,13 @@ public class PersonTempPasswordLogic extends Logic implements PersonTempPassword
     }
 
     @Override
-    public void onPersonSetTempPassword() {
-        mCaller.onPersonSetTempPassword();
+    public void onPersonTempPasswordSentSuccess() {
+        mCaller.onPersonTempPasswordSentSuccess();
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 
     @Override
-    public void onPersonSetTempPasswordFailure(Integer iStatusCode) {
+    public void onPersonTempPasswordSentFailure(Integer iStatusCode) {
         mCaller.returnStatus(iStatusCode);
     }
-
 }
