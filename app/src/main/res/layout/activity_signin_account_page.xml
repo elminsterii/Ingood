@@ -66,7 +66,7 @@
             android:textCursorDrawable="@null"
             android:lineSpacingExtra="0.8sp"
             android:inputType="textPassword"
-            android:hint="@string/user_data_pwd"
+            android:hint="@string/login_pwd"
             android:paddingStart="@dimen/padding_start_registration_form_input_text"
             android:textColorHighlight="@color/colorSlaveUltraLight"
             tools:ignore="RtlSymmetry"

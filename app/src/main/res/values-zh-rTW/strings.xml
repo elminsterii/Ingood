@@ -78,6 +78,7 @@
 
     <!-- Default Tags -->
     <string name="tag_recently">近期</string>
+    <string name="tag_ongoing">進行中</string>
     <string name="tag_popularity">熱門</string>
     <string name="tag_good">優質</string>
     <string name="tag_nearly">附近</string>

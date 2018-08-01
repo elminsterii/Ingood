@@ -390,6 +390,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabRecently.setText(R.string.tag_recently);
         mTabLayoutTagBar.addTab(tabRecently);
 
+        TabLayout.Tab tabOngoing = mTabLayoutTagBar.newTab();
+        tabOngoing.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabOngoing.setText(R.string.tag_ongoing);
+        mTabLayoutTagBar.addTab(tabOngoing);
+
         TabLayout.Tab tabPopularity = mTabLayoutTagBar.newTab();
         tabPopularity.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabPopularity.setText(R.string.tag_popularity);
@@ -439,6 +444,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);
+            m_bIsShowExpireIgActivity = false;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_ongoing))) {
+            igCondition.setStatus(IgActivity.IGA_STATUS_START);
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
             igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
