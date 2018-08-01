@@ -21,14 +21,14 @@
     <string name="register_title_location">地區</string>
     <string name="register_title_interest">興趣</string>
     <string name="user_data_email">信箱</string>
-    <string name="user_data_pwd">密碼</string>
+    <string name="user_data_pwd">密碼  (最少8碼不含符號)</string>
     <string name="user_data_pwd_confirm">確認密碼</string>
     <string name="user_data_name">名稱</string>
     <string name="done">完成</string>
     <string name="next">下一步</string>
     <string name="send_verify_code">發送驗證碼</string>
     <string name="input_verify_code_hint">請輸入驗證碼</string>
-    <string name="hint_for_verify">沒收到驗證信嗎? 請按 發送驗證碼 重新發送。</string>
+    <string name="hint_for_verify">沒收到驗證信嗎?\n請按 發送驗證碼 重新發送。</string>
 
     <!-- Activity -->
     <string name="activity_action_save_ig_activity">保存</string>
