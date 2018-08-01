@@ -17,6 +17,10 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
+    public void doPersonRestPassword(PersonTempPasswordLogic.PersonTempPasswordLogicCaller caller, String strEmail) {
+        Logic fl = new PersonTempPasswordLogic(caller, strEmail);
+        fl.doLogic();
+    }
     public void doPersonLogout(PersonLogoutLogic.PersonLogoutLogicCaller caller) {
         Logic fl = new PersonLogoutLogic(caller);
         fl.doLogic();

@@ -1,7 +1,10 @@
 package com.fff.ingood.task;
 
+import android.widget.Toast;
+
 import com.fff.ingood.data.Person;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,18 +13,20 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 /**
  * Created by chris on 2018/7/30.
  */
 
-public class PersonTempPasswordTask extends HttpRequestTask<String, Integer, Void> {
-
+public class PersonTempPasswordTask extends HttpRequestTask<JsonObject, Integer, Void> {
+    private PersonTempPasswordTask mActivity = this;
     public PersonTempPasswordTask(AsyncHttpRequestResponder<Integer, Void> responder) {
         super(responder);
     }
 
     @Override
-    protected String access(String strEmail) {
+    protected String access(JsonObject jsonObject) {
         HttpURLConnection connection = null;
 
         try {
@@ -38,7 +43,7 @@ public class PersonTempPasswordTask extends HttpRequestTask<String, Integer, Voi
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
 
-            String jsonString = new Gson().toJson(strEmail, Person.class);
+            String jsonString = new Gson().toJson(jsonObject);
             writer.write(jsonString.getBytes());
             writer.flush();
             writer.close();

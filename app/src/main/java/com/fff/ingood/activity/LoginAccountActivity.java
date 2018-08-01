@@ -17,19 +17,24 @@ import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.logic.PersonTempPasswordLogic;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class LoginAccountActivity extends BaseActivity {
+public class LoginAccountActivity extends BaseActivity implements PersonTempPasswordLogic.PersonTempPasswordLogicCaller {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
     private ImageButton mBtnBack;
     private TextView mTextViewTitle;
+    private TextView mTextViewForgetPwd;
     private Button mButton_SignIn;
     private ImageButton mImageButton_PwdEye;
     private Boolean mIsPwdEyeCheck = true;
     private LoginAccountActivity mActivity;
+    PersonTempPasswordLogic.PersonTempPasswordLogicCaller caller = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class LoginAccountActivity extends BaseActivity {
         mImageButton_PwdEye = findViewById(R.id.pwd_eye);
         mBtnBack = findViewById(R.id.imgBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
+        mTextViewForgetPwd = findViewById(R.id.textview_forgetPwd);
     }
 
     @Override
@@ -105,6 +111,14 @@ public class LoginAccountActivity extends BaseActivity {
             }
         });
 
+        mTextViewForgetPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PersonLogicExecutor executor = new PersonLogicExecutor();
+                executor.doPersonRestPassword(caller, mEditText_Account.getText().toString());
+            }
+        });
+
     }
 
     @Override
@@ -127,5 +141,15 @@ public class LoginAccountActivity extends BaseActivity {
         } else {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        Toast.makeText(mActivity, "重置信已發出", LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPersonTempPasswordSentSuccess() {
+        Toast.makeText(mActivity, "重置錯誤", LENGTH_LONG).show();
     }
 }

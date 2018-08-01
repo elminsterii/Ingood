@@ -1,6 +1,5 @@
 package com.fff.ingood.logic;
 
-import com.fff.ingood.data.Person;
 import com.fff.ingood.task.wrapper.PersonTempPasswordTaskWrapper;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -17,18 +16,18 @@ public class PersonTempPasswordLogic extends Logic implements PersonTempPassword
     }
 
     private PersonTempPasswordLogic.PersonTempPasswordLogicCaller mCaller;
-    private Person mPerson;
+    private String m_strEmail;
 
-    PersonTempPasswordLogic(PersonTempPasswordLogicCaller caller, Person person) {
+    public PersonTempPasswordLogic(PersonTempPasswordLogicCaller caller, String strEmail) {
         super(caller);
         mCaller = caller;
-        mPerson = person;
+        m_strEmail = strEmail;
     }
 
     @Override
     protected void doLogic() {
         PersonTempPasswordTaskWrapper tempPasswordWrapper = new PersonTempPasswordTaskWrapper(this);
-        tempPasswordWrapper.execute(mPerson);
+        tempPasswordWrapper.execute(m_strEmail);
     }
 
     @Override

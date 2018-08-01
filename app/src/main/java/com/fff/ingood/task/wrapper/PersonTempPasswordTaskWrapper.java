@@ -1,10 +1,10 @@
 package com.fff.ingood.task.wrapper;
 
-import com.fff.ingood.data.Person;
 import com.fff.ingood.task.AsyncHttpRequestResponder;
 import com.fff.ingood.task.PersonTempPasswordTask;
 import com.fff.ingood.tools.ParserUtils;
 import com.fff.ingood.tools.StringTool;
+import com.google.gson.JsonObject;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NWK_FAIL_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_PARSING_ERROR;
@@ -62,7 +62,10 @@ public class PersonTempPasswordTaskWrapper {
         });
     }
 
-    public void execute(String strEmail) {
-        task.execute(strEmail);
+    public void execute( String strEmail) {
+        final String TAG_PERSON_EMAIL = "email";
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(TAG_PERSON_EMAIL, strEmail);
+        task.execute(jsonObject);
     }
 }
