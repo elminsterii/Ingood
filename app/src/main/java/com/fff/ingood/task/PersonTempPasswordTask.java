@@ -43,8 +43,7 @@ public class PersonTempPasswordTask extends HttpRequestTask<JsonObject, Integer,
             OutputStream os = connection.getOutputStream();
             DataOutputStream writer = new DataOutputStream(os);
 
-            String jsonString = new Gson().toJson(jsonObject);
-            writer.write(jsonString.getBytes());
+            writer.write(jsonObject.toString().getBytes());
             writer.flush();
             writer.close();
             os.close();

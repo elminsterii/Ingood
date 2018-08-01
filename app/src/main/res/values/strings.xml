@@ -13,6 +13,9 @@
     <string name="login_account">Account</string>
     <string name="login_pwd">Password</string>
     <string name="login_forget_pwd">Forget Password?</string>
+    <string name="login_temp_password_success">Temp Password mail has been sent</string>
+    <string name="login_temp_password_fail">Temp Password mail sent error</string>
+    <string name="login_email_account_empty">Please fill in Email account</string>
 
     <!-- Registration -->
     <string name="register_title_form">Registration</string>

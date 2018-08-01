@@ -89,7 +89,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/loginaccount_margin_btw_forget_and_pwd"
         android:clickable="true"
-        android:onClick="onClick"
+        android:focusable="true"
         android:text="@string/login_forget_pwd" />
 
     <RelativeLayout

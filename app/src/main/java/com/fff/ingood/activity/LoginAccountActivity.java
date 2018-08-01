@@ -19,8 +19,9 @@ import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonTempPasswordLogic;
+import com.fff.ingood.tools.StringTool;
 
-import static android.widget.Toast.LENGTH_LONG;
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 public class LoginAccountActivity extends BaseActivity implements PersonTempPasswordLogic.PersonTempPasswordLogicCaller {
@@ -34,7 +35,6 @@ public class LoginAccountActivity extends BaseActivity implements PersonTempPass
     private ImageButton mImageButton_PwdEye;
     private Boolean mIsPwdEyeCheck = true;
     private LoginAccountActivity mActivity;
-    PersonTempPasswordLogic.PersonTempPasswordLogicCaller caller = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +114,18 @@ public class LoginAccountActivity extends BaseActivity implements PersonTempPass
         mTextViewForgetPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PersonLogicExecutor executor = new PersonLogicExecutor();
-                executor.doPersonRestPassword(caller, mEditText_Account.getText().toString());
+                if(StringTool.checkStringNotNull(mEditText_Account.getText().toString())) {
+                    doPersonTempPassword(mEditText_Account.getText().toString());
+                } else {
+                    Toast.makeText(mActivity, getResources().getText(R.string.login_email_account_empty), LENGTH_SHORT).show();
+                }
             }
         });
+    }
 
+    private void doPersonTempPassword(String strVerifyEmail) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonRestPassword(this, strVerifyEmail);
     }
 
     @Override
@@ -139,17 +146,17 @@ public class LoginAccountActivity extends BaseActivity implements PersonTempPass
                 mActivity.finish();
             }
         } else {
-            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void returnStatus(Integer iStatusCode) {
-        Toast.makeText(mActivity, "重置信已發出", LENGTH_LONG).show();
+    public void onPersonTempPasswordSentSuccess() {
+        Toast.makeText(mActivity, getResources().getText(R.string.login_temp_password_success), LENGTH_SHORT).show();
     }
 
     @Override
-    public void onPersonTempPasswordSentSuccess() {
-        Toast.makeText(mActivity, "重置錯誤", LENGTH_LONG).show();
+    public void returnStatus(Integer iStatusCode) {
+        Toast.makeText(mActivity, getResources().getText(R.string.login_temp_password_fail), LENGTH_SHORT).show();
     }
 }
