@@ -93,16 +93,14 @@ public class RegistrationVerifyFragment extends BaseFragment implements
             @Override
             public void onClick(View v) {
                 mButtonSendCode.setEnabled(false);
-
-                PersonLogicExecutor executor = new PersonLogicExecutor();
-                executor.doPersonVerify(mThis, PersonManager.getInstance().getPerson());
+                sendVerifyEmail();
             }
         });
     }
 
     @Override
     protected void postInit() {
-        //do nothing.
+        sendVerifyEmail();
     }
 
     @Override
@@ -144,6 +142,11 @@ public class RegistrationVerifyFragment extends BaseFragment implements
         mVerifyCodeInput.append(mEditTextVerifyCode2.getText().toString());
         mVerifyCodeInput.append(mEditTextVerifyCode3.getText().toString());
         mVerifyCodeInput.append(mEditTextVerifyCode4.getText().toString());
+    }
+
+    private void sendVerifyEmail() {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonVerify(mThis, PersonManager.getInstance().getPerson());
     }
 
     @Override
