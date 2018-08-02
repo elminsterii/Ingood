@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -200,6 +201,11 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
+    void LogOutFB(){
+        // Facebook Logout
+        mLoginManager.logOut();
+        }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
