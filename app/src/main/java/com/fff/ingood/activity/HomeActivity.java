@@ -17,7 +17,9 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.BuildConfig;
@@ -64,6 +66,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     private SearchView mSearchViewSearchBar;
     private FloatingActionButton mFabPublishBtn;
     private SwipeRefreshLayout mLayoutSwipeRefresh;
+
+    //header UI
+    private ImageView mImgMenuPersonThumbnail;
+    private TextView mTextViewMenuPersonName;
+    private TextView mTextViewMenuPersonEmail;
 
     List<IgActivity> m_lsIgActivities;
 
@@ -117,6 +124,14 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mSearchViewSearchBar = findViewById(R.id.searchViewSearchBar);
         mFabPublishBtn = findViewById(R.id.fabPublishAction);
         mLayoutSwipeRefresh = findViewById(R.id.layoutSwipeRefresh);
+
+        if(mNvMenu != null) {
+            View viewMenuHeader = mNvMenu.getHeaderView(0);
+            FrameLayout frameLayout = viewMenuHeader.findViewById(R.id.layoutDrawerPersonThumbnail);
+            mImgMenuPersonThumbnail = (ImageView)frameLayout.getChildAt(0);
+            mTextViewMenuPersonName = viewMenuHeader.findViewById(R.id.textViewDrawerPersonName);
+            mTextViewMenuPersonEmail = viewMenuHeader.findViewById(R.id.textViewDrawerPersonEmail);
+        }
     }
 
     @Override
@@ -135,6 +150,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mViewActivityList.setAdapter(mActivityListAdapter);
 
         mSearchViewSearchBar.setSubmitButtonEnabled(true);
+
+        mImgMenuPersonThumbnail.setImageResource(R.drawable.ic_person_black_36dp);
+        mTextViewMenuPersonName.setText(PersonManager.getInstance().getPerson().getName());
+        mTextViewMenuPersonEmail.setText(PersonManager.getInstance().getPerson().getEmail());
 
         preSearchCondition = new IgActivity();
         setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_recently).toString());

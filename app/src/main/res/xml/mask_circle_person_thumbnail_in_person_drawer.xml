@@ -3,8 +3,5 @@
     android:shape="ring"
     android:thickness="30dp"
     android:useLevel="false">
-    <solid android:color="@color/colorHomepageBackground"/>
-    <stroke
-        android:width="2dp"
-        android:color="@color/colorSlaveUltraLight"/>
+    <solid android:color="@color/colorPrimary"/>
 </shape>

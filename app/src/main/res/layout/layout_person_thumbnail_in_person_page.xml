@@ -4,13 +4,13 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imageViewThumbnailInComment"
+        android:id="@+id/imageViewThumbnailInPersonPage"
         android:layout_width="97.5dp"
         android:layout_height="97.5dp"
         android:scaleType="fitXY" />
 
     <ImageView
-        android:id="@+id/imageViewThumbnailMaskInComment"
+        android:id="@+id/imageViewThumbnailMaskInPersonPage"
         android:layout_width="97.5dp"
         android:layout_height="97.5dp"
         android:scaleType="fitXY"

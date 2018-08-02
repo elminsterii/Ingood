@@ -3,16 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="@color/colorPrimary"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:orientation="vertical"
-    android:gravity="bottom">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:layout_width="match_parent"
+    <include
+        layout="@layout/layout_person_thumbnail_in_person_drawer"
+        android:id="@+id/layoutDrawerPersonThumbnail"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_menu_header_name"
-        android:text="My Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+    </include>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutDrawerPersonThumbnail"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewDrawerPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_menu_header_name"
+            android:textColor="@color/colorSlave"/>
+
+        <TextView
+            android:id="@+id/textViewDrawerPersonEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/text_size_menu_header_email"
+            android:textColor="@color/colorSlave"/>
+    </LinearLayout>
 </RelativeLayout>
