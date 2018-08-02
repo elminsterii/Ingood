@@ -15,7 +15,7 @@
     <string name="login_pwd">密碼</string>
     <string name="login_forget_pwd">忘記密碼?</string>
     <string name="login_temp_password_success">重置信已發出</string>
-    <string name="login_temp_password_fail">重置信錯誤</string>
+    <string name="login_temp_password_fail">重置信發送錯誤</string>
     <string name="login_email_account_empty">請輸入信箱帳號</string>
 
     <!-- Registration -->
