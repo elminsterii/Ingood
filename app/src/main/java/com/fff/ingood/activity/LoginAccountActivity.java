@@ -17,15 +17,20 @@ import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.logic.PersonTempPasswordLogic;
+import com.fff.ingood.tools.StringTool;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class LoginAccountActivity extends BaseActivity {
+public class LoginAccountActivity extends BaseActivity implements PersonTempPasswordLogic.PersonTempPasswordLogicCaller {
 
     private EditText mEditText_Account;
     private EditText mEditText_Password;
     private ImageButton mBtnBack;
     private TextView mTextViewTitle;
+    private TextView mTextViewForgetPwd;
     private Button mButton_SignIn;
     private ImageButton mImageButton_PwdEye;
     private Boolean mIsPwdEyeCheck = true;
@@ -61,6 +66,7 @@ public class LoginAccountActivity extends BaseActivity {
         mImageButton_PwdEye = findViewById(R.id.pwd_eye);
         mBtnBack = findViewById(R.id.imgBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
+        mTextViewForgetPwd = findViewById(R.id.textview_forgetPwd);
     }
 
     @Override
@@ -105,6 +111,21 @@ public class LoginAccountActivity extends BaseActivity {
             }
         });
 
+        mTextViewForgetPwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(StringTool.checkStringNotNull(mEditText_Account.getText().toString())) {
+                    doPersonTempPassword(mEditText_Account.getText().toString());
+                } else {
+                    Toast.makeText(mActivity, getResources().getText(R.string.login_email_account_empty), LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void doPersonTempPassword(String strVerifyEmail) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonRestPassword(this, strVerifyEmail);
     }
 
     @Override
@@ -125,7 +146,17 @@ public class LoginAccountActivity extends BaseActivity {
                 mActivity.finish();
             }
         } else {
-            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onPersonTempPasswordSentSuccess() {
+        Toast.makeText(mActivity, getResources().getText(R.string.login_temp_password_success), LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void returnStatus(Integer iStatusCode) {
+        Toast.makeText(mActivity, getResources().getText(R.string.login_temp_password_fail), LENGTH_SHORT).show();
     }
 }
