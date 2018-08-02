@@ -10,15 +10,14 @@
         android:id="@+id/layoutDrawerPersonThumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp">
     </include>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutDrawerPersonThumbnail"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
@@ -26,6 +25,7 @@
             android:id="@+id/textViewDrawerPersonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:textSize="@dimen/text_size_menu_header_name"
             android:textColor="@color/colorSlave"/>
 
@@ -33,8 +33,10 @@
             android:id="@+id/textViewDrawerPersonEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textViewDrawerPersonName"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/text_size_menu_header_email"
             android:textColor="@color/colorSlave"/>
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

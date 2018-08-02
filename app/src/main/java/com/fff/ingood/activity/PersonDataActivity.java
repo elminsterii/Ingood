@@ -29,35 +29,26 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
-import com.fff.ingood.ui.CircleProgressBarDialog;
 
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller{
-
-
-
-    CircleProgressBarDialog mWaitingDialog;
 
     private ImageView mImageView_EditName;
     private ImageView mImageView_EditDescription;
     private ImageView mImageView_EditPhoto;
-    //private ImageView mImageView_EditInterests;
-
-    private PersonDataActivity mActivity;
-
     private TextView mTextView_Name;
     private TextView mTextView_Description;
     private TextView mTextView_ChangePwd;
     private TextView mTextView_Mail;
 
     private Button mButton_Save;
-
     private Spinner mSpinner_Age;
     private Spinner mSpinner_Gender;
     private Spinner mSpinner_Location;
     private ImageView mImageView_HeadIcon;
 
-    //for change password dialog
+    private PersonDataActivity mActivity;
 
+    //for change password dialog
     private boolean mIsOldPwdEyeCheck = true;
     private boolean mIsNewPwdEyeCheck = true;
     private boolean mIsNewPwdConfirmEyeCheck = true;
@@ -77,13 +68,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageButton mBtnBack;
     private TextView mTextViewTitle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_persondata);
         super.onCreate(savedInstanceState);
-
-        mWaitingDialog = new CircleProgressBarDialog();
     }
 
     @Override
@@ -103,7 +91,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initView(){
-        mTextView_Name = findViewById(R.id.textview_name);
+        mTextView_Name = findViewById(R.id.textViewPersonNme);
         mTextView_Description = findViewById(R.id.textview_content_about_me);
         mTextView_ChangePwd = findViewById(R.id.textview_change_pwd);
         mTextView_Mail = findViewById(R.id.textview_mail);
@@ -112,8 +100,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mSpinner_Age = findViewById(R.id.spinner_age);
         mSpinner_Location = findViewById(R.id.spinner_location);
 
-        mImageView_EditPhoto = findViewById(R.id.imageview_edit_photo);
-        mImageView_EditName = findViewById(R.id.imageview_edit_name);
+        mImageView_EditPhoto = findViewById(R.id.imageViewEditPhoto);
+        mImageView_EditName = findViewById(R.id.imageViewEditName);
         mImageView_EditDescription = findViewById(R.id.imageview_edit_about_me);
         //mImageView_EditInterests = findViewById(R.id.imageview_edit_tags);
 
@@ -123,7 +111,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewTitle = findViewById(R.id.textViewTitle);
 
 
-        FrameLayout frameLayout = findViewById(R.id.flayour_headicon);
+        FrameLayout frameLayout = findViewById(R.id.layoutPersonThumbnailInPersonPage);
         mImageView_HeadIcon = (ImageView)frameLayout.getChildAt(0);
         mImageView_HeadIcon.setImageResource(R.drawable.ic_person_black_36dp);
     }
