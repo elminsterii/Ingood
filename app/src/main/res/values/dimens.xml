@@ -83,8 +83,8 @@
     <dimen name="text_size_ig_activity_publish_description">15sp</dimen>
 
     <!-- Menu -->
-    <dimen name="text_size_menu_header_name">18sp</dimen>
-    <dimen name="text_size_menu_header_email">14sp</dimen>
+    <dimen name="text_size_menu_header_name">17sp</dimen>
+    <dimen name="text_size_menu_header_email">13sp</dimen>
     <dimen name="text_size_menu_item">16sp</dimen>
 
     <!-- Global -->

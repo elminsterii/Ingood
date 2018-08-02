@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
     </include>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutDrawerPersonThumbnail"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:orientation="vertical">
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/textViewDrawerPersonName"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="2dp"
             android:textSize="@dimen/text_size_menu_header_email"
             android:textColor="@color/colorSlave"/>
     </RelativeLayout>
