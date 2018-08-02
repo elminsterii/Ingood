@@ -53,7 +53,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
     @SuppressLint("CommitTransaction")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.setContentViewId(R.layout.activity_registration);
+        super.setContentViewId(R.layout.person_registration);
         super.onCreate(savedInstanceState);
 
         mFragmentMgr = getSupportFragmentManager();

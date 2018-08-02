@@ -27,7 +27,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_signin_page);
+        setContentView(R.layout.signin_page);
         super.onCreate(savedInstanceState);
     }
 

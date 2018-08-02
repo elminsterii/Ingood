@@ -23,7 +23,7 @@
             android:textColorHighlight="@color/colorSlaveUltraLight"
             android:textCursorDrawable="@null"
             android:maxLength="150"
-            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textSize="@dimen/text_size_person_page_change_pwd_input"
             android:theme="@style/IngoodEditTextStyle"
             tools:ignore="RtlSymmetry" />
 

@@ -70,7 +70,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_persondata);
+        setContentView(R.layout.person_form_page);
         super.onCreate(savedInstanceState);
     }
 
@@ -91,10 +91,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initView(){
-        mTextView_Name = findViewById(R.id.textViewPersonNme);
+        mTextView_Name = findViewById(R.id.textViewPersonName);
         mTextView_Description = findViewById(R.id.textview_content_about_me);
         mTextView_ChangePwd = findViewById(R.id.textview_change_pwd);
-        mTextView_Mail = findViewById(R.id.textview_mail);
+        mTextView_Mail = findViewById(R.id.textViewEmail);
 
         mSpinner_Gender = findViewById(R.id.spinner_gender);
         mSpinner_Age = findViewById(R.id.spinner_age);
@@ -128,18 +128,18 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextView_ChangePwd.setClickable(true);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
-        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, arrAges);
-        spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item);
+        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrAges);
+        spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinner_Age.setAdapter(spinnerAgeAdapter);
 
         String[] arrGender = getResources().getStringArray(R.array.user_gender_list);
-        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, arrGender);
-        spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item);
+        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrGender);
+        spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinner_Gender.setAdapter(spinnerGenderAdapter);
 
         String[] arrLocation = getResources().getStringArray(R.array.user_location_list);
-        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, arrLocation);
-        spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item);
+        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrLocation);
+        spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinner_Location.setAdapter(spinnerLocationAdapter);
 
 

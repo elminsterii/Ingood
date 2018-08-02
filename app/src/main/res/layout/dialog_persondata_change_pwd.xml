@@ -25,7 +25,7 @@
             android:paddingStart="12dp"
             android:textColorHighlight="@color/colorSlaveUltraLight"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textSize="@dimen/text_size_person_page_change_pwd_input"
             android:theme="@style/IngoodEditTextStyle"
             tools:ignore="RtlSymmetry" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/edit_pwd_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textSize="@dimen/text_size_person_page_change_pwd_input"
             android:textCursorDrawable="@null"
             android:inputType="textPassword"
             android:hint="@string/edit_hint_new_pwd"
@@ -82,7 +82,7 @@
             android:id="@+id/edit_pwd_new_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_persondata_form_change_pwd_input"
+            android:textSize="@dimen/text_size_person_page_change_pwd_input"
             android:textCursorDrawable="@null"
             android:inputType="textPassword"
             android:hint="@string/edit_hint_confirm_new_pwd"

@@ -66,5 +66,4 @@
             android:textColor="@color/colorSlave"
             android:text="@string/next"/>
     </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>

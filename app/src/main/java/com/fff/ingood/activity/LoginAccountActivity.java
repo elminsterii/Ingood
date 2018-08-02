@@ -33,7 +33,7 @@ public class LoginAccountActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_signin_account_page);
+        setContentView(R.layout.signin_account_page);
         super.onCreate(savedInstanceState);
     }
 
