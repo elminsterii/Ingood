@@ -78,6 +78,7 @@
     <string name="activity_publish_edit_update">更新</string>
     <string name="activity_publish_images_upload">上傳活動圖片</string>
     <string name="activity_publish_images_select">選擇圖片</string>
+    <string name="activity_publish_republish">重新發佈</string>
 
     <!-- Default Tags -->
     <string name="tag_recently">近期</string>

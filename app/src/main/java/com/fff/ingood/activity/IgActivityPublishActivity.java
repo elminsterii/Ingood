@@ -192,9 +192,12 @@ public class IgActivityPublishActivity extends BaseActivity implements
                         m_igActivity.setLargeActivity("0");
                         createIgActivity(m_igActivity);
                     }
-                    else
-                        updateIgActivity(m_igActivity);
-
+                    else {
+                        if(m_igActivity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
+                            //TODO - republish
+                        } else
+                            updateIgActivity(m_igActivity);
+                    }
                     showWaitingDialog(IgActivityPublishActivity.class.getName());
                 }
             }
@@ -297,7 +300,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private void initUIData(IgActivity activity, boolean bEditMode) {
         if(bEditMode) {
             if(activity != null) {
-                mBtnRightBottom.setText(R.string.activity_publish_edit_update);
+                if(activity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED))
+                    mBtnRightBottom.setText(R.string.activity_publish_republish);
+                else
+                    mBtnRightBottom.setText(R.string.activity_publish_edit_update);
+
                 mTextViewTitle.setText(R.string.activity_edit);
                 mTextViewPublisherName.setText(PersonManager.getInstance().getPerson().getName());
                 mEditTextIgActivityName.setText(activity.getName());

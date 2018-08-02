@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
@@ -29,6 +30,7 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
+import com.fff.ingood.tools.StringTool;
 
 import static com.fff.ingood.data.Person.TAG_PERSON;
 
@@ -48,20 +50,15 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private Spinner mSpinnerLocation;
     private ImageView mImageViewPersonIcon;
 
-    private PersonDataActivity mActivity;
-
     //for change password dialog
-    private boolean mIsOldPwdEyeCheck = true;
     private boolean mIsNewPwdEyeCheck = true;
     private boolean mIsNewPwdConfirmEyeCheck = true;
 
-    private EditText mEditText_OldPassword;
-    private EditText mEditText_NewPassword;
-    private EditText mEditText_NewPasswordConfirm;
+    private EditText mEditTextNewPassword;
+    private EditText mEditTextNewPasswordConfirm;
 
-    private ImageButton mImageButton_EyeOldPassword;
-    private ImageButton mImageButton_EyeNewPassword;
-    private ImageButton mImageButton_EyeNewPasswordConfirm;
+    private ImageButton mImageBtnEyeNewPassword;
+    private ImageButton mImageBtnEyeNewPasswordConfirm;
 
     private ImageButton mBtnBack;
     private TextView mTextViewTitle;
@@ -118,7 +115,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     @Override
     protected void initData(){
         Person person = PersonManager.getInstance().getPerson();
-        mActivity = this;
 
         mTextViewPersonName.setText(person.getName());
         mTextViewEmail.setText(person.getEmail());
@@ -126,17 +122,17 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewChangePwd.setClickable(true);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
-        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrAges);
+        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrAges);
         spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerAge.setAdapter(spinnerAgeAdapter);
 
         String[] arrGender = getResources().getStringArray(R.array.user_gender_list);
-        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrGender);
+        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrGender);
         spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerGender.setAdapter(spinnerGenderAdapter);
 
         String[] arrLocation = getResources().getStringArray(R.array.user_location_list);
-        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrLocation);
+        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrLocation);
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
 
@@ -213,8 +209,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 else {
                     person.setEmail(PersonManager.getInstance().getPerson().getEmail());
                     person.setPassword(PersonManager.getInstance().getPerson().getPassword());
-                    PersonLogicExecutor executor = new PersonLogicExecutor();
-                    executor.doPersonUpdate(mActivity, person);
+                    updatePerson(person);
                 }
             }
         });
@@ -279,63 +274,45 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void changePwdDlg(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_change_pwd,null);
 
-        mEditText_OldPassword = newPlanDialog.findViewById(R.id.edit_pwd);
-        mEditText_NewPassword = newPlanDialog.findViewById(R.id.edit_pwd_new);
-        mEditText_NewPasswordConfirm = newPlanDialog.findViewById(R.id.edit_pwd_new_confirm);
+        mEditTextNewPassword = newPlanDialog.findViewById(R.id.edit_pwd_new);
+        mEditTextNewPasswordConfirm = newPlanDialog.findViewById(R.id.edit_pwd_new_confirm);
 
-        mImageButton_EyeOldPassword = newPlanDialog.findViewById(R.id.pwd_eye);
-        mImageButton_EyeNewPassword = newPlanDialog.findViewById(R.id.pwd_new_eye);
-        mImageButton_EyeNewPasswordConfirm = newPlanDialog.findViewById(R.id.pwd_new_confirm_eye);
+        mImageBtnEyeNewPassword = newPlanDialog.findViewById(R.id.pwd_new_eye);
+        mImageBtnEyeNewPasswordConfirm = newPlanDialog.findViewById(R.id.pwd_new_confirm_eye);
 
-        mIsOldPwdEyeCheck = true;
         mIsNewPwdEyeCheck = true;
         mIsNewPwdConfirmEyeCheck = true;
 
-        mImageButton_EyeOldPassword.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mIsOldPwdEyeCheck) {
-                    mIsOldPwdEyeCheck = false;
-                    mImageButton_EyeOldPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
-                    mEditText_OldPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    mIsOldPwdEyeCheck = true;
-                    mImageButton_EyeOldPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
-                    mEditText_OldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-            }
-        });
-
-        mImageButton_EyeNewPassword.setOnClickListener(new Button.OnClickListener() {
+        mImageBtnEyeNewPassword.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mIsNewPwdEyeCheck) {
                     mIsNewPwdEyeCheck = false;
-                    mImageButton_EyeNewPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
-                    mEditText_NewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mImageBtnEyeNewPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
+                    mEditTextNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     mIsNewPwdEyeCheck = true;
-                    mImageButton_EyeNewPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
-                    mEditText_NewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mImageBtnEyeNewPassword.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
+                    mEditTextNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
 
-        mImageButton_EyeNewPasswordConfirm.setOnClickListener(new Button.OnClickListener() {
+        mImageBtnEyeNewPasswordConfirm.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mIsNewPwdConfirmEyeCheck) {
                     mIsNewPwdConfirmEyeCheck = false;
-                    mImageButton_EyeNewPasswordConfirm.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
-                    mEditText_NewPasswordConfirm.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mImageBtnEyeNewPasswordConfirm.setImageDrawable(getResources().getDrawable(R.drawable.view_y));
+                    mEditTextNewPasswordConfirm.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     mIsNewPwdConfirmEyeCheck = true;
-                    mImageButton_EyeNewPasswordConfirm.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
-                    mEditText_NewPasswordConfirm.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mImageBtnEyeNewPasswordConfirm.setImageDrawable(getResources().getDrawable(R.drawable.view_g));
+                    mEditTextNewPasswordConfirm.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
             }
         });
@@ -351,25 +328,31 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         );
         builder.setTitle(ssBuilder);
         builder.setView(newPlanDialog);
-        builder.setPositiveButton(getString(R.string.btn_text_cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.btn_text_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
 
-        builder.setNegativeButton(getString(R.string.btn_text_ok), new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.btn_text_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(mEditText_NewPassword.getText().equals(mEditText_NewPasswordConfirm.getText())
-                        && mEditText_OldPassword.getText().toString().equals(PersonManager.getInstance().getPerson().getPassword())){
-                    Person person = new Person();
-                    person.setEmail(PersonManager.getInstance().getPerson().getEmail());
-                    person.setPassword(PersonManager.getInstance().getPerson().getPassword());
-                    person.setNewPassword(mEditText_NewPassword.getText().toString());
-                    PersonLogicExecutor executor = new PersonLogicExecutor();
-                    executor.doPersonUpdate(mActivity, person);
-                }
+                String strNewPassword = mEditTextNewPassword.getText().toString();
+                String strNewPasswordConfirm = mEditTextNewPasswordConfirm.getText().toString();
+
+                if(StringTool.checkStringNotNull(strNewPassword)
+                        && StringTool.checkStringNotNull(strNewPasswordConfirm)) {
+                    if(mEditTextNewPassword.getText().equals(mEditTextNewPasswordConfirm.getText())){
+                        Person person = new Person();
+                        person.setEmail(PersonManager.getInstance().getPerson().getEmail());
+                        person.setPassword(PersonManager.getInstance().getPerson().getPassword());
+                        person.setNewPassword(mEditTextNewPassword.getText().toString());
+                        updatePerson(person);
+                    } else
+                        Toast.makeText(mActivity, getResources().getText(R.string.register_password_not_consistent), Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(mActivity, getResources().getText(R.string.register_password_format_wrong), Toast.LENGTH_SHORT).show();
             }
         });
         builder.show();
@@ -381,6 +364,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         finish();
     }
 
+    private void updatePerson(Person person) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonUpdate(this, person);
+    }
 
     @Override
     public void returnStatus(Integer iStatusCode) {
@@ -389,6 +376,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     public void returnUpdatePersonSuccess() {
-
+        PersonManager.getInstance().refresh();
     }
 }
