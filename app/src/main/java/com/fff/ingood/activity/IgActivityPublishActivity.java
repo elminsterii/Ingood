@@ -711,7 +711,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     public void returnRepublishIgActivitySuccess() {
-
+        Toast.makeText(mActivity, getResources().getText(R.string.activity_publish_republish), Toast.LENGTH_SHORT).show();
     }
 
     @Override
