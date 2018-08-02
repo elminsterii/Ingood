@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
 
+    public static final String TAG_PERSON = "person";
+
     @SerializedName("id")
     private String m_id;
 

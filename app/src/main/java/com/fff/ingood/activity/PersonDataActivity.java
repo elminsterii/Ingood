@@ -1,13 +1,13 @@
 package com.fff.ingood.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.text.style.StyleSpan;
@@ -30,21 +30,23 @@ import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
 
+import static com.fff.ingood.data.Person.TAG_PERSON;
+
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller{
 
-    private ImageView mImageView_EditName;
-    private ImageView mImageView_EditDescription;
-    private ImageView mImageView_EditPhoto;
-    private TextView mTextView_Name;
-    private TextView mTextView_Description;
-    private TextView mTextView_ChangePwd;
-    private TextView mTextView_Mail;
+    private ImageView mImageViewEditName;
+    private ImageView mImageViewEditDescription;
+    private ImageView mImageViewEditPhoto;
+    private TextView mTextViewPersonName;
+    private TextView mTextViewPersonDescription;
+    private TextView mTextViewChangePwd;
+    private TextView mTextViewEmail;
 
-    private Button mButton_Save;
-    private Spinner mSpinner_Age;
-    private Spinner mSpinner_Gender;
-    private Spinner mSpinner_Location;
-    private ImageView mImageView_HeadIcon;
+    private Button mBtnSave;
+    private Spinner mSpinnerAge;
+    private Spinner mSpinnerGender;
+    private Spinner mSpinnerLocation;
+    private ImageView mImageViewPersonIcon;
 
     private PersonDataActivity mActivity;
 
@@ -61,12 +63,11 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageButton mImageButton_EyeNewPassword;
     private ImageButton mImageButton_EyeNewPasswordConfirm;
 
-    //for edit description dialog
-    private EditText mEditText_EditDes;
-    private TextView mTextView_DesLimitation;
-
     private ImageButton mBtnBack;
     private TextView mTextViewTitle;
+
+    private Person mPerson;
+    private boolean m_bObserverMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,89 +81,85 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     protected void preInit() {
-
+        Intent intent = getIntent();
+        if(intent != null) {
+            mPerson = (Person)intent.getSerializableExtra(TAG_PERSON);
+            m_bObserverMode = mPerson != null;
+        }
     }
 
     @Override
     protected void initView(){
-        mTextView_Name = findViewById(R.id.textViewPersonName);
-        mTextView_Description = findViewById(R.id.textview_content_about_me);
-        mTextView_ChangePwd = findViewById(R.id.textview_change_pwd);
-        mTextView_Mail = findViewById(R.id.textViewEmail);
+        mTextViewPersonName = findViewById(R.id.textViewPersonName);
+        mTextViewPersonDescription = findViewById(R.id.textViewPersonAboutContent);
+        mTextViewChangePwd = findViewById(R.id.textViewChangePwd);
+        mTextViewEmail = findViewById(R.id.textViewEmail);
 
-        mSpinner_Gender = findViewById(R.id.spinner_gender);
-        mSpinner_Age = findViewById(R.id.spinner_age);
-        mSpinner_Location = findViewById(R.id.spinner_location);
+        mSpinnerGender = findViewById(R.id.spinner_gender);
+        mSpinnerAge = findViewById(R.id.spinner_age);
+        mSpinnerLocation = findViewById(R.id.spinner_location);
 
-        mImageView_EditPhoto = findViewById(R.id.imageViewEditPhoto);
-        mImageView_EditName = findViewById(R.id.imageViewEditName);
-        mImageView_EditDescription = findViewById(R.id.imageview_edit_about_me);
-        //mImageView_EditInterests = findViewById(R.id.imageview_edit_tags);
+        mImageViewEditPhoto = findViewById(R.id.imageViewEditPhoto);
+        mImageViewEditName = findViewById(R.id.imageViewEditName);
+        mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
 
-
-        mButton_Save = findViewById(R.id.btn_save);
-        mBtnBack = findViewById(R.id.imgBack);
+        mBtnSave = findViewById(R.id.btnPersonSave);
+        mBtnBack = findViewById(R.id.imgPersonBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
 
-
         FrameLayout frameLayout = findViewById(R.id.layoutPersonThumbnailInPersonPage);
-        mImageView_HeadIcon = (ImageView)frameLayout.getChildAt(0);
-        mImageView_HeadIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        if(frameLayout != null) {
+            mImageViewPersonIcon = (ImageView) frameLayout.getChildAt(0);
+            mImageViewPersonIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        }
     }
 
     @Override
     protected void initData(){
-
         Person person = PersonManager.getInstance().getPerson();
         mActivity = this;
 
-        mTextView_Name.setText(person.getName());
-        mTextView_Mail.setText(person.getEmail());
-        mTextView_Description.setText(person.getDescription());
-        mTextView_ChangePwd.setClickable(true);
+        mTextViewPersonName.setText(person.getName());
+        mTextViewEmail.setText(person.getEmail());
+        mTextViewPersonDescription.setText(person.getDescription());
+        mTextViewChangePwd.setClickable(true);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
         ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrAges);
         spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
-        mSpinner_Age.setAdapter(spinnerAgeAdapter);
+        mSpinnerAge.setAdapter(spinnerAgeAdapter);
 
         String[] arrGender = getResources().getStringArray(R.array.user_gender_list);
         ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrGender);
         spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
-        mSpinner_Gender.setAdapter(spinnerGenderAdapter);
+        mSpinnerGender.setAdapter(spinnerGenderAdapter);
 
         String[] arrLocation = getResources().getStringArray(R.array.user_location_list);
         ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item_in_person_page, arrLocation);
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
-        mSpinner_Location.setAdapter(spinnerLocationAdapter);
-
+        mSpinnerLocation.setAdapter(spinnerLocationAdapter);
 
         int index = 0;
         String strPersonAge = person.getAge();
         for(int i=0; i<arrAges.length; i++)
             if(strPersonAge.equals(arrAges[i]))
                 index = i;
-        mSpinner_Age.setSelection(index);
+        mSpinnerAge.setSelection(index);
 
         index = 0;
         String strGender = person.getGender();
         for(int i=0; i<arrGender.length; i++)
             if(strGender.equals(arrGender[i]))
                 index = i;
-        mSpinner_Gender.setSelection(index);
+        mSpinnerGender.setSelection(index);
 
         index = 0;
         String strLocation = person.getLocation();
         for(int i=0; i<arrLocation.length; i++)
             if(strLocation.equals(arrLocation[i]))
                 index = i;
-        mSpinner_Location.setSelection(index);
+        mSpinnerLocation.setSelection(index);
     }
 
     @Override
@@ -170,10 +167,11 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                backToHomePage();
             }
         });
-        mTextView_ChangePwd.setOnClickListener(new TextView.OnClickListener() {
+
+        mTextViewChangePwd.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changePwdDlg();
@@ -181,8 +179,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-
-        mButton_Save.setOnClickListener(new Button.OnClickListener() {
+        mBtnSave.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Person person = new Person();
@@ -191,39 +188,38 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 boolean isLocationChanged = false;
                 boolean isDescriptionChanged = false;
 
-                if(!PersonManager.getInstance().getPerson().getGender().equals(String.valueOf(mSpinner_Gender.getSelectedItem()))){
-                    person.setGender(String.valueOf(mSpinner_Gender.getSelectedItem()));
+                if(!PersonManager.getInstance().getPerson().getGender().equals(String.valueOf(mSpinnerGender.getSelectedItem()))) {
+                    person.setGender(String.valueOf(mSpinnerGender.getSelectedItem()));
                     isGenderChanged = true;
                 }
 
-                if(!PersonManager.getInstance().getPerson().getAge().equals(String.valueOf(mSpinner_Age.getSelectedItem()))){
-                    person.setAge(String.valueOf(mSpinner_Age.getSelectedItem()));
+                if(!PersonManager.getInstance().getPerson().getAge().equals(String.valueOf(mSpinnerAge.getSelectedItem()))) {
+                    person.setAge(String.valueOf(mSpinnerAge.getSelectedItem()));
                     isAgeChanged = true;
                 }
 
-                if(!PersonManager.getInstance().getPerson().getLocation().equals(String.valueOf(mSpinner_Location.getSelectedItem()))){
-                    person.setLocation(String.valueOf(mSpinner_Location.getSelectedItem()));
+                if(!PersonManager.getInstance().getPerson().getLocation().equals(String.valueOf(mSpinnerLocation.getSelectedItem()))) {
+                    person.setLocation(String.valueOf(mSpinnerLocation.getSelectedItem()));
                     isLocationChanged = true;
                 }
-                if(!PersonManager.getInstance().getPerson().getDescription().equals(String.valueOf(mTextView_Description.getText()))){
-                    person.setDescription(String.valueOf(mSpinner_Age.getSelectedItem()));
+
+                if(!PersonManager.getInstance().getPerson().getDescription().equals(String.valueOf(mTextViewPersonDescription.getText()))) {
+                    person.setDescription(String.valueOf(mSpinnerAge.getSelectedItem()));
                     isDescriptionChanged = true;
                 }
 
-                if(!isAgeChanged && !isGenderChanged && !isLocationChanged && !isDescriptionChanged)
-                    return;
-                else{
+                if(!isAgeChanged && !isGenderChanged && !isLocationChanged && !isDescriptionChanged) {
+                }
+                else {
                     person.setEmail(PersonManager.getInstance().getPerson().getEmail());
                     person.setPassword(PersonManager.getInstance().getPerson().getPassword());
                     PersonLogicExecutor executor = new PersonLogicExecutor();
                     executor.doPersonUpdate(mActivity, person);
                 }
-
-
             }
         });
 
-        mImageView_EditPhoto.setOnClickListener(new ImageView.OnClickListener() {
+        mImageViewEditPhoto.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -231,7 +227,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mImageView_EditName.setOnClickListener(new ImageView.OnClickListener() {
+        mImageViewEditName.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -239,25 +235,14 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mImageView_EditDescription.setOnClickListener(new ImageView.OnClickListener() {
+        mImageViewEditDescription.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editDescriptionDlg();
 
             }
         });
 
-
-
-//        mImageView_EditInterests.setOnClickListener(new ImageView.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//            }
-//        });
-
-        mSpinner_Location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             }
@@ -267,7 +252,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mSpinner_Age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerAge.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             }
@@ -277,7 +262,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mSpinner_Gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             }
@@ -296,15 +281,15 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private void changePwdDlg(){
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
-        View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_change_pwd,null);
+        @SuppressLint("InflateParams") View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_change_pwd,null);
 
-        mEditText_OldPassword = (EditText) newPlanDialog.findViewById(R.id.edit_pwd);
-        mEditText_NewPassword = (EditText) newPlanDialog.findViewById(R.id.edit_pwd_new);
-        mEditText_NewPasswordConfirm = (EditText) newPlanDialog.findViewById(R.id.edit_pwd_new_confirm);
+        mEditText_OldPassword = newPlanDialog.findViewById(R.id.edit_pwd);
+        mEditText_NewPassword = newPlanDialog.findViewById(R.id.edit_pwd_new);
+        mEditText_NewPasswordConfirm = newPlanDialog.findViewById(R.id.edit_pwd_new_confirm);
 
-        mImageButton_EyeOldPassword = (ImageButton) newPlanDialog.findViewById(R.id.pwd_eye);
-        mImageButton_EyeNewPassword = (ImageButton) newPlanDialog.findViewById(R.id.pwd_new_eye);
-        mImageButton_EyeNewPasswordConfirm = (ImageButton) newPlanDialog.findViewById(R.id.pwd_new_confirm_eye);
+        mImageButton_EyeOldPassword = newPlanDialog.findViewById(R.id.pwd_eye);
+        mImageButton_EyeNewPassword = newPlanDialog.findViewById(R.id.pwd_new_eye);
+        mImageButton_EyeNewPasswordConfirm = newPlanDialog.findViewById(R.id.pwd_new_confirm_eye);
 
         mIsOldPwdEyeCheck = true;
         mIsNewPwdEyeCheck = true;
@@ -385,58 +370,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     PersonLogicExecutor executor = new PersonLogicExecutor();
                     executor.doPersonUpdate(mActivity, person);
                 }
-
             }
         });
-
         builder.show();
     }
 
-    private void editDescriptionDlg(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-        LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
-        View newPlanDialog = layoutInflater.inflate(R.layout.dialog_persondata_edit_description,null);
-
-        mEditText_EditDes = (EditText) newPlanDialog.findViewById(R.id.edit_des);
-        mTextView_DesLimitation = (TextView) newPlanDialog.findViewById(R.id.text_edit_limit);
-
-        mEditText_EditDes.setText(mTextView_Description.getText().toString());
-
-        mEditText_EditDes.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mTextView_DesLimitation.setText(String.valueOf(150 - mEditText_EditDes.getText().toString().length()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        builder.setView(newPlanDialog);
-        builder.setPositiveButton(getString(R.string.btn_text_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton(getString(R.string.btn_text_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mTextView_Description.setText(mEditText_EditDes.getText());
-                dialog.dismiss();
-            }
-        });
-
-        builder.show();
+    private void backToHomePage() {
+        hideWaitingDialog();
+        onBackPressed();
+        finish();
     }
-
 
 
     @Override
@@ -448,10 +391,4 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     public void returnUpdatePersonSuccess() {
 
     }
-
-
-
-
-
-
 }

@@ -1,226 +1,238 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="10.1dp">
-
-        <ImageButton
-            android:id="@+id/imgBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/selector_arrow_btn_dark" />
-
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgBack"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="16dp"
-            android:textSize="@dimen/title_size_registration"
-            android:textColor="@color/colorSlave"
-            android:textStyle="bold"
-            android:text="@string/title_person_data" />
-    </RelativeLayout>
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/layoutPersonThumbnailInPersonPage"
-                layout="@layout/layout_person_thumbnail_in_person_page"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp" />
-
-            <ImageView
-                android:id="@+id/imageViewEditPhoto"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignBottom="@+id/layoutPersonThumbnailInPersonPage"
-                android:layout_alignEnd="@+id/layoutPersonThumbnailInPersonPage"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/editphoto_n" />
-
-            <TextView
-                android:id="@+id/textViewPersonName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutPersonThumbnailInPersonPage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="" />
-
-            <ImageView
-                android:id="@+id/imageViewEditName"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignBottom="@+id/textViewPersonName"
-                android:layout_toEndOf="@+id/textViewPersonName"
-                android:layout_marginStart="5dp"
-                android:src="@drawable/edit_n"/>
-
-            <TextView
-                android:id="@+id/textViewEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewPersonName"
-                android:layout_centerHorizontal="true"/>
-
             <RelativeLayout
-                android:id="@+id/layoutPersonalSpinners"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewEmail"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="30dp">
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10.1dp">
 
-                <Spinner
-                    android:id="@+id/spinner_age"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                <ImageButton
+                    android:id="@+id/imgPersonBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
-                    android:paddingStart="@dimen/text_padding_person_page_spinner"
-                    android:theme="@style/IngoodSpinnerStyle"
-                    tools:ignore="RtlSymmetry" />
-
-                <Spinner
-                    android:id="@+id/spinner_gender"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/spinner_age"
-                    android:layout_marginStart="@dimen/gap_person_page_spinner"
-                    android:spinnerMode="dropdown"
-                    android:paddingStart="@dimen/text_padding_person_page_spinner"
-                    android:theme="@style/IngoodSpinnerStyle"
-                    tools:ignore="RtlSymmetry" />
-
-                <Spinner
-                    android:id="@+id/spinner_location"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/spinner_gender"
-                    android:layout_marginStart="@dimen/gap_person_page_spinner"
-                    android:spinnerMode="dropdown"
-                    android:paddingStart="@dimen/text_padding_person_page_spinner"
-                    android:theme="@style/IngoodSpinnerStyle"
-                    tools:ignore="RtlSymmetry" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layoutPersonalDeemGrade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutPersonalSpinners"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="35dp">
-
-                <ImageView
-                    android:id="@+id/imageViewPersonalDeemGrade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/grade" />
+                    android:background="@drawable/selector_arrow_btn_dark" />
 
                 <TextView
-                    android:id="@+id/textViewPersonalDeemGradeTitle"
+                    android:id="@+id/textViewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/imageViewPersonalDeemGrade"
+                    android:layout_toEndOf="@+id/imgPersonBack"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:textSize="@dimen/text_size_person_page_sub_title"
+                    android:layout_marginStart="16dp"
+                    android:textSize="@dimen/title_size_registration"
                     android:textColor="@color/colorSlave"
-                    android:text="@string/title_comment_grade" />
+                    android:textStyle="bold"
+                    android:text="@string/title_person_data" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layoutPersonAbout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutPersonalDeemGrade"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="35dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/layoutPersonThumbnailInPersonPage"
+                    layout="@layout/layout_person_thumbnail_in_person_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp" />
 
                 <ImageView
-                    android:id="@+id/imageViewPersonAbout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/host" />
+                    android:id="@+id/imageViewEditPhoto"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignBottom="@+id/layoutPersonThumbnailInPersonPage"
+                    android:layout_alignEnd="@+id/layoutPersonThumbnailInPersonPage"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/editphoto_n" />
 
                 <TextView
-                    android:id="@+id/textViewPersonAboutTitle"
+                    android:id="@+id/textViewPersonName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/imageViewPersonAbout"
-                    android:layout_centerVertical="true"
+                    android:layout_below="@+id/layoutPersonThumbnailInPersonPage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="" />
+
+                <ImageView
+                    android:id="@+id/imageViewEditName"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignBottom="@+id/textViewPersonName"
+                    android:layout_toEndOf="@+id/textViewPersonName"
                     android:layout_marginStart="5dp"
-                    android:textSize="@dimen/text_size_person_page_sub_title"
-                    android:textColor="@color/colorSlave"
-                    android:text="@string/title_about_me" />
+                    android:src="@drawable/edit_n"/>
+
+                <TextView
+                    android:id="@+id/textViewEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewPersonName"
+                    android:layout_centerHorizontal="true"/>
+
+                <RelativeLayout
+                    android:id="@+id/layoutPersonalSpinners"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewEmail"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="30dp">
+
+                    <Spinner
+                        android:id="@+id/spinner_age"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown"
+                        android:paddingStart="@dimen/text_padding_person_page_spinner"
+                        android:theme="@style/IngoodSpinnerStyle"
+                        tools:ignore="RtlSymmetry" />
+
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/spinner_age"
+                        android:layout_marginStart="@dimen/gap_person_page_spinner"
+                        android:spinnerMode="dropdown"
+                        android:paddingStart="@dimen/text_padding_person_page_spinner"
+                        android:theme="@style/IngoodSpinnerStyle"
+                        tools:ignore="RtlSymmetry" />
+
+                    <Spinner
+                        android:id="@+id/spinner_location"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/spinner_gender"
+                        android:layout_marginStart="@dimen/gap_person_page_spinner"
+                        android:spinnerMode="dropdown"
+                        android:paddingStart="@dimen/text_padding_person_page_spinner"
+                        android:theme="@style/IngoodSpinnerStyle"
+                        tools:ignore="RtlSymmetry" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layoutPersonalDeemGrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutPersonalSpinners"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="35dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewPersonalDeemGrade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/grade" />
+
+                    <TextView
+                        android:id="@+id/textViewPersonalDeemGradeTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/imageViewPersonalDeemGrade"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:textSize="@dimen/text_size_person_page_sub_title"
+                        android:textColor="@color/colorSlave"
+                        android:text="@string/title_comment_grade" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layoutPersonAbout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutPersonalDeemGrade"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="35dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewPersonAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/host" />
+
+                    <TextView
+                        android:id="@+id/textViewPersonAboutTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/imageViewPersonAbout"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:textSize="@dimen/text_size_person_page_sub_title"
+                        android:textColor="@color/colorSlave"
+                        android:text="@string/title_about_me" />
+
+                    <ImageView
+                        android:id="@+id/imageViewPersonEditAbout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="35dp"
+                        android:src="@drawable/edit_n" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textViewPersonAboutContent"
+                    android:singleLine="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginEnd="53dp"
+                    android:layout_below="@+id/layoutPersonAbout"/>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewPersonAboutContent"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="90dp">
+
+                    <View
+                        android:id="@+id/viewTopOfChangePwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:background="@color/colorTextHint" />
+
+                    <TextView
+                        android:id="@+id/textViewChangePwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/viewTopOfChangePwd"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="@dimen/text_size_person_page_sub_title"
+                        android:textColor="@color/colorWarningRed"
+                        android:text="@string/btn_change_pwd" />
+
+                    <View
+                        android:id="@+id/viewBottomOfChangePwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/textViewChangePwd"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/colorTextHint" />
+                </RelativeLayout>
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textview_content_about_me"
-                android:singleLine="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layoutPersonAbout"/>
-
-            <ImageView
-                android:id="@+id/imageview_edit_about_me"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/layoutPersonAbout"
-                android:layout_marginRight="35dp"
-                android:layout_marginTop="72dp"
-                android:src="@drawable/edit_n" />
-
-            <View
-                android:id="@+id/top_of_change_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/imageview_edit_about_me"
-                android:layout_marginTop="72dp"
-                android:background="@color/colorBlack" />
-
-            <TextView
-                android:id="@+id/textview_change_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/top_of_change_pwd"
-                android:layout_marginTop="7dp"
-                android:textSize="20sp"
-                android:textColor="@color/colorWarningRed"
-                android:layout_centerHorizontal="true"
-                android:text="@string/btn_change_pwd" />
-
-            <View
-                android:id="@+id/bottom_of_change_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/imageview_edit_about_me"
-                android:layout_marginTop="114.5dp"
-                android:background="@color/colorBlack" />
         </RelativeLayout>
     </ScrollView>
 
@@ -228,22 +240,21 @@
         android:id="@+id/layoutIgActivityButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16.5dp"
-        android:layout_marginBottom="7dp"
-        app:layout_anchor="@+id/zoomViewIgActivity"
-        app:layout_anchorGravity="bottom|center">
+        android:layout_marginBottom="7dp">
 
         <Button
-            android:id="@+id/btn_save"
+            android:id="@+id/btnPersonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="3dp"
             android:background="@drawable/selector_register_next"
-            android:text="@string/btn_save"
             android:textColor="@color/colorSlave"
-            android:textSize="@dimen/text_size_button_ig_activity" />
+            android:textSize="@dimen/text_size_button_ig_activity"
+            android:text="@string/btn_save"/>
     </RelativeLayout>
 </RelativeLayout>

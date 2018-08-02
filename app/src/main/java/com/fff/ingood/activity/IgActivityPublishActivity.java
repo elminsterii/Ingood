@@ -86,7 +86,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private EditText mEditTextIgActivityDescription;
     private LinearLayout mLayoutIgActivityTags;
 
-    private boolean m_bEditMode = false;
+    private boolean m_bEditMode;
     private boolean m_bIsImageChanged = false;
     private IgActivity m_igActivity;
 
@@ -119,8 +119,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         Intent intent = getIntent();
         if(intent != null) {
             m_igActivity = (IgActivity)intent.getSerializableExtra(TAG_IGACTIVITY);
-            if(m_igActivity != null)
-                m_bEditMode = true;
+            m_bEditMode = (m_igActivity != null);
         }
     }
 

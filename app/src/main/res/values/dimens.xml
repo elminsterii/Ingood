@@ -40,7 +40,7 @@
     <!-- PersonData -->
     <dimen name="text_size_person_page_spinner">15sp</dimen>
     <dimen name="text_size_person_page_change_pwd_input">15sp</dimen>
-    <dimen name="text_size_person_page_sub_title">15sp</dimen>
+    <dimen name="text_size_person_page_sub_title">16sp</dimen>
     <dimen name="text_padding_person_page_spinner">10dp</dimen>
     <dimen name="gap_person_page_spinner">12dp</dimen>
 
