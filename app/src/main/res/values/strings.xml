@@ -8,7 +8,7 @@
     <string name="activity_edit">Activity Edit</string>
     <string name="activity_closed">Closed</string>
 
-    <!-- LoginPage -->
+    <!-- Login page -->
     <string name="login_slogan">Activity / Band / Social</string>
     <string name="login_account">Account</string>
     <string name="login_pwd">Password</string>
@@ -41,7 +41,7 @@
     <string name="activity_action_edit">Edit</string>
     <string name="activity_action_delete">Delete</string>
 
-    <!-- PersonData -->
+    <!-- Person data -->
     <string name="title_person_data">Person Data</string>
     <string name="title_comment_grade">Comment Grade</string>
     <string name="title_about_me">About Me</string>
@@ -51,7 +51,10 @@
     <string name="edit_hint_new_pwd">New Password</string>
     <string name="edit_hint_confirm_new_pwd">Confirm New Password</string>
     <string name="btn_text_cancel">Cancel</string>
-    <string name="btn_text_ok">OK</string>    <!-- Activity detail -->
+    <string name="btn_text_ok">OK</string>
+    <string name="person_data_update_success">Personal data has been updated</string>
+
+    <!-- Activity detail -->
     <string name="activity_detail_publisher">Publisher : </string>
     <string name="activity_detail_attendees_count_1"> </string>
     <string name="activity_detail_attendees_count_2">people have attended</string>
@@ -79,7 +82,7 @@
     <string name="activity_publish_images_select">Select Image</string>
     <string name="activity_publish_republish">Republish</string>
 
-    <!-- Default Tags -->
+    <!-- Default tags -->
     <string name="tag_recently">Recently</string>
     <string name="tag_ongoing">Ongoing</string>
     <string name="tag_popularity">Popularity</string>
@@ -89,7 +92,7 @@
     <string name="tag_my_attend_igactivity">Attended</string>
     <string name="tag_my_save_igactivity">Saved</string>
 
-    <!-- Custom Tags -->
+    <!-- Custom tags -->
     <string name="tag_sport">Sport</string>
     <string name="tag_ball">Ball</string>
     <string name="tag_casual">Casual</string>
@@ -111,7 +114,7 @@
     <string name="tag_food2">Food</string>
     <string name="tag_food3">Eat</string>
 
-    <!-- Tags Description-->
+    <!-- Tags description-->
     <string name="tag_care_description">Human care</string>
     <string name="tag_environmental_protection_description">Environmental protection</string>
     <string name="tag_education_description">Education</string>
@@ -130,11 +133,11 @@
     <string name="dialog_delete_comment_done_message">Comment has been deleted</string>
     <string name="dialog_update_comment_done_message">Comment has been updated</string>
 
-    <!-- SearchBar -->
+    <!-- Search bar -->
     <string name="search_bar_label">Search</string>
     <string name="search_bar_hint">Name #Tags @Email</string>
 
-    <!-- Menu Personal -->
+    <!-- Menu personal -->
     <string name="menu_personal_detail">Personal</string>
     <string name="menu_personal_about">About</string>
     <string name="menu_personal_logout">Logout</string>
@@ -173,7 +176,7 @@
     <string name="publish_igactivity_begin_end_time_wrong">Begin can not after end time</string>
     <string name="publish_igactivity_begin_cur_time_wrong">Begin can not be post time</string>
 
-    <!-- Server Response -->
+    <!-- Server response -->
     <string name="server_res_0_success">Success, request has been done</string>
     <string name="server_res_1_user_not_found">Fail, user was not found</string>
     <string name="server_res_2_user_already_exist">Fail, user was already exist</string>

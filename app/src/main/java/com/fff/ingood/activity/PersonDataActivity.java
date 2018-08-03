@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.HideReturnsTransformationMethod;
@@ -31,10 +33,14 @@ import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
 import com.fff.ingood.tools.StringTool;
+import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 
 import static com.fff.ingood.data.Person.TAG_PERSON;
+import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
+import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller{
+public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller, PersonManager.PersonManagerRefreshEvent {
 
     private ImageView mImageViewEditName;
     private ImageView mImageViewEditDescription;
@@ -51,6 +57,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private Spinner mSpinnerGender;
     private Spinner mSpinnerLocation;
     private ImageView mImageViewPersonIcon;
+
+    private String[] m_arrAges;
+    private String[] m_arrGender;
+    private String[] m_arrLocation;
 
     //for change password dialog
     private boolean mIsNewPwdEyeCheck = true;
@@ -77,6 +87,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     @Override
     protected  void onResume() {
         super.onResume();
+        refresh();
     }
 
     @Override
@@ -117,47 +128,22 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initData(){
-        mTextViewPersonName.setText(mPerson.getName());
-        mTextViewEmail.setText(mPerson.getEmail());
-        mTextViewPersonDescription.setText(mPerson.getDescription());
         mTextViewChangePwd.setClickable(true);
-        setUiDeemPeopleByPerson(mPerson);
 
-        String[] arrAges = getResources().getStringArray(R.array.user_age_list);
-        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrAges);
+        m_arrAges = getResources().getStringArray(R.array.user_age_list);
+        ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, m_arrAges);
         spinnerAgeAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerAge.setAdapter(spinnerAgeAdapter);
 
-        String[] arrGender = getResources().getStringArray(R.array.user_gender_list);
-        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrGender);
+        m_arrGender = getResources().getStringArray(R.array.user_gender_list);
+        ArrayAdapter<String> spinnerGenderAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, m_arrGender);
         spinnerGenderAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerGender.setAdapter(spinnerGenderAdapter);
 
-        String[] arrLocation = getResources().getStringArray(R.array.user_location_list);
-        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrLocation);
+        m_arrLocation = getResources().getStringArray(R.array.user_location_list);
+        ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, m_arrLocation);
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
-
-        int index = 0;
-        String strPersonAge = mPerson.getAge();
-        for(int i=0; i<arrAges.length; i++)
-            if(strPersonAge.equals(arrAges[i]))
-                index = i;
-        mSpinnerAge.setSelection(index);
-
-        index = 0;
-        String strGender = mPerson.getGender();
-        for(int i=0; i<arrGender.length; i++)
-            if(strGender.equals(arrGender[i]))
-                index = i;
-        mSpinnerGender.setSelection(index);
-
-        index = 0;
-        String strLocation = mPerson.getLocation();
-        for(int i=0; i<arrLocation.length; i++)
-            if(strLocation.equals(arrLocation[i]))
-                index = i;
-        mSpinnerLocation.setSelection(index);
     }
 
     @Override
@@ -179,36 +165,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mBtnSave.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Person person = new Person();
-                boolean isGenderChanged = false;
-                boolean isAgeChanged = false;
-                boolean isLocationChanged = false;
-                boolean isDescriptionChanged = false;
+                if(isDataValid()) {
+                    mPerson.setAge(String.valueOf(mSpinnerAge.getSelectedItemPosition() + AGE_LIMITATION - 1));
+                    mPerson.setGender(mSpinnerGender.getSelectedItemPosition() == 1 ? "M":"F");
+                    mPerson.setLocation(String.valueOf(mSpinnerLocation.getSelectedItem()));
 
-                if(!mPerson.getGender().equals(String.valueOf(mSpinnerGender.getSelectedItem()))) {
-                    person.setGender(String.valueOf(mSpinnerGender.getSelectedItem()));
-                    isGenderChanged = true;
-                }
-
-                if(!mPerson.getAge().equals(String.valueOf(mSpinnerAge.getSelectedItem()))) {
-                    person.setAge(String.valueOf(mSpinnerAge.getSelectedItem()));
-                    isAgeChanged = true;
-                }
-
-                if(!mPerson.getLocation().equals(String.valueOf(mSpinnerLocation.getSelectedItem()))) {
-                    person.setLocation(String.valueOf(mSpinnerLocation.getSelectedItem()));
-                    isLocationChanged = true;
-                }
-
-                if(!mPerson.getDescription().equals(String.valueOf(mTextViewPersonDescription.getText()))) {
-                    person.setDescription(String.valueOf(mSpinnerAge.getSelectedItem()));
-                    isDescriptionChanged = true;
-                }
-
-                if(isAgeChanged || isGenderChanged || isLocationChanged || isDescriptionChanged) {
-                    person.setEmail(mPerson.getEmail());
-                    person.setPassword(mPerson.getPassword());
-                    updatePerson(person);
+                    showWaitingDialog(PersonDataActivity.class.getName());
+                    updatePerson(mPerson);
                 }
             }
         });
@@ -229,6 +192,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditDescription.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ConfirmDialogWithTextContent.newInstance(new ConfirmDialogWithTextContent.TextContentEventCB() {
+                    @Override
+                    public void onPositiveClick(String strTextContent) {
+                        mPerson.setDescription(strTextContent);
+                    }
+                }, getResources().getText(R.string.title_about_me).toString(), mPerson.getDescription())
+                        .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
 
@@ -267,6 +237,71 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     protected void initSystemUI() {
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_PERSONDATA).setSystemUI(this);
     }
+
+    private boolean isDataValid() {
+        return checkGenderValid()
+                && checkAgeValid()
+                && checkLocationValid();
+    }
+
+    private boolean checkGenderValid() {
+        if(mSpinnerGender.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, getResources().getText(R.string.register_gender_choose), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mSpinnerGender, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mSpinnerGender, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkAgeValid() {
+        if(mSpinnerAge.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, getResources().getText(R.string.register_age_choose), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mSpinnerAge, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mSpinnerAge, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private boolean checkLocationValid() {
+        if(mSpinnerLocation.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, getResources().getText(R.string.register_location_choose), Toast.LENGTH_SHORT).show();
+            setViewUnderlineColor(mSpinnerLocation, getResources().getColor(R.color.colorWarningRed));
+            return false;
+        }
+        setViewUnderlineColor(mSpinnerLocation, getResources().getColor(R.color.colorTextHint));
+        return true;
+    }
+
+    private void refresh() {
+        mTextViewPersonName.setText(mPerson.getName());
+        mTextViewEmail.setText(mPerson.getEmail());
+        mTextViewPersonDescription.setText(mPerson.getDescription());
+        setUiDeemPeopleByPerson(mPerson);
+
+        int index = 0;
+        String strPersonAge = mPerson.getAge();
+        for(int i=0; i<m_arrAges.length; i++)
+            if(m_arrAges[i].contains(strPersonAge))
+                index = i;
+        mSpinnerAge.setSelection(index);
+
+        index = 0;
+        String strGender = mPerson.getGender();
+        for(int i=0; i<m_arrGender.length; i++)
+            if(strGender.equals(m_arrGender[i]))
+                index = i;
+        mSpinnerGender.setSelection(index);
+
+        index = 0;
+        String strLocation = mPerson.getLocation();
+        for(int i=0; i<m_arrLocation.length; i++)
+            if(strLocation.equals(m_arrLocation[i]))
+                index = i;
+        mSpinnerLocation.setSelection(index);
+    }
+
 
     private void changePwdDlg(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -339,11 +374,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 if(StringTool.checkStringNotNull(strNewPassword)
                         && StringTool.checkStringNotNull(strNewPasswordConfirm)) {
                     if(mEditTextNewPassword.getText().equals(mEditTextNewPasswordConfirm.getText())){
-                        Person person = new Person();
-                        person.setEmail(mPerson.getEmail());
-                        person.setPassword(mPerson.getPassword());
-                        person.setNewPassword(mEditTextNewPassword.getText().toString());
-                        updatePerson(person);
+                        mPerson.setNewPassword(mEditTextNewPassword.getText().toString());
                     } else
                         Toast.makeText(mActivity, getResources().getText(R.string.register_password_not_consistent), Toast.LENGTH_SHORT).show();
                 } else
@@ -377,13 +408,30 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
+    private void setViewUnderlineColor(View view, int iColor) {
+        ColorStateList colorStateList = ColorStateList.valueOf(iColor);
+        ViewCompat.setBackgroundTintList(view, colorStateList);
+    }
+
     @Override
     public void returnStatus(Integer iStatusCode) {
-
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
+            hideWaitingDialog();
+            Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void returnUpdatePersonSuccess() {
-        PersonManager.getInstance().refresh();
+        PersonManager.getInstance().refresh(this);
+    }
+
+    @Override
+    public void onRefreshDone(Person person) {
+        hideWaitingDialog();
+        Toast.makeText(mActivity, getResources().getText(R.string.person_data_update_success), Toast.LENGTH_SHORT).show();
+
+        mPerson = person;
+        refresh();
     }
 }

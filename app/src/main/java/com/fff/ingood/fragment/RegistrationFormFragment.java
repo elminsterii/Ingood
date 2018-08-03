@@ -26,11 +26,10 @@ import com.fff.ingood.logic.PersonLogicExecutor;
 
 import java.util.Objects;
 
+import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
 
 public class RegistrationFormFragment extends BaseFragment implements PersonCheckExistLogic.PersonCheckExistLogicCaller {
-    public static final int AGE_LIMITATION = 18;
-
     private EditText mEditTextAccount;
     private EditText mEditTextPassword;
     private EditText mEditTextConfirmPassword;

@@ -9,7 +9,7 @@
     <string name="activity_edit">編輯活動</string>
     <string name="activity_closed">已結束</string>
 
-    <!-- LoginPage -->
+    <!-- Login page -->
     <string name="login_slogan">活動 x 揪團 x 社交</string>
     <string name="login_account">帳號</string>
     <string name="login_pwd">密碼</string>
@@ -42,7 +42,7 @@
     <string name="activity_action_edit">編輯</string>
     <string name="activity_action_delete">刪除</string>
 
-    <!-- PersonData -->
+    <!-- Person data -->
     <string name="title_person_data">個人資料</string>
     <string name="title_comment_grade">評價指數</string>
     <string name="title_about_me">關於我</string>
@@ -52,7 +52,10 @@
     <string name="edit_hint_new_pwd">新密碼</string>
     <string name="edit_hint_confirm_new_pwd">確認新密碼</string>
     <string name="btn_text_cancel">取消</string>
-    <string name="btn_text_ok">確認</string>    <!-- Activity detail -->
+    <string name="btn_text_ok">確認</string>
+    <string name="person_data_update_success">個人資訊更新成功</string>
+
+    <!-- Activity detail -->
     <string name="activity_detail_publisher">主辦人 : </string>
     <string name="activity_detail_attendees_count_1">參與者</string>
     <string name="activity_detail_attendees_count_2">名</string>
@@ -90,7 +93,7 @@
     <string name="tag_my_attend_igactivity">我參加的</string>
     <string name="tag_my_save_igactivity">我保存的</string>
 
-    <!-- Custom Tags -->
+    <!-- Custom tags -->
     <string name="tag_sport">運動</string>
     <string name="tag_ball">球</string>
     <string name="tag_casual">休閒</string>
@@ -112,7 +115,7 @@
     <string name="tag_food2">食物</string>
     <string name="tag_food3">吃</string>
 
-    <!-- Tags Description-->
+    <!-- Tags description-->
     <string name="tag_care_description">關心社會上的弱勢族群。\n例如街友、街賣者、憨兒、獨居老人等等。</string>
     <string name="tag_environmental_protection_description">與環境保育有關。\n例如資源回收、淨灘、節能等等。</string>
     <string name="tag_education_description">到偏鄉地區/社區 教導小朋友或是民眾技能。\n例如到偏鄉小學教導小朋友英文、或是到郊區小鎮教導民眾電腦技能等等。</string>
@@ -131,11 +134,11 @@
     <string name="dialog_delete_comment_done_message">留言已刪除</string>
     <string name="dialog_update_comment_done_message">留言已更新</string>
 
-    <!-- SearchBar -->
+    <!-- Search bar -->
     <string name="search_bar_label">搜尋</string>
     <string name="search_bar_hint">活動名 #標籤 @信箱</string>
 
-    <!-- Menu Personal -->
+    <!-- Menu personal -->
     <string name="menu_personal_detail">個人資料</string>
     <string name="menu_personal_about">關於</string>
     <string name="menu_personal_logout">登出</string>
@@ -174,7 +177,7 @@
     <string name="publish_igactivity_begin_end_time_wrong">開始時間不可超過結束時間</string>
     <string name="publish_igactivity_begin_cur_time_wrong">開始時間不可為過去時間</string>
 
-    <!-- Server Response -->
+    <!-- Server response -->
     <string name="server_res_0_success">執行成功</string>
     <string name="server_res_1_user_not_found">找不到使用者</string>
     <string name="server_res_2_user_already_exist">使用者已存在</string>

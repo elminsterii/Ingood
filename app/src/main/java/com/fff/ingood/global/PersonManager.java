@@ -12,6 +12,12 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller{
     private static PersonManager m_instance = null;
     private Person mPerson;
 
+    private PersonManagerRefreshEvent m_personManagerRefreshEvent = null;
+
+    public interface PersonManagerRefreshEvent {
+        void onRefreshDone(Person person);
+    }
+
     private PersonManager() {
 
     }
@@ -31,6 +37,12 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller{
     }
 
     public void refresh() {
+        refresh(null);
+    }
+
+    public void refresh(PersonManagerRefreshEvent cb) {
+        m_personManagerRefreshEvent = cb;
+
         if(mPerson == null)
             return;
 
@@ -41,6 +53,8 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller{
     @Override
     public void returnLoginPerson(Person person) {
         mPerson = person;
+        if(m_personManagerRefreshEvent != null)
+            m_personManagerRefreshEvent.onRefreshDone(mPerson);
     }
 
     @Override

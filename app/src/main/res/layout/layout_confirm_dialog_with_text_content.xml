@@ -12,7 +12,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textColor="@color/colorSlave" />
 
     <EditText
@@ -25,7 +25,7 @@
         android:layout_below="@+id/textViewTextContentTitle"
         android:textColor="@color/colorSlave"
         android:textSize="@dimen/text_size_ig_activity_description"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:maxLength="500"
         tools:ignore="LabelFor" />
 

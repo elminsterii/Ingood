@@ -7,6 +7,9 @@ public class GlobalProperty {
     //Start animation
     public static final int STARTUP_ANIMATION_DURATION = 1500;
 
+    //Person
+    public static final int AGE_LIMITATION = 18;
+
     //Homepage
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_EMAIL = '@';
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_TAG = '#';
