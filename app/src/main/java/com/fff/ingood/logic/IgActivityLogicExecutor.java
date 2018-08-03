@@ -30,6 +30,11 @@ public class IgActivityLogicExecutor {
         fl.doLogic();
     }
 
+    public void doRepublishIgActivity(IgActivityRepublishLogic.IgActivityRepublishLogicCaller caller, IgActivity activity) {
+        Logic fl = new IgActivityRepublishLogic(caller, activity);
+        fl.doLogic();
+    }
+
     public void doSearchIgActivitiesIds(IgActivityQueryLogic.IgActivityQueryLogicCaller caller, IgActivity activity) {
         Logic fl = new IgActivityQueryLogic(caller, activity);
         fl.doLogic();

@@ -35,6 +35,7 @@ import com.fff.ingood.logic.IgActivityCreateLogic;
 import com.fff.ingood.logic.IgActivityImageDeleteLogic;
 import com.fff.ingood.logic.IgActivityImagesUploadLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.logic.IgActivityRepublishLogic;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
@@ -60,7 +61,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
         IgActivityCreateLogic.IgActivityCreateLogicCaller
         , IgActivityUpdateLogic.IgActivityUpdateLogicCaller
         , IgActivityImagesUploadLogic.IgActivityImagesUploadLogicCaller
-        , IgActivityImageDeleteLogic.IgActivityImageDeleteLogicCaller {
+        , IgActivityImageDeleteLogic.IgActivityImageDeleteLogicCaller
+        ,IgActivityRepublishLogic.IgActivityRepublishLogicCaller{
 
     private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 15 * 1000;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
@@ -194,7 +196,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                     else {
                         if(m_igActivity.getStatus().equals(IgActivity.IGA_STATUS_CLOSED)) {
-                            //TODO - republish
+                            republishIgActivity(m_igActivity);
                         } else
                             updateIgActivity(m_igActivity);
                     }
@@ -433,6 +435,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private void updateIgActivity(IgActivity activity) {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doUpdateIgActivity(this, activity);
+    }
+
+    private void republishIgActivity(IgActivity activity) {
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+        executor.doRepublishIgActivity(this, activity);
     }
 
     private void uploadIgActivityImage(String strIgActivityId, List<Bitmap> lsIgActivityImages) {
@@ -700,6 +707,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(iStatusCode != null && !iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void returnRepublishIgActivitySuccess() {
+        Toast.makeText(mActivity, getResources().getText(R.string.activity_publish_republish), Toast.LENGTH_SHORT).show();
     }
 
     @Override
