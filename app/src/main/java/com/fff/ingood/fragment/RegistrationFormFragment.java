@@ -59,7 +59,7 @@ public class RegistrationFormFragment extends BaseFragment implements PersonChec
             personNew.setEmail(mEditTextAccount.getText().toString());
             personNew.setPassword(mEditTextPassword.getText().toString());
             personNew.setName(mEditTextDisplayName.getText().toString());
-            personNew.setGender(mSpinnerGender.getSelectedItemPosition() == 1 ? "M":"F");
+            personNew.setGender(String.valueOf(mSpinnerGender.getSelectedItem()));
             personNew.setAge(String.valueOf(mSpinnerAge.getSelectedItemPosition() + AGE_LIMITATION - 1));
         }
         return personNew;

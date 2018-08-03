@@ -167,7 +167,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             public void onClick(View v) {
                 if(isDataValid()) {
                     mPerson.setAge(String.valueOf(mSpinnerAge.getSelectedItemPosition() + AGE_LIMITATION - 1));
-                    mPerson.setGender(mSpinnerGender.getSelectedItemPosition() == 1 ? "M":"F");
+                    mPerson.setGender(String.valueOf(mSpinnerGender.getSelectedItem()));
                     mPerson.setLocation(String.valueOf(mSpinnerLocation.getSelectedItem()));
 
                     showWaitingDialog(PersonDataActivity.class.getName());
