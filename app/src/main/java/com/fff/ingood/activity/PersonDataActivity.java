@@ -187,6 +187,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditName.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ConfirmDialogWithTextContent.newInstance(new ConfirmDialogWithTextContent.TextContentEventCB() {
+                    @Override
+                    public void onPositiveClick(String strTextContent) {
+                        mPerson.setName(strTextContent);
+                    }
+                }, getResources().getText(R.string.user_data_name).toString(), mPerson.getName())
+                        .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
 
