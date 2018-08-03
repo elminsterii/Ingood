@@ -711,7 +711,17 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @Override
     public void returnRepublishIgActivitySuccess() {
-        Toast.makeText(mActivity, getResources().getText(R.string.activity_publish_republish), Toast.LENGTH_SHORT).show();
+        if(m_bIsImageChanged) {
+            IgActivityImageManager.IgActivityImageAction imageAction
+                    = IgActivityImageManager.getInstance()
+                    .determineImagesAction(IgActivityImageCache.getInstance().getCacheImagesByRef(), m_lsUploadImages);
+
+            if(imageAction.withUploadAction())
+                uploadIgActivityImage(m_igActivity.getId(), m_lsUploadImages);
+        } else {
+            Toast.makeText(mActivity, getResources().getText(R.string.activity_publish_republish), Toast.LENGTH_SHORT).show();
+            backToDetailPage();
+        }
     }
 
     @Override
