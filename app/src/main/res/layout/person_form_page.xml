@@ -156,10 +156,68 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/layoutPersonDeem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="11.5dp"
+                    android:layout_below="@+id/layoutPersonalDeemGrade">
+
+                    <RelativeLayout
+                        android:id="@+id/layoutPersonDeemGood"
+                        android:layout_width="170dp"
+                        android:layout_height="47.5dp"
+                        android:layout_alignParentStart="true">
+
+                        <ImageView
+                            android:id="@+id/btnPersonDeemGood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/good_d"/>
+                        <TextView
+                            android:id="@+id/textViewPersonDeemGood"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/btnPersonDeemGood"
+                            android:textSize="@dimen/text_size_deem_people_ig_activity"/>
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/imageViewPersonDeemGood"
+                        android:layout_width="1dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:src="@xml/separate_line_shape_in_deem_igactivity"/>
+
+                    <RelativeLayout
+                        android:layout_width="170dp"
+                        android:layout_height="47.5dp"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:id="@+id/btnPersonDeemBad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/bad_d"/>
+                        <TextView
+                            android:id="@+id/textViewPersonDeemBad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/btnPersonDeemBad"
+                            android:textSize="@dimen/text_size_deem_people_ig_activity"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/layoutPersonAbout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/layoutPersonalDeemGrade"
+                    android:layout_below="@+id/layoutPersonDeem"
                     android:layout_marginStart="35dp"
                     android:layout_marginTop="35dp">
 

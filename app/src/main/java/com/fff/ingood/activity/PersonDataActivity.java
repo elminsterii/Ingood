@@ -43,6 +43,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private TextView mTextViewPersonDescription;
     private TextView mTextViewChangePwd;
     private TextView mTextViewEmail;
+    private TextView mTextViewDeemGood;
+    private TextView mTextViewDeemBad;
 
     private Button mBtnSave;
     private Spinner mSpinnerAge;
@@ -94,15 +96,14 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewPersonDescription = findViewById(R.id.textViewPersonAboutContent);
         mTextViewChangePwd = findViewById(R.id.textViewChangePwd);
         mTextViewEmail = findViewById(R.id.textViewEmail);
-
+        mTextViewDeemGood = findViewById(R.id.textViewPersonDeemGood);
+        mTextViewDeemBad = findViewById(R.id.textViewPersonDeemBad);
         mSpinnerGender = findViewById(R.id.spinner_gender);
         mSpinnerAge = findViewById(R.id.spinner_age);
         mSpinnerLocation = findViewById(R.id.spinner_location);
-
         mImageViewEditPhoto = findViewById(R.id.imageViewEditPhoto);
         mImageViewEditName = findViewById(R.id.imageViewEditName);
         mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
-
         mBtnSave = findViewById(R.id.btnPersonSave);
         mBtnBack = findViewById(R.id.imgPersonBack);
         mTextViewTitle = findViewById(R.id.textViewTitle);
@@ -120,6 +121,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewEmail.setText(mPerson.getEmail());
         mTextViewPersonDescription.setText(mPerson.getDescription());
         mTextViewChangePwd.setClickable(true);
+        setUiDeemPeopleByPerson(mPerson);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
         ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, arrAges);
@@ -171,7 +173,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             @Override
             public void onClick(View v) {
                 changePwdDlg();
-
             }
         });
 
@@ -204,9 +205,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     isDescriptionChanged = true;
                 }
 
-                if(!isAgeChanged && !isGenderChanged && !isLocationChanged && !isDescriptionChanged) {
-                }
-                else {
+                if(isAgeChanged || isGenderChanged || isLocationChanged || isDescriptionChanged) {
                     person.setEmail(mPerson.getEmail());
                     person.setPassword(mPerson.getPassword());
                     updatePerson(person);
@@ -218,22 +217,18 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             @Override
             public void onClick(View v) {
 
-
             }
         });
 
         mImageViewEditName.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
             }
         });
 
         mImageViewEditDescription.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 
@@ -367,6 +362,19 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private void updatePerson(Person person) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonUpdate(this, person);
+    }
+
+    private void setUiDeemPeopleByPerson(Person person) {
+        String strDeemGoodFullText;
+        String strDeemBadFullText;
+        String strDeemGoodPeople = person.getGood();
+        String strDeemBadPeople = person.getNoGood();
+
+        strDeemGoodFullText = strDeemGoodPeople + getResources().getText(R.string.activity_detail_deem_good_people).toString();
+        strDeemBadFullText = strDeemBadPeople + getResources().getText(R.string.activity_detail_deem_bad_people).toString();
+
+        mTextViewDeemGood.setText(strDeemGoodFullText);
+        mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
     @Override
