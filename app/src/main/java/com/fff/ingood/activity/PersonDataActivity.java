@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.PersonManager;
+import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
@@ -373,7 +374,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
                 if(StringTool.checkStringNotNull(strNewPassword)
                         && StringTool.checkStringNotNull(strNewPasswordConfirm)) {
-                    if(mEditTextNewPassword.getText().equals(mEditTextNewPasswordConfirm.getText())){
+                    if(mEditTextNewPassword.getText().toString().equals(mEditTextNewPasswordConfirm.getText().toString())){
                         mPerson.setNewPassword(mEditTextNewPassword.getText().toString());
                     } else
                         Toast.makeText(mActivity, getResources().getText(R.string.register_password_not_consistent), Toast.LENGTH_SHORT).show();
@@ -423,6 +424,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     public void returnUpdatePersonSuccess() {
+        if(StringTool.checkStringNotNull(mPerson.getNewPassword())) {
+            PreferenceManager.getInstance().setLoginPassword(mPerson.getNewPassword());
+            mPerson.setPassword(mPerson.getNewPassword());
+        }
+
+        PersonManager.getInstance().setPerson(mPerson);
         PersonManager.getInstance().refresh(this);
     }
 
