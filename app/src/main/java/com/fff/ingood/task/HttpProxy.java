@@ -24,7 +24,7 @@ public class HttpProxy {
     public static final String HTTP_POST_API_ACTIVITY_DELETE = SERVER_URL + "/deleteactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY = SERVER_URL + "/queryactivity";
     public static final String HTTP_POST_API_ACTIVITY_UPDATE = SERVER_URL + "/updateactivity";
-    public static final String HTTP_POST_API_ACTIVITY_REPUBLISH = SERVER_URL + "/updateactivity";
+    public static final String HTTP_POST_API_ACTIVITY_REPUBLISH = SERVER_URL + "/republishactivity";
     public static final String HTTP_POST_API_ACTIVITY_QUERY_ID_BY = SERVER_URL + "/queryactivityidby";
     public static final String HTTP_POST_API_ACTIVITY_DEEM = SERVER_URL + "/deemactivity";
     public static final String HTTP_POST_API_ACTIVITY_ATTEND = SERVER_URL + "/attendactivity";

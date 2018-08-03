@@ -184,14 +184,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             return;
 
         setUiPublisherDefaultIcon();
-        setUiSaveIgActivity();
-
         setUiIgActivityDefaultImage();
-        setUiIgActivityImageMask(mIgActivity);
-        downloadImages_IgActivityMainImages(mIgActivity);
-
-        showWaitingDialog(IgActivityDetailActivity.class.getName());
-        getPublisherInfo();
     }
 
     private void changeMainImage(int index) {
@@ -979,13 +972,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     setUiDeemInfoByIgActivity(mIgActivity);
                     setUiDeemPeopleByIgActivity(mIgActivity);
                     setUiAttendeesWithDefaultIconByIgActivity(mIgActivity);
+                    setUiIgActivityImageMask(mIgActivity);
+                    setUiSaveIgActivity();
                     downloadIcon_IgActivityAttendees(mIgActivity);
                     downloadImages_IgActivityMainImages(mIgActivity);
                     getCommentsByIgActivity(mIgActivity);
+                    getPublisherInfo();
                     break;
 
                 case uiSecBasic :
                     setUiBasicInfoByIgActivity(mIgActivity);
+                    setUiIgActivityImageMask(mIgActivity);
+                    setUiSaveIgActivity();
+                    getPublisherInfo();
                     break;
 
                 case uiSecDeem :
