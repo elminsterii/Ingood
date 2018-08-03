@@ -26,6 +26,7 @@ import com.fff.ingood.BuildConfig;
 import com.fff.ingood.R;
 import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
+import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
@@ -189,7 +190,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
                         switch(menuItem.getItemId()) {
                             case R.id.menuItemPersonal :
-                                mActivity.startActivity(new Intent(mActivity, PersonDataActivity.class));
+                                Intent intent = new Intent(mActivity, PersonDataActivity.class);
+                                intent.putExtra(Person.TAG_PERSON, PersonManager.getInstance().getPerson());
+                                mActivity.startActivity(intent);
                                 break;
                             case R.id.menuItemAbout :
                                 String strVersion =  getResources().getText(R.string.ingood_app_version) + BuildConfig.VERSION_NAME;

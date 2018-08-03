@@ -82,7 +82,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         Intent intent = getIntent();
         if(intent != null) {
             mPerson = (Person)intent.getSerializableExtra(TAG_PERSON);
-            m_bObserverMode = mPerson != null;
+            if(mPerson != null
+                    && !mPerson.getEmail().equals(PersonManager.getInstance().getPerson().getEmail()))
+            m_bObserverMode = true;
         }
     }
 
@@ -114,11 +116,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initData(){
-        Person person = PersonManager.getInstance().getPerson();
-
-        mTextViewPersonName.setText(person.getName());
-        mTextViewEmail.setText(person.getEmail());
-        mTextViewPersonDescription.setText(person.getDescription());
+        mTextViewPersonName.setText(mPerson.getName());
+        mTextViewEmail.setText(mPerson.getEmail());
+        mTextViewPersonDescription.setText(mPerson.getDescription());
         mTextViewChangePwd.setClickable(true);
 
         String[] arrAges = getResources().getStringArray(R.array.user_age_list);
@@ -137,21 +137,21 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
 
         int index = 0;
-        String strPersonAge = person.getAge();
+        String strPersonAge = mPerson.getAge();
         for(int i=0; i<arrAges.length; i++)
             if(strPersonAge.equals(arrAges[i]))
                 index = i;
         mSpinnerAge.setSelection(index);
 
         index = 0;
-        String strGender = person.getGender();
+        String strGender = mPerson.getGender();
         for(int i=0; i<arrGender.length; i++)
             if(strGender.equals(arrGender[i]))
                 index = i;
         mSpinnerGender.setSelection(index);
 
         index = 0;
-        String strLocation = person.getLocation();
+        String strLocation = mPerson.getLocation();
         for(int i=0; i<arrLocation.length; i++)
             if(strLocation.equals(arrLocation[i]))
                 index = i;
@@ -184,22 +184,22 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 boolean isLocationChanged = false;
                 boolean isDescriptionChanged = false;
 
-                if(!PersonManager.getInstance().getPerson().getGender().equals(String.valueOf(mSpinnerGender.getSelectedItem()))) {
+                if(!mPerson.getGender().equals(String.valueOf(mSpinnerGender.getSelectedItem()))) {
                     person.setGender(String.valueOf(mSpinnerGender.getSelectedItem()));
                     isGenderChanged = true;
                 }
 
-                if(!PersonManager.getInstance().getPerson().getAge().equals(String.valueOf(mSpinnerAge.getSelectedItem()))) {
+                if(!mPerson.getAge().equals(String.valueOf(mSpinnerAge.getSelectedItem()))) {
                     person.setAge(String.valueOf(mSpinnerAge.getSelectedItem()));
                     isAgeChanged = true;
                 }
 
-                if(!PersonManager.getInstance().getPerson().getLocation().equals(String.valueOf(mSpinnerLocation.getSelectedItem()))) {
+                if(!mPerson.getLocation().equals(String.valueOf(mSpinnerLocation.getSelectedItem()))) {
                     person.setLocation(String.valueOf(mSpinnerLocation.getSelectedItem()));
                     isLocationChanged = true;
                 }
 
-                if(!PersonManager.getInstance().getPerson().getDescription().equals(String.valueOf(mTextViewPersonDescription.getText()))) {
+                if(!mPerson.getDescription().equals(String.valueOf(mTextViewPersonDescription.getText()))) {
                     person.setDescription(String.valueOf(mSpinnerAge.getSelectedItem()));
                     isDescriptionChanged = true;
                 }
@@ -207,8 +207,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 if(!isAgeChanged && !isGenderChanged && !isLocationChanged && !isDescriptionChanged) {
                 }
                 else {
-                    person.setEmail(PersonManager.getInstance().getPerson().getEmail());
-                    person.setPassword(PersonManager.getInstance().getPerson().getPassword());
+                    person.setEmail(mPerson.getEmail());
+                    person.setPassword(mPerson.getPassword());
                     updatePerson(person);
                 }
             }
@@ -345,8 +345,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                         && StringTool.checkStringNotNull(strNewPasswordConfirm)) {
                     if(mEditTextNewPassword.getText().equals(mEditTextNewPasswordConfirm.getText())){
                         Person person = new Person();
-                        person.setEmail(PersonManager.getInstance().getPerson().getEmail());
-                        person.setPassword(PersonManager.getInstance().getPerson().getPassword());
+                        person.setEmail(mPerson.getEmail());
+                        person.setPassword(mPerson.getPassword());
                         person.setNewPassword(mEditTextNewPassword.getText().toString());
                         updatePerson(person);
                     } else
