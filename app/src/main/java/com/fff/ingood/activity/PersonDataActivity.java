@@ -302,7 +302,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void refresh() {
-        if(PersonManager.getInstance().getPersonIcon() != null)
+        if(PersonManager.getInstance().getPersonIcon() != null
+                && m_bmPersonIconUpload == null)
             mImageViewPersonIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
 
         mTextViewPersonName.setText(mPerson.getName());
@@ -441,7 +442,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {getIntent, pickIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent, getIntent});
         startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
     }
 
