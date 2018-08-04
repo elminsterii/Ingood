@@ -124,6 +124,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
     private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
+    private static final String LOGIC_TAG_PERSON_QUERY_PUBLISHER = "person_query_publisher";
+    private static final String LOGIC_TAG_PERSON_QUERY_ATTENDEES = "person_query_attendees";
+    private static final String LOGIC_TAG_PERSON_QUERY_COMMENTS = "person_query_comments";
 
     private UPDATE_IGACTIVITY_UI_SECTION m_updateUiSection;
 
@@ -394,9 +397,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             return;
 
         String strPublisherEmail = mIgActivity.getPublisherEmail();
-
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonQuery(this, strPublisherEmail, true);
+        queryPerson(strPublisherEmail, true, LOGIC_TAG_PERSON_QUERY_PUBLISHER);
     }
 
     private void setUiIgActivityDefaultImage() {
@@ -433,15 +434,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doIgActivityImagesDownloadAll(this, activity.getId());
     }
 
-    private void setUiAttendeesDefaultIcons(int iAttention) {
+    private void setUiAttendeesDefaultIcons(String strAttendeesIds) {
         mLayoutAttendeesIcons.removeAllViews();
 
         if(m_lsImageViewAttendeeIcons == null)
             m_lsImageViewAttendeeIcons = new ArrayList<>();
         m_lsImageViewAttendeeIcons.clear();
 
-        for(int i=0; i<iAttention; i++)
-            setAttendeesDefaultIcons();
+        String[] arrAttendeesIds = strAttendeesIds.split(",");
+
+        for (String anArrAttendeesId : arrAttendeesIds)
+            setAttendeesDefaultIcons(anArrAttendeesId);
     }
 
     private void downloadIcon_IgActivityAttendees(IgActivity activity) {
@@ -466,11 +469,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
         }
     }
 
-    private void setAttendeesDefaultIcons() {
+    private void setAttendeesDefaultIcons(String strAttendeesId) {
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") FrameLayout layout = (FrameLayout)inflater.inflate(R.layout.layout_person_thumbnail, null, false);
         ImageView imageViewIcon = (ImageView)layout.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        imageViewIcon.setTag(strAttendeesId);
+        imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strAttendeesId = (String)v.getTag();
+                queryPerson(strAttendeesId, false, LOGIC_TAG_PERSON_QUERY_ATTENDEES);
+            }
+        });
         m_lsImageViewAttendeeIcons.add(imageViewIcon);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -495,7 +506,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewAttention.setText(strAttention);
 
-        setUiAttendeesDefaultIcons(iAttention);
+        setUiAttendeesDefaultIcons(activity.getAttendees());
     }
 
     private void addCommentInLayoutWithDefaultIcon(Comment comment) {
@@ -508,6 +519,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         ImageView imageViewIcon = (ImageView)frameLayout.getChildAt(0);
         imageViewIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        imageViewIcon.setTag(comment.getPublisherEmail());
+        imageViewIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strEmail = (String)v.getTag();
+                queryPerson(strEmail, true, LOGIC_TAG_PERSON_QUERY_COMMENTS);
+            }
+        });
         m_lsImageViewCommentIcons.add(imageViewIcon);
 
         if(comment.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail())) {
@@ -812,12 +831,27 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doUpdateComment(this, comment);
     }
 
+    private void queryPerson(String strEmailOrId, boolean bIsQueryByEmail, String strTag) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonQuery(this, strEmailOrId, bIsQueryByEmail, strTag);
+    }
+
     @Override
-    public void returnPersons(List<Person> lsPersons) {
+    public void returnPersons(List<Person> lsPersons, String strTag) {
         if(lsPersons != null && lsPersons.size() > 0) {
-            Person publisher = lsPersons.get(0);
-            mTextViewIgPublisherName.setText(publisher.getName());
-            downloadIcon_IgActivityPublisher(publisher);
+            if(strTag != null) {
+                if(strTag.equals(LOGIC_TAG_PERSON_QUERY_PUBLISHER)) {
+                    Person publisher = lsPersons.get(0);
+                    mTextViewIgPublisherName.setText(publisher.getName());
+                    downloadIcon_IgActivityPublisher(publisher);
+                } else if(strTag.equals(LOGIC_TAG_PERSON_QUERY_ATTENDEES)
+                        || strTag.equals(LOGIC_TAG_PERSON_QUERY_COMMENTS)) {
+                    Person person = lsPersons.get(0);
+                    Intent intent = new Intent(mActivity, PersonDataActivity.class);
+                    intent.putExtra(Person.TAG_PERSON, person);
+                    mActivity.startActivity(intent);
+                }
+            }
         }
     }
 

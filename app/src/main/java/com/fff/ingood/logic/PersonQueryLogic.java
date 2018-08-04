@@ -13,19 +13,21 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 public class PersonQueryLogic extends Logic implements PersonQueryTaskWrapper.PersonQueryTaskWrapperCallback {
 
     public interface PersonQueryLogicCaller extends LogicCaller {
-        void returnPersons(List<Person> lsPersons);
+        void returnPersons(List<Person> lsPersons, String strTag);
         void returnStatus(Integer iStatusCode);
     }
 
     private PersonQueryLogicCaller mCaller;
     private String m_strPersonPrimaryKey;
     private boolean m_bByEmail;
+    private String m_strTag;
 
-    PersonQueryLogic(PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail) {
+    PersonQueryLogic(PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail, String strTag) {
         super(caller);
         mCaller = caller;
         m_strPersonPrimaryKey = strPersonPrimaryKey;
         m_bByEmail = bByEmail;
+        m_strTag = strTag;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class PersonQueryLogic extends Logic implements PersonQueryTaskWrapper.Pe
 
     @Override
     public void onSuccess(List<Person> lsPersons) {
-        mCaller.returnPersons(lsPersons);
+        mCaller.returnPersons(lsPersons, m_strTag);
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

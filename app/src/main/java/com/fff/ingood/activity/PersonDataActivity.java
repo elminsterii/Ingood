@@ -75,12 +75,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private TextView mTextViewEmail;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
-
     private Button mBtnSave;
     private Spinner mSpinnerAge;
     private Spinner mSpinnerGender;
     private Spinner mSpinnerLocation;
     private ImageView mImageViewPersonIcon;
+    private View mViewTopOfChangePwd;
+    private View mViewBottomOfChangePwd;
 
     private String[] m_arrAges;
     private String[] m_arrGender;
@@ -139,6 +140,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditIcon = findViewById(R.id.imageViewEditPhoto);
         mImageViewEditName = findViewById(R.id.imageViewEditName);
         mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
+        mViewTopOfChangePwd = findViewById(R.id.viewTopOfChangePwd);
+        mViewBottomOfChangePwd = findViewById(R.id.viewBottomOfChangePwd);
         mBtnSave = findViewById(R.id.btnPersonSave);
         mBtnBack = findViewById(R.id.imgPersonBack);
 
@@ -166,6 +169,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         ArrayAdapter<String> spinnerLocationAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, m_arrLocation);
         spinnerLocationAdapter.setDropDownViewResource(R.layout.spinner_item_in_person_page);
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
+
+        setUiForObserver(m_bObserverMode);
     }
 
     @Override
@@ -461,6 +466,21 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private void setViewUnderlineColor(View view, int iColor) {
         ColorStateList colorStateList = ColorStateList.valueOf(iColor);
         ViewCompat.setBackgroundTintList(view, colorStateList);
+    }
+
+    private void setUiForObserver(boolean bIsObserver) {
+        if(bIsObserver) {
+            mImageViewEditName.setVisibility(View.INVISIBLE);
+            mImageViewEditDescription.setVisibility(View.INVISIBLE);
+            mImageViewEditIcon.setVisibility(View.INVISIBLE);
+            mTextViewChangePwd.setVisibility(View.INVISIBLE);
+            mViewTopOfChangePwd.setVisibility(View.INVISIBLE);
+            mViewBottomOfChangePwd.setVisibility(View.INVISIBLE);
+            mBtnSave.setVisibility(View.INVISIBLE);
+            mSpinnerAge.setEnabled(false);
+            mSpinnerGender.setEnabled(false);
+            mSpinnerLocation.setEnabled(false);
+        }
     }
 
     private void updatePerson(Person person) {

@@ -51,8 +51,13 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
+    public void doPersonQuery(PersonQueryLogic.PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail, String strTag) {
+        Logic fl = new PersonQueryLogic(caller, strPersonPrimaryKey, bByEmail, strTag);
+        fl.doLogic();
+    }
+
     public void doPersonQuery(PersonQueryLogic.PersonQueryLogicCaller caller, String strPersonPrimaryKey, boolean bByEmail) {
-        Logic fl = new PersonQueryLogic(caller, strPersonPrimaryKey, bByEmail);
+        Logic fl = new PersonQueryLogic(caller, strPersonPrimaryKey, bByEmail, null);
         fl.doLogic();
     }
 
