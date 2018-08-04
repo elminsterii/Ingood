@@ -504,11 +504,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
-    public void onRefreshIconDone(Bitmap bmPersonIcon) {
-        //do nothing.
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {

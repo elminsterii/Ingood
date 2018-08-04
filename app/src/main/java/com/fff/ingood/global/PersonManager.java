@@ -3,15 +3,13 @@ package com.fff.ingood.global;
 import android.graphics.Bitmap;
 
 import com.fff.ingood.data.Person;
-import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonLoginLogic;
 
 /**
  * Created by ElminsterII on 2018/6/11.
  */
-public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller
-        , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller {
+public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
 
     private static PersonManager m_instance = null;
     private Person mPerson;
@@ -21,7 +19,6 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller
 
     public interface PersonManagerRefreshEvent {
         void onRefreshDone(Person person);
-        void onRefreshIconDone(Bitmap bmPersonIcon);
     }
 
     private PersonManager() {
@@ -64,29 +61,11 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller
         executor.doPersonLogin(this, mPerson);
     }
 
-    public void refreshIcon() {
-        downloadPersonPhoto();
-    }
-
-    private void downloadPersonPhoto() {
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonMainIconDownload(this, getPerson().getEmail());
-    }
-
     @Override
     public void returnLoginPerson(Person person) {
         mPerson = person;
         if(m_personManagerRefreshEvent != null)
             m_personManagerRefreshEvent.onRefreshDone(mPerson);
-    }
-
-    @Override
-    public void returnPersonMainIcon(Bitmap bmPersonIcon) {
-        if(bmPersonIcon != null)
-            m_bmPersonIcon = bmPersonIcon;
-
-        if(m_personManagerRefreshEvent != null)
-            m_personManagerRefreshEvent.onRefreshIconDone(m_bmPersonIcon);
     }
 
     @Override

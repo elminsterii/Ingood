@@ -87,7 +87,7 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT = 12;
     private static final Integer STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT = 13;
     private static final Integer STATUS_CODE_FAIL_SAVE_IGACTIVITY_WRONG = 14;
-    private static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 99;
+    public static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 99;
 
     //Server response tag
     public static final String TAG_SERVER_RESPONSE_COMMON_IDS = "ids";
