@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
         FlowManager.getInstance().setCurFlow(flow);
 
-        if(!iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT))
+        if(!iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)
+                && !iStatusCode.equals(ServerResponse.STATUS_CODE_NEVER_LOGIN) )
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
 
         if(clsFlow != null

@@ -31,6 +31,7 @@
     <string name="send_verify_code">Send Code</string>
     <string name="input_verify_code_hint">Input verify code please</string>
     <string name="hint_for_verify">Please push "Send Code" to send verify code to your email.</string>
+    <string name="register_person_success">Register success</string>
 
     <!-- Activity -->
     <string name="activity_action_save_ig_activity">Save</string>
@@ -133,6 +134,7 @@
     <string name="dialog_delete_igactivity_done_message">Activity has been deleted</string>
     <string name="dialog_delete_comment_done_message">Comment has been deleted</string>
     <string name="dialog_update_comment_done_message">Comment has been updated</string>
+    <string name="dialog_logout_confirm_message">Are you sure logout this account?</string>
 
     <!-- Search bar -->
     <string name="search_bar_label">Search</string>

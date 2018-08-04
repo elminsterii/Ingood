@@ -74,18 +74,37 @@ public abstract class BaseFragmentActivity extends AppCompatActivity implements 
         if(!StringTool.checkStringNotNull(strTag))
             return;
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mWaitingDialog.show(getSupportFragmentManager(), strTag);
-            }
-        });
+        if(mWaitingDialog.getDialog() != null
+                && !mWaitingDialog.getDialog().isShowing()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingDialog.show(getSupportFragmentManager(), strTag);
+                }
+            });
+        } else if(mWaitingDialog.getDialog() == null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingDialog.show(getSupportFragmentManager(), strTag);
+                }
+            });
+        }
     }
 
     protected void hideWaitingDialog() {
         if(mWaitingDialog.getDialog() != null
                 && mWaitingDialog.getDialog().isShowing())
-            mWaitingDialog.dismiss();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mWaitingDialog.dismiss();
+                }
+            });
+    }
+
+    protected void setWaitingDialogTimeout(long iMillis) {
+        mWaitingDialog.setTimeout(iMillis);
     }
 
     protected void openKeyboard() {

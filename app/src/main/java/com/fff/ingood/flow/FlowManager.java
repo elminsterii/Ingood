@@ -1,10 +1,6 @@
 package com.fff.ingood.flow;
 
-import com.fff.ingood.activity.LoginAccountActivity;
-import com.fff.ingood.activity.RegistrationFragmentActivity;
 import com.fff.ingood.data.Person;
-
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
  * Created by ElminsterII on 2018/5/27.
@@ -47,17 +43,7 @@ public class FlowManager {
         mCurFlow = fl.doLogic();
     }
 
-    public void goLoginAccountFlow(Flow.FlowLogicCaller caller) {
-        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_LOGIN, LoginAccountActivity.class);
-        mCurFlow = Flow.FLOW.FL_LOGIN;
-    }
-
-    public void goRegistrationFlow(Flow.FlowLogicCaller caller) {
-        caller.returnFlow(STATUS_CODE_SUCCESS_INT, Flow.FLOW.FL_REGISTRATION, RegistrationFragmentActivity.class);
-        mCurFlow = Flow.FLOW.FL_REGISTRATION;
-    }
-
-    public void endRegistrationFlow(Flow.FlowLogicCaller caller, Person personNew) {
+    public void goRegistrationFlow(Flow.FlowLogicCaller caller, Person personNew) {
         Flow fl = new RegistrationFlow(caller, personNew);
         mCurFlow = fl.doLogic();
     }

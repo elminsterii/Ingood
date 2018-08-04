@@ -48,12 +48,6 @@ public class LoginAccountActivity extends BaseActivity implements PersonTempPass
     }
 
     @Override
-    public void onBackPressed() {
-        FlowManager.getInstance().goLoginFlow(mActivity);
-    }
-
-
-    @Override
     protected void preInit() {
         mActivity = this;
     }

@@ -12,6 +12,7 @@ import com.fff.ingood.logic.PersonLoginLogic;
 
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_UNKNOWN_ERROR_INT;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NEVER_LOGIN;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
@@ -57,6 +58,8 @@ public class LoginFlow extends Flow implements PersonLoginLogic.PersonLoginLogic
         if (iStatusCode != null) {
             if (iStatusCode.equals(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT))
                 mCaller.returnFlow(STATUS_CODE_SUCCESS_INT, FLOW.FL_HOME, HomeActivity.class);
+            else if(iStatusCode.equals(STATUS_CODE_NEVER_LOGIN))
+                mCaller.returnFlow(iStatusCode, FLOW.FL_LOGIN, LoginActivity.class);
             else if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT))
                 mCaller.returnFlow(iStatusCode, FLOW.FL_LOGIN, LoginActivity.class);
         } else

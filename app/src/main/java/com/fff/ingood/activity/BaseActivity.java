@@ -52,15 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Flow.Flo
         initSystemUI();
     }
 
-//    @SuppressLint("NewApi")
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if(mCurAPIVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
-//            getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_INGOOD);
-//        }
-//    }
-
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         FlowManager.getInstance().setCurFlow(flow);

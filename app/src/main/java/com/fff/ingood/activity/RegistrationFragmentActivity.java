@@ -152,17 +152,18 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
                 //ignore interest in registration.
                 //showFragment(mFragmentRegistrationInterest, TAG_FRAGMENT_REGISTRATION_INTEREST);
-                FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
+                showWaitingDialog(RegistrationFragmentActivity.class.getName());
+                FlowManager.getInstance().goRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
                 hideKeyboard();
             }
         } else if(mCurFragment instanceof RegistrationInterestFragment) {
             String strInterests = mFragmentRegistrationInterest.getInterests();
 
             if(strInterests != null) {
-                showWaitingDialog(RegistrationFragmentActivity.class.getName());
-
                 PersonManager.getInstance().getPerson().setInterests(strInterests);
-                FlowManager.getInstance().endRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
+
+                showWaitingDialog(RegistrationFragmentActivity.class.getName());
+                FlowManager.getInstance().goRegistrationFlow(mActivity, PersonManager.getInstance().getPerson());
                 hideKeyboard();
             }
         }
@@ -182,7 +183,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
     private void backToPreviousFragment() {
         if(mCurFragment instanceof RegistrationFormFragment) {
-            FlowManager.getInstance().goLoginFlow(mActivity);
+            finish();
         } else if(mCurFragment instanceof RegistrationVerifyFragment) {
             showFragment(mFragmentRegistrationForm, TAG_FRAGMENT_REGISTRATION_FORM);
         } else if(mCurFragment instanceof RegistrationLocationFragment) {
@@ -221,6 +222,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
                     && !clsFlow.isInstance(LoginActivity.class)) {
+                Toast.makeText(this, getResources().getText(R.string.register_person_success), Toast.LENGTH_SHORT).show();
                 mActivity.startActivity(new Intent(this, clsFlow));
                 mActivity.finish();
             }

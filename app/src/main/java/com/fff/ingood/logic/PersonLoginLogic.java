@@ -5,6 +5,7 @@ import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.task.wrapper.PersonLoginTaskWrapper;
 
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_NEVER_LOGIN;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
 /**
@@ -44,7 +45,7 @@ public class PersonLoginLogic extends Logic implements PersonLoginTaskWrapper.Pe
             PersonLoginTaskWrapper loginWrapper = new PersonLoginTaskWrapper(this);
             loginWrapper.execute(mPersonCondition);
         } else {
-            mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
+            mCaller.returnStatus(STATUS_CODE_NEVER_LOGIN);
         }
     }
 

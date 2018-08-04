@@ -32,6 +32,7 @@
     <string name="send_verify_code">發送驗證碼</string>
     <string name="input_verify_code_hint">請輸入驗證碼</string>
     <string name="hint_for_verify">沒收到驗證信嗎?\n請按 發送驗證碼 重新發送。</string>
+    <string name="register_person_success">註冊成功</string>
 
     <!-- Activity -->
     <string name="activity_action_save_ig_activity">保存</string>
@@ -134,6 +135,7 @@
     <string name="dialog_delete_igactivity_done_message">活動已刪除</string>
     <string name="dialog_delete_comment_done_message">留言已刪除</string>
     <string name="dialog_update_comment_done_message">留言已更新</string>
+    <string name="dialog_logout_confirm_message">您確定要登出此帳號嗎?</string>
 
     <!-- Search bar -->
     <string name="search_bar_label">搜尋</string>

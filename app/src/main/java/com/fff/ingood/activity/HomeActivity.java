@@ -35,6 +35,7 @@ import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialog;
+import com.fff.ingood.ui.WarningDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,7 +219,19 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                                 }, strAboutMessage).show(getSupportFragmentManager(), HomeActivity.class.getName());
                                 break;
                             case R.id.menuItemLogout :
-                                FlowManager.getInstance().goLogoutFlow(mActivity);
+                                WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
+                                    @Override
+                                    public void onPositiveClick(DialogInterface dialog) {
+                                        FlowManager.getInstance().goLogoutFlow(mActivity);
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onNegativeClick(DialogInterface dialog) {
+                                        dialog.dismiss();
+                                    }
+                                }, getResources().getText(R.string.dialog_logout_confirm_message).toString())
+                                        .show(getSupportFragmentManager(), HomeActivity.class.getName());
                                 break;
                         }
 

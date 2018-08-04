@@ -61,14 +61,14 @@ public class LoginActivity extends BaseActivity {
         mButton_SignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FlowManager.getInstance().goLoginAccountFlow(mActivity);
+                mActivity.startActivity(new Intent(mActivity, LoginAccountActivity.class));
             }
         });
 
         mButton_Register.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FlowManager.getInstance().goRegistrationFlow(mActivity);
+                mActivity.startActivity(new Intent(mActivity, RegistrationFragmentActivity.class));
             }
         });
     }

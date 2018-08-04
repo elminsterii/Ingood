@@ -67,6 +67,7 @@ public class ServerResponse {
     public static final Integer STATUS_CODE_LOGIC_MISSING_DATA_INT = -2;
     public static final Integer STATUS_CODE_PARSING_ERROR = -3;
     public static final Integer STATUS_CODE_DOWNLOAD_RESOURCE_ERROR = -4;
+    public static final Integer STATUS_CODE_NEVER_LOGIN = -5;
 
     public static final String TAG_SERVER_RESPONSE_STATUS_CODE = "status_code";
     public static final String TAG_SERVER_RESPONSE_STATUS_DESCRIPTION = "status_description";
