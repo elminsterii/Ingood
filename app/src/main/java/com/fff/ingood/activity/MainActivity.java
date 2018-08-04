@@ -3,9 +3,10 @@ package com.fff.ingood.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -112,18 +113,22 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     }
 
     private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        boolean bIsDenied = false;
+        String[] arrPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                , Manifest.permission.CAMERA};
 
-            for (String str : permissions) {
-                if (checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(permissions, REQUEST_CODE_PERMISSION);
-                } else {
-                    startStartupAnimation();
-                    break;
-                }
+        for (String strPermission : arrPermissions) {
+            if (ContextCompat.checkSelfPermission(this, strPermission) != PackageManager.PERMISSION_GRANTED) {
+                bIsDenied = true;
+                break;
             }
         }
+
+        if(bIsDenied)
+            ActivityCompat.requestPermissions(this, arrPermissions, REQUEST_CODE_PERMISSION);
+        else
+            startStartupAnimation();
     }
 
     @Override
@@ -146,8 +151,18 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE_PERMISSION: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startStartupAnimation();
+                boolean bIsDenied = false;
+                if (grantResults.length > 0) {
+                    for(int iPermission : grantResults) {
+                        if (iPermission != PackageManager.PERMISSION_GRANTED) {
+                            bIsDenied = true;
+                            break;
+                        }
+                    }
+                    if(bIsDenied)
+                        finish();
+                    else
+                        startStartupAnimation();
                 } else {
                     finish();
                 }
