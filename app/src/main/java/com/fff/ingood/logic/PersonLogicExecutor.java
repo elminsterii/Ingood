@@ -78,8 +78,8 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
-    public void doPersonIconUpload(PersonIconUploadLogic.PersonIconUploadLogicCaller caller, String strIconName, Bitmap bmUploadIcon) {
-        Logic fl = new PersonIconUploadLogic(caller, strIconName, bmUploadIcon);
+    public void doPersonIconUpload(PersonIconUploadLogic.PersonIconUploadLogicCaller caller, String strEmail, String strIconName, Bitmap bmUploadIcon) {
+        Logic fl = new PersonIconUploadLogic(caller, strEmail, strIconName, bmUploadIcon);
         fl.doLogic();
     }
 

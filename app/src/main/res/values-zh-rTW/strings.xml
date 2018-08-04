@@ -54,6 +54,7 @@
     <string name="btn_text_cancel">取消</string>
     <string name="btn_text_ok">確認</string>
     <string name="person_data_update_success">個人資訊更新成功</string>
+    <string name="person_data_photo_edit">編輯照片</string>
 
     <!-- Activity detail -->
     <string name="activity_detail_publisher">主辦人 : </string>

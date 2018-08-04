@@ -53,6 +53,7 @@
     <string name="btn_text_cancel">Cancel</string>
     <string name="btn_text_ok">OK</string>
     <string name="person_data_update_success">Personal data has been updated</string>
+    <string name="person_data_photo_edit">Edit photo</string>
 
     <!-- Activity detail -->
     <string name="activity_detail_publisher">Publisher : </string>

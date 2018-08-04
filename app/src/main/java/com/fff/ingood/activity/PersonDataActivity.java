@@ -1,12 +1,18 @@
 package com.fff.ingood.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -28,20 +34,35 @@ import android.widget.Toast;
 
 import com.fff.ingood.R;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.PersonIconUploadLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
+import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
+
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller, PersonManager.PersonManagerRefreshEvent {
+public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller
+        , PersonManager.PersonManagerRefreshEvent
+        , PersonIconUploadLogic.PersonIconUploadLogicCaller {
+
+    private static final int RESULT_CODE_PICK_IMAGE = 1;
 
     private ImageView mImageViewEditName;
     private ImageView mImageViewEditDescription;
@@ -74,9 +95,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageButton mImageBtnEyeNewPasswordConfirm;
 
     private ImageButton mBtnBack;
-    private TextView mTextViewTitle;
 
     private Person mPerson;
+    private Bitmap m_bmPersonIconUpload;
     private boolean m_bObserverMode;
 
     @Override
@@ -118,18 +139,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
         mBtnSave = findViewById(R.id.btnPersonSave);
         mBtnBack = findViewById(R.id.imgPersonBack);
-        mTextViewTitle = findViewById(R.id.textViewTitle);
 
         FrameLayout frameLayout = findViewById(R.id.layoutPersonThumbnailInPersonPage);
-        if(frameLayout != null) {
+        if(frameLayout != null)
             mImageViewPersonIcon = (ImageView) frameLayout.getChildAt(0);
-            mImageViewPersonIcon.setImageResource(R.drawable.ic_person_black_36dp);
-        }
     }
 
     @Override
     protected void initData(){
         mTextViewChangePwd.setClickable(true);
+        mImageViewPersonIcon.setImageResource(R.drawable.ic_person_black_36dp);
 
         m_arrAges = getResources().getStringArray(R.array.user_age_list);
         ArrayAdapter<String> spinnerAgeAdapter = new ArrayAdapter<>(this, R.layout.spinner_item_in_person_page, m_arrAges);
@@ -180,7 +199,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditPhoto.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pickImageByGalleryOrCam();
             }
         });
 
@@ -283,6 +302,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void refresh() {
+        if(PersonManager.getInstance().getPersonIcon() != null)
+            mImageViewPersonIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
+
         mTextViewPersonName.setText(mPerson.getName());
         mTextViewEmail.setText(mPerson.getEmail());
         mTextViewPersonDescription.setText(mPerson.getDescription());
@@ -403,6 +425,26 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         executor.doPersonUpdate(this, person);
     }
 
+    private void uploadPersonPhoto(Bitmap bmPhoto, String strIconName) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonIconUpload(this, mPerson.getEmail(), strIconName, bmPhoto);
+    }
+
+    private void pickImageByGalleryOrCam() {
+        Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {getIntent, pickIntent});
+        startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
+    }
+
     private void setUiDeemPeopleByPerson(Person person) {
         String strDeemGoodFullText;
         String strDeemBadFullText;
@@ -422,8 +464,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
+    public void returnUploadPersonIconSuccess() {
+        PersonManager.getInstance().setPerson(mPerson);
+        PersonManager.getInstance().setPersonIcon(m_bmPersonIconUpload);
+        PersonManager.getInstance().refresh(this);
+    }
+
+    @Override
     public void returnStatus(Integer iStatusCode) {
-        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
+        if(!iStatusCode.equals(STATUS_CODE_SUCCESS_INT)
+                && !iStatusCode.equals(STATUS_CODE_FAIL_FILE_NOT_FOUND_INT)) {
             hideWaitingDialog();
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
@@ -436,8 +486,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             mPerson.setPassword(mPerson.getNewPassword());
         }
 
-        PersonManager.getInstance().setPerson(mPerson);
-        PersonManager.getInstance().refresh(this);
+        if(m_bmPersonIconUpload != null) {
+            uploadPersonPhoto(m_bmPersonIconUpload, GlobalProperty.ARRAY_PERSON_ICON_NAMES[0]);
+        } else {
+            PersonManager.getInstance().setPerson(mPerson);
+            PersonManager.getInstance().refresh(this);
+        }
     }
 
     @Override
@@ -447,5 +501,32 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
         mPerson = person;
         refresh();
+    }
+
+    @Override
+    public void onRefreshIconDone(Bitmap bmPersonIcon) {
+        //do nothing.
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
+                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
+                    bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
+                    inputStream.close();
+
+                    m_bmPersonIconUpload = bm;
+                    mImageViewPersonIcon.setImageBitmap(bm);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

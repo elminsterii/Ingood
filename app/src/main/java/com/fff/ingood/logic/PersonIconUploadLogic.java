@@ -18,12 +18,14 @@ public class PersonIconUploadLogic extends Logic
     }
 
     private PersonIconUploadLogicCaller mCaller;
+    private String m_strEmail;
     private String m_strIconName;
     private Bitmap m_bmUploadIcon;
 
-    PersonIconUploadLogic(PersonIconUploadLogicCaller caller, String strIconName, Bitmap bmUploadIcon) {
+    PersonIconUploadLogic(PersonIconUploadLogicCaller caller, String strEmail, String strIconName, Bitmap bmUploadIcon) {
         super(caller);
         mCaller = caller;
+        m_strEmail = strEmail;
         m_strIconName = strIconName;
         m_bmUploadIcon = bmUploadIcon;
     }
@@ -31,7 +33,7 @@ public class PersonIconUploadLogic extends Logic
     @Override
     protected void doLogic() {
         PersonIconUploadTaskWrapper task = new PersonIconUploadTaskWrapper(this, m_bmUploadIcon);
-        task.execute(m_strIconName);
+        task.execute(m_strEmail, m_strIconName);
     }
 
     @Override

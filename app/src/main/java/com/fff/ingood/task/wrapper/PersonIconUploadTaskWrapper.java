@@ -59,7 +59,7 @@ public class PersonIconUploadTaskWrapper {
         }, bmUpload);
     }
 
-    public void execute(String strEmailAndIcon) {
-        task.execute(strEmailAndIcon);
+    public void execute(String strEmail, String strIconName) {
+        task.execute(strEmail + "/" + strIconName);
     }
 }

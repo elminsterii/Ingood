@@ -382,6 +382,9 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     }
 
     private void refresh() {
+        if(PersonManager.getInstance().getPersonIcon() != null)
+            mImgMenuPersonThumbnail.setImageBitmap(PersonManager.getInstance().getPersonIcon());
+
         if(preSearchCondition != null) {
             m_lsIgActivities.clear();
             mActivityListAdapter.updateActivityList(m_lsIgActivities);

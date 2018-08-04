@@ -9,6 +9,10 @@ public class GlobalProperty {
 
     //Person
     public static final int AGE_LIMITATION = 18;
+    public static final int PERSON_ICON_UPLOAD_UPPER_LIMIT = 1;
+    public static final int PERSON_ICON_WIDTH = 512;
+    public static final int PERSON_ICON_HEIGHT = 512;
+    public static final String[] ARRAY_PERSON_ICON_NAMES = {"icon00","icon01","icon02"};
 
     //Homepage
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_EMAIL = '@';
