@@ -441,10 +441,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
             m_lsImageViewAttendeeIcons = new ArrayList<>();
         m_lsImageViewAttendeeIcons.clear();
 
-        String[] arrAttendeesIds = strAttendeesIds.split(",");
+        if(StringTool.checkStringNotNull(strAttendeesIds)) {
+            String[] arrAttendeesIds = strAttendeesIds.split(",");
 
-        for (String anArrAttendeesId : arrAttendeesIds)
-            setAttendeesDefaultIcons(anArrAttendeesId);
+            for (String anArrAttendeesId : arrAttendeesIds)
+                setAttendeesDefaultIcons(anArrAttendeesId);
+        }
     }
 
     private void downloadIcon_IgActivityAttendees(IgActivity activity) {
@@ -478,6 +480,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
                 String strAttendeesId = (String)v.getTag();
                 queryPerson(strAttendeesId, false, LOGIC_TAG_PERSON_QUERY_ATTENDEES);
             }
@@ -523,6 +526,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
                 String strEmail = (String)v.getTag();
                 queryPerson(strEmail, true, LOGIC_TAG_PERSON_QUERY_COMMENTS);
             }
