@@ -162,6 +162,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     @Override
     protected void initListener() {
+        mImgMenuPersonThumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mLayoutMenu.closeDrawers();
+
+                Intent intent = new Intent(mActivity, PersonDataActivity.class);
+                intent.putExtra(Person.TAG_PERSON, PersonManager.getInstance().getPerson());
+                mActivity.startActivity(intent);
+            }
+        });
+
         mViewActivityList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
