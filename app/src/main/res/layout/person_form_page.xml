@@ -53,8 +53,8 @@
 
                 <ImageView
                     android:id="@+id/imageViewEditPhoto"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/layoutPersonThumbnailInPersonPage"
                     android:layout_alignEnd="@+id/layoutPersonThumbnailInPersonPage"
                     android:layout_marginEnd="8dp"
@@ -67,15 +67,16 @@
                     android:layout_below="@+id/layoutPersonThumbnailInPersonPage"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="" />
+                    android:textSize="@dimen/text_size_person_page_name"/>
 
                 <ImageView
                     android:id="@+id/imageViewEditName"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/textViewPersonName"
                     android:layout_toEndOf="@+id/textViewPersonName"
                     android:layout_marginStart="5dp"
+                    android:layout_marginBottom="2dp"
                     android:src="@drawable/edit_n"/>
 
                 <TextView
@@ -83,7 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewPersonName"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/text_size_person_page_email"/>
 
                 <RelativeLayout
                     android:id="@+id/layoutPersonalSpinners"
@@ -187,8 +189,8 @@
 
                     <ImageView
                         android:id="@+id/imageViewPersonDeemGood"
-                        android:layout_width="1dp"
-                        android:layout_height="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:src="@xml/separate_line_shape_in_deem_igactivity"/>
 

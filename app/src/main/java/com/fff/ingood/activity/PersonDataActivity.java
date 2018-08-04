@@ -38,6 +38,7 @@ import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
 import com.fff.ingood.logic.PersonIconUploadLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
@@ -60,13 +61,14 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller
         , PersonManager.PersonManagerRefreshEvent
-        , PersonIconUploadLogic.PersonIconUploadLogicCaller {
+        , PersonIconUploadLogic.PersonIconUploadLogicCaller
+        , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller {
 
     private static final int RESULT_CODE_PICK_IMAGE = 1;
 
     private ImageView mImageViewEditName;
     private ImageView mImageViewEditDescription;
-    private ImageView mImageViewEditPhoto;
+    private ImageView mImageViewEditIcon;
     private TextView mTextViewPersonName;
     private TextView mTextViewPersonDescription;
     private TextView mTextViewChangePwd;
@@ -134,7 +136,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mSpinnerGender = findViewById(R.id.spinner_gender);
         mSpinnerAge = findViewById(R.id.spinner_age);
         mSpinnerLocation = findViewById(R.id.spinner_location);
-        mImageViewEditPhoto = findViewById(R.id.imageViewEditPhoto);
+        mImageViewEditIcon = findViewById(R.id.imageViewEditPhoto);
         mImageViewEditName = findViewById(R.id.imageViewEditName);
         mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
         mBtnSave = findViewById(R.id.btnPersonSave);
@@ -196,7 +198,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mImageViewEditPhoto.setOnClickListener(new ImageView.OnClickListener() {
+        mImageViewEditIcon.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickImageByGalleryOrCam();
@@ -302,14 +304,11 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void refresh() {
-        if(PersonManager.getInstance().getPersonIcon() != null
-                && m_bmPersonIconUpload == null)
-            mImageViewPersonIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
-
         mTextViewPersonName.setText(mPerson.getName());
         mTextViewEmail.setText(mPerson.getEmail());
         mTextViewPersonDescription.setText(mPerson.getDescription());
         setUiDeemPeopleByPerson(mPerson);
+        setUiPersonIconByPerson(mPerson);
 
         int index = 0;
         String strPersonAge = mPerson.getAge();
@@ -421,16 +420,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         finish();
     }
 
-    private void updatePerson(Person person) {
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonUpdate(this, person);
-    }
-
-    private void uploadPersonPhoto(Bitmap bmPhoto, String strIconName) {
-        PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonIconUpload(this, mPerson.getEmail(), strIconName, bmPhoto);
-    }
-
     private void pickImageByGalleryOrCam() {
         Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
@@ -459,9 +448,34 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mTextViewDeemBad.setText(strDeemBadFullText);
     }
 
+    private void setUiPersonIconByPerson(Person person) {
+        if(!m_bObserverMode) {
+            if(PersonManager.getInstance().getPersonIcon() != null
+                    && m_bmPersonIconUpload == null)
+                mImageViewPersonIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
+        } else {
+            downloadPersonIcon(person.getEmail());
+        }
+    }
+
     private void setViewUnderlineColor(View view, int iColor) {
         ColorStateList colorStateList = ColorStateList.valueOf(iColor);
         ViewCompat.setBackgroundTintList(view, colorStateList);
+    }
+
+    private void updatePerson(Person person) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonUpdate(this, person);
+    }
+
+    private void downloadPersonIcon(String strEmail) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonMainIconDownload(this, strEmail);
+    }
+
+    private void uploadPersonIcon(Bitmap bmIcon, String strIconName) {
+        PersonLogicExecutor executor = new PersonLogicExecutor();
+        executor.doPersonIconUpload(this, mPerson.getEmail(), strIconName, bmIcon);
     }
 
     @Override
@@ -469,6 +483,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         PersonManager.getInstance().setPerson(mPerson);
         PersonManager.getInstance().setPersonIcon(m_bmPersonIconUpload);
         PersonManager.getInstance().refresh(this);
+    }
+
+    @Override
+    public void returnPersonMainIcon(Bitmap bmPersonIcon) {
+        if(bmPersonIcon != null)
+            mImageViewPersonIcon.setImageBitmap(bmPersonIcon);
     }
 
     @Override
@@ -488,7 +508,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         }
 
         if(m_bmPersonIconUpload != null) {
-            uploadPersonPhoto(m_bmPersonIconUpload, GlobalProperty.ARRAY_PERSON_ICON_NAMES[0]);
+            uploadPersonIcon(m_bmPersonIconUpload, GlobalProperty.ARRAY_PERSON_ICON_NAMES[0]);
         } else {
             PersonManager.getInstance().setPerson(mPerson);
             PersonManager.getInstance().refresh(this);
