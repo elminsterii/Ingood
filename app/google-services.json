@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "961184250189",
+    "firebase_url": "https://ingoodtw.firebaseio.com",
+    "project_id": "ingoodtw",
+    "storage_bucket": "ingoodtw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961184250189:android:b8c87ef9909cac9a",
+        "android_client_info": {
+          "package_name": "com.fff.ingood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961184250189-1k8dq3n5lc4ggkvafk9mg4at5422cmk9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fff.ingood",
+            "certificate_hash": "e527d5f0b1016d47abbf8090b9e7c4f082d24b2a"
+          }
+        },
+        {
+          "client_id": "961184250189-vcfvafpit9aug7ad880m47gdpal0bjc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOqywjizSdGmt-bcVAsUO6M3-uRB8rRWU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961184250189-vcfvafpit9aug7ad880m47gdpal0bjc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
