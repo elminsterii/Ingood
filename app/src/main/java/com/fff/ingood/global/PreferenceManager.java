@@ -25,6 +25,8 @@ public class PreferenceManager {
     private static final String PREF_KEY_LOGIN_EMAIL = PREF_NAME_LOGIN + "email";
     private static final String PREF_KEY_LOGIN_PASSWORD = PREF_NAME_LOGIN + "password";
     private static final String PREF_KEY_LOGIN_KEEP_LOGIN = PREF_NAME_LOGIN + "keeplogin";
+    private static final String PREF_KEY_LOGIN_BY_GOOGLE = PREF_NAME_LOGIN + "bygoogle";
+    private static final String PREF_KEY_LOGIN_BY_FACEBOOK = PREF_NAME_LOGIN + "byfacebook";
 
     //---------------------------------------- Preference Register ----------------------------------------
     public static final String PREF_NAME_REGISTER = "prefregister";
@@ -97,6 +99,22 @@ public class PreferenceManager {
 
     public void setKeepLogin(boolean bKeepLogin) {
         m_prefLogin.edit().putBoolean(PREF_KEY_LOGIN_KEEP_LOGIN, bKeepLogin).apply();
+    }
+
+    public boolean getLoginByGoogle() {
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_BY_GOOGLE, false);
+    }
+
+    public void setLoginByGoogle(boolean bLoginByGoogle) {
+        m_prefLogin.edit().putBoolean(PREF_KEY_LOGIN_BY_GOOGLE, bLoginByGoogle).apply();
+    }
+
+    public boolean getLoginByFacebook() {
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_BY_GOOGLE, false);
+    }
+
+    public void setLoginByFacebook(boolean bLoginByFacebook) {
+        m_prefLogin.edit().putBoolean(PREF_KEY_LOGIN_BY_FACEBOOK, bLoginByFacebook).apply();
     }
 
     //----------------------------------------  Register Functions ----------------------------------------
