@@ -21,8 +21,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Base64;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 
 /**
  * Created by ElminsterII on 2018/6/20.
@@ -64,6 +69,46 @@ public class ImageHelper {
 
     public static Bitmap loadBitmapFromResId(Context context, int iResId) {
         return BitmapFactory.decodeResource(context.getResources(), iResId);
+    }
+
+    public static Bitmap loadBitmapFromUri(Context context, Uri uriImage) {
+        Bitmap bm = null;
+        try {
+            InputStream inputStream = context.getContentResolver().openInputStream(Objects.requireNonNull(uriImage));
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
+            bm = BitmapFactory.decodeStream(bufferedInputStream);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bm;
+    }
+
+    public static Uri genImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "TempImageSave", null);
+        return Uri.parse(path);
+    }
+
+    public static void saveImageToUri(Bitmap bm, Uri uriImage)
+    {
+        String strImagePath = uriImage.getPath();
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(strImagePath);
+            bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static byte[] bitmapToByteArray(Bitmap bmp) {

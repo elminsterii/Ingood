@@ -3,12 +3,12 @@ package com.fff.ingood.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,11 +46,6 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Objects;
-
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
@@ -65,6 +60,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller {
 
     private static final int RESULT_CODE_PICK_IMAGE = 1;
+    private static final int RESULT_CODE_CROP_IMAGE = 2;
 
     private ImageView mImageViewEditName;
     private ImageView mImageViewEditDescription;
@@ -102,6 +98,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private Person mPerson;
     private Bitmap m_bmPersonIconUpload;
     private boolean m_bObserverMode;
+    private Uri m_uriCameraImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -427,8 +424,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     private void pickImageByGalleryOrCam() {
         Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
-        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        m_uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCameraImage);
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
@@ -545,24 +542,61 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
-                try {
-                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
-                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
+                //from gallery
+                Uri uriImage = data.getData();
+                if(uriImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
+                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriCameraImage);
+                }
+            } else {
+                //from camera
+                if(m_uriCameraImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCameraImage);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriCameraImage, this);
+                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriCameraImage);
+                }
+            }
+        } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                Bundle extras = data.getExtras();
+                if(extras != null) {
+                    Bitmap bm = extras.getParcelable("data");
                     bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
-                    inputStream.close();
 
                     m_bmPersonIconUpload = bm;
                     mImageViewPersonIcon.setImageBitmap(bm);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    deleteImageByUri(m_uriCameraImage);
+                    m_uriCameraImage = null;
                 }
             }
         }
+    }
+
+    private void performCropImage(Uri uriCropImage) {
+        // take care of exceptions
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uriCropImage, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 2);
+            cropIntent.putExtra("aspectY", 2);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException ignored) {
+
+        }
+    }
+
+    private void deleteImageByUri(Uri uriImage) {
+        getContentResolver().delete(uriImage, null, null);
     }
 }
