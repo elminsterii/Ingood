@@ -845,8 +845,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
         if(lsPersons != null && lsPersons.size() > 0) {
             if(strTag != null) {
                 if(strTag.equals(LOGIC_TAG_PERSON_QUERY_PUBLISHER)) {
-                    Person publisher = lsPersons.get(0);
+                    final Person publisher = lsPersons.get(0);
                     mTextViewIgPublisherName.setText(publisher.getName());
+                    mImageViewPublisherIcon.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mActivity, PersonDataActivity.class);
+                            intent.putExtra(Person.TAG_PERSON, publisher);
+                            mActivity.startActivity(intent);
+                        }
+                    });
+
                     downloadIcon_IgActivityPublisher(publisher);
                 } else if(strTag.equals(LOGIC_TAG_PERSON_QUERY_ATTENDEES)
                         || strTag.equals(LOGIC_TAG_PERSON_QUERY_COMMENTS)) {
