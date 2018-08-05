@@ -214,6 +214,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     @Override
                     public void onPositiveClick(String strTextContent) {
                         mPerson.setName(strTextContent);
+                        mTextViewPersonName.setText(strTextContent);
                     }
                 }, getResources().getText(R.string.user_data_name).toString(), mPerson.getName())
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
@@ -227,6 +228,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     @Override
                     public void onPositiveClick(String strTextContent) {
                         mPerson.setDescription(strTextContent);
+                        mTextViewPersonDescription.setText(strTextContent);
                     }
                 }, getResources().getText(R.string.title_about_me).toString(), mPerson.getDescription())
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
