@@ -21,6 +21,7 @@ import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.service.IngoodService;
+import com.fff.ingood.third_party.GoogleSignInManager;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
 
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         TagManager.getInstance(this);
         PreferenceManager.getInstance(this);
         ServerResponse.getInstance(this);
+        GoogleSignInManager.getInstance(this);
     }
 
     private void startStartupAnimation() {
