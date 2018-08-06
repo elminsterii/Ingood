@@ -334,7 +334,7 @@
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
             android:lineSpacingExtra="0.8sp"
-            android:inputType="textPersonName"
+            android:inputType="textMultiLine"
             android:hint="@string/activity_publish_description"
             android:paddingStart="@dimen/padding_start_registration_form_input_text"
             android:textColorHighlight="@color/colorSlaveUltraLight"
