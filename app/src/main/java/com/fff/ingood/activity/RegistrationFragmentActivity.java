@@ -221,7 +221,7 @@ public class RegistrationFragmentActivity extends BaseFragmentActivity implement
 
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
-                    && !clsFlow.isInstance(LoginActivity.class)) {
+                    && clsFlow != LoginActivity.class) {
                 Toast.makeText(this, getResources().getText(R.string.register_person_success), Toast.LENGTH_SHORT).show();
                 mActivity.startActivity(new Intent(this, clsFlow));
                 mActivity.finish();

@@ -136,7 +136,7 @@ public class LoginAccountActivity extends BaseActivity implements PersonTempPass
 
         if(iStatusCode.equals(STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
-                    && !clsFlow.isInstance(LoginActivity.class)) {
+                    && clsFlow != LoginActivity.class) {
                 mActivity.startActivity(new Intent(this, clsFlow));
                 mActivity.finish();
             }

@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
 
         if(clsFlow != null
-                && !clsFlow.isInstance(MainActivity.class))
+                && clsFlow != MainActivity.class)
             mActivity.startActivity(new Intent(this, clsFlow));
     }
 

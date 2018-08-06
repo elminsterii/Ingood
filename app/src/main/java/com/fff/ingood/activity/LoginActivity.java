@@ -145,8 +145,8 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
 
         if(iStatusCode.equals(ServerResponse.STATUS_CODE_SUCCESS_INT)) {
             if(clsFlow != null
-                    && !clsFlow.isInstance(LoginActivity.class)) {
-                if(clsFlow.isInstance(HomeActivity.class))
+                    && clsFlow != LoginActivity.class) {
+                if(clsFlow == HomeActivity.class)
                     Toast.makeText(mActivity, getResources().getText(R.string.login_success), Toast.LENGTH_SHORT).show();
 
                 mActivity.startActivity(new Intent(this, clsFlow));
