@@ -49,9 +49,10 @@
 
     <LinearLayout
         android:id="@+id/layoutCommentAction"
-        android:layout_width="38dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/layoutCommentPersonData"
         android:orientation="vertical">
@@ -80,10 +81,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layoutCommentPersonData"
         android:layout_marginTop="15dp"
+        android:layout_alignStart="@+id/layoutCommentPersonData"
+        android:layout_alignEnd="@+id/layoutCommentAction"
         android:drawablePadding="15dp"
         android:ellipsize="end"
-        android:paddingEnd="14.5dp"
-        android:paddingStart="14.5dp"
+        android:paddingBottom="10dp"
         android:textColor="@color/colorSlave"
         android:textSize="@dimen/text_size_comment_publisher_comment_content" />
 </RelativeLayout>
