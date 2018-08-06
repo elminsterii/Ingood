@@ -168,6 +168,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
 
         setUiForObserver(m_bObserverMode);
+        setUiChangePwdVis();
     }
 
     @Override
@@ -479,6 +480,15 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             mSpinnerAge.setEnabled(false);
             mSpinnerGender.setEnabled(false);
             mSpinnerLocation.setEnabled(false);
+        }
+    }
+
+    private void setUiChangePwdVis() {
+        if(PreferenceManager.getInstance().getLoginByFacebook()
+                || PreferenceManager.getInstance().getLoginByGoogle()) {
+            mTextViewChangePwd.setVisibility(View.INVISIBLE);
+            mViewTopOfChangePwd.setVisibility(View.INVISIBLE);
+            mViewBottomOfChangePwd.setVisibility(View.INVISIBLE);
         }
     }
 

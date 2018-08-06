@@ -1,5 +1,7 @@
 package com.fff.ingood.flow;
 
+import android.graphics.Bitmap;
+
 import com.fff.ingood.data.Person;
 
 /**
@@ -45,6 +47,11 @@ public class FlowManager {
 
     public void goRegistrationFlow(Flow.FlowLogicCaller caller, Person personNew) {
         Flow fl = new RegistrationFlow(caller, personNew);
+        mCurFlow = fl.doLogic();
+    }
+
+    public void goRegistrationFlow(Flow.FlowLogicCaller caller, Person personNew, Bitmap bmPersonIcon) {
+        Flow fl = new RegistrationFlow(caller, personNew, bmPersonIcon);
         mCurFlow = fl.doLogic();
     }
 }

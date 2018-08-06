@@ -34,6 +34,8 @@ public class PersonLogoutLogic extends Logic implements PersonLogoutTaskWrapper.
         PreferenceManager.getInstance().setLoginSuccess(false);
         PreferenceManager.getInstance().setLoginEmail("");
         PreferenceManager.getInstance().setLoginPassword("");
+        PreferenceManager.getInstance().setLoginByGoogle(false);
+        PreferenceManager.getInstance().setLoginByFacebook(false);
         PersonManager.getInstance().setPerson(null);
         PersonManager.getInstance().setPersonIcon(null);
 

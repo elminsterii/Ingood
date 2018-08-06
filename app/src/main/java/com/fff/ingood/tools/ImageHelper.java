@@ -15,6 +15,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -235,5 +238,41 @@ public class ImageHelper {
         drawable.draw(canvas);
 
         return bitmap;
+    }
+
+    public interface loadBitmapFromURLEvent {
+        void returnBitmap(Bitmap bm);
+    }
+
+    public static void loadBitmapFromURL(String strURL, final loadBitmapFromURLEvent event) {
+        new LoadBitmapFromURLTask(event).execute(strURL);
+    }
+
+    private static class LoadBitmapFromURLTask extends AsyncTask<String, Void, Bitmap> {
+        private loadBitmapFromURLEvent m_event;
+
+        LoadBitmapFromURLTask(loadBitmapFromURLEvent event) {
+            m_event = event;
+        }
+
+        protected Bitmap doInBackground(String... strURL) {
+            try {
+                URL url = new URL(strURL[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        public void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+            if(m_event != null)
+                m_event.returnBitmap(result);
+        }
     }
 }

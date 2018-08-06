@@ -57,6 +57,7 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_LOGIC_MISSING_DATA_INT, context.getResources().getText(R.string.missing_necessary_data).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_PARSING_ERROR, context.getResources().getText(R.string.parsing_data_error).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_DOWNLOAD_RESOURCE_ERROR, context.getResources().getText(R.string.download_data_error).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_GOOGLE_SIGNIN_FAIL, context.getResources().getText(R.string.google_signin_error).toString());
     }
 
     public static Map<Integer, String> getServerResponseDescriptions() {
@@ -68,6 +69,7 @@ public class ServerResponse {
     public static final Integer STATUS_CODE_PARSING_ERROR = -3;
     public static final Integer STATUS_CODE_DOWNLOAD_RESOURCE_ERROR = -4;
     public static final Integer STATUS_CODE_NEVER_LOGIN = -5;
+    public static final Integer STATUS_CODE_GOOGLE_SIGNIN_FAIL = -6;
 
     public static final String TAG_SERVER_RESPONSE_STATUS_CODE = "status_code";
     public static final String TAG_SERVER_RESPONSE_STATUS_DESCRIPTION = "status_description";

@@ -78,7 +78,7 @@
             android:layout_marginStart="@dimen/login_margin_btns_btw_edge"
             android:layout_marginEnd="@dimen/login_margin_btns_btw_edge"
             android:layout_marginBottom="15.5dp"
-            android:layout_above="@id/btn_google"
+            android:layout_above="@id/btnGoogleSignIn"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_btns_height"
@@ -91,7 +91,7 @@
             android:src="@drawable/facebook"/>
 
         <ImageButton
-            android:id="@+id/btn_google"
+            android:id="@+id/btnGoogleSignIn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/login_btns_height"
             android:layout_gravity="center"

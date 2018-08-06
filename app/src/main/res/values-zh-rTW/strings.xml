@@ -17,6 +17,7 @@
     <string name="login_temp_password_success">重置信已發出</string>
     <string name="login_temp_password_fail">重置信發送錯誤</string>
     <string name="login_email_account_empty">請輸入信箱帳號</string>
+    <string name="login_success">登入成功</string>
 
     <!-- Registration -->
     <string name="register_title_form">個人資料</string>
@@ -160,6 +161,7 @@
     <string name="missing_necessary_data">缺少必要條件資訊</string>
     <string name="parsing_data_error">資料解析失敗</string>
     <string name="download_data_error">資源下載失敗</string>
+    <string name="google_signin_error">Google登入錯誤</string>
     <string name="verify_email_sent">驗證碼已寄至您的信箱</string>
     <string name="deem_activity_has_been_sent">已送出評價</string>
     <string name="deem_activity_has_been_recover">已收回評價</string>
