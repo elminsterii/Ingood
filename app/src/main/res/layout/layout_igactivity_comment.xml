@@ -35,14 +35,14 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLength="15"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_size_comment_publisher_name"
                 android:textColor="@color/colorSlave"/>
 
             <TextView
                 android:id="@+id/textViewCommentPublishDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:textSize="@dimen/text_size_comment_publish_date"
                 android:textColor="@color/colorTextHint"/>
         </LinearLayout>
     </RelativeLayout>
@@ -85,5 +85,5 @@
         android:paddingEnd="14.5dp"
         android:paddingStart="14.5dp"
         android:textColor="@color/colorSlave"
-        android:textSize="@dimen/text_size_ig_activity_description" />
+        android:textSize="@dimen/text_size_comment_publisher_comment_content" />
 </RelativeLayout>

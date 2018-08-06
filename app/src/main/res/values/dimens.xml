@@ -62,10 +62,13 @@
     <dimen name="height_main_image_ig_activity">250dp</dimen>
     <dimen name="text_size_ig_activity_close">40sp</dimen>
     <dimen name="text_size_ig_activity_title">20sp</dimen>
-    <dimen name="text_size_ig_activity_sub_title">15sp</dimen>
-    <dimen name="text_size_ig_activity_description">13sp</dimen>
+    <dimen name="text_size_ig_activity_sub_title">16sp</dimen>
+    <dimen name="text_size_ig_activity_description">14sp</dimen>
+    <dimen name="text_size_comment_publisher_name">15sp</dimen>
+    <dimen name="text_size_comment_publish_date">13sp</dimen>
+    <dimen name="text_size_comment_publisher_comment_content">14sp</dimen>
     <dimen name="text_size_button_ig_activity">17.5sp</dimen>
-    <dimen name="text_size_deem_people_ig_activity">13sp</dimen>
+    <dimen name="text_size_deem_people_ig_activity">14sp</dimen>
     <dimen name="margin_start_ig_activity">10dp</dimen>
     <dimen name="margin_start_ig_activity_thumbnail">39dp</dimen>
     <dimen name="margin_end_ig_activity">16dp</dimen>
