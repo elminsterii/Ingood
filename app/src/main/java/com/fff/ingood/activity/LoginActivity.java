@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
@@ -30,6 +29,7 @@ import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonCheckExistLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
+import com.fff.ingood.third_party.FaceBookSignInManager;
 import com.fff.ingood.third_party.GoogleSignInManager;
 import com.fff.ingood.tools.ImageHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.Task;
 
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
+import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_FACEBOOK_SIGN;
 import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_GOOGLE_SIGN;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_GOOGLE_SIGNIN_FAIL;import org.json.JSONException;
@@ -58,6 +59,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class LoginActivity extends BaseActivity implements PersonCheckExistLogic.PersonCheckExistLogicCaller, ImageHelper.loadBitmapFromURLEvent {
 
     private static final int REQUEST_CODE_GOOGLE_SINGIN = 1011;
+    private static final int REQUEST_CODE_FB_SINGIN = 1011;
 
     private Button mButton_SignIn;
     private Button mButton_Register;
@@ -67,9 +69,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
 
     private LoginActivity mActivity;
 
-    // FB
     private LoginManager mLoginManager;
-    private CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         FacebookSdk.sdkInitialize(getApplicationContext());
         // init LoginManager & CallbackManager
         mLoginManager = LoginManager.getInstance();
-        mCallbackManager = CallbackManager.Factory.create();    }
+    }
 
     @Override
     protected void initListener(){
@@ -205,6 +205,9 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleSignInResult(task);
         }
+        else{
+            FaceBookSignInManager.getInstance().getFBCallBackMgr().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -220,6 +223,13 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                     person.setPassword(googleSignInAccount.getId());
                     FlowManager.getInstance().goLoginFlow(this, person);
                 }
+
+                boolean bByFaceBookSignIn = PreferenceManager.getInstance().getLoginByFacebook();
+                Person fbSignInAccount = FaceBookSignInManager.getInstance().getFBSignInAccount();
+
+                if(bByFaceBookSignIn && fbSignInAccount != null) {
+                    FlowManager.getInstance().goLoginFlow(this, fbSignInAccount);
+                }
             }
         }
     }
@@ -228,6 +238,9 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     public void onPersonNotExist() {
         boolean bByGoogleSignIn = PreferenceManager.getInstance().getLoginByGoogle();
         GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
+
+        boolean bByFaceBookSignIn = PreferenceManager.getInstance().getLoginByFacebook();
+        Person fbSignInAccount = FaceBookSignInManager.getInstance().getFBSignInAccount();
 
         if(bByGoogleSignIn && googleSignInAccount != null) {
             if(googleSignInAccount.getPhotoUrl() != null)
@@ -240,6 +253,12 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                 personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
                 FlowManager.getInstance().goRegistrationFlow(this, personNew);
             }
+        }
+
+        if(bByFaceBookSignIn && fbSignInAccount != null) {
+            Person personNew = fbSignInAccount;
+            personNew.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
+            FlowManager.getInstance().goRegistrationFlow(this, personNew);
         }
     }
 
@@ -257,30 +276,16 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             FlowManager.getInstance().goRegistrationFlow(this, personNew, bm);
         }
     }
-    private void LogOutFB(){
-        // Facebook Logout
-        mLoginManager.logOut();
-        }
+
 
 	private void LoginFB() {
-        // 設定FB login的顯示方式 ; 預設是：NATIVE_WITH_FALLBACK
-        /**
-         * 1. NATIVE_WITH_FALLBACK
-         * 2. NATIVE_ONLY
-         * 3. KATANA_ONLY
-         * 4. WEB_ONLY
-         * 5. WEB_VIEW_ONLY
-         * 6. DEVICE_AUTH
-         */
         mLoginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
-        // 設定要跟用戶取得的權限，以下3個是基本可以取得，不需要經過FB的審核
         List<String> permissions = new ArrayList<>();
         permissions.add("public_profile");
         permissions.add("email");
         permissions.add("user_friends");
-                                // 設定要讀取的權限
-                                mLoginManager.logInWithReadPermissions(this, permissions);
-        mLoginManager.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+        mLoginManager.logInWithReadPermissions(this, permissions);
+        mLoginManager.registerCallback(FaceBookSignInManager.getInstance().getFBCallBackMgr(), new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
@@ -292,12 +297,18 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                                 long id = object.getLong("id");
                                 String name = object.getString("name");
                                 String email = object.getString("email");
-                                Log.d("yoie", "Facebook id:" + id);
-                                Log.d("yoie", "Facebook name:" + name);
-                                Log.d("yoie", "Facebook email:" + email);
-                                // 此時如果登入成功，就可以順便取得用戶大頭照
+                                String pwd = String.valueOf(id);
+
+                                Person personFB = new Person();
+                                personFB.setEmail(email);
+                                personFB.setName(name);
+                                personFB.setPassword(pwd);
+
+                                FaceBookSignInManager.getInstance().setFBSignInAccount(personFB);
+                                PreferenceManager.getInstance().setLoginByFacebook(true);
+                                checkPersonExist(personFB);
+
                                 Profile profile = Profile.getCurrentProfile();
-                                // 設定大頭照大小
                                 Uri userPhoto = profile.getProfilePictureUri(300, 300);
 
                             }
@@ -308,9 +319,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                         }
                     }
                 });
-                // https://developers.facebook.com/docs/android/graph?locale=zh_TW
-                // 如果要取得email，需透過添加參數的方式來獲取(如下)
-                // 不添加只能取得id & name
+
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email");
                 graphRequest.setParameters(parameters);
@@ -319,14 +328,12 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
 
             @Override
             public void onCancel() {
-                // 用戶取消
-                Log.d("yoie", "Facebook onCancel");
+
             }
 
             @Override
             public void onError(FacebookException error) {
-                // 登入失敗
-                Log.d("yoie", "Facebook onError:" + error.toString());
+
             }
         });
     }

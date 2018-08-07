@@ -110,7 +110,7 @@ public class PreferenceManager {
     }
 
     public boolean getLoginByFacebook() {
-        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_BY_GOOGLE, false);
+        return m_prefLogin.getBoolean(PREF_KEY_LOGIN_BY_FACEBOOK, false);
     }
 
     public void setLoginByFacebook(boolean bLoginByFacebook) {
