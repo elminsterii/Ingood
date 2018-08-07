@@ -289,13 +289,16 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                 preSearchCondition = new IgActivity();
                 String strTabText = tab.getText().toString();
 
+                boolean bNeedRefresh = true;
                 if(bIsDefaultTag)
-                    setConditionByDefaultTab(preSearchCondition, strTabText);
+                    bNeedRefresh = setConditionByDefaultTab(preSearchCondition, strTabText);
                 else
                     preSearchCondition.setTags(strTabText);
 
-                showWaitingDialog(HomeActivity.class.getName());
-                refresh();
+                if(bNeedRefresh) {
+                    showWaitingDialog(HomeActivity.class.getName());
+                    refresh();
+                }
             }
 
             @Override
@@ -485,9 +488,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         return false;
     }
 
-    private void setConditionByDefaultTab(IgActivity igCondition, String strTabContext) {
+    private boolean setConditionByDefaultTab(final IgActivity igCondition, String strTabContext) {
+        boolean bRefreshOutside = true;
         if(!StringTool.checkStringNotNull(strTabContext))
-            return;
+            return false;
 
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
             String strCurTime = TimeHelper.getCurTime();
@@ -515,10 +519,19 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             igCondition.setAttendees(PersonManager.getInstance().getPerson().getId());
             m_bIsShowExpireIgActivity = true;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_save_igactivity))) {
-            String strSaveIgActivitiesId = PersonManager.getInstance().getPerson().getSaveIgActivities();
-            igCondition.setId(strSaveIgActivitiesId);
-            m_bIsShowExpireIgActivity = true;
+            bRefreshOutside = false;
+            showWaitingDialog(HomeActivity.class.getName());
+            PersonManager.getInstance().refresh(new PersonManager.PersonManagerRefreshEvent() {
+                @Override
+                public void onRefreshDone(Person person) {
+                    String strSaveIgActivitiesId = person.getSaveIgActivities();
+                    igCondition.setId(strSaveIgActivitiesId);
+                    m_bIsShowExpireIgActivity = true;
+                    refresh();
+                }
+            });
         }
+        return bRefreshOutside;
     }
 
     private void resetSearchData(String strActivitiesIds) {
