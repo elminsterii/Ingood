@@ -1,4 +1,6 @@
 <resources>
+
+
     <string name="app_name">Ingood</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Register</string>
@@ -299,6 +301,11 @@
         10F., No.166, Sec. 4, Zhongxiao E. Rd., Da’an Dist., Taipei City 106, Taiwan (R.O.C.)\n\n\n</string>
 
     <string name="ingood_app_version">App version : </string>
+
+    <!-- FB LOGIN-->
+    <string name="facebook_app_id">1612934862149855</string>
+    <string name="fb_login_protocol_scheme">fb1612934862149855</string>
+
 </resources>
 
 
