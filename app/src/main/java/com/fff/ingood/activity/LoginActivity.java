@@ -2,21 +2,16 @@ package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -29,7 +24,7 @@ import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.PersonCheckExistLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
-import com.fff.ingood.third_party.FaceBookSignInManager;
+import com.fff.ingood.third_party.FacebookSignInManager;
 import com.fff.ingood.third_party.GoogleSignInManager;
 import com.fff.ingood.tools.ImageHelper;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -37,18 +32,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
-import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
-import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_FACEBOOK_SIGN;
-import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_GOOGLE_SIGN;
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
-import static com.fff.ingood.global.ServerResponse.STATUS_CODE_GOOGLE_SIGNIN_FAIL;import org.json.JSONException;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
+import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_FACEBOOK_SIGN;
+import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_GOOGLE_SIGN;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
+import static com.fff.ingood.global.ServerResponse.STATUS_CODE_GOOGLE_SIGNIN_FAIL;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
 /**
@@ -56,20 +52,18 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
  */
 
 
-public class LoginActivity extends BaseActivity implements PersonCheckExistLogic.PersonCheckExistLogicCaller, ImageHelper.loadBitmapFromURLEvent {
+public class LoginActivity extends BaseActivity implements PersonCheckExistLogic.PersonCheckExistLogicCaller
+        , ImageHelper.loadBitmapFromURLEvent {
 
-    private static final int REQUEST_CODE_GOOGLE_SINGIN = 1011;
-    private static final int REQUEST_CODE_FB_SINGIN = 1011;
+    private static final int REQUEST_CODE_GOOGLE_SIGNIN = 1011;
 
     private Button mButton_SignIn;
     private Button mButton_Register;
     private ImageButton mButtonGoogleSignIn;
-
-    private ImageButton mImageButton_FBLogin;
+    private ImageButton mButtonFacebookSignIn;
 
     private LoginActivity mActivity;
 
-    private LoginManager mLoginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,16 +89,13 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     protected void initView(){
         mButton_SignIn = findViewById(R.id.btn_signin);
         mButton_Register = findViewById(R.id.btn_register);
-        mImageButton_FBLogin = findViewById(R.id.btn_facebook);
+        mButtonFacebookSignIn = findViewById(R.id.btn_facebook);
         mButtonGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
     }
 
     @Override
     protected void initData(){
-        // init facebook
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        // init LoginManager & CallbackManager
-        mLoginManager = LoginManager.getInstance();
+
     }
 
     @Override
@@ -123,7 +114,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             }
         });
 
-		mImageButton_FBLogin.setOnClickListener(new Button.OnClickListener() {
+		mButtonFacebookSignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginFB();
@@ -146,7 +137,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
 
     private void googleSignIn() {
         Intent signInIntent = GoogleSignInManager.getInstance().geGoogleSignInClient().getSignInIntent();
-        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_SINGIN);
+        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_SIGNIN);
     }
 
     private void handleGoogleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -201,12 +192,11 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_GOOGLE_SINGIN) {
+        if (requestCode == REQUEST_CODE_GOOGLE_SIGNIN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleGoogleSignInResult(task);
-        }
-        else{
-            FaceBookSignInManager.getInstance().getFBCallBackMgr().onActivityResult(requestCode, resultCode, data);
+        } else {
+            FacebookSignInManager.getInstance().getCallbackManager().onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -215,20 +205,23 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         if(iStatusCode != null) {
             if(iStatusCode.equals(STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT)) {
                 boolean bByGoogleSignIn = PreferenceManager.getInstance().getLoginByGoogle();
-                GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
-
-                if(bByGoogleSignIn && googleSignInAccount != null) {
-                    Person person = new Person();
-                    person.setEmail(googleSignInAccount.getEmail());
-                    person.setPassword(googleSignInAccount.getId());
-                    FlowManager.getInstance().goLoginFlow(this, person);
-                }
-
                 boolean bByFaceBookSignIn = PreferenceManager.getInstance().getLoginByFacebook();
-                Person fbSignInAccount = FaceBookSignInManager.getInstance().getFBSignInAccount();
 
-                if(bByFaceBookSignIn && fbSignInAccount != null) {
-                    FlowManager.getInstance().goLoginFlow(this, fbSignInAccount);
+                if(bByGoogleSignIn) {
+                    GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
+
+                    if(googleSignInAccount != null) {
+                        Person person = new Person();
+                        person.setEmail(googleSignInAccount.getEmail());
+                        person.setPassword(googleSignInAccount.getId());
+                        FlowManager.getInstance().goLoginFlow(this, person);
+                    }
+                } else if(bByFaceBookSignIn) {
+                    Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
+
+                    if(fbSignInAccount != null) {
+                        FlowManager.getInstance().goLoginFlow(this, fbSignInAccount);
+                    }
                 }
             }
         }
@@ -237,28 +230,30 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     @Override
     public void onPersonNotExist() {
         boolean bByGoogleSignIn = PreferenceManager.getInstance().getLoginByGoogle();
-        GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
-
         boolean bByFaceBookSignIn = PreferenceManager.getInstance().getLoginByFacebook();
-        Person fbSignInAccount = FaceBookSignInManager.getInstance().getFBSignInAccount();
 
-        if(bByGoogleSignIn && googleSignInAccount != null) {
-            if(googleSignInAccount.getPhotoUrl() != null)
-                loadBitmapFromURL(googleSignInAccount.getPhotoUrl().toString());
-            else {
-                Person personNew = new Person();
-                personNew.setEmail(googleSignInAccount.getEmail());
-                personNew.setPassword(googleSignInAccount.getId());
-                personNew.setName(googleSignInAccount.getDisplayName());
-                personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
-                FlowManager.getInstance().goRegistrationFlow(this, personNew);
+        if(bByGoogleSignIn) {
+            GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
+
+            if(googleSignInAccount != null) {
+                if(googleSignInAccount.getPhotoUrl() != null)
+                    loadBitmapFromURL(googleSignInAccount.getPhotoUrl().toString());
+                else {
+                    Person personNew = new Person();
+                    personNew.setEmail(googleSignInAccount.getEmail());
+                    personNew.setPassword(googleSignInAccount.getId());
+                    personNew.setName(googleSignInAccount.getDisplayName());
+                    personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
+                    FlowManager.getInstance().goRegistrationFlow(this, personNew);
+                }
             }
-        }
+        } else if(bByFaceBookSignIn) {
+            Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
 
-        if(bByFaceBookSignIn && fbSignInAccount != null) {
-            Person personNew = fbSignInAccount;
-            personNew.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
-            FlowManager.getInstance().goRegistrationFlow(this, personNew);
+            if(fbSignInAccount != null) {
+                fbSignInAccount.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
+                FlowManager.getInstance().goRegistrationFlow(this, fbSignInAccount);
+            }
         }
     }
 
@@ -277,15 +272,15 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         }
     }
 
-
 	private void LoginFB() {
-        mLoginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
+        LoginManager loginManager = FacebookSignInManager.getInstance().getLoginManager();
+        loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         List<String> permissions = new ArrayList<>();
         permissions.add("public_profile");
         permissions.add("email");
         permissions.add("user_friends");
-        mLoginManager.logInWithReadPermissions(this, permissions);
-        mLoginManager.registerCallback(FaceBookSignInManager.getInstance().getFBCallBackMgr(), new FacebookCallback<LoginResult>() {
+        loginManager.logInWithReadPermissions(this, permissions);
+        loginManager.registerCallback(FacebookSignInManager.getInstance().getCallbackManager(), new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
@@ -304,17 +299,14 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                                 personFB.setName(name);
                                 personFB.setPassword(pwd);
 
-                                FaceBookSignInManager.getInstance().setFBSignInAccount(personFB);
+                                FacebookSignInManager.getInstance().setFBSignInAccount(personFB);
                                 PreferenceManager.getInstance().setLoginByFacebook(true);
                                 checkPersonExist(personFB);
 
-                                Profile profile = Profile.getCurrentProfile();
-                                Uri userPhoto = profile.getProfilePictureUri(300, 300);
-
+                                //Profile profile = Profile.getCurrentProfile();
+                                //Uri userPhoto = profile.getProfilePictureUri(PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
                             }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
+                        } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }
                     }

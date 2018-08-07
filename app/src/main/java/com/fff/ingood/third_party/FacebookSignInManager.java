@@ -1,35 +1,29 @@
 package com.fff.ingood.third_party;
 
-import android.content.Context;
-
 import com.facebook.CallbackManager;
+import com.facebook.login.LoginManager;
 import com.fff.ingood.data.Person;
 
-public class FaceBookSignInManager {
-    private static FaceBookSignInManager m_instance = null;
+public class FacebookSignInManager {
+    private static FacebookSignInManager m_instance = null;
     private Person mFaceBookSignInAccount = null;
     private CallbackManager mCallbackManager;
+    private LoginManager mLoginManager;
 
-    private FaceBookSignInManager() {
-
+    private FacebookSignInManager() {
     }
 
-    public static FaceBookSignInManager getInstance(Context context) {
+    public static FacebookSignInManager getInstance() {
         if(m_instance == null) {
-            m_instance = new FaceBookSignInManager();
-            m_instance.initialize(context);
+            m_instance = new FacebookSignInManager();
+            m_instance.initialize();
         }
         return m_instance;
     }
 
-    public static FaceBookSignInManager getInstance() {
-        return m_instance;
-    }
-
-    private void initialize(Context context) {
+    private void initialize() {
         mCallbackManager = CallbackManager.Factory.create();
-
-
+        mLoginManager = LoginManager.getInstance();
     }
 
     public void setFBSignInAccount(Person fbSignInAccount) {
@@ -40,10 +34,11 @@ public class FaceBookSignInManager {
         return mFaceBookSignInAccount;
     }
 
-
-
-    public CallbackManager getFBCallBackMgr() {
+    public CallbackManager getCallbackManager() {
         return mCallbackManager;
     }
 
+    public LoginManager getLoginManager() {
+        return mLoginManager;
+    }
 }
