@@ -317,24 +317,37 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
         int index = 0;
         String strPersonAge = mPerson.getAge();
-        for(int i=0; i<m_arrAges.length; i++)
-            if(m_arrAges[i].contains(strPersonAge))
-                index = i;
-        mSpinnerAge.setSelection(index);
+        if(!StringTool.checkStringNotNull(strPersonAge)
+                || strPersonAge.equals("0")) {
+            mSpinnerAge.setSelection(0);
+        } else {
+            for (int i = 0; i < m_arrAges.length; i++)
+                if (m_arrAges[i].contains(strPersonAge))
+                    index = i;
+            mSpinnerAge.setSelection(index);
+        }
 
         index = 0;
         String strGender = mPerson.getGender();
-        for(int i=0; i<m_arrGender.length; i++)
-            if(strGender.equals(m_arrGender[i]))
-                index = i;
-        mSpinnerGender.setSelection(index);
+        if(!StringTool.checkStringNotNull(strGender)) {
+            mSpinnerGender.setSelection(0);
+        } else {
+            for (int i = 0; i < m_arrGender.length; i++)
+                if (strGender.equals(m_arrGender[i]))
+                    index = i;
+            mSpinnerGender.setSelection(index);
+        }
 
         index = 0;
         String strLocation = mPerson.getLocation();
-        for(int i=0; i<m_arrLocation.length; i++)
-            if(strLocation.equals(m_arrLocation[i]))
-                index = i;
-        mSpinnerLocation.setSelection(index);
+        if(!StringTool.checkStringNotNull(strLocation)) {
+            mSpinnerLocation.setSelection(0);
+        } else {
+            for (int i = 0; i < m_arrLocation.length; i++)
+                if (strLocation.equals(m_arrLocation[i]))
+                    index = i;
+            mSpinnerLocation.setSelection(index);
+        }
     }
 
 

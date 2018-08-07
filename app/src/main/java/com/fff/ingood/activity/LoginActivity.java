@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.Task;
 
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
+import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_GOOGLE_SIGN;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_GOOGLE_SIGNIN_FAIL;import org.json.JSONException;
 import org.json.JSONObject;
@@ -236,9 +237,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                 personNew.setEmail(googleSignInAccount.getEmail());
                 personNew.setPassword(googleSignInAccount.getId());
                 personNew.setName(googleSignInAccount.getDisplayName());
-                personNew.setAge("10");              //change by user in person data page.
-                personNew.setGender("F");           //change by user in person data page.
-                personNew.setVerifyCode("5454");
+                personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
                 FlowManager.getInstance().goRegistrationFlow(this, personNew);
             }
         }
@@ -254,9 +253,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             personNew.setEmail(googleSignInAccount.getEmail());
             personNew.setPassword(googleSignInAccount.getId());
             personNew.setName(googleSignInAccount.getDisplayName());
-            personNew.setAge("10");              //change by user in person data page.
-            personNew.setGender("F");           //change by user in person data page.
-            personNew.setVerifyCode("5454");
+            personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
             FlowManager.getInstance().goRegistrationFlow(this, personNew, bm);
         }
     }
