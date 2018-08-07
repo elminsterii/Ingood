@@ -181,6 +181,7 @@
                 android:paddingEnd="14.5dp"
                 android:paddingStart="14.5dp"
                 android:paddingTop="14.5dp"
+                android:paddingBottom="14.5dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_description" />
 
