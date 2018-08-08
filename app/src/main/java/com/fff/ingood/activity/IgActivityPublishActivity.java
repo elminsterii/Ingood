@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -41,19 +44,15 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
-import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT;
-import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_WIDTH;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -66,6 +65,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 15 * 1000;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
+    private static final int RESULT_CODE_CROP_IMAGE = 2;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -96,6 +96,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private ImageButton m_preBtnOfTagAdd;
 
     private List<Bitmap> m_lsUploadImages;
+    private Uri m_uriCameraImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +209,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mBtnImageUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pickImageByGallery();
+                pickImageByGalleryOrCam();
             }
         });
 
@@ -452,17 +453,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
         executor.doIgActivityImageDelete(this, personOwner.getEmail(), personOwner.getPassword(), strIgActivityId, lsIgActivityImagesName);
     }
 
-    private void pickImageByGallery() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, getResources().getText(R.string.activity_publish_images_select));
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-        startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
-    }
-
     private void addImageIntoLayout(Bitmap bm) {
         if(bm == null)
             return;
@@ -671,6 +661,42 @@ public class IgActivityPublishActivity extends BaseActivity implements
         finish();
     }
 
+    private void pickImageByGalleryOrCam() {
+        Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        m_uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCameraImage);
+
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent, getIntent});
+        startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
+    }
+
+    private void performCropImage(Uri uriCropImage) {
+        // take care of exceptions
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uriCropImage, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 2);
+            cropIntent.putExtra("aspectY", 2);
+            cropIntent.putExtra("return-data", true);
+            startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException ignored) {
+
+        }
+    }
+
+    private void deleteImageByUri(Uri uriImage) {
+        getContentResolver().delete(uriImage, null, null);
+    }
+
     @Override
     public void returnUploadIgActivityImagesSuccess(int iUploadCount) {
         if(!m_bEditMode) {
@@ -750,20 +776,52 @@ public class IgActivityPublishActivity extends BaseActivity implements
     {
         if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
-                try {
-                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
-                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
-                    bm = ImageHelper.resizeBitmap(bm, IGACTIVITY_IMAGE_WIDTH, IGACTIVITY_IMAGE_HEIGHT);
-
-                    inputStream.close();
+                //from gallery
+                Uri uriImage = data.getData();
+                if(uriImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
+                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriCameraImage);
+                }
+            } else {
+                //from camera
+                if(m_uriCameraImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCameraImage);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriCameraImage, this);
+                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriCameraImage);
+                }
+            }
+        } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
+            if(data != null) {
+                Bundle extras = data.getExtras();
+                if(extras != null) {
+                    Bitmap bm = extras.getParcelable("data");
+                    bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
                     addImageIntoLayout(bm);
+                    deleteImageByUri(m_uriCameraImage);
+                    m_uriCameraImage = null;
                     m_bIsImageChanged = true;
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
+//        if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+//            if(data != null) {
+//                try {
+//                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
+//                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
+//                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
+//                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
+//                    bm = ImageHelper.resizeBitmap(bm, IGACTIVITY_IMAGE_WIDTH, IGACTIVITY_IMAGE_HEIGHT);
+//
+//                    inputStream.close();
+//                    addImageIntoLayout(bm);
+//                    m_bIsImageChanged = true;
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 }
