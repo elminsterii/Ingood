@@ -50,9 +50,9 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT;
-import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
-import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_IMAGE_WIDTH;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
@@ -96,7 +96,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private ImageButton m_preBtnOfTagAdd;
 
     private List<Bitmap> m_lsUploadImages;
-    private Uri m_uriCameraImage;
+    private Uri m_uriPickImage;
+    private Uri m_uriCropImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -663,8 +664,9 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private void pickImageByGalleryOrCam() {
         Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        m_uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
-        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCameraImage);
+        m_uriPickImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriPickImage);
+        m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setType("image/*");
@@ -676,7 +678,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
     }
 
-    private void performCropImage(Uri uriCropImage) {
+    private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
         // take care of exceptions
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -684,7 +686,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 2);
             cropIntent.putExtra("aspectY", 2);
-            cropIntent.putExtra("return-data", true);
+            cropIntent.putExtra("outputX", IGACTIVITY_IMAGE_WIDTH);
+            cropIntent.putExtra("outputY", IGACTIVITY_IMAGE_HEIGHT);
+            cropIntent.putExtra("return-data", false);
+            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriCropResult);
             startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
         }
         // respond to users whose devices do not support the crop action
@@ -781,47 +786,34 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 if(uriImage != null) {
                     Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
                     bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
-                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriCameraImage);
+                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriPickImage, m_uriCropImage);
                 }
             } else {
                 //from camera
-                if(m_uriCameraImage != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCameraImage);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriCameraImage, this);
-                    m_uriCameraImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriCameraImage);
+                if(m_uriPickImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriPickImage);
+                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
+                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                    performCropImage(m_uriPickImage, m_uriCropImage);
                 }
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
                 Bundle extras = data.getExtras();
                 if(extras != null) {
-                    Bitmap bm = extras.getParcelable("data");
-                    bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
-                    addImageIntoLayout(bm);
-                    deleteImageByUri(m_uriCameraImage);
-                    m_uriCameraImage = null;
-                    m_bIsImageChanged = true;
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCropImage);
+
+                    if(bm != null) {
+                        addImageIntoLayout(bm);
+                        deleteImageByUri(m_uriPickImage);
+                        deleteImageByUri(m_uriCropImage);
+                        m_uriPickImage = null;
+                        m_uriCropImage = null;
+                        m_bIsImageChanged = true;
+                    }
                 }
             }
         }
-//        if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-//            if(data != null) {
-//                try {
-//                    InputStream inputStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
-//                    BufferedInputStream bufferedInputStream = new BufferedInputStream(Objects.requireNonNull(inputStream));
-//                    Bitmap bm = BitmapFactory.decodeStream(bufferedInputStream);
-//                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, data.getData(), this);
-//                    bm = ImageHelper.resizeBitmap(bm, IGACTIVITY_IMAGE_WIDTH, IGACTIVITY_IMAGE_HEIGHT);
-//
-//                    inputStream.close();
-//                    addImageIntoLayout(bm);
-//                    m_bIsImageChanged = true;
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
     }
 }
