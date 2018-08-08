@@ -2,6 +2,7 @@ package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.Profile;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -249,7 +251,10 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             }
         } else if(bByFaceBookSignIn) {
             Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
-
+            Profile profile = Profile.getCurrentProfile();
+            if(profile != null){
+                loadBitmapFromURL(profile.getProfilePictureUri(PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT).toString());
+            }
             if(fbSignInAccount != null) {
                 fbSignInAccount.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
                 FlowManager.getInstance().goRegistrationFlow(this, fbSignInAccount);
@@ -278,7 +283,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         List<String> permissions = new ArrayList<>();
         permissions.add("public_profile");
         permissions.add("email");
-        permissions.add("user_friends");
+        //permissions.add("user_friends");
         loginManager.logInWithReadPermissions(this, permissions);
         loginManager.registerCallback(FacebookSignInManager.getInstance().getCallbackManager(), new FacebookCallback<LoginResult>() {
             @Override
@@ -303,8 +308,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                                 PreferenceManager.getInstance().setLoginByFacebook(true);
                                 checkPersonExist(personFB);
 
-                                //Profile profile = Profile.getCurrentProfile();
-                                //Uri userPhoto = profile.getProfilePictureUri(PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
+
                             }
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();
