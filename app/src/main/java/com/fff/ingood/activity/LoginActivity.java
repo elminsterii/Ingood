@@ -2,7 +2,6 @@ package com.fff.ingood.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -221,9 +220,8 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                 } else if(bByFaceBookSignIn) {
                     Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
 
-                    if(fbSignInAccount != null) {
+                    if(fbSignInAccount != null)
                         FlowManager.getInstance().goLoginFlow(this, fbSignInAccount);
-                    }
                 }
             }
         }
@@ -250,30 +248,45 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                 }
             }
         } else if(bByFaceBookSignIn) {
-            Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
             Profile profile = Profile.getCurrentProfile();
-            if(profile != null){
+            if(profile != null
+                    && profile.getProfilePictureUri(PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT) != null){
                 loadBitmapFromURL(profile.getProfilePictureUri(PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT).toString());
-            }
-            if(fbSignInAccount != null) {
-                fbSignInAccount.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
-                FlowManager.getInstance().goRegistrationFlow(this, fbSignInAccount);
+            } else {
+                Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
+
+                if(fbSignInAccount != null) {
+                    fbSignInAccount.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
+                    FlowManager.getInstance().goRegistrationFlow(this, fbSignInAccount);
+                }
             }
         }
     }
 
     @Override
     public void returnBitmap(Bitmap bm) {
-        if (bm != null) {
-            bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
+        boolean bByGoogleSignIn = PreferenceManager.getInstance().getLoginByGoogle();
+        boolean bByFaceBookSignIn = PreferenceManager.getInstance().getLoginByFacebook();
 
-            GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
-            Person personNew = new Person();
-            personNew.setEmail(googleSignInAccount.getEmail());
-            personNew.setPassword(googleSignInAccount.getId());
-            personNew.setName(googleSignInAccount.getDisplayName());
-            personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
-            FlowManager.getInstance().goRegistrationFlow(this, personNew, bm);
+        if (bm != null) {
+            if (bByGoogleSignIn) {
+                bm = ImageHelper.resizeBitmap(bm, PERSON_ICON_WIDTH, PERSON_ICON_HEIGHT);
+
+                GoogleSignInAccount googleSignInAccount = GoogleSignInManager.getInstance().getGoogleSignInAccount();
+                Person personNew = new Person();
+                personNew.setEmail(googleSignInAccount.getEmail());
+                personNew.setPassword(googleSignInAccount.getId());
+                personNew.setName(googleSignInAccount.getDisplayName());
+                personNew.setVerifyCode(VERIFY_CODE_FOR_GOOGLE_SIGN);
+                FlowManager.getInstance().goRegistrationFlow(this, personNew, bm);
+            } else if(bByFaceBookSignIn) {
+                Person fbSignInAccount = FacebookSignInManager.getInstance().getFBSignInAccount();
+
+                if(fbSignInAccount != null) {
+                    fbSignInAccount.setVerifyCode(VERIFY_CODE_FOR_FACEBOOK_SIGN);
+                    FlowManager.getInstance().goRegistrationFlow(this, fbSignInAccount, bm);
+                }
+            }
         }
     }
 
@@ -283,7 +296,6 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         List<String> permissions = new ArrayList<>();
         permissions.add("public_profile");
         permissions.add("email");
-        //permissions.add("user_friends");
         loginManager.logInWithReadPermissions(this, permissions);
         loginManager.registerCallback(FacebookSignInManager.getInstance().getCallbackManager(), new FacebookCallback<LoginResult>() {
             @Override
@@ -307,8 +319,6 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                                 FacebookSignInManager.getInstance().setFBSignInAccount(personFB);
                                 PreferenceManager.getInstance().setLoginByFacebook(true);
                                 checkPersonExist(personFB);
-
-
                             }
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();
