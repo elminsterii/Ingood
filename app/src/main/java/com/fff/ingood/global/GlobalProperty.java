@@ -22,8 +22,8 @@ public class GlobalProperty {
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_EMAIL = '@';
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_TAG = '#';
     public static final boolean IS_SHOW_CLOSED_IGACTIVITY = false;
-    public static final String GOOD_IGACTIVITY_THRESHOLD = "10";
-    public static final String POPULARITY_IGACTIVITY_THRESHOLD = "5";
+    public static final String GOOD_IGACTIVITY_THRESHOLD = "1";
+    public static final String POPULARITY_IGACTIVITY_THRESHOLD = "1";
     public static final int MAX_QUERY_QUANTITY_IGACTIVITY_ONCE = 10;
     public static final int IGACTIVITY_MAIN_IMAGE_CORNER_LEVEL = 62;
 
