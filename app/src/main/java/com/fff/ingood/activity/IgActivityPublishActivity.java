@@ -44,6 +44,7 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -678,30 +679,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
         startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
     }
 
-    private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
-        // take care of exceptions
-        try {
-            Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(uriCropImage, "image/*");
-            cropIntent.putExtra("crop", "true");
-            cropIntent.putExtra("aspectX", 2);
-            cropIntent.putExtra("aspectY", 2);
-            cropIntent.putExtra("outputX", IGACTIVITY_IMAGE_WIDTH);
-            cropIntent.putExtra("outputY", IGACTIVITY_IMAGE_HEIGHT);
-            cropIntent.putExtra("return-data", false);
-            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriCropResult);
-            startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
-        }
-        // respond to users whose devices do not support the crop action
-        catch (ActivityNotFoundException ignored) {
-
-        }
-    }
-
-    private void deleteImageByUri(Uri uriImage) {
-        getContentResolver().delete(uriImage, null, null);
-    }
-
     @Override
     public void returnUploadIgActivityImagesSuccess(int iUploadCount) {
         if(!m_bEditMode) {
@@ -785,17 +762,25 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 Uri uriImage = data.getData();
                 if(uriImage != null) {
                     Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
-                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriPickImage, m_uriCropImage);
+
+                    if(bm != null) {
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
+                        deleteImageByUri(m_uriPickImage);
+                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    }
                 }
             } else {
                 //from camera
                 if(m_uriPickImage != null) {
                     Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriPickImage);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
-                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriPickImage, m_uriCropImage);
+
+                    if(bm != null) {
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
+                        deleteImageByUri(m_uriPickImage);
+                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    }
                 }
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
@@ -814,6 +799,38 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     }
                 }
             }
+        } else if (resultCode == RESULT_CANCELED) {
+            deleteImageByUri(m_uriPickImage);
+            deleteImageByUri(m_uriCropImage);
+            m_uriPickImage = null;
+            m_uriCropImage = null;
         }
+    }
+
+    private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
+        // take care of exceptions
+        try {
+            Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setDataAndType(uriCropImage, "image/*");
+            cropIntent.putExtra("crop", "true");
+            cropIntent.putExtra("aspectX", 2);
+            cropIntent.putExtra("aspectY", 2);
+            cropIntent.putExtra("outputX", IGACTIVITY_IMAGE_WIDTH);
+            cropIntent.putExtra("outputY", IGACTIVITY_IMAGE_HEIGHT);
+            cropIntent.putExtra("return-data", false);
+            cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriCropResult);
+            startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
+        }
+        // respond to users whose devices do not support the crop action
+        catch (ActivityNotFoundException ignored) {
+
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private void deleteImageByUri(Uri uriImage) {
+        getContentResolver().delete(uriImage, null, null);
+        File file = new File(uriImage.getPath());
+        file.delete();
     }
 }

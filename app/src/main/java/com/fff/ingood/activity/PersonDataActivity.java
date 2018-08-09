@@ -46,6 +46,8 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 
+import java.io.File;
+
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
@@ -576,17 +578,25 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                 Uri uriImage = data.getData();
                 if(uriImage != null) {
                     Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
-                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriPickImage, m_uriCropImage);
+
+                    if(bm != null) {
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
+                        deleteImageByUri(m_uriPickImage);
+                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    }
                 }
             } else {
                 //from camera
                 if(m_uriPickImage != null) {
                     Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriPickImage);
-                    bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
-                    m_uriPickImage = ImageHelper.genImageUri(this, bm);
-                    performCropImage(m_uriPickImage, m_uriCropImage);
+
+                    if(bm != null) {
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
+                        deleteImageByUri(m_uriPickImage);
+                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    }
                 }
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
@@ -605,6 +615,11 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                     }
                 }
             }
+        } else if (resultCode == RESULT_CANCELED) {
+            deleteImageByUri(m_uriPickImage);
+            deleteImageByUri(m_uriCropImage);
+            m_uriPickImage = null;
+            m_uriCropImage = null;
         }
     }
 
@@ -628,7 +643,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deleteImageByUri(Uri uriImage) {
         getContentResolver().delete(uriImage, null, null);
+        File file = new File(uriImage.getPath());
+        file.delete();
     }
 }
