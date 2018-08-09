@@ -493,14 +493,17 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strTabContext))
             return false;
 
+        final String DEF_ORDER_BY_GOOD = "0";
+
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
             String strCurTime = TimeHelper.getCurTime();
             String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
-
+            igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_ongoing))) {
+            igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setStatus(IgActivity.IGA_STATUS_START);
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
@@ -510,6 +513,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             igCondition.setGood(GOOD_IGACTIVITY_THRESHOLD);
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_nearly))) {
+            igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setLocation(PersonManager.getInstance().getPerson().getLocation());
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_igactivity))) {
