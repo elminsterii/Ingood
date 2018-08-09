@@ -118,7 +118,8 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
 		mButtonFacebookSignIn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginFB();
+                showWaitingDialog(LoginActivity.class.getName());
+                facebookSingIn();
             }
         });
 
@@ -290,7 +291,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
         }
     }
 
-	private void LoginFB() {
+	private void facebookSingIn() {
         LoginManager loginManager = FacebookSignInManager.getInstance().getLoginManager();
         loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
         List<String> permissions = new ArrayList<>();
