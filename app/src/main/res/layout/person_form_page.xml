@@ -268,27 +268,26 @@
                     android:layout_marginBottom="90dp">
 
                     <View
-                        android:id="@+id/viewTopOfChangePwd"
+                        android:id="@+id/viewTopOfFunctionalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
                         android:background="@color/colorTextHint" />
 
                     <TextView
-                        android:id="@+id/textViewChangePwd"
+                        android:id="@+id/textViewFunctionalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/viewTopOfChangePwd"
+                        android:layout_below="@+id/viewTopOfFunctionalButton"
                         android:layout_marginTop="10dp"
                         android:layout_centerHorizontal="true"
                         android:textSize="@dimen/text_size_person_page_sub_title"
-                        android:textColor="@color/colorWarningRed"
-                        android:text="@string/btn_change_pwd" />
+                        android:textColor="@color/colorSlave"/>
 
                     <View
-                        android:id="@+id/viewBottomOfChangePwd"
+                        android:id="@+id/viewBottomOfFunctionalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="0.5dp"
-                        android:layout_below="@+id/textViewChangePwd"
+                        android:layout_below="@+id/textViewFunctionalButton"
                         android:layout_marginTop="10dp"
                         android:background="@color/colorTextHint" />
                 </RelativeLayout>

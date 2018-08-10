@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.IGA_STATUS_CLOSED;
+import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_EMAIL;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_TAG;
 import static com.fff.ingood.global.GlobalProperty.GOOD_IGACTIVITY_THRESHOLD;
@@ -57,6 +58,7 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.IgActivityQueryLogicCaller {
 
     private static final String DEFAULT_TAG_IN_TAG_BAR = "default_tag";
+    private static final String DEF_ORDER_BY_GOOD = "0";
 
     private RecyclerView mViewActivityList;
     private ActivityListAdapter mActivityListAdapter;
@@ -112,7 +114,13 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     @Override
     protected void preInit() {
-
+        Intent intent = getIntent();
+        if(intent != null) {
+            IgActivity activity = (IgActivity) getIntent().getSerializableExtra(TAG_IGACTIVITY);
+            if(activity != null) {
+                preSearchCondition = activity;
+            }
+        }
     }
 
     @Override
@@ -157,8 +165,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         mTextViewMenuPersonName.setText(PersonManager.getInstance().getPerson().getName());
         mTextViewMenuPersonEmail.setText(PersonManager.getInstance().getPerson().getEmail());
 
-        preSearchCondition = new IgActivity();
-        setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_recently).toString());
+        if(preSearchCondition == null) {
+            preSearchCondition = new IgActivity();
+            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_recently).toString());
+        }
     }
 
     @Override
@@ -342,6 +352,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                         activityCondition.setName(query);
                     }
 
+                    activityCondition.setGood(DEF_ORDER_BY_GOOD);
                     m_bIsShowExpireIgActivity = true;
                     mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
                     preSearchCondition = activityCondition;
@@ -438,7 +449,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     }
 
     private void makeDefaultTags() {
-
         TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
         tabRecently.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabRecently.setText(R.string.tag_recently);
@@ -492,8 +502,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         boolean bRefreshOutside = true;
         if(!StringTool.checkStringNotNull(strTabContext))
             return false;
-
-        final String DEF_ORDER_BY_GOOD = "0";
 
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
             String strCurTime = TimeHelper.getCurTime();

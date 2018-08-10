@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fff.ingood.R;
+import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
@@ -48,6 +49,7 @@ import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 
 import java.io.File;
 
+import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
@@ -69,7 +71,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private ImageView mImageViewEditIcon;
     private TextView mTextViewPersonName;
     private TextView mTextViewPersonDescription;
-    private TextView mTextViewChangePwd;
+    private TextView mTextViewFunctionalButton;
     private TextView mTextViewEmail;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
@@ -78,8 +80,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private Spinner mSpinnerGender;
     private Spinner mSpinnerLocation;
     private ImageView mImageViewPersonIcon;
-    private View mViewTopOfChangePwd;
-    private View mViewBottomOfChangePwd;
+    private View mViewTopOfFunctionalButton;
+    private View mViewBottomOfFunctionalButton;
 
     private String[] m_arrAges;
     private String[] m_arrGender;
@@ -130,7 +132,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     protected void initView(){
         mTextViewPersonName = findViewById(R.id.textViewPersonName);
         mTextViewPersonDescription = findViewById(R.id.textViewPersonAboutContent);
-        mTextViewChangePwd = findViewById(R.id.textViewChangePwd);
+        mTextViewFunctionalButton = findViewById(R.id.textViewFunctionalButton);
         mTextViewEmail = findViewById(R.id.textViewEmail);
         mTextViewDeemGood = findViewById(R.id.textViewPersonDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewPersonDeemBad);
@@ -140,8 +142,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mImageViewEditIcon = findViewById(R.id.imageViewEditPhoto);
         mImageViewEditName = findViewById(R.id.imageViewEditName);
         mImageViewEditDescription = findViewById(R.id.imageViewPersonEditAbout);
-        mViewTopOfChangePwd = findViewById(R.id.viewTopOfChangePwd);
-        mViewBottomOfChangePwd = findViewById(R.id.viewBottomOfChangePwd);
+        mViewTopOfFunctionalButton = findViewById(R.id.viewTopOfFunctionalButton);
+        mViewBottomOfFunctionalButton = findViewById(R.id.viewBottomOfFunctionalButton);
         mBtnSave = findViewById(R.id.btnPersonSave);
         mBtnBack = findViewById(R.id.imgPersonBack);
 
@@ -152,7 +154,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initData(){
-        mTextViewChangePwd.setClickable(true);
+        mTextViewFunctionalButton.setClickable(true);
         mImageViewPersonIcon.setImageResource(R.drawable.ic_person_black_36dp);
 
         m_arrAges = getResources().getStringArray(R.array.user_age_list);
@@ -171,7 +173,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         mSpinnerLocation.setAdapter(spinnerLocationAdapter);
 
         setUiForObserver(m_bObserverMode);
-        setUiChangePwdVis();
     }
 
     @Override
@@ -183,10 +184,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         });
 
-        mTextViewChangePwd.setOnClickListener(new TextView.OnClickListener() {
+        mTextViewFunctionalButton.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changePwdDlg();
+                if(m_bObserverMode)
+                    goToHomepage();
+                else
+                    changePwdDlg();
             }
         });
 
@@ -353,6 +357,14 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         }
     }
 
+    private void goToHomepage() {
+        IgActivity activity = new IgActivity();
+        activity.setPublisherEmail(mPerson.getEmail());
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(TAG_IGACTIVITY, activity);
+        startActivity(intent);
+    }
 
     private void changePwdDlg(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -490,22 +502,29 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             mImageViewEditName.setVisibility(View.INVISIBLE);
             mImageViewEditDescription.setVisibility(View.INVISIBLE);
             mImageViewEditIcon.setVisibility(View.INVISIBLE);
-            mTextViewChangePwd.setVisibility(View.INVISIBLE);
-            mViewTopOfChangePwd.setVisibility(View.INVISIBLE);
-            mViewBottomOfChangePwd.setVisibility(View.INVISIBLE);
             mBtnSave.setVisibility(View.INVISIBLE);
             mSpinnerAge.setEnabled(false);
             mSpinnerGender.setEnabled(false);
             mSpinnerLocation.setEnabled(false);
-        }
-    }
 
-    private void setUiChangePwdVis() {
-        if(PreferenceManager.getInstance().getLoginByFacebook()
-                || PreferenceManager.getInstance().getLoginByGoogle()) {
-            mTextViewChangePwd.setVisibility(View.INVISIBLE);
-            mViewTopOfChangePwd.setVisibility(View.INVISIBLE);
-            mViewBottomOfChangePwd.setVisibility(View.INVISIBLE);
+            mViewTopOfFunctionalButton.setVisibility(View.VISIBLE);
+            mViewBottomOfFunctionalButton.setVisibility(View.VISIBLE);
+            mTextViewFunctionalButton.setVisibility(View.VISIBLE);
+            mTextViewFunctionalButton.setText(R.string.person_data_view_all_igactivities);
+            mTextViewFunctionalButton.setTextColor(getResources().getColor(R.color.colorSlave));
+        } else {
+            if(PreferenceManager.getInstance().getLoginByFacebook()
+                    || PreferenceManager.getInstance().getLoginByGoogle()) {
+                mTextViewFunctionalButton.setVisibility(View.INVISIBLE);
+                mViewTopOfFunctionalButton.setVisibility(View.INVISIBLE);
+                mViewBottomOfFunctionalButton.setVisibility(View.INVISIBLE);
+            } else {
+                mViewTopOfFunctionalButton.setVisibility(View.VISIBLE);
+                mViewBottomOfFunctionalButton.setVisibility(View.VISIBLE);
+                mTextViewFunctionalButton.setVisibility(View.VISIBLE);
+                mTextViewFunctionalButton.setText(R.string.btn_change_pwd);
+                mTextViewFunctionalButton.setTextColor(getResources().getColor(R.color.colorWarningRed));
+            }
         }
     }
 
