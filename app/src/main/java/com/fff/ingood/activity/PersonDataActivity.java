@@ -224,7 +224,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                         mPerson.setName(strTextContent);
                         mTextViewPersonName.setText(strTextContent);
                     }
-                }, getResources().getText(R.string.user_data_name).toString(), mPerson.getName())
+                }, getResources().getText(R.string.user_data_name).toString(), mPerson.getName(), 64)
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
@@ -238,7 +238,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
                         mPerson.setDescription(strTextContent);
                         mTextViewPersonDescription.setText(strTextContent);
                     }
-                }, getResources().getText(R.string.title_about_me).toString(), mPerson.getDescription())
+                }, getResources().getText(R.string.title_about_me).toString(), mPerson.getDescription(), 1024)
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });

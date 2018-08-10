@@ -286,7 +286,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                         showWaitingDialog(IgActivityDetailActivity.class.getName());
                         publishComment(strTextContent);
                     }
-                }, getResources().getText(R.string.activity_comment_publish_description).toString(), null)
+                }, getResources().getText(R.string.activity_comment_publish_description).toString(), null, 1024)
                         .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
             }
         });
@@ -574,7 +574,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                             comment.setContent(strTextContent);
                             editComment(comment);
                         }
-                    }, getResources().getText(R.string.activity_comment_edit_description).toString(), comment.getContent())
+                    }, getResources().getText(R.string.activity_comment_edit_description).toString(), comment.getContent(), 1024)
                             .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
                 }
             });

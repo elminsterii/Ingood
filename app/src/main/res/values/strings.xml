@@ -84,9 +84,10 @@
     <string name="activity_publish_what_kind">What kind of activity</string>
     <string name="activity_publish_max_attention">Upper limit of attention</string>
     <string name="activity_publish_edit_update">Update</string>
-    <string name="activity_publish_images_upload">Upload Images</string>
-    <string name="activity_publish_images_select">Select Image</string>
+    <string name="activity_publish_images_upload">Upload images</string>
+    <string name="activity_publish_images_select">Select image</string>
     <string name="activity_publish_republish">Republish</string>
+    <string name="activity_publish_info">Activity information</string>
 
     <!-- Default tags -->
     <string name="tag_recently">Recently</string>

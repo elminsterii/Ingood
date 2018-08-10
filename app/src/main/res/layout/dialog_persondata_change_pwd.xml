@@ -24,6 +24,7 @@
             android:hint="@string/edit_hint_new_pwd"
             android:paddingStart="12dp"
             android:textColorHighlight="@color/colorSlaveUltraLight"
+            android:maxLength="64"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
 
@@ -55,6 +56,7 @@
             android:hint="@string/edit_hint_confirm_new_pwd"
             android:paddingStart="12dp"
             android:textColorHighlight="@color/colorSlaveUltraLight"
+            android:maxLength="64"
             tools:ignore="RtlSymmetry"
             android:ems="10"/>
 

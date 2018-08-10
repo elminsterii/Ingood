@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
+import android.text.InputFilter;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -375,6 +376,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_puglish_igactivity, null, false);
         EditText editTextTagInput = (EditText)layout.getChildAt(0);
+        editTextTagInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         m_lsTagsInput.add(editTextTagInput);
 
         ImageButton btnTagAdd = (ImageButton)layout.getChildAt(1);

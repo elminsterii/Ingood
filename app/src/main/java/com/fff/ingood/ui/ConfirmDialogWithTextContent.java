@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,21 +28,23 @@ public class ConfirmDialogWithTextContent extends DialogFragment {
 
     private String m_strTextTitle;
     private String m_strDefaultTextContent;
+    private int m_editTextMaxLength = 0;
     private TextContentEventCB m_eventCB = null;
 
     public interface TextContentEventCB {
         void onPositiveClick(String strTextContent);
     }
 
-    private void initialize(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent) {
+    private void initialize(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent, int editTextMaxLength) {
         m_eventCB = cb;
         m_strTextTitle = strTextTitle;
         m_strDefaultTextContent = strDefaultTextContent;
+        m_editTextMaxLength = editTextMaxLength;
     }
 
-    public static ConfirmDialogWithTextContent newInstance(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent) {
+    public static ConfirmDialogWithTextContent newInstance(TextContentEventCB cb, String strTextTitle, String strDefaultTextContent, int editTextMaxLength) {
         ConfirmDialogWithTextContent dialog = new ConfirmDialogWithTextContent();
-        dialog.initialize(cb, strTextTitle, strDefaultTextContent);
+        dialog.initialize(cb, strTextTitle, strDefaultTextContent, editTextMaxLength);
         return dialog;
     }
 
@@ -71,26 +74,29 @@ public class ConfirmDialogWithTextContent extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final EditText editTextCommentContent = view.findViewById(R.id.editTextContent);
+        final EditText editTextContent = view.findViewById(R.id.editTextContent);
+        if(m_editTextMaxLength > 0)
+            editTextContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(m_editTextMaxLength)});
+
         if(StringTool.checkStringNotNull(m_strDefaultTextContent)) {
-            editTextCommentContent.setText(m_strDefaultTextContent);
-            editTextCommentContent.setSelection(editTextCommentContent.getText().length());
+            editTextContent.setText(m_strDefaultTextContent);
+            editTextContent.setSelection(editTextContent.getText().length());
         }
 
         TextView textViewTextContentTitle = view.findViewById(R.id.textViewTextContentTitle);
         textViewTextContentTitle.setText(m_strTextTitle);
 
-        view.findViewById(R.id.btnCommentPublishLeftBottom).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnTextContentLeftBottom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
 
-        view.findViewById(R.id.btnCommentPublishRightBottom).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btnTextContentRightBottom).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                m_eventCB.onPositiveClick(editTextCommentContent.getText().toString());
+                m_eventCB.onPositiveClick(editTextContent.getText().toString());
                 dismiss();
             }
         });
