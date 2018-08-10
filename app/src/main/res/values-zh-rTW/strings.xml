@@ -76,8 +76,8 @@
     <string name="activity_publish_name">活動名稱</string>
     <string name="activity_publish_location">活動地點</string>
     <string name="activity_publish_description">活動介紹</string>
-    <string name="activity_publish_date_begin">開始時間</string>
-    <string name="activity_publish_date_end">結束時間</string>
+    <string name="activity_publish_date_begin">活動開始時間</string>
+    <string name="activity_publish_date_end">活動結束時間</string>
     <string name="activity_publish_date_description">請選擇日期</string>
     <string name="activity_publish_time_description">請選擇時間</string>
     <string name="activity_publish_what_kind">何種類型的活動</string>
