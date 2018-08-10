@@ -109,7 +109,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     @Override
     public void onBackPressed() {
-        closeSearchView();
+        if(mImgIngoodIcon.getVisibility() != View.VISIBLE)
+            closeSearchView();
+        else
+            super.onBackPressed();
     }
 
     @Override

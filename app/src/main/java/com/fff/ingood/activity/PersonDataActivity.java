@@ -361,7 +361,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         IgActivity activity = new IgActivity();
         activity.setPublisherEmail(mPerson.getEmail());
         Intent intent = new Intent(this, HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(TAG_IGACTIVITY, activity);
         startActivity(intent);
     }
