@@ -139,6 +139,7 @@
     <string name="dialog_delete_comment_done_message">Comment has been deleted</string>
     <string name="dialog_update_comment_done_message">Comment has been updated</string>
     <string name="dialog_logout_confirm_message">Are you sure logout this account?</string>
+    <string name="dialog_exit_confirm_message">Are you leave Ingood?</string>
 
     <!-- Search bar -->
     <string name="search_bar_label">Search</string>

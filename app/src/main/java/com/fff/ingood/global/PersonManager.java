@@ -12,10 +12,11 @@ import com.fff.ingood.logic.PersonLoginLogic;
 public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
 
     private static PersonManager m_instance = null;
-    private Person mPerson;
+    private Person mPerson = null;
 
     private PersonManagerRefreshEvent m_personManagerRefreshEvent = null;
-    private Bitmap m_bmPersonIcon;
+    private Bitmap m_bmPersonIcon = null;
+    private boolean m_bLoginSuccess = false;
 
     public interface PersonManagerRefreshEvent {
         void onRefreshDone(Person person);
@@ -59,6 +60,14 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
 
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonLogin(this, mPerson);
+    }
+
+    public boolean isLoginSuccess() {
+        return m_bLoginSuccess;
+    }
+
+    public void setLoginSuccess(boolean m_bLoginSuccess) {
+        this.m_bLoginSuccess = m_bLoginSuccess;
     }
 
     @Override

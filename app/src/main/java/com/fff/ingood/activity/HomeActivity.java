@@ -100,6 +100,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     @Override
     protected void onResume() {
         super.onResume();
+        PersonManager.getInstance().setLoginSuccess(true);
 
         if(m_bIsInitialize) {
             showWaitingDialog(HomeActivity.class.getName());

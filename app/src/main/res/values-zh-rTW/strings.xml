@@ -138,6 +138,7 @@
     <string name="dialog_delete_comment_done_message">留言已刪除</string>
     <string name="dialog_update_comment_done_message">留言已更新</string>
     <string name="dialog_logout_confirm_message">您確定要登出此帳號嗎?</string>
+    <string name="dialog_exit_confirm_message">您要離開Ingood嗎?</string>
 
     <!-- Search bar -->
     <string name="search_bar_label">搜尋</string>

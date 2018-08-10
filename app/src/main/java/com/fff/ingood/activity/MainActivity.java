@@ -1,6 +1,7 @@
 package com.fff.ingood.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,20 +17,24 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.service.IngoodService;
+import com.fff.ingood.task.wrapper.PersonLogoutTaskWrapper;
 import com.fff.ingood.third_party.FacebookSignInManager;
 import com.fff.ingood.third_party.GoogleSignInManager;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.CircleProgressBarDialog;
+import com.fff.ingood.ui.WarningDialog;
 
 import static com.fff.ingood.global.GlobalProperty.STARTUP_ANIMATION_DURATION;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
 
-public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller {
+public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller
+        , PersonLogoutTaskWrapper.PersonLogoutTaskWrapperCallback {
 
     private static final int REQUEST_CODE_PERMISSION = 101;
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     @Override
     protected void onResume() {
         super.onResume();
+        showUserExitDialog();
     }
 
     @Override
@@ -135,6 +141,33 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
             startStartupAnimation();
     }
 
+    private void showUserExitDialog() {
+        if(PersonManager.getInstance().isLoginSuccess()) {
+            PersonManager.getInstance().setLoginSuccess(false);
+
+            WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
+                @Override
+                public void onPositiveClick(DialogInterface dialog) {
+                    dialog.dismiss();
+                    logoutPerson();
+                    showWaitingDialog(MainActivity.class.getName());
+                }
+
+                @Override
+                public void onNegativeClick(DialogInterface dialog) {
+                    dialog.dismiss();
+                    mActivity.startActivity(new Intent(mActivity, HomeActivity.class));
+                }
+            }, getResources().getText(R.string.dialog_exit_confirm_message).toString())
+                    .show(getSupportFragmentManager(), MainActivity.class.getName());
+        }
+    }
+
+    private void logoutPerson() {
+        PersonLogoutTaskWrapper logoutWrapper = new PersonLogoutTaskWrapper(this);
+        logoutWrapper.execute(PersonManager.getInstance().getPerson());
+    }
+
     @Override
     public void returnFlow(Integer iStatusCode, Flow.FLOW flow, Class<?> clsFlow) {
         hideWaitingDialog();
@@ -172,5 +205,17 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
                 }
             }
         }
+    }
+
+    @Override
+    public void onLogoutSuccess() {
+        hideWaitingDialog();
+        finish();
+    }
+
+    @Override
+    public void onLogoutFailure(Integer iStatusCode) {
+        hideWaitingDialog();
+        finish();
     }
 }
