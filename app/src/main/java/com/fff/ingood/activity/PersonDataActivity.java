@@ -460,10 +460,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriPickImage);
         m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
-        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriPickImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriPickImage, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        grantUriPermission(Intent.ACTION_GET_CONTENT, m_uriPickImage, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        grantUriPermission(Intent.ACTION_GET_CONTENT, m_uriPickImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -653,8 +653,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
-        grantUriPermission("com.android.camera.action.CROP", uriCropImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        grantUriPermission("com.android.camera.action.CROP", uriCropResult, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
