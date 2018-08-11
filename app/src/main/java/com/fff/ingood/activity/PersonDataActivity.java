@@ -455,14 +455,23 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     private void pickImageByGalleryOrCam() {
         Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         m_uriPickImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        capIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriPickImage);
         m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriPickImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriPickImage, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(Intent.ACTION_GET_CONTENT, m_uriPickImage, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(Intent.ACTION_GET_CONTENT, m_uriPickImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
         getIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        getIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         getIntent.setType("image/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        pickIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
@@ -644,9 +653,13 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
-        // take care of exceptions
+        grantUriPermission("com.android.camera.action.CROP", uriCropImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", uriCropResult, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
+            cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             cropIntent.setDataAndType(uriCropImage, "image/*");
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 2);
