@@ -78,8 +78,8 @@
     <string name="activity_publish_description">活動介紹</string>
     <string name="activity_publish_date_begin">活動開始時間</string>
     <string name="activity_publish_date_end">活動結束時間</string>
-    <string name="activity_publish_date_description">請選擇日期</string>
-    <string name="activity_publish_time_description">請選擇時間</string>
+    <string name="activity_publish_date_description">選擇日期</string>
+    <string name="activity_publish_time_description">選擇時間</string>
     <string name="activity_publish_what_kind">何種類型的活動</string>
     <string name="activity_publish_max_attention">參加人數上限</string>
     <string name="activity_publish_edit_update">更新</string>
@@ -87,6 +87,7 @@
     <string name="activity_publish_images_select">選擇圖片</string>
     <string name="activity_publish_republish">重新發佈</string>
     <string name="activity_publish_info">活動資訊</string>
+    <string name="activity_publish_tags">活動標籤</string>
 
     <!-- Default Tags -->
     <string name="tag_recently">近期</string>

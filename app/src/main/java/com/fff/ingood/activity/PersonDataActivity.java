@@ -459,8 +459,10 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         getIntent.setType("image/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));

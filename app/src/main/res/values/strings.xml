@@ -88,6 +88,7 @@
     <string name="activity_publish_images_select">Select image</string>
     <string name="activity_publish_republish">Republish</string>
     <string name="activity_publish_info">Activity information</string>
+    <string name="activity_publish_tags">Activity tags</string>
 
     <!-- Default tags -->
     <string name="tag_recently">Recently</string>

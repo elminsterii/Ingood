@@ -77,7 +77,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , CommentQueryLogic.CommentQueryLogicCaller
         , CommentCreateLogic.CommentCreateLogicCaller
         , CommentDeleteLogic.CommentDeleteLogicCaller
-        , CommentUpdateLogic.CommentUpdateLogicCaller, IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller {
+        , CommentUpdateLogic.CommentUpdateLogicCaller
+        , IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller {
 
     private enum UPDATE_IGACTIVITY_UI_SECTION {
         uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
@@ -421,7 +422,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void setUiPublisherDefaultIcon() {
         mImageViewPublisherIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
-        mImageViewPublisherIcon.setImageResource(R.drawable.ic_person_black_36dp);
+        if(m_bIsIgActivityOwner && PersonManager.getInstance().getPersonIcon() != null)
+            mImageViewPublisherIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
+        else
+            mImageViewPublisherIcon.setImageResource(R.drawable.ic_person_black_36dp);
     }
 
     private void downloadIcon_IgActivityPublisher(Person igActivityPublisher) {
@@ -856,7 +860,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
                         }
                     });
 
-                    downloadIcon_IgActivityPublisher(publisher);
+                    if(!m_bIsIgActivityOwner)
+                        downloadIcon_IgActivityPublisher(publisher);
+
                 } else if(strTag.equals(LOGIC_TAG_PERSON_QUERY_ATTENDEES)
                         || strTag.equals(LOGIC_TAG_PERSON_QUERY_COMMENTS)) {
                     Person person = lsPersons.get(0);

@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_CODE_PERMISSION: {
+            case REQUEST_CODE_PERMISSION :
                 boolean bIsDenied = false;
                 if (grantResults.length > 0) {
                     for(int iPermission : grantResults) {
@@ -203,7 +203,9 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
                 } else {
                     finish();
                 }
-            }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

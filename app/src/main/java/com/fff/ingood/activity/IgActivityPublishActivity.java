@@ -374,7 +374,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     private EditText addNewEmptyTag() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_puglish_igactivity, null, false);
+        @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_publish_igactivity, null, false);
         EditText editTextTagInput = (EditText)layout.getChildAt(0);
         editTextTagInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
         m_lsTagsInput.add(editTextTagInput);
@@ -672,8 +672,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
         m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         getIntent.setType("image/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));

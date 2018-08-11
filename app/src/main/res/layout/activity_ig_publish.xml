@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="none">
@@ -52,13 +53,13 @@
             android:layout_below="@+id/layoutIgActivityPublishTitle"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish">
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish">
 
-            <ImageView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/imageViewIgActivityPublisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/host" />
+                app:srcCompat="@drawable/ic_person_outline_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewIgActivityPublisher"
@@ -68,7 +69,7 @@
                 android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                 android:layout_toEndOf="@+id/imageViewIgActivityPublisher"
                 android:text="@string/activity_detail_publisher"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title" />
 
             <TextView
@@ -78,7 +79,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                 android:layout_toEndOf="@+id/textViewIgActivityPublisher"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title" />
         </RelativeLayout>
 
@@ -89,12 +90,20 @@
             android:layout_below="@+id/layoutIgActivityPublisher"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="@dimen/gap_row_big_ig_activity_publish">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishImageUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_image_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewIgActivityPublishImageUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageViewIgActivityPublishImageUpload"
+                android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                 android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
                 android:text="@string/activity_publish_images_upload"/>
@@ -104,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewIgActivityPublishImageUpload"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal">
             </RelativeLayout>
 
@@ -116,6 +125,7 @@
                 android:layout_toEndOf="@+id/layoutIgActivityPublishImages"
                 android:layout_below="@+id/textViewIgActivityPublishImageUpload"
                 android:layout_marginStart="11dp"
+                android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
                 android:src="@drawable/add"/>
         </RelativeLayout>
 
@@ -124,13 +134,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="@dimen/gap_row_big_ig_activity_publish"
             android:layout_below="@+id/layoutIgActivityPublishImageUpload">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishStartDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_directions_run_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewIgActivityPublishStartDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageViewIgActivityPublishStartDateTime"
+                android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                 android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
                 android:text="@string/activity_publish_date_begin"/>
@@ -152,7 +170,7 @@
                     android:textSize="@dimen/text_size_ig_activity_publish_description"
                     android:text="@string/activity_publish_date_description"/>
 
-                <ImageButton
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/btnIgActivityPublishStartDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -160,7 +178,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/textViewIgActivityPublishStartDateDescription"
                     android:background="@color/colorHomepageBackground"
-                    android:src="@drawable/date"/>
+                    app:srcCompat="@drawable/ic_date_range_black_24dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -180,7 +198,7 @@
                     android:textSize="@dimen/text_size_ig_activity_publish_description"
                     android:text="@string/activity_publish_time_description"/>
 
-                <ImageButton
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/btnIgActivityPublishStartTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -188,7 +206,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/textViewIgActivityPublishStartTimeDescription"
                     android:background="@color/colorHomepageBackground"
-                    android:src="@drawable/date"/>
+                    app:srcCompat="@drawable/ic_access_time_black_24dp"/>
             </RelativeLayout>
         </RelativeLayout>
 
@@ -197,13 +215,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="@dimen/gap_row_big_ig_activity_publish"
             android:layout_below="@+id/layoutIgActivityPublishStart">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishEndDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_directions_run_back_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewIgActivityPublishEndDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageViewIgActivityPublishEndDateTime"
+                android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                 android:textColor="@color/colorSlave"
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
                 android:text="@string/activity_publish_date_end"/>
@@ -225,7 +251,7 @@
                     android:textSize="@dimen/text_size_ig_activity_publish_description"
                     android:text="@string/activity_publish_date_description"/>
 
-                <ImageButton
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/btnIgActivityPublishEndDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -233,7 +259,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/textViewIgActivityPublishEndDateDescription"
                     android:background="@color/colorHomepageBackground"
-                    android:src="@drawable/date"/>
+                    app:srcCompat="@drawable/ic_date_range_black_24dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -253,7 +279,7 @@
                     android:textSize="@dimen/text_size_ig_activity_publish_description"
                     android:text="@string/activity_publish_time_description"/>
 
-                <ImageButton
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/btnIgActivityPublishEndTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -261,28 +287,42 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/textViewIgActivityPublishEndTimeDescription"
                     android:background="@color/colorHomepageBackground"
-                    android:src="@drawable/date"/>
+                    app:srcCompat="@drawable/ic_access_time_black_24dp"/>
             </RelativeLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textViewIgActivityPublishInfo"
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutIgActivityPublishEnd"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="30dp"
-            android:textColor="@color/colorSlave"
-            android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
-            android:text="@string/activity_publish_info"/>
+            android:layout_marginTop="30dp">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_sort_black_24dp" />
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageViewIgActivityPublishInfo"
+                android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_info"/>
+        </RelativeLayout>
 
         <EditText
             android:theme="@style/IngoodEditTextStyle"
             android:id="@+id/editTextIgActivityPublishName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewIgActivityPublishInfo"
+            android:layout_below="@+id/layoutIgActivityPublishInfo"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
             android:layout_marginTop="10dp"
@@ -305,7 +345,7 @@
             android:layout_below="@+id/editTextIgActivityPublishName"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
             android:lineSpacingExtra="0.8sp"
@@ -325,7 +365,7 @@
             android:layout_below="@+id/editTextIgActivityPublishLocation"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
             android:lineSpacingExtra="0.8sp"
@@ -345,7 +385,7 @@
             android:layout_below="@+id/editTextIgActivityPublishDescription"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
             android:textSize="@dimen/text_size_registration_form_input"
             android:textCursorDrawable="@null"
             android:lineSpacingExtra="0.8sp"
@@ -357,13 +397,39 @@
             tools:ignore="RtlSymmetry"
             android:ems="10" />
 
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editTextIgActivityPublishMaxAttention"
+            android:layout_marginStart="@dimen/margin_start_igactivity_publish"
+            android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
+            android:layout_marginTop="30dp">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_insert_link_black_24dp" />
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/imageViewIgActivityPublishTags"
+                android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_tags"/>
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/layoutIgActivityPublishTags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
-            android:layout_below="@id/editTextIgActivityPublishMaxAttention"
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
+            android:layout_below="@id/layoutIgActivityPublishTag"
             android:orientation="vertical">
         </LinearLayout>
 
@@ -373,7 +439,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10.1dp"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="30dp"
             android:layout_alignParentStart="true"
             android:layout_below="@id/layoutIgActivityPublishTags"
             android:background="@drawable/selector_register_next"
@@ -387,7 +453,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10.1dp"
-            android:layout_marginTop="@dimen/gap_tags_row_ig_activity_publish"
+            android:layout_marginTop="30dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/layoutIgActivityPublishTags"
             android:background="@drawable/selector_register_next"
