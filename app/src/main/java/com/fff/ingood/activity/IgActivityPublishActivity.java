@@ -322,7 +322,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 setTagsByIgActivity(activity);
 
                 if(IgActivityImageCache.getInstance().isCacheExist()) {
-                    m_lsUploadImages = IgActivityImageCache.getInstance().getCacheImages();
+                    m_lsUploadImages = IgActivityImageCache.getInstance().getIgActivityImagesCache();
                     makeUploadImageLayout(m_lsUploadImages);
                 }
             }
@@ -700,7 +700,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         } else {
             IgActivityImageManager.IgActivityImageAction imageAction
                     = IgActivityImageManager.getInstance()
-                    .determineImagesAction(IgActivityImageCache.getInstance().getCacheImagesByRef(), m_lsUploadImages);
+                    .determineImagesAction(IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef(), m_lsUploadImages);
 
             if(imageAction.withDeleteAction()) {
                 List<String> lsNames = new ArrayList<>();
@@ -735,7 +735,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(m_bIsImageChanged) {
             IgActivityImageManager.IgActivityImageAction imageAction
                     = IgActivityImageManager.getInstance()
-                    .determineImagesAction(IgActivityImageCache.getInstance().getCacheImagesByRef(), m_lsUploadImages);
+                    .determineImagesAction(IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef(), m_lsUploadImages);
 
             if(imageAction.withUploadAction())
                 uploadIgActivityImage(m_igActivity.getId(), m_lsUploadImages);
@@ -750,7 +750,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(m_bIsImageChanged) {
             IgActivityImageManager.IgActivityImageAction imageAction
                     = IgActivityImageManager.getInstance()
-                    .determineImagesAction(IgActivityImageCache.getInstance().getCacheImagesByRef(), m_lsUploadImages);
+                    .determineImagesAction(IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef(), m_lsUploadImages);
 
             if(imageAction.withUploadAction())
                 uploadIgActivityImage(m_igActivity.getId(), m_lsUploadImages);

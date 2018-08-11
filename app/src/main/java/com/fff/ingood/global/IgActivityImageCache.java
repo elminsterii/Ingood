@@ -12,10 +12,13 @@ import java.util.List;
  */
 public class IgActivityImageCache {
     private static IgActivityImageCache m_instance = null;
-    private List<Bitmap> m_lsCacheImages;
 
+    //for Homepage.
     private HashMap<String, ImageView> m_hashImageViewsHolder;
     private HashMap<String, Bitmap> m_hashIgActivityMainImagesCache;
+
+    //for IgActivityDetail.
+    private List<Bitmap> m_lsIgActivityImagesCache;
 
     private IgActivityImageCache() {
 
@@ -32,6 +35,7 @@ public class IgActivityImageCache {
     private void initialize() {
         m_hashImageViewsHolder = new HashMap<>();
         m_hashIgActivityMainImagesCache = new HashMap<>();
+        m_lsIgActivityImagesCache = new ArrayList<>();
     }
 
     public void clear() {
@@ -47,19 +51,15 @@ public class IgActivityImageCache {
         return m_hashIgActivityMainImagesCache;
     }
 
-    public List<Bitmap> getCacheImages() {
-        return new ArrayList<>(m_lsCacheImages);
+    public List<Bitmap> getIgActivityImagesCache() {
+        return new ArrayList<>(m_lsIgActivityImagesCache);
     }
 
-    public List<Bitmap> getCacheImagesByRef() {
-        return m_lsCacheImages;
-    }
-
-    public void cachingImages(List<Bitmap> lsCacheImages) {
-        m_lsCacheImages = lsCacheImages;
+    public List<Bitmap> getIgActivityImagesCacheByRef() {
+        return m_lsIgActivityImagesCache;
     }
 
     public boolean isCacheExist() {
-        return (m_lsCacheImages != null) && (m_lsCacheImages.size() > 0);
+        return (m_lsIgActivityImagesCache != null) && (m_lsIgActivityImagesCache.size() > 0);
     }
 }

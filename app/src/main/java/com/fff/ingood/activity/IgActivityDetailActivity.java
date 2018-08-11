@@ -113,7 +113,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private IgActivity mIgActivity;
     private List<ImageView> m_lsImageViewAttendeeIcons;
     private List<ImageView> m_lsImageViewCommentIcons;
-    private ArrayList<Bitmap> m_lsIgActivityImages;
 
     private int mTagBarWidth;
     private boolean m_bIsGetTagBarWidth = false;
@@ -151,6 +150,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         Person person = PersonManager.getInstance().getPerson();
         m_bIsIgActivityOwner = mIgActivity.getPublisherEmail().equals(person.getEmail());
+        IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().clear();
     }
 
     @Override
@@ -192,8 +192,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void changeMainImage(int index) {
-        if(index < m_lsIgActivityImages.size()) {
-            Bitmap bm = m_lsIgActivityImages.get(index);
+        if(index < IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().size()) {
+            Bitmap bm = IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().get(index);
             mImageViewIgActivityMain.setImageBitmap(bm);
         }
     }
@@ -203,7 +203,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewIgActivityMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(curIndexMainImage >= m_lsIgActivityImages.size())
+                if(curIndexMainImage >= IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().size())
                     curIndexMainImage = 0;
                 changeMainImage(curIndexMainImage);
                 curIndexMainImage++;
@@ -319,7 +319,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 public void onClick(View v) {
                     Intent intent = new Intent(mActivity, IgActivityPublishActivity.class);
                     intent.putExtra(TAG_IGACTIVITY, mIgActivity);
-                    IgActivityImageCache.getInstance().cachingImages(m_lsIgActivityImages);
                     mActivity.startActivity(intent);
                 }
             };
@@ -402,10 +401,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiIgActivityDefaultImage() {
-        if(m_lsIgActivityImages == null)
-            m_lsIgActivityImages = new ArrayList<>();
         curIndexMainImage = 1;
-        mImageViewIgActivityMain.setImageResource(R.drawable.ic_image_black_72dp);
+        if(IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().containsKey(mIgActivity.getId())) {
+            Bitmap bm = IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().get(mIgActivity.getId());
+            mImageViewIgActivityMain.setImageBitmap(bm);
+            IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().add(bm);
+        }
+        else
+            mImageViewIgActivityMain.setImageResource(R.drawable.ic_image_black_72dp);
     }
 
     private void setUiIgActivityImageMask(IgActivity activity) {
@@ -433,7 +436,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doPersonMainIconDownload(this, igActivityPublisher.getEmail());
     }
 
-    private void downloadImages_IgActivityMainImages(IgActivity activity) {
+    private void downloadImages_IgActivityImages(IgActivity activity) {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doIgActivityImagesDownloadAll(this, activity.getId());
     }
@@ -924,8 +927,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         if(bmIgActivityImages != null && bmIgActivityImages.size() > 0) {
             mImageViewIgActivityMain.setImageBitmap(bmIgActivityImages.get(0));
-            m_lsIgActivityImages.clear();
-            m_lsIgActivityImages.addAll(bmIgActivityImages);
+            IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().clear();
+            IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().addAll(bmIgActivityImages);
         }
     }
 
@@ -1016,6 +1019,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     public void returnIgActivities(List<IgActivity> lsActivities) {
+        hideWaitingDialog();
+
         if(lsActivities != null && lsActivities.size() > 0) {
             mIgActivity = lsActivities.get(0);
 
@@ -1028,7 +1033,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     setUiIgActivityImageMask(mIgActivity);
                     setUiSaveIgActivity();
                     downloadIcon_IgActivityAttendees(mIgActivity);
-                    downloadImages_IgActivityMainImages(mIgActivity);
+                    downloadImages_IgActivityImages(mIgActivity);
                     getCommentsByIgActivity(mIgActivity);
                     getPublisherInfo();
                     break;
