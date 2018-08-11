@@ -308,8 +308,6 @@
 
     <!-- FB LOGIN-->
     <string name="facebook_app_id">1612934862149855</string>
-    <string name="fb_login_protocol_scheme">fb1612934862149855</string>
-
 </resources>
 
 
