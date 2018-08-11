@@ -630,18 +630,15 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
-                Bundle extras = data.getExtras();
-                if(extras != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCropImage);
+                Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCropImage);
 
-                    if(bm != null) {
-                        m_bmPersonIconUpload = bm;
-                        mImageViewPersonIcon.setImageBitmap(bm);
-                        deleteImageByUri(m_uriPickImage);
-                        deleteImageByUri(m_uriCropImage);
-                        m_uriPickImage = null;
-                        m_uriCropImage = null;
-                    }
+                if(bm != null) {
+                    m_bmPersonIconUpload = bm;
+                    mImageViewPersonIcon.setImageBitmap(bm);
+                    deleteImageByUri(m_uriPickImage);
+                    deleteImageByUri(m_uriCropImage);
+                    m_uriPickImage = null;
+                    m_uriCropImage = null;
                 }
             }
         } else if (resultCode == RESULT_CANCELED) {

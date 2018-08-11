@@ -186,6 +186,7 @@
     <string name="publish_igactivity_time_format_wrong">Determine time for activity</string>
     <string name="publish_igactivity_begin_end_time_wrong">Begin can not after end time</string>
     <string name="publish_igactivity_begin_cur_time_wrong">Begin can not be post time</string>
+    <string name="login_fail_nwk_error">Login fail by network disconnection</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">Success, request has been done</string>

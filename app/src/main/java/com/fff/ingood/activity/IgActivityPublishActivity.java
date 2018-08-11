@@ -798,18 +798,15 @@ public class IgActivityPublishActivity extends BaseActivity implements
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
-                Bundle extras = data.getExtras();
-                if(extras != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCropImage);
+                Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCropImage);
 
-                    if(bm != null) {
-                        addImageIntoLayout(bm);
-                        deleteImageByUri(m_uriPickImage);
-                        deleteImageByUri(m_uriCropImage);
-                        m_uriPickImage = null;
-                        m_uriCropImage = null;
-                        m_bIsImageChanged = true;
-                    }
+                if(bm != null) {
+                    addImageIntoLayout(bm);
+                    deleteImageByUri(m_uriPickImage);
+                    deleteImageByUri(m_uriCropImage);
+                    m_uriPickImage = null;
+                    m_uriCropImage = null;
+                    m_bIsImageChanged = true;
                 }
             }
         } else if (resultCode == RESULT_CANCELED) {

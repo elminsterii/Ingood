@@ -185,6 +185,7 @@
     <string name="publish_igactivity_time_format_wrong">請選擇活動時間</string>
     <string name="publish_igactivity_begin_end_time_wrong">開始時間不可超過結束時間</string>
     <string name="publish_igactivity_begin_cur_time_wrong">開始時間不可為過去時間</string>
+    <string name="login_fail_nwk_error">登入失敗, 網路不通喔</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">執行成功</string>

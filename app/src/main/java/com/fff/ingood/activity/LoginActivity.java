@@ -47,6 +47,7 @@ import static com.fff.ingood.global.GlobalProperty.VERIFY_CODE_FOR_GOOGLE_SIGN;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_USER_ALREADY_EXIST_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_GOOGLE_SIGNIN_FAIL;
 import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions;
+import static com.google.android.gms.common.api.CommonStatusCodes.NETWORK_ERROR;
 
 /**
  * Created by yoie7 on 2018/5/3.
@@ -155,7 +156,10 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                 checkPersonExist(person);
             }
         } catch (ApiException e) {
-            Toast.makeText(mActivity, getServerResponseDescriptions().get(STATUS_CODE_GOOGLE_SIGNIN_FAIL), Toast.LENGTH_SHORT).show();
+            if(e.getStatusCode() == NETWORK_ERROR)
+                Toast.makeText(mActivity, getResources().getText(R.string.login_fail_nwk_error), Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(mActivity, getServerResponseDescriptions().get(STATUS_CODE_GOOGLE_SIGNIN_FAIL), Toast.LENGTH_SHORT).show();
         }
     }
 
