@@ -17,6 +17,7 @@ import com.fff.ingood.R;
 import com.fff.ingood.activity.IgActivityDetailActivity;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
+import com.fff.ingood.global.IgActivityImageCache;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.TagManager;
 import com.fff.ingood.logic.IgActivityImageComboLogic_IgActivityMainImageDownload;
@@ -28,7 +29,6 @@ import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
@@ -44,8 +44,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private int mTagBarWidth;
 
     private Context mContext;
-    private HashMap<String, ImageView> m_hashImageViews;
-    private HashMap<String, Bitmap> m_hashImageBitmapsCache;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout mLayoutIgactivityItem;
@@ -80,8 +78,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public ActivityListAdapter(List<IgActivity> lsActivity, Context context) {
         m_lsActivity = lsActivity;
         mContext = context;
-        m_hashImageViews = new HashMap<>();
-        m_hashImageBitmapsCache = new HashMap<>();
     }
 
     @NonNull
@@ -125,8 +121,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     public void clear() {
-        m_hashImageBitmapsCache.clear();
-        m_hashImageViews.clear();
+        IgActivityImageCache.getInstance().clear();
         m_lsActivity.clear();
     }
 
@@ -224,13 +219,13 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private void makeImage(ViewHolder holder, IgActivity activity, int position) {
         String strPosition = Integer.toString(position);
-        m_hashImageViews.put(strPosition, holder.mImageViewActivity);
+        IgActivityImageCache.getInstance().getHashImageViewsHolder().put(strPosition, holder.mImageViewActivity);
 
-        if(!m_hashImageBitmapsCache.containsKey(activity.getId())) {
+        if(!IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().containsKey(activity.getId())) {
             makeDefaultImage(holder);
             downloadIgActivityImage(activity, strPosition);
         } else {
-            Bitmap bm = m_hashImageBitmapsCache.get(activity.getId());
+            Bitmap bm = IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().get(activity.getId());
             holder.mImageViewActivity.setScaleType(ImageView.ScaleType.CENTER_CROP);
             holder.mImageViewActivity.setImageBitmap(bm);
         }
@@ -267,12 +262,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 if(index >= 0 && index < m_lsActivity.size()) {
                     IgActivity activity = m_lsActivity.get(index);
                     String strIgActivityId = activity.getId();
-                    if(!m_hashImageBitmapsCache.containsKey(strIgActivityId))
-                        m_hashImageBitmapsCache.put(strIgActivityId, bmIgActivityImage);
+                    if(!IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().containsKey(strIgActivityId))
+                        IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().put(strIgActivityId, bmIgActivityImage);
                 }
 
-                if(m_hashImageViews.containsKey(strTag)) {
-                    ImageView imageView = m_hashImageViews.get(strTag);
+                if(IgActivityImageCache.getInstance().getHashImageViewsHolder().containsKey(strTag)) {
+                    ImageView imageView = IgActivityImageCache.getInstance().getHashImageViewsHolder().get(strTag);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     imageView.setImageBitmap(bmIgActivityImage);
                 }
