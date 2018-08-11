@@ -114,7 +114,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         if(m_lsUploadImages != null) {
             for(Bitmap bm : m_lsUploadImages)
                 if(bm != null && !bm.isRecycled())
-                    bm.recycle();
+                    bm = null;
         }
         m_lsUploadImages = null;
         System.gc();
