@@ -41,6 +41,7 @@ import com.fff.ingood.logic.IgActivityImagesUploadLogic;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
 import com.fff.ingood.logic.IgActivityRepublishLogic;
 import com.fff.ingood.logic.IgActivityUpdateLogic;
+import com.fff.ingood.tools.FileHelper;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
@@ -98,6 +99,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private ImageButton m_preBtnOfTagAdd;
 
     private List<Bitmap> m_lsUploadImages;
+    private Uri m_uriCapImage;
     private Uri m_uriPickImage;
     private Uri m_uriCropImage;
 
@@ -666,25 +668,25 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     private void pickImageByGalleryOrCam() {
-        Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        m_uriPickImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
-        capIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        capIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriPickImage);
-        m_uriCropImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        final String TEMP_PICK_IMAGE_NAME = "temp_pick_image.png";
+        final String TEMP_CROP_IMAGE_NAME = "temp_crop_image.png";
 
-        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        m_uriCapImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        capIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCapImage);
+
+        m_uriPickImage = FileHelper.createUriFromProvider(this, TEMP_PICK_IMAGE_NAME);
+        m_uriCropImage = FileHelper.createUri(this, TEMP_CROP_IMAGE_NAME);
+
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
         Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        getIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        getIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         getIntent.setType("image/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        pickIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
@@ -779,19 +781,19 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     if(bm != null) {
                         bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
                         deleteImageByUri(m_uriPickImage);
-                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        m_uriPickImage = FileHelper.bitmapToUri(this, bm);
                         performCropImage(m_uriPickImage, m_uriCropImage);
                     }
                 }
             } else {
                 //from camera
-                if(m_uriPickImage != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriPickImage);
+                if(m_uriCapImage != null) {
+                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCapImage);
 
                     if(bm != null) {
-                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriPickImage, this);
-                        deleteImageByUri(m_uriPickImage);
-                        m_uriPickImage = ImageHelper.genImageUri(this, bm);
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriCapImage, this);
+                        deleteImageByUri(m_uriCapImage);
+                        m_uriPickImage = FileHelper.bitmapToUri(this, bm);
                         performCropImage(m_uriPickImage, m_uriCropImage);
                     }
                 }
@@ -802,29 +804,21 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
                 if(bm != null) {
                     addImageIntoLayout(bm);
-                    deleteImageByUri(m_uriPickImage);
-                    deleteImageByUri(m_uriCropImage);
-                    m_uriPickImage = null;
-                    m_uriCropImage = null;
+                    clearMiddleImages();
                     m_bIsImageChanged = true;
                 }
             }
         } else if (resultCode == RESULT_CANCELED) {
-            deleteImageByUri(m_uriPickImage);
-            deleteImageByUri(m_uriCropImage);
-            m_uriPickImage = null;
-            m_uriCropImage = null;
+            clearMiddleImages();
         }
     }
 
     private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
-        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             cropIntent.setDataAndType(uriCropImage, "image/*");
             cropIntent.putExtra("crop", "true");
             cropIntent.putExtra("aspectX", 2);
@@ -835,7 +829,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
             cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriCropResult);
             startActivityForResult(cropIntent, RESULT_CODE_CROP_IMAGE);
         }
-        // respond to users whose devices do not support the crop action
         catch (ActivityNotFoundException ignored) {
 
         }
@@ -843,8 +836,21 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deleteImageByUri(Uri uriImage) {
-        getContentResolver().delete(uriImage, null, null);
+        try {
+            getContentResolver().delete(uriImage, null, null);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
         File file = new File(uriImage.getPath());
         file.delete();
+    }
+
+    private void clearMiddleImages() {
+        deleteImageByUri(m_uriCapImage);
+        deleteImageByUri(m_uriPickImage);
+        deleteImageByUri(m_uriCropImage);
+        m_uriCapImage = null;
+        m_uriPickImage = null;
+        m_uriCropImage = null;
     }
 }

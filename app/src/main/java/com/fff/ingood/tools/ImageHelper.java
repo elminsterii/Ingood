@@ -17,6 +17,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -24,6 +25,7 @@ import android.util.Base64;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -122,18 +124,15 @@ public class ImageHelper {
 
     public static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
+
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
             while ((halfHeight / inSampleSize) >= reqHeight
                     && (halfWidth / inSampleSize) >= reqWidth) {
                 inSampleSize *= 2;
@@ -144,16 +143,11 @@ public class ImageHelper {
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
-
-        // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, resId, options);
 
-        // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
     }
@@ -168,15 +162,7 @@ public class ImageHelper {
     public static Bitmap makeBitmapCorrectOrientation(Bitmap srcBitmap, Uri uri, Context context) {
         Bitmap bmRes = srcBitmap;
         ExifInterface exif = null;
-        String strImagePath = null;
-
-        String[] filePath = {MediaStore.Images.Media.DATA};
-        Cursor cursor = context.getContentResolver().query(uri, filePath, null, null, null);
-        if(cursor != null) {
-            cursor.moveToFirst();
-            strImagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-            cursor.close();
-        }
+        String strImagePath = getRealPathFromUri(context, uri);
 
         try {
             exif = new ExifInterface(strImagePath);
@@ -211,6 +197,44 @@ public class ImageHelper {
                 break;
         }
         return bmRes;
+    }
+
+    public static String getRealPathFromUri(Context context, Uri uri) {
+        String result = null;
+        Cursor cursor = context.getContentResolver().query(uri, null,
+                null, null, null);
+
+        if (cursor == null)
+            result = uri.getPath();
+        else {
+            cursor.moveToFirst();
+            try {
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                result = cursor.getString(idx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.close();
+        }
+
+        if (!StringTool.checkStringNotNull(result)) {
+            String uriString = uri.toString();
+            int index = uriString.lastIndexOf("/");
+            String imageName = uriString.substring(index);
+            File storageDir;
+
+            storageDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File file = new File(storageDir, imageName);
+            if (file.exists()) {
+                result = file.getAbsolutePath();
+            } else {
+                storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File file1 = new File(storageDir, imageName);
+                result = file1.getAbsolutePath();
+            }
+        }
+        return result;
     }
 
     public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
