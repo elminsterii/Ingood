@@ -516,7 +516,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_ongoing))) {
             igCondition.setGood(DEF_ORDER_BY_GOOD);
-            igCondition.setStatus(IgActivity.IGA_STATUS_START);
+            String strCurTime = TimeHelper.getCurTime();
+            igCondition.setDateBegin(strCurTime);
             m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
             igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
