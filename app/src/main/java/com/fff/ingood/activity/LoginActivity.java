@@ -139,7 +139,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     }
 
     private void googleSignIn() {
-        Intent signInIntent = GoogleSignInManager.getInstance().geGoogleSignInClient().getSignInIntent();
+        Intent signInIntent = GoogleSignInManager.getInstance().geGoogleSignInClient(this).getSignInIntent();
         startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE_SIGNIN);
     }
 
@@ -150,6 +150,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             if(account != null) {
                 GoogleSignInManager.getInstance().setGoogleSignInAccount(account);
                 PreferenceManager.getInstance().setLoginByGoogle(true);
+                PreferenceManager.getInstance().setLoginByFacebook(false);
 
                 Person person = new Person();
                 person.setEmail(account.getEmail());
@@ -322,6 +323,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
                                 personFB.setPassword(pwd);
 
                                 FacebookSignInManager.getInstance().setFBSignInAccount(personFB);
+                                PreferenceManager.getInstance().setLoginByGoogle(false);
                                 PreferenceManager.getInstance().setLoginByFacebook(true);
                                 checkPersonExist(personFB);
                             }

@@ -58,7 +58,13 @@ public class GoogleSignInManager {
         return mGoogleSignInAccount != null;
     }
 
-    public GoogleSignInClient geGoogleSignInClient() {
+    public GoogleSignInClient geGoogleSignInClient(Context context) {
+        if(mGoogleSignInClient == null) {
+            GoogleSignInOptions mGso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
+            mGoogleSignInClient = GoogleSignIn.getClient(context, mGso);
+        }
         return mGoogleSignInClient;
     }
 }
