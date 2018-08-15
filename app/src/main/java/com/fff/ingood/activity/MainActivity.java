@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M)
             requestPermission();
+        else
+            startStartupAnimation();
     }
 
     @Override
