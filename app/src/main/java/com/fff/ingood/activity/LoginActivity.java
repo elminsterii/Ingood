@@ -304,7 +304,7 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
             LoginManager.getInstance().logOut();
 
         LoginManager loginManager = FacebookSignInManager.getInstance().getLoginManager();
-        loginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
+        loginManager.setLoginBehavior(LoginBehavior.WEB_ONLY);
         List<String> permissions = new ArrayList<>();
         permissions.add("public_profile");
         permissions.add("email");
