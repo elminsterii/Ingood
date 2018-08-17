@@ -297,7 +297,10 @@ public class LoginActivity extends BaseActivity implements PersonCheckExistLogic
     }
 
 	private void facebookSingIn() {
-        if (AccessToken.getCurrentAccessToken() != null)
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+        if (isLoggedIn)
             LoginManager.getInstance().logOut();
 
         LoginManager loginManager = FacebookSignInManager.getInstance().getLoginManager();
