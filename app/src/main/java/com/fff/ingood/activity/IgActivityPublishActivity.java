@@ -418,6 +418,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         String strDateEnd = activity.getDateEnd();
 
         if(StringTool.checkStringNotNull(strDateBegin)) {
+            strDateBegin = TimeHelper.makeTimeStringWithoutSec(strDateBegin);
             String[] arrDateBegin = strDateBegin.split(" ");
             if(arrDateBegin.length > 1) {
                 mTextViewStartDateDescription.setText(arrDateBegin[0]);
@@ -426,6 +427,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         }
 
         if(StringTool.checkStringNotNull(strDateEnd)) {
+            strDateEnd = TimeHelper.makeTimeStringWithoutSec(strDateEnd);
             String[] arrDateEnd = strDateEnd.split(" ");
             if(arrDateEnd.length > 1) {
                 mTextViewEndDateDescription.setText(arrDateEnd[0]);
@@ -742,7 +744,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             if(imageAction.withUploadAction())
                 uploadIgActivityImage(m_igActivity.getId(), m_lsUploadImages);
         } else {
-            Toast.makeText(mActivity, getResources().getText(R.string.activity_publish_republish), Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, getResources().getText(R.string.activity_has_been_published), Toast.LENGTH_SHORT).show();
             backToDetailPage();
         }
     }

@@ -44,6 +44,26 @@ public class TimeHelper {
         return strTimeBegin + " ~ " + strTimeEnd;
     }
 
+    public static String makeTimeStringWithoutSec(String strTime) {
+        String strTimeBewFormat = null;
+        String strOriginPattern = "yyyy-MM-dd HH:mm:ss";
+        String strNewPattern = "yyyy-MM-dd HH:mm";
+
+        DateFormat dateOriginFormat = new SimpleDateFormat(strOriginPattern, Locale.getDefault());
+        DateFormat dateNewFormat = new SimpleDateFormat(strNewPattern, Locale.getDefault());
+
+        if(!StringTool.checkStringNotNull(strTime))
+            return "";
+
+        try {
+            Date date = dateOriginFormat.parse(strTime);
+            strTimeBewFormat = dateNewFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strTimeBewFormat;
+    }
+
     public static String makeIgActivityDateStringByUI(String strUIDate) {
         if(!StringTool.checkStringNotNull(strUIDate))
             return "";
