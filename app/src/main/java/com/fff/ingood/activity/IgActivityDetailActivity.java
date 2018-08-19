@@ -868,6 +868,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
                 } else if(strTag.equals(LOGIC_TAG_PERSON_QUERY_ATTENDEES)
                         || strTag.equals(LOGIC_TAG_PERSON_QUERY_COMMENTS)) {
+                    hideWaitingDialog();
+
                     Person person = lsPersons.get(0);
                     Intent intent = new Intent(mActivity, PersonDataActivity.class);
                     intent.putExtra(Person.TAG_PERSON, person);
