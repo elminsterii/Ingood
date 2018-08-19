@@ -205,6 +205,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                             republishIgActivity(m_igActivity);
                         } else
                             updateIgActivity(m_igActivity);
+                        IgActivityDetailActivity.DoRefreshInResume = true;
                     }
                     showWaitingDialog(IgActivityPublishActivity.class.getName());
                 }

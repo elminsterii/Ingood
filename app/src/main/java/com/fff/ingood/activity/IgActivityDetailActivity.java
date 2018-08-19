@@ -130,18 +130,26 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private UPDATE_IGACTIVITY_UI_SECTION m_updateUiSection;
 
+    //refresh all info about IgActivity when necessary.
+    public static boolean DoRefreshInResume;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ig_detail);
         super.onCreate(savedInstanceState);
+
+        DoRefreshInResume = true;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        showWaitingDialog(HomeActivity.class.getName());
-        refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
+        if(DoRefreshInResume) {
+            showWaitingDialog(HomeActivity.class.getName());
+            refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
+            DoRefreshInResume = false;
+        }
     }
 
     @Override
