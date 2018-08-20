@@ -3,6 +3,7 @@ package com.fff.ingood.tools;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.FileProvider;
 
 import com.fff.ingood.BuildConfig;
@@ -30,9 +31,16 @@ public class FileHelper {
     }
 
     private static Uri readFileToUri(Context context, String strName) {
+        Uri uri;
         File fileDir = context.getExternalFilesDir(null);
         File file = new File(fileDir, strName);
-        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+        else
+            uri = Uri.fromFile(file);
+
+        return uri;
     }
 
     private static void writeBitmapToFile(Context context, Bitmap bm, String strName) {

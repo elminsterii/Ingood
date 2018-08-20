@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
@@ -679,7 +680,11 @@ public class IgActivityPublishActivity extends BaseActivity implements
         capIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCapImage);
 
-        m_uriPickImage = FileHelper.createUriFromProvider(this, TEMP_PICK_IMAGE_NAME);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            m_uriPickImage = FileHelper.createUriFromProvider(this, TEMP_PICK_IMAGE_NAME);
+        else
+            m_uriPickImage = FileHelper.createUri(this, TEMP_PICK_IMAGE_NAME);
+
         m_uriCropImage = FileHelper.createUri(this, TEMP_CROP_IMAGE_NAME);
 
         grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
