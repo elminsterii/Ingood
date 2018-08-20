@@ -551,7 +551,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         });
         m_lsImageViewCommentIcons.add(imageViewIcon);
 
-        if(comment.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail())) {
+        if(comment.getPublisherEmail().equals(PersonManager.getInstance().getPerson().getEmail())
+                || PersonManager.getInstance().isAdmin()) {
             LinearLayout linerLayout = layout.findViewById(R.id.layoutCommentAction);
             ImageButton imageBtnCommentActionDelete = linerLayout.findViewById(R.id.imageBtnCommentActionDelete);
             ImageButton imageBtnCommentActionEdit = linerLayout.findViewById(R.id.imageBtnCommentActionEdit);
@@ -963,7 +964,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
         hideWaitingDialog();
         getCommentsByIgActivity(mIgActivity);
         Toast.makeText(mActivity, getResources().getText(R.string.dialog_delete_comment_done_message), Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
