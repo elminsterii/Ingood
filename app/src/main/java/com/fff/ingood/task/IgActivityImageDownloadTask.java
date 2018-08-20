@@ -16,7 +16,7 @@ public class IgActivityImageDownloadTask extends HttpDownloadTask<String, Intege
     protected Bitmap access(String strIgActivityIdAndIconName) {
 
         Bitmap bitmap;
-        String strURL = String.valueOf(HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS);
+        String strURL = HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS;
         strURL += "/";
         strURL += strIgActivityIdAndIconName;
 

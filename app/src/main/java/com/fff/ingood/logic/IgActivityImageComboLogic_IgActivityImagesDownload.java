@@ -20,6 +20,7 @@ public class IgActivityImageComboLogic_IgActivityImagesDownload extends Logic im
         , IgActivityImageGetListTaskWrapper.IgActivityImageGetListTaskWrapperCallback {
 
     public interface IgActivityImagesDownloadLogicCaller extends LogicCaller {
+        void returnIgActivityImageSize(int iSize);
         void returnIgActivityImages(List<Bitmap> bmIgActivityImages);
         void returnStatus(Integer iStatusCode);
     }
@@ -60,6 +61,8 @@ public class IgActivityImageComboLogic_IgActivityImagesDownload extends Logic im
     @Override
     public void onGetIgActivitiesImageListSuccess(String strIgActivityImagesName) {
         m_lsIgActivityImagesName = StringTool.arrayStringToListString(strIgActivityImagesName.split(","));
+        mCaller.returnIgActivityImageSize(m_lsIgActivityImagesName.size());
+
         if(m_lsIgActivityImagesName.size() > 0) {
             m_lsIgActivityImages = new ArrayList<>();
 

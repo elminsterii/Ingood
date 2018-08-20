@@ -46,6 +46,7 @@ import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonQueryLogic;
 import com.fff.ingood.logic.PersonSaveIgActivityLogic;
+import com.fff.ingood.task.HttpProxy;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
@@ -55,11 +56,13 @@ import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.HeadZoomScrollView;
 import com.fff.ingood.ui.WarningDialog;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.ARRAY_IGACTIVITY_IMAGE_NAMES;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -120,7 +123,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private boolean m_bIsIgActivityOwner;
     private boolean m_bIsAttended;
     private boolean m_bIsSave;
-    private int curIndexMainImage;
 
     private static final String LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS = "attendees_icons_download";
     private static final String LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS = "comment_publisher_icons_download";
@@ -132,6 +134,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     //refresh all info about IgActivity when necessary.
     public static boolean DoRefreshInResume;
+    private int m_iIgActivityImagesSize = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,22 +203,24 @@ public class IgActivityDetailActivity extends BaseActivity implements
         setUiIgActivityDefaultImage();
     }
 
-    private void changeMainImage(int index) {
-        if(index < IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().size()) {
-            Bitmap bm = IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().get(index);
-            mImageViewIgActivityMain.setImageBitmap(bm);
-        }
-    }
-
     @Override
     protected void initListener() {
         mImageViewIgActivityMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(curIndexMainImage >= IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().size())
-                    curIndexMainImage = 0;
-                changeMainImage(curIndexMainImage);
-                curIndexMainImage++;
+                final int iSize = m_iIgActivityImagesSize <= 0 ? 1 : m_iIgActivityImagesSize;
+
+                String[] arrImagesURL = new String[iSize];
+                String strURL = HttpProxy.HTTP_API_ACTIVITY_IMAGE_ACCESS + "/";
+                strURL += mIgActivity.getId();
+                strURL += "/";
+
+                for(int i=0; i<arrImagesURL.length; i++)
+                    arrImagesURL[i] = strURL + ARRAY_IGACTIVITY_IMAGE_NAMES[i];
+
+                new ImageViewer.Builder(mActivity, arrImagesURL)
+                        .setStartPosition(0)
+                        .show();
             }
         });
 
@@ -410,7 +415,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiIgActivityDefaultImage() {
-        curIndexMainImage = 1;
         if(IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().containsKey(mIgActivity.getId())) {
             Bitmap bm = IgActivityImageCache.getInstance().getHashIgActivityMainImagesCache().get(mIgActivity.getId());
             mImageViewIgActivityMain.setImageBitmap(bm);
@@ -933,6 +937,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 }
             }
         }
+    }
+
+    @Override
+    public void returnIgActivityImageSize(int iSize) {
+        m_iIgActivityImagesSize = iSize;
     }
 
     @Override

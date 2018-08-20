@@ -15,6 +15,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.fff.ingood.R;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         GoogleSignInManager.getInstance(this);
         FacebookSignInManager.getInstance();
         GlobalProperty.initialize();
+        Fresco.initialize(this);
     }
 
     private void startStartupAnimation() {
