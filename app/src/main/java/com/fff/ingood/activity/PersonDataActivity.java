@@ -11,7 +11,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewCompat;
@@ -456,7 +455,6 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void pickImageByGalleryOrCam() {
-        final String TEMP_PICK_IMAGE_NAME = "temp_pick_image";
         final String TEMP_CROP_IMAGE_NAME = "temp_crop_image";
 
         Intent capIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -464,25 +462,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         capIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         capIntent.putExtra(MediaStore.EXTRA_OUTPUT, m_uriCapImage);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            m_uriPickImage = FileHelper.createUriFromProvider(this, TEMP_PICK_IMAGE_NAME);
-        else
-            m_uriPickImage = FileHelper.createUri(this, TEMP_PICK_IMAGE_NAME);
-
         m_uriCropImage = FileHelper.createUri(this, TEMP_CROP_IMAGE_NAME);
 
-        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        grantUriPermission(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriCapImage, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        getIntent.setType("image/*");
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         pickIntent.setType("image/*");
 
         Intent chooserIntent = Intent.createChooser(capIntent, getResources().getText(R.string.person_data_photo_edit));
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent, getIntent});
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
         startActivityForResult(chooserIntent, RESULT_CODE_PICK_IMAGE);
     }
 
@@ -612,28 +601,12 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             if(data != null) {
                 //from gallery
                 Uri uriImage = data.getData();
-                if(uriImage != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, uriImage);
-
-                    if(bm != null) {
-                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, this);
-                        deleteImageByUri(m_uriPickImage);
-                        m_uriPickImage = FileHelper.bitmapToUri(this, bm);
-                        performCropImage(m_uriPickImage, m_uriCropImage);
-                    }
-                }
+                if(uriImage != null)
+                    performCropImage(uriImage, m_uriCropImage);
             } else {
                 //from camera
-                if(m_uriCapImage != null) {
-                    Bitmap bm = ImageHelper.loadBitmapFromUri(this, m_uriCapImage);
-
-                    if(bm != null) {
-                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, m_uriCapImage, this);
-                        deleteImageByUri(m_uriCapImage);
-                        m_uriPickImage = FileHelper.bitmapToUri(this, bm);
-                        performCropImage(m_uriPickImage, m_uriCropImage);
-                    }
-                }
+                if(m_uriCapImage != null)
+                    performCropImage(m_uriCapImage, m_uriCropImage);
             }
         } else if(requestCode == RESULT_CODE_CROP_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
@@ -651,7 +624,8 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     private void performCropImage(Uri uriCropImage, Uri uriCropResult) {
-        grantUriPermission("com.android.camera.action.CROP", MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", uriCropImage, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        grantUriPermission("com.android.camera.action.CROP", uriCropResult, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
         try {
             Intent cropIntent = new Intent("com.android.camera.action.CROP");
@@ -673,6 +647,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deleteImageByUri(Uri uriImage) {
+        if(uriImage == null)
+            return;
+
         try {
             getContentResolver().delete(uriImage, null, null);
         } catch (IllegalArgumentException e) {
