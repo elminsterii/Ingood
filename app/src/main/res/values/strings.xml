@@ -91,6 +91,7 @@
     <string name="activity_publish_tags">Activity tags</string>
 
     <!-- Default tags -->
+    <string name="tag_official">Official</string>
     <string name="tag_recently">Recently</string>
     <string name="tag_ongoing">Ongoing</string>
     <string name="tag_popularity">Popularity</string>

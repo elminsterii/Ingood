@@ -61,6 +61,8 @@ public class TagManager {
     private void initialize() {
         m_mapTagColor = new HashMap<>();
 
+        String strTagOfficial = mContext.getResources().getText(R.string.tag_official).toString();
+        int colTagOfficial = mContext.getResources().getColor(R.color.colorSlave);
         String strTagSport = mContext.getResources().getText(R.string.tag_sport).toString();
         int colTagSport = mContext.getResources().getColor(R.color.colorTagBlue);
         String strTagBall = mContext.getResources().getText(R.string.tag_ball).toString();
@@ -102,6 +104,7 @@ public class TagManager {
         String strTagFood3 = mContext.getResources().getText(R.string.tag_food3).toString();
         int colTagFood3 = mContext.getResources().getColor(R.color.colorTagOrange);
 
+        m_mapTagColor.put(strTagOfficial, colTagOfficial);
         m_mapTagColor.put(strTagSport, colTagSport);
         m_mapTagColor.put(strTagBall, colTagBall);
         m_mapTagColor.put(strTagCasual, colTagCasual);

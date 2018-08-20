@@ -40,7 +40,9 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
     public void setPerson(Person person) {
         this.mPerson = person;
 
-        if(mPerson != null && GlobalProperty.MAP_ADMIN_ACCOUNTS_AND_PW.containsKey(mPerson.getEmail())) {
+        if(mPerson == null)
+            m_bIsAdmin = false;
+        else if(GlobalProperty.MAP_ADMIN_ACCOUNTS_AND_PW.containsKey(mPerson.getEmail())) {
             String strAdminPassword = GlobalProperty.MAP_ADMIN_ACCOUNTS_AND_PW.get(mPerson.getEmail());
             if(strAdminPassword != null && strAdminPassword.equals(mPerson.getPassword()))
                 m_bIsAdmin = true;

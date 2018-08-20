@@ -28,6 +28,7 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
@@ -123,6 +124,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             IgActivity activity = (IgActivity) getIntent().getSerializableExtra(TAG_IGACTIVITY);
             if(activity != null) {
                 preSearchCondition = activity;
+                m_bIsShowExpireIgActivity = true;
             }
         }
     }
@@ -171,7 +173,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         if(preSearchCondition == null) {
             preSearchCondition = new IgActivity();
-            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_recently).toString());
+            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_official).toString());
         }
     }
 
@@ -453,6 +455,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     }
 
     private void makeDefaultTags() {
+        TabLayout.Tab tabOfficial = mTabLayoutTagBar.newTab();
+        tabOfficial.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabOfficial.setText(R.string.tag_official);
+        mTabLayoutTagBar.addTab(tabOfficial);
+
         TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
         tabRecently.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabRecently.setText(R.string.tag_recently);
@@ -507,7 +514,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strTabContext))
             return false;
 
-        if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
+        if(strTabContext.contentEquals(getResources().getText(R.string.tag_official))) {
+            igCondition.setPublisherEmail(GlobalProperty.ADMIN_ACCOUNT_01);
+            m_bIsShowExpireIgActivity = true;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
             String strCurTime = TimeHelper.getCurTime();
             String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
             igCondition.setGood(DEF_ORDER_BY_GOOD);

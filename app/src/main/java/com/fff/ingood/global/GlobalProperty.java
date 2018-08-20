@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class GlobalProperty {
     //Admins
     public static final HashMap<String, String> MAP_ADMIN_ACCOUNTS_AND_PW = new HashMap<>();
-    private static final String ADMIN_ACCOUNT_01 = "fivefourfiveit@gmail.com";
+    public static final String ADMIN_ACCOUNT_01 = "fivefourfiveit@gmail.com";
     private static final String ADMIN_ACCOUNT_PW_01 = "545450779031";
 
     //Start animation
