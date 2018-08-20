@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.fff.ingood.R;
 import com.fff.ingood.flow.Flow;
 import com.fff.ingood.flow.FlowManager;
+import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.ServerResponse;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         ServerResponse.getInstance(this);
         GoogleSignInManager.getInstance(this);
         FacebookSignInManager.getInstance();
+        GlobalProperty.initialize();
     }
 
     private void startStartupAnimation() {

@@ -1,9 +1,16 @@
 package com.fff.ingood.global;
 
+import java.util.HashMap;
+
 /**
  * Created by ElminsterII on 2018/6/15.
  */
 public class GlobalProperty {
+    //Admins
+    public static final HashMap<String, String> MAP_ADMIN_ACCOUNTS_AND_PW = new HashMap<>();
+    private static final String ADMIN_ACCOUNT_01 = "fivefourfiveit@gmail.com";
+    private static final String ADMIN_ACCOUNT_PW_01 = "545450779031";
+
     //Start animation
     public static final int STARTUP_ANIMATION_DURATION = 1500;
 
@@ -32,4 +39,8 @@ public class GlobalProperty {
     public static final int IGACTIVITY_IMAGE_WIDTH = 512;
     public static final int IGACTIVITY_IMAGE_HEIGHT = 512;
     public static final String[] ARRAY_IGACTIVITY_IMAGE_NAMES = {"image00","image01","image02"};
+
+    public static void initialize() {
+        MAP_ADMIN_ACCOUNTS_AND_PW.put(ADMIN_ACCOUNT_01, ADMIN_ACCOUNT_PW_01);
+    }
 }

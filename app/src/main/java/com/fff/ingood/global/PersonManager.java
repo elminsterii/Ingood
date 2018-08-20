@@ -17,6 +17,7 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
     private PersonManagerRefreshEvent m_personManagerRefreshEvent = null;
     private Bitmap m_bmPersonIcon = null;
     private boolean m_bLoginSuccess = false;
+    private boolean m_bIsAdmin = false;
 
     public interface PersonManagerRefreshEvent {
         void onRefreshDone(Person person);
@@ -38,6 +39,12 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
 
     public void setPerson(Person person) {
         this.mPerson = person;
+
+        if(mPerson != null && GlobalProperty.MAP_ADMIN_ACCOUNTS_AND_PW.containsKey(mPerson.getEmail())) {
+            String strAdminPassword = GlobalProperty.MAP_ADMIN_ACCOUNTS_AND_PW.get(mPerson.getEmail());
+            if(strAdminPassword != null && strAdminPassword.equals(mPerson.getPassword()))
+                m_bIsAdmin = true;
+        }
     }
 
     public Bitmap getPersonIcon() {
@@ -68,6 +75,10 @@ public class PersonManager implements PersonLoginLogic.PersonLoginLogicCaller {
 
     public void setLoginSuccess(boolean m_bLoginSuccess) {
         this.m_bLoginSuccess = m_bLoginSuccess;
+    }
+
+    public boolean isAdmin() {
+        return m_bIsAdmin;
     }
 
     @Override

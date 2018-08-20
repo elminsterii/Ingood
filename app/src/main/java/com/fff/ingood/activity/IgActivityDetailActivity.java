@@ -154,10 +154,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     @Override
     protected void preInit() {
-        mIgActivity = (IgActivity)getIntent().getSerializableExtra(TAG_IGACTIVITY);
+        mIgActivity = (IgActivity) getIntent().getSerializableExtra(TAG_IGACTIVITY);
 
         Person person = PersonManager.getInstance().getPerson();
-        m_bIsIgActivityOwner = mIgActivity.getPublisherEmail().equals(person.getEmail());
+        m_bIsIgActivityOwner = PersonManager.getInstance().isAdmin()
+                || mIgActivity.getPublisherEmail().equals(person.getEmail());
         IgActivityImageCache.getInstance().getIgActivityImagesCacheByRef().clear();
     }
 
@@ -433,7 +434,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void setUiPublisherDefaultIcon() {
         mImageViewPublisherIcon = (ImageView)mLayoutPublisherIcon.getChildAt(0);
-        if(m_bIsIgActivityOwner && PersonManager.getInstance().getPersonIcon() != null)
+        if(m_bIsIgActivityOwner
+                && !PersonManager.getInstance().isAdmin()
+                && PersonManager.getInstance().getPersonIcon() != null)
             mImageViewPublisherIcon.setImageBitmap(PersonManager.getInstance().getPersonIcon());
         else
             mImageViewPublisherIcon.setImageResource(R.drawable.ic_person_black_36dp);
@@ -871,7 +874,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                         }
                     });
 
-                    if(!m_bIsIgActivityOwner)
+                    if(!m_bIsIgActivityOwner || PersonManager.getInstance().isAdmin())
                         downloadIcon_IgActivityPublisher(publisher);
 
                 } else if(strTag.equals(LOGIC_TAG_PERSON_QUERY_ATTENDEES)
