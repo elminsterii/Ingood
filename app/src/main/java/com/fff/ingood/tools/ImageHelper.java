@@ -96,9 +96,9 @@ public class ImageHelper {
         return Uri.parse(path);
     }
 
-    public static void saveImageToUri(Bitmap bm, Uri uriImage)
+    public static void saveImageToUri(Context context, Bitmap bm, Uri uriImage)
     {
-        String strImagePath = uriImage.getPath();
+        String strImagePath = getRealPathFromUri(context, uriImage);
         FileOutputStream out = null;
         try {
             out = new FileOutputStream(strImagePath);
