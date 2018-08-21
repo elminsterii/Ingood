@@ -151,12 +151,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         super.onResume();
 
         if(DoRefreshInResume) {
-            ImagePipeline imagePipeline = Fresco.getImagePipeline();
-            imagePipeline.clearMemoryCaches();
-            imagePipeline.clearDiskCaches();
-            imagePipeline.clearCaches();
-
             showWaitingDialog(HomeActivity.class.getName());
+            clearImageViewerCache();
             refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
             DoRefreshInResume = false;
         }
@@ -868,6 +864,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private void queryPerson(String strEmailOrId, boolean bIsQueryByEmail, String strTag) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
         executor.doPersonQuery(this, strEmailOrId, bIsQueryByEmail, strTag);
+    }
+
+    private void clearImageViewerCache() {
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        imagePipeline.clearMemoryCaches();
+        imagePipeline.clearDiskCaches();
+        imagePipeline.clearCaches();
     }
 
     @Override

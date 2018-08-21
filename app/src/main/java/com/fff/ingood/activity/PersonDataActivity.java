@@ -32,10 +32,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
 import com.fff.ingood.R;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
-import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
@@ -43,17 +44,21 @@ import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
 import com.fff.ingood.logic.PersonIconUploadLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
+import com.fff.ingood.task.HttpProxy;
 import com.fff.ingood.tools.FileHelper;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import java.io.File;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
+import static com.fff.ingood.global.GlobalProperty.ARRAY_PERSON_ICON_NAMES;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
+import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_UPLOAD_UPPER_LIMIT;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -179,6 +184,23 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
 
     @Override
     protected void initListener() {
+        mImageViewPersonIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] arrImagesURL = new String[PERSON_ICON_UPLOAD_UPPER_LIMIT];
+                String strURL = HttpProxy.HTTP_API_PERSON_ICON_ACCESS + "/";
+                strURL += mPerson.getEmail();
+                strURL += "/";
+
+                for(int i=0; i<arrImagesURL.length; i++)
+                    arrImagesURL[i] = strURL + ARRAY_PERSON_ICON_NAMES[i];
+
+                new ImageViewer.Builder(mActivity, arrImagesURL)
+                        .setStartPosition(0)
+                        .show();
+            }
+        });
+
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -549,8 +571,16 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         executor.doPersonIconUpload(this, mPerson.getEmail(), strIconName, bmIcon);
     }
 
+    private void clearImageViewerCache() {
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        imagePipeline.clearMemoryCaches();
+        imagePipeline.clearDiskCaches();
+        imagePipeline.clearCaches();
+    }
+
     @Override
     public void returnUploadPersonIconSuccess() {
+        clearImageViewerCache();
         PersonManager.getInstance().setPerson(mPerson);
         PersonManager.getInstance().setPersonIcon(m_bmPersonIconUpload);
         PersonManager.getInstance().refresh(this);
@@ -579,7 +609,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         }
 
         if(m_bmPersonIconUpload != null) {
-            uploadPersonIcon(m_bmPersonIconUpload, GlobalProperty.ARRAY_PERSON_ICON_NAMES[0]);
+            uploadPersonIcon(m_bmPersonIconUpload, ARRAY_PERSON_ICON_NAMES[0]);
         } else {
             PersonManager.getInstance().setPerson(mPerson);
             PersonManager.getInstance().refresh(this);
