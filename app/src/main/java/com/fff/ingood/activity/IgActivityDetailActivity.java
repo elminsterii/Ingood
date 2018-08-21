@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
 import com.fff.ingood.R;
 import com.fff.ingood.data.Comment;
 import com.fff.ingood.data.IgActivity;
@@ -149,6 +151,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         super.onResume();
 
         if(DoRefreshInResume) {
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            imagePipeline.clearMemoryCaches();
+            imagePipeline.clearDiskCaches();
+            imagePipeline.clearCaches();
+
             showWaitingDialog(HomeActivity.class.getName());
             refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
             DoRefreshInResume = false;

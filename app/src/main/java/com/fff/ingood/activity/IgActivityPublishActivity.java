@@ -66,7 +66,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         , IgActivityImageDeleteLogic.IgActivityImageDeleteLogicCaller
         ,IgActivityRepublishLogic.IgActivityRepublishLogicCaller{
 
-    private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 15 * 1000;
+    private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 60 * 1000;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
     private static final int RESULT_CODE_CROP_IMAGE = 2;
 
@@ -215,7 +215,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mBtnImageUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pickImageByGalleryOrCam();
+                if(m_lsUploadImages.size() < IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT)
+                    pickImageByGalleryOrCam();
+                else
+                    Toast.makeText(mActivity, getResources().getText(R.string.publish_igactivity_upload_image_limitation), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -508,14 +511,6 @@ public class IgActivityPublishActivity extends BaseActivity implements
             mLayoutIgActivityPublishImages.addView(imageView);
             preImageViewImageUpload = imageView;
         }
-        checkUpperLimitUploadImages();
-    }
-
-    private void checkUpperLimitUploadImages() {
-        if(m_lsUploadImages.size() >= IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT)
-            mBtnImageUpload.setVisibility(View.INVISIBLE);
-        else
-            mBtnImageUpload.setVisibility(View.VISIBLE);
     }
 
     private boolean isDataValid() {

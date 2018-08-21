@@ -108,25 +108,33 @@
                 android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
                 android:text="@string/activity_publish_images_upload"/>
 
-            <RelativeLayout
-                android:id="@+id/layoutIgActivityPublishImages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewIgActivityPublishImageUpload"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-            </RelativeLayout>
-
             <ImageButton
                 android:id="@+id/imageBtnIgActivityPublishImageUpload"
                 android:layout_width="83dp"
                 android:layout_height="83dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/layoutIgActivityPublishImages"
                 android:layout_below="@+id/textViewIgActivityPublishImageUpload"
-                android:layout_marginStart="11dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
                 android:src="@drawable/add"/>
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewIgActivityPublishImages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewIgActivityPublishImageUpload"
+                android:layout_toEndOf="@+id/imageBtnIgActivityPublishImageUpload"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="11dp"
+                android:scrollbars="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/layoutIgActivityPublishImages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                </RelativeLayout>
+            </HorizontalScrollView>
         </RelativeLayout>
 
         <RelativeLayout
