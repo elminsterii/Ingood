@@ -631,8 +631,17 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
             if(data != null) {
                 //from gallery
                 Uri uriImage = data.getData();
-                if(uriImage != null)
-                    performCropImage(uriImage, m_uriCropImage);
+
+                if(uriImage != null) {
+                    if (FileHelper.isFromContentProvider(uriImage)) {
+                        Bitmap bm = ImageHelper.loadBitmapFromUri(mActivity, uriImage);
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, mActivity);
+                        m_uriPickImage = FileHelper.bitmapToUri(mActivity, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    } else {
+                        performCropImage(uriImage, m_uriCropImage);
+                    }
+                }
             } else {
                 //from camera
                 if(m_uriCapImage != null) {

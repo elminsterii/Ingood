@@ -202,7 +202,7 @@
     <string name="server_res_8_io_error">Fail, file io error</string>
     <string name="server_res_9_file_not_found">Fail, file was not found</string>
     <string name="server_res_10_comment_not_found">Fail, comment was not found</string>
-    <string name="server_res_11_already_attend">Fail, already attend or cancel fail?</string>
+    <string name="server_res_11_already_attend">Fail, Activity was full</string>
     <string name="server_res_12_verify_code_wrong">Fail, input verify code wrong</string>
     <string name="server_res_13_time_format_wrong">Fail, time format wrong</string>
     <string name="server_res_14_save_igactivity_wrong">Fail, save activity wrong</string>

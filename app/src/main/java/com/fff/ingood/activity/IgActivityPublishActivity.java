@@ -677,7 +677,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
         grantUriPermission(MediaStore.ACTION_IMAGE_CAPTURE, m_uriCapImage, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         pickIntent.setType("image/*");
 
@@ -761,14 +761,22 @@ public class IgActivityPublishActivity extends BaseActivity implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_CODE_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
             if(data != null) {
                 //from gallery
                 Uri uriImage = data.getData();
-                if(uriImage != null)
-                    performCropImage(uriImage, m_uriCropImage);
+
+                if(uriImage != null) {
+                    if (FileHelper.isFromContentProvider(uriImage)) {
+                        Bitmap bm = ImageHelper.loadBitmapFromUri(mActivity, uriImage);
+                        bm = ImageHelper.makeBitmapCorrectOrientation(bm, uriImage, mActivity);
+                        m_uriPickImage = FileHelper.bitmapToUri(mActivity, bm);
+                        performCropImage(m_uriPickImage, m_uriCropImage);
+                    } else {
+                        performCropImage(uriImage, m_uriCropImage);
+                    }
+                }
             } else {
                 //from camera
                 if(m_uriCapImage != null) {

@@ -201,7 +201,7 @@
     <string name="server_res_8_io_error">檔案讀寫錯誤</string>
     <string name="server_res_9_file_not_found">檔案不存在</string>
     <string name="server_res_10_comment_not_found">留言不存在</string>
-    <string name="server_res_11_already_attend">您已參與了此次活動</string>
+    <string name="server_res_11_already_attend">不好意思，活動人滿囉</string>
     <string name="server_res_12_verify_code_wrong">驗證碼輸入錯誤</string>
     <string name="server_res_13_time_format_wrong">時間格式錯誤</string>
     <string name="server_res_14_save_igactivity_wrong">保存活動錯誤</string>
