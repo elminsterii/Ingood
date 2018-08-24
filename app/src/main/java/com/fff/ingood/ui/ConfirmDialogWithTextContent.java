@@ -76,7 +76,7 @@ public class ConfirmDialogWithTextContent extends DialogFragment {
 
         final EditText editTextContent = view.findViewById(R.id.editTextContent);
         if(m_editTextMaxLength > 0)
-            editTextContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(m_editTextMaxLength)});
+            editTextContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(m_editTextMaxLength), StringTool.getInputFilterForEditText()});
 
         if(StringTool.checkStringNotNull(m_strDefaultTextContent)) {
             editTextContent.setText(m_strDefaultTextContent);

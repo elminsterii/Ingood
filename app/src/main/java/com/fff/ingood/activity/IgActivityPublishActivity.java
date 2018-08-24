@@ -161,6 +161,9 @@ public class IgActivityPublishActivity extends BaseActivity implements
         m_lsTagsInput = new ArrayList<>();
         initUIData(m_igActivity, m_bEditMode);
         setWaitingDialogTimeout(MAX_TIMEOUT_WAITING_DIALOG_MS);
+
+        mEditTextIgActivityName.setFilters(new InputFilter[] {StringTool.getInputFilterForEditText()});
+        mEditTextIgActivityDescription.setFilters(new InputFilter[] {StringTool.getInputFilterForEditText()});
     }
 
     @Override
@@ -382,7 +385,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         LayoutInflater inflater = LayoutInflater.from(this);
         @SuppressLint("InflateParams") RelativeLayout layout = (RelativeLayout)inflater.inflate(R.layout.layout_add_tag_in_publish_igactivity, null, false);
         EditText editTextTagInput = (EditText)layout.getChildAt(0);
-        editTextTagInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
+        editTextTagInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10), StringTool.getInputFilterForEditText()});
         m_lsTagsInput.add(editTextTagInput);
 
         ImageButton btnTagAdd = (ImageButton)layout.getChildAt(1);

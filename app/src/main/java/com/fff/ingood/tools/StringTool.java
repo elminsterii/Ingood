@@ -1,5 +1,7 @@
 package com.fff.ingood.tools;
 
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -10,6 +12,21 @@ import java.util.List;
  * Created by ElminsterII on 2018/6/8.
  */
 public class StringTool {
+
+    public static InputFilter getInputFilterForEditText() {
+        return new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                char[] chars = {'\'','"','\\'};
+                for (int i = start; i < end; i++) {
+                    if (new String(chars).contains(String.valueOf(source.charAt(i)))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+    }
 
     public static String strTagsToRegExp(String strTags) {
         if(strTags == null || strTags.isEmpty())
