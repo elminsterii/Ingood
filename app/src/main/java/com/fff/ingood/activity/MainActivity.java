@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
                     dialog.dismiss();
                     mActivity.startActivity(new Intent(mActivity, HomeActivity.class));
                 }
-            }, getResources().getText(R.string.dialog_exit_confirm_message).toString())
+            }, getResources().getText(R.string.dialog_exit_confirm_message).toString(), false)
                     .show(getSupportFragmentManager(), MainActivity.class.getName());
         }
     }

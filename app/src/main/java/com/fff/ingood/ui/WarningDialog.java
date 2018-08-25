@@ -22,6 +22,7 @@ import java.util.Objects;
 public class WarningDialog extends DialogFragment {
 
     private String m_strMessage;
+    private boolean m_bClickOutsideCancel;
     private WarningDialogEvent m_eventCB = null;
 
     public interface WarningDialogEvent {
@@ -29,14 +30,21 @@ public class WarningDialog extends DialogFragment {
         void onNegativeClick(DialogInterface dialog);
     }
 
-    private void initialize(WarningDialogEvent cb, String strMessage) {
+    private void initialize(WarningDialogEvent cb, String strMessage, boolean bClickOutsideCancel) {
         m_eventCB = cb;
         m_strMessage = strMessage;
+        m_bClickOutsideCancel = bClickOutsideCancel;
+    }
+
+    public static WarningDialog newInstance(WarningDialogEvent cb, String strMessage, boolean bClickOutsideCancel) {
+        WarningDialog dialog = new WarningDialog();
+        dialog.initialize(cb, strMessage, bClickOutsideCancel);
+        return dialog;
     }
 
     public static WarningDialog newInstance(WarningDialogEvent cb, String strMessage) {
         WarningDialog dialog = new WarningDialog();
-        dialog.initialize(cb, strMessage);
+        dialog.initialize(cb, strMessage, true);
         return dialog;
     }
 
@@ -60,7 +68,9 @@ public class WarningDialog extends DialogFragment {
                     }
                 });
         // Create the AlertDialog object and return it
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(m_bClickOutsideCancel);
+        return dialog;
     }
 
     @Nullable
