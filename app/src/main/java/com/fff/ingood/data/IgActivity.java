@@ -69,29 +69,37 @@ public class IgActivity implements Serializable {
     @SerializedName("maxattention")
     private String m_maxattention;
 
+    @SerializedName("maxoffer")
+    private String m_maxoffer;
+
+    @SerializedName("offertook")
+    private String m_offertook;
+
     private String m_ts;
 
-    public IgActivity(String sEmail,
-                      String sPwd,
-                      String pBegin,
-                      String pEnd,
-                      String bLarge,
-                      String sName,
-                      String dBegin,
-                      String dEnd,
-                      String sLocation,
-                      String sMaxAttention
-                    ) {
-        m_publisheremail = sEmail;
-        m_publisherpwd = sPwd;
-        m_displayname = sName;
-        m_location= sLocation;
-        m_publishbegin = pBegin;
-        m_publishend = pEnd;
-        m_datebegin = dBegin;
-        m_dateend = dEnd;
-        m_largeactivity = bLarge;
-        m_maxattention = sMaxAttention;
+    public IgActivity(String m_id, String m_publisheremail, String m_publisherpwd, String m_publishbegin, String m_publishend, String m_largeactivity, String m_earlybird, String m_displayname, String m_datebegin, String m_dateend, String m_location, String m_status, String m_description, String m_tags, String m_good, String m_nogood, String m_attention, String m_attendees, String m_maxattention, String m_maxoffer, String m_offertook, String m_ts) {
+        this.m_id = m_id;
+        this.m_publisheremail = m_publisheremail;
+        this.m_publisherpwd = m_publisherpwd;
+        this.m_publishbegin = m_publishbegin;
+        this.m_publishend = m_publishend;
+        this.m_largeactivity = m_largeactivity;
+        this.m_earlybird = m_earlybird;
+        this.m_displayname = m_displayname;
+        this.m_datebegin = m_datebegin;
+        this.m_dateend = m_dateend;
+        this.m_location = m_location;
+        this.m_status = m_status;
+        this.m_description = m_description;
+        this.m_tags = m_tags;
+        this.m_good = m_good;
+        this.m_nogood = m_nogood;
+        this.m_attention = m_attention;
+        this.m_attendees = m_attendees;
+        this.m_maxattention = m_maxattention;
+        this.m_maxoffer = m_maxoffer;
+        this.m_offertook = m_offertook;
+        this.m_ts = m_ts;
     }
 
     public IgActivity(){
@@ -228,5 +236,21 @@ public class IgActivity implements Serializable {
     }
     public void setMaxAttention(String maxAttention){
         m_maxattention  = maxAttention;
+    }
+
+    public String getMaxOffer() {
+        return m_maxoffer;
+    }
+
+    public void setMaxOffer(String m_maxoffer) {
+        this.m_maxoffer = m_maxoffer;
+    }
+
+    public String getOfferTook() {
+        return m_offertook;
+    }
+
+    public void setOfferTook(String m_offertook) {
+        this.m_offertook = m_offertook;
     }
 }

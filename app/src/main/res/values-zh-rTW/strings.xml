@@ -68,12 +68,13 @@
     <string name="activity_detail_deem_good_people">個人說讚</string>
     <string name="activity_detail_deem_bad_people">個人說差</string>
     <string name="activity_detail_offer_title">優惠卷</string>
-    <string name="activity_detail_offer_summary_1">總共發行 </string>
-    <string name="activity_detail_offer_summary_2"> 組優惠卷</string>
+    <string name="activity_detail_offer_max_1">總共發行 </string>
+    <string name="activity_detail_offer_max_2"> 組優惠卷</string>
     <string name="activity_detail_offer_took_1">已領取 </string>
     <string name="activity_detail_offer_took_2"> 組</string>
     <string name="activity_detail_offer_show">出示優惠卷</string>
     <string name="activity_detail_offer_scan">掃描優惠卷</string>
+    <string name="activity_detail_offer_no_release">無發行優惠卷</string>
     <string name="activity_detail_comment_publish">我要留言</string>
     <string name="activity_detail_comment_view_all">看全部留言</string>
     <string name="activity_comment_publish_description">請在下方輸入您的留言 : </string>

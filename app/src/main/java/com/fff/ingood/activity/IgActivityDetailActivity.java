@@ -105,6 +105,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private ImageView mImageViewDeemBad;
     private TextView mTextViewDeemGood;
     private TextView mTextViewDeemBad;
+    private TextView mTextViewIgActivityMaxOffer;
+    private TextView mTextViewIgActivityOfferTook;
+    private Button mBtnIgActivityOfferBottom;
     private LinearLayout mLayoutComments;
     private ImageView mImageViewSaveIgActivity;
     private TextView mTextViewPublishComment;
@@ -189,6 +192,9 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewDeemBad = findViewById(R.id.btnIgActivityDeemBad);
         mTextViewDeemGood = findViewById(R.id.textViewIgActivityDeemGood);
         mTextViewDeemBad = findViewById(R.id.textViewIgActivityDeemBad);
+        mTextViewIgActivityMaxOffer = findViewById(R.id.textViewIgActivityMaxOffer);
+        mTextViewIgActivityOfferTook = findViewById(R.id.textViewIgActivityOfferTook);
+        mBtnIgActivityOfferBottom = findViewById(R.id.btnIgActivityOfferBottom);
         mLayoutComments = findViewById(R.id.layoutComments);
         mImageViewSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
         mTextViewPublishComment = findViewById(R.id.textViewIgActivityPublishComment);
@@ -292,6 +298,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     deemIgActivity(DeemInfoManager.DEEM_INFO.DEEM_BAD);
                 } else
                     Toast.makeText(mActivity, getResources().getText(R.string.deem_fail_in_your_own_igactivity), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mBtnIgActivityOfferBottom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(m_bIsIgActivityOwner) {
+                    //TODO - call QR code scanner
+                } else {
+                    //TODO - show QR code image
+                }
             }
         });
 
@@ -670,6 +687,34 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewDeemGood.setText(strDeemGoodFullText);
         mTextViewDeemBad.setText(strDeemBadFullText);
+    }
+
+    private void setUiOfferByIgActivity(IgActivity activity) {
+        //@@
+        activity.setMaxOffer("20");
+        activity.setOfferTook("12");
+
+        if(m_bIsIgActivityOwner) {
+            mBtnIgActivityOfferBottom.setText(R.string.activity_detail_offer_scan);
+        } else {
+            mBtnIgActivityOfferBottom.setText(R.string.activity_detail_offer_show);
+        }
+
+        if(!StringTool.checkStringNotNull(activity.getMaxOffer())
+            || activity.getMaxOffer().equals("0")) {
+            mTextViewIgActivityMaxOffer.setText(R.string.activity_detail_offer_no_release);
+            mTextViewIgActivityOfferTook.setVisibility(View.GONE);
+            mBtnIgActivityOfferBottom.setVisibility(View.GONE);
+        } else {
+            mBtnIgActivityOfferBottom.setVisibility(View.VISIBLE);
+            String strMaxOffer = getResources().getString(R.string.activity_detail_offer_max_1)
+                    + activity.getMaxOffer() + getResources().getString(R.string.activity_detail_offer_max_2);
+            mTextViewIgActivityMaxOffer.setText(strMaxOffer);
+
+            String strOfferTook = getResources().getString(R.string.activity_detail_offer_took_1)
+                    + activity.getOfferTook() + getResources().getString(R.string.activity_detail_offer_took_2);
+            mTextViewIgActivityOfferTook.setText(strOfferTook);
+        }
     }
 
     private void setUiTagsByIgActivity(IgActivity activity) {
@@ -1061,6 +1106,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     setUiBasicInfoByIgActivity(mIgActivity);
                     setUiDeemInfoByIgActivity(mIgActivity);
                     setUiDeemPeopleByIgActivity(mIgActivity);
+                    setUiOfferByIgActivity(mIgActivity);
                     setUiAttendeesWithDefaultIconByIgActivity(mIgActivity);
                     setUiIgActivityImageMask(mIgActivity);
                     setUiSaveIgActivity();
@@ -1073,6 +1119,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 case uiSecBasic :
                     setUiBasicInfoByIgActivity(mIgActivity);
                     setUiIgActivityImageMask(mIgActivity);
+                    setUiOfferByIgActivity(mIgActivity);
                     setUiSaveIgActivity();
                     getPublisherInfo();
                     break;

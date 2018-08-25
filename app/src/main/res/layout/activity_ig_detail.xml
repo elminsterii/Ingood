@@ -51,7 +51,7 @@
                 android:layout_below="@+id/imageViewIgActivityMain"
                 android:layout_marginEnd="60dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/text_size_ig_activity_title"
                 android:textStyle="bold" />
@@ -72,7 +72,7 @@
                 android:layout_below="@+id/textViewIgActivityTitle"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="11.5dp">
+                android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityDate"
@@ -99,7 +99,7 @@
                 android:layout_below="@+id/layoutIgActivityDate"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityLocation"
@@ -126,7 +126,7 @@
                 android:layout_below="@+id/layoutIgActivityLocation"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
-                android:layout_marginTop="7dp">
+                android:layout_marginTop="15dp">
 
                 <ImageView
                     android:id="@+id/imageViewIgActivityPublisher"
@@ -232,7 +232,7 @@
                 android:layout_below="@+id/layoutIgActivityAttendees"
                 android:layout_marginStart="6.6dp"
                 android:layout_marginEnd="@dimen/margin_end_attendees_thumbnail_ig_activity"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="15dp"
                 android:scrollbars="none">
                 <LinearLayout
                     android:id="@+id/layoutIgActivityAttendeesIcons"
@@ -344,23 +344,12 @@
                     app:srcCompat="@drawable/ic_directions_run_for_offer_24dp" />
 
                 <TextView
-                    android:id="@+id/textViewIgActivityOffer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                     android:layout_toEndOf="@+id/imageViewIgActivityOffer"
                     android:text="@string/activity_detail_offer_title"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
-
-                <TextView
-                    android:id="@+id/textViewIgActivityOfferCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
-                    android:layout_toEndOf="@+id/textViewIgActivityOffer"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
             </RelativeLayout>
@@ -376,7 +365,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
-                    android:id="@+id/textViewIgActivityOfferAll"
+                    android:id="@+id/textViewIgActivityMaxOffer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -390,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/textViewIgActivityOfferAll"
+                    android:layout_below="@+id/textViewIgActivityMaxOffer"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_title"/>
 
