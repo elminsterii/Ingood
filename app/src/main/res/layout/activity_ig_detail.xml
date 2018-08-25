@@ -391,8 +391,8 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@+id/textViewIgActivityOfferTook"
-                    android:background="@drawable/selector_register_next_light"
-                    android:textColor="@color/colorSlaveLight"
+                    android:background="@drawable/selector_register_next"
+                    android:textColor="@color/colorSlave"
                     android:textSize="15sp"/>
             </RelativeLayout>
 
