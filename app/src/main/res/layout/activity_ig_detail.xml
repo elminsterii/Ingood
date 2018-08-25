@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -118,7 +119,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layoutIgActivityPublisherAndIgActivityImageUpload"
+                android:id="@+id/layoutIgActivityPublisherAndIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -161,7 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/layoutIgActivityPublisherAndIgActivityImageUpload"
+                android:layout_below="@+id/layoutIgActivityPublisherAndIcon"
                 android:layout_marginStart="@dimen/margin_start_ig_activity_thumbnail"
                 android:layout_marginTop="5dp">
             </include>
@@ -327,11 +328,91 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/layoutIgActivityComment"
+                android:id="@+id/layoutIgActivityOfferTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/layoutDeem"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="39dp">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/imageViewIgActivityOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_directions_run_for_offer_24dp" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/imageViewIgActivityOffer"
+                    android:text="@string/activity_detail_offer_title"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
+
+                <TextView
+                    android:id="@+id/textViewIgActivityOfferCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
+                    android:layout_toEndOf="@+id/textViewIgActivityOffer"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_sub_title" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutIgActivityOfferTitle"
+                android:layout_marginEnd="@dimen/margin_end_ig_activity"
+                android:layout_marginStart="@dimen/margin_start_ig_activity"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewIgActivityOfferAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_title"/>
+
+                <TextView
+                    android:id="@+id/textViewIgActivityOfferTook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/textViewIgActivityOfferAll"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text_size_ig_activity_title"/>
+
+                <Button
+                    android:id="@+id/btnIgActivityOfferBottom"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/textViewIgActivityOfferTook"
+                    android:background="@drawable/selector_register_next_light"
+                    android:textColor="@color/colorSlaveLight"
+                    android:textSize="15sp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutIgActivityComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/layoutIgActivityOffer"
                 android:layout_marginEnd="@dimen/margin_end_ig_activity"
                 android:layout_marginStart="@dimen/margin_start_ig_activity"
                 android:layout_marginTop="39dp">
@@ -445,13 +526,4 @@
         android:textColor="@color/colorSlave"
         android:textSize="@dimen/text_size_button_ig_activity"
         android:visibility="invisible"/>
-
-    <!--<include
-        android:id="@+id/fabSetIgActivity"
-        layout="@layout/fab_set_ig_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@+id/zoomViewIgActivity"
-        app:layout_anchorGravity="bottom|center"
-        app:layout_constraintBottom_toBottomOf="parent" /> -->
 </android.support.design.widget.CoordinatorLayout>

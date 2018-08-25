@@ -68,6 +68,13 @@
     <string name="activity_detail_comment_title">Activity comments</string>
     <string name="activity_detail_deem_good_people"> deem good</string>
     <string name="activity_detail_deem_bad_people"> deem bad</string>
+    <string name="activity_detail_offer_title">Special offers</string>
+    <string name="activity_detail_offer_summary_1">All release </string>
+    <string name="activity_detail_offer_summary_2"> special offers</string>
+    <string name="activity_detail_offer_took_1"> </string>
+    <string name="activity_detail_offer_took_2"> has been took</string>
+    <string name="activity_detail_offer_show">Show your offer</string>
+    <string name="activity_detail_offer_scan">Scan offer</string>
     <string name="activity_detail_comment_publish">Message</string>
     <string name="activity_detail_comment_view_all">All</string>
     <string name="activity_comment_publish_description">Input your comment : </string>
