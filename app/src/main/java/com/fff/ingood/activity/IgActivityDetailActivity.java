@@ -121,7 +121,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private Button mBtnIgActivityOfferBottom;
     private LinearLayout mLayoutComments;
     private ImageView mImageViewSaveIgActivity;
-    private TextView mTextViewPublishComment;
+    private Button mBtnPublishComment;
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
     private ImageView mImageViewIgActivityMain;
@@ -208,7 +208,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mBtnIgActivityOfferBottom = findViewById(R.id.btnIgActivityOfferBottom);
         mLayoutComments = findViewById(R.id.layoutComments);
         mImageViewSaveIgActivity = findViewById(R.id.imageViewIgActivitySave);
-        mTextViewPublishComment = findViewById(R.id.textViewIgActivityPublishComment);
+        mBtnPublishComment = findViewById(R.id.btnIgActivityPublishComment);
 
         mBtnLeftBottom = findViewById(R.id.btnIgActivityLeftBottom);
         mBtnRightBottom = findViewById(R.id.btnIgActivityRightBottom);
@@ -336,7 +336,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
             }
         });
 
-        mTextViewPublishComment.setOnClickListener(new View.OnClickListener() {
+        mBtnPublishComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ConfirmDialogWithTextContent.newInstance(new ConfirmDialogWithTextContent.TextContentEventCB() {
@@ -651,10 +651,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
         textViewCommentPublishDate.setText(TimeHelper.gmtToLocalTime(comment.getTs()));
         textViewCommentContent.setText(comment.getContent());
 
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.setMarginStart(getResources().getDimensionPixelSize(R.dimen.gap_comment_comments_ig_activity));
-        layout.setLayoutParams(params);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        int iMargin = getResources().getDimensionPixelSize(R.dimen.gap_comment_comments_ig_activity);
+        params.setMargins(iMargin, iMargin, iMargin, 0);
 
+        layout.setLayoutParams(params);
         mLayoutComments.addView(layout);
     }
 

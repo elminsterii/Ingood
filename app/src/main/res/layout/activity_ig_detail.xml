@@ -11,7 +11,7 @@
         android:id="@+id/zoomViewIgActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:fillViewport="true"
         android:scrollbars="none"
         tools:context=".activity.IgActivityDetailActivity">
@@ -448,7 +448,7 @@
                     android:visibility="invisible"/>
             </RelativeLayout>
 
-            <HorizontalScrollView
+            <ScrollView
                 android:id="@+id/scrollViewComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -457,11 +457,11 @@
                 android:scrollbars="none">
                 <LinearLayout
                     android:id="@+id/layoutComments"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </LinearLayout>
-            </HorizontalScrollView>
+            </ScrollView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -471,13 +471,15 @@
                 android:layout_marginEnd="15dp"
                 android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/textViewIgActivityPublishComment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <Button
+                    android:id="@+id/btnIgActivityPublishComment"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="3dp"
                     android:layout_alignParentEnd="true"
-                    android:textSize="14sp"
+                    android:background="@drawable/selector_register_next"
                     android:textColor="@color/colorSlave"
+                    android:textSize="14sp"
                     android:text="@string/activity_detail_comment_publish"/>
 
                 <TextView
