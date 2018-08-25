@@ -89,6 +89,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private EditText mEditTextIgActivityMaxAttention;
     private EditText mEditTextIgActivityLocation;
     private EditText mEditTextIgActivityDescription;
+    private EditText mEditTextIgActivityMaxOffer;
     private LinearLayout mLayoutIgActivityTags;
 
     private boolean m_bEditMode;
@@ -150,6 +151,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mTextViewEndTimeDescription = findViewById(R.id.textViewIgActivityPublishEndTimeDescription);
         mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
         mEditTextIgActivityMaxAttention = findViewById(R.id.editTextIgActivityPublishMaxAttention);
+        mEditTextIgActivityMaxOffer = findViewById(R.id.editTextIgActivityPublishMaxOffer);
         mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
         mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
         mLayoutIgActivityTags = findViewById(R.id.layoutIgActivityPublishTags);
@@ -198,6 +200,9 @@ public class IgActivityPublishActivity extends BaseActivity implements
                     m_igActivity.setMaxAttention(mEditTextIgActivityMaxAttention.getText().toString());
                     setIgActivityTags(m_igActivity);
                     setIgActivityTime(m_igActivity);
+
+                    if(StringTool.checkStringNotNull(mEditTextIgActivityMaxOffer.getText().toString()))
+                        m_igActivity.setMaxOffer(mEditTextIgActivityMaxOffer.getText().toString());
 
                     if(!m_bEditMode) {
                         m_igActivity.setLargeActivity("0");
