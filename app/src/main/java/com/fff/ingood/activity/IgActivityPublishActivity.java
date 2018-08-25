@@ -332,6 +332,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
                 mEditTextIgActivityLocation.setText(activity.getLocation());
                 mEditTextIgActivityDescription.setText(activity.getDescription());
                 mEditTextIgActivityMaxAttention.setText(activity.getMaxAttention());
+                mEditTextIgActivityMaxOffer.setText(activity.getMaxOffer());
                 setDateByIgActivity(activity);
                 setTagsByIgActivity(activity);
 
