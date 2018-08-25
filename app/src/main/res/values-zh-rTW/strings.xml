@@ -100,6 +100,7 @@
 
     <!-- Default Tags -->
     <string name="tag_official">官方</string>
+    <string name="tag_offer">優惠</string>
     <string name="tag_recently">近期</string>
     <string name="tag_ongoing">進行中</string>
     <string name="tag_popularity">熱門</string>

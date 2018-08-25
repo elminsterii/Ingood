@@ -460,6 +460,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabOfficial.setText(R.string.tag_official);
         mTabLayoutTagBar.addTab(tabOfficial);
 
+        TabLayout.Tab tabOffer = mTabLayoutTagBar.newTab();
+        tabOffer.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabOffer.setText(R.string.tag_offer);
+        mTabLayoutTagBar.addTab(tabOffer);
+
         TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
         tabRecently.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabRecently.setText(R.string.tag_recently);
@@ -517,6 +522,10 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_official))) {
             igCondition.setPublisherEmail(GlobalProperty.ADMIN_ACCOUNT_01);
             m_bIsShowExpireIgActivity = true;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_offer))) {
+            igCondition.setGood(DEF_ORDER_BY_GOOD);
+            igCondition.setMaxOffer("1");
+            m_bIsShowExpireIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
             String strCurTime = TimeHelper.getCurTime();
             String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
