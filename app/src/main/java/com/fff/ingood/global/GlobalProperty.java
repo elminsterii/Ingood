@@ -41,6 +41,11 @@ public class GlobalProperty {
     public static final String[] ARRAY_IGACTIVITY_IMAGE_NAMES = {"image00","image01","image02","image03","image04"
             ,"image05","image06","image07","image08","image09"};
 
+    //QR code image
+    public static final int IGACTIVITY_OFFER_QRCODE_IMAGE_WIDTH = 600;
+    public static final int IGACTIVITY_OFFER_QRCODE_IMAGE_HEIGH = 600;
+    public static final String ENCRYPT_AES_KEY_PART = "~!@#$%^&*()_+";
+
     public static void initialize() {
         MAP_ADMIN_ACCOUNTS_AND_PW.put(ADMIN_ACCOUNT_01, ADMIN_ACCOUNT_PW_01);
     }

@@ -1,9 +1,5 @@
 package com.fff.ingood.task;
 
-import android.widget.Toast;
-
-import com.fff.ingood.data.Person;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -12,8 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static android.widget.Toast.LENGTH_LONG;
 
 /**
  * Created by chris on 2018/7/30.

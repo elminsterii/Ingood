@@ -42,6 +42,7 @@ import com.fff.ingood.logic.IgActivityDeemLogic;
 import com.fff.ingood.logic.IgActivityDeleteLogic;
 import com.fff.ingood.logic.IgActivityImageComboLogic_IgActivityImagesDownload;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
+import com.fff.ingood.logic.IgActivityOfferTookLogic;
 import com.fff.ingood.logic.IgActivityQueryLogic;
 import com.fff.ingood.logic.PersonIconComboLogic_MultiPersonMainIconsDownload;
 import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
@@ -52,12 +53,18 @@ import com.fff.ingood.task.HttpProxy;
 import com.fff.ingood.task.wrapper.IgActivityAttendTaskWrapper;
 import com.fff.ingood.task.wrapper.IgActivityDeemTaskWrapper;
 import com.fff.ingood.task.wrapper.PersonSaveIgActivityTaskWrapper;
+import com.fff.ingood.tools.AESUtils;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
 import com.fff.ingood.ui.ConfirmDialogWithTextContent;
 import com.fff.ingood.ui.ExpandableTextView;
 import com.fff.ingood.ui.HeadZoomScrollView;
+import com.fff.ingood.ui.ShowBitmapDialog;
 import com.fff.ingood.ui.WarningDialog;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import java.util.ArrayList;
@@ -65,6 +72,9 @@ import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.global.GlobalProperty.ARRAY_IGACTIVITY_IMAGE_NAMES;
+import static com.fff.ingood.global.GlobalProperty.ENCRYPT_AES_KEY_PART;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_OFFER_QRCODE_IMAGE_HEIGH;
+import static com.fff.ingood.global.GlobalProperty.IGACTIVITY_OFFER_QRCODE_IMAGE_WIDTH;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_COMMENT_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -83,7 +93,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         , CommentCreateLogic.CommentCreateLogicCaller
         , CommentDeleteLogic.CommentDeleteLogicCaller
         , CommentUpdateLogic.CommentUpdateLogicCaller
-        , IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller {
+        , IgActivityImageComboLogic_IgActivityImagesDownload.IgActivityImagesDownloadLogicCaller
+        , IgActivityOfferTookLogic.IgActivityOfferTookLogicCaller {
 
     private enum UPDATE_IGACTIVITY_UI_SECTION {
         uiSecAll, uiSecBasic, uiSecDeem, uiSecAttendees
@@ -305,10 +316,19 @@ public class IgActivityDetailActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 if(m_bIsIgActivityOwner) {
-                    //TODO - call QR code scanner
+                    if(mIgActivity.getOfferTook().equals(mIgActivity.getMaxOffer()))
+                        Toast.makeText(mActivity, getResources().getText(R.string.all_offers_had_been_took), Toast.LENGTH_SHORT).show();
+                    else
+                        new IntentIntegrator(mActivity).initiateScan();
                 } else {
                     if(m_bIsAttended) {
-                        //TODO - show QR code image
+                        String strEncryptContent = getAESContent(mIgActivity);
+                        String strEncryptKey = genAESKey(mIgActivity);
+                        String strQRCodeContent = AESUtils.encryptAES(strEncryptContent, strEncryptKey);
+                        Bitmap bm = genQRCodeImage(strQRCodeContent);
+
+                        ShowBitmapDialog.newInstance(getResources().getText(R.string.show_code_for_publisher).toString(), bm)
+                                .show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
                     } else {
                         Toast.makeText(mActivity, getResources().getText(R.string.offer_after_attend), Toast.LENGTH_SHORT).show();
                     }
@@ -842,6 +862,13 @@ public class IgActivityDetailActivity extends BaseActivity implements
         executor.doSaveIgActivity(this, person.getEmail(), mIgActivity.getId(), svValue);
     }
 
+    private void offerTookIgActivity(String strIgActivityId) {
+        Person person = PersonManager.getInstance().getPerson();
+        IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
+
+        executor.doOfferTookIgActivity(this, person.getEmail(), person.getPassword(), strIgActivityId);
+    }
+
     private void deemIgActivity(DeemInfoManager.DEEM_INFO deemInfo) {
         Person person = PersonManager.getInstance().getPerson();
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
@@ -922,6 +949,29 @@ public class IgActivityDetailActivity extends BaseActivity implements
         imagePipeline.clearMemoryCaches();
         imagePipeline.clearDiskCaches();
         imagePipeline.clearCaches();
+    }
+
+    private Bitmap genQRCodeImage(String strContent) {
+        Bitmap bmRes = null;
+
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bmRes = barcodeEncoder.encodeBitmap(strContent, BarcodeFormat.QR_CODE
+                    , IGACTIVITY_OFFER_QRCODE_IMAGE_WIDTH, IGACTIVITY_OFFER_QRCODE_IMAGE_HEIGH);
+        } catch(Exception ignored) {
+
+        }
+        return bmRes;
+    }
+
+    private String genAESKey(IgActivity activity) {
+        return activity.getPublisherEmail().substring(0, 2)
+                + ENCRYPT_AES_KEY_PART
+                + activity.getId().substring(0,1);
+    }
+
+    private String getAESContent(IgActivity activity) {
+        return activity.getPublisherEmail() + activity.getId();
     }
 
     @Override
@@ -1027,6 +1077,12 @@ public class IgActivityDetailActivity extends BaseActivity implements
             hideWaitingDialog();
             Toast.makeText(mActivity, getServerResponseDescriptions().get(iStatusCode), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void returnOfferTookIgActivitySuccess() {
+        refresh(UPDATE_IGACTIVITY_UI_SECTION.uiSecAll);
+        Toast.makeText(mActivity, getResources().getText(R.string.took_offer_scan_success), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -1147,5 +1203,25 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     public void returnIgActivitiesIds(String strActivitiesIds) {
         //do not enter.
+    }
+
+    // Get the results:
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() != null) {
+                String strDecryptContent = getAESContent(mIgActivity);
+                String strDecryptKey = genAESKey(mIgActivity);
+                String strContent = AESUtils.decryptAES(result.getContents(), strDecryptKey);
+
+                if(strContent != null && strContent.equals(strDecryptContent))
+                    offerTookIgActivity(mIgActivity.getId());
+                else
+                    Toast.makeText(mActivity, getResources().getText(R.string.took_offer_scan_fail), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

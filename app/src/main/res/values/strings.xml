@@ -182,6 +182,8 @@
     <string name="deem_activity_has_been_recover">Deem has been recovered</string>
     <string name="deem_fail_in_your_own_igactivity">You can not deem your own activity</string>
     <string name="offer_after_attend">take the offer after attend</string>
+    <string name="show_code_for_publisher">Show the screen for publisher</string>
+    <string name="all_offers_had_been_took">all offers had been took</string>
     <string name="attend_activity_success">Attended</string>
     <string name="no_attend_activity_success">Canceled attend</string>
     <string name="comment_has_been_published">Comment has been published</string>
@@ -199,6 +201,8 @@
     <string name="publish_igactivity_begin_cur_time_wrong">Begin can not be post time</string>
     <string name="publish_igactivity_upload_image_limitation">over the upper limit of upload images quantity</string>
     <string name="login_fail_nwk_error">Login fail by network disconnection</string>
+    <string name="took_offer_scan_success">Success, The offer has been took</string>
+    <string name="took_offer_scan_fail">Fail, Scan again please</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">Success, request has been done</string>

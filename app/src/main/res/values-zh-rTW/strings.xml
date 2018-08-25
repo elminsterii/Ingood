@@ -181,6 +181,8 @@
     <string name="deem_activity_has_been_recover">已收回評價</string>
     <string name="deem_fail_in_your_own_igactivity">您無法評價自己的活動</string>
     <string name="offer_after_attend">參加活動後，才可以使用優惠卷喔</string>
+    <string name="all_offers_had_been_took">優惠卷已經用完囉，您可以編輯活動增加優惠卷數量</string>
+    <string name="show_code_for_publisher">請出示此優惠卷給店家或主辦者掃描</string>
     <string name="attend_activity_success">參加成功</string>
     <string name="no_attend_activity_success">已取消參加</string>
     <string name="comment_has_been_published">留言已發佈</string>
@@ -198,6 +200,8 @@
     <string name="publish_igactivity_begin_cur_time_wrong">開始時間不可為過去時間</string>
     <string name="publish_igactivity_upload_image_limitation">超過上傳數量限制囉, 點一下不要的圖片刪除它</string>
     <string name="login_fail_nwk_error">登入失敗, 網路不通喔</string>
+    <string name="took_offer_scan_success">掃描成功，已領取優惠卷</string>
+    <string name="took_offer_scan_fail">掃描失敗，請再掃描一次</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">執行成功</string>
