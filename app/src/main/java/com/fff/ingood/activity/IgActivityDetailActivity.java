@@ -65,6 +65,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.journeyapps.barcodescanner.CaptureActivity;
 import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import java.util.ArrayList;
@@ -318,8 +319,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 if(m_bIsIgActivityOwner) {
                     if(mIgActivity.getOfferTook().equals(mIgActivity.getMaxOffer()))
                         Toast.makeText(mActivity, getResources().getText(R.string.all_offers_had_been_took), Toast.LENGTH_SHORT).show();
-                    else
-                        new IntentIntegrator(mActivity).initiateScan();
+                    else {
+                        IntentIntegrator integrator = new IntentIntegrator(mActivity);
+                        integrator.setCaptureActivity(CaptureActivity.class);
+                        integrator.initiateScan();
+                    }
                 } else {
                     if(m_bIsAttended) {
                         String strEncryptContent = getAESContent(mIgActivity);
