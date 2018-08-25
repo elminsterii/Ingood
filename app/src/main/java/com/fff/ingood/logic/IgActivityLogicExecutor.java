@@ -57,6 +57,12 @@ public class IgActivityLogicExecutor {
         fl.doLogic();
     }
 
+    public void doOfferTookIgActivity(IgActivityOfferTookLogic.IgActivityOfferTookLogicCaller caller, String strEmail
+            , String strPassword, String strActivityId) {
+        Logic fl = new IgActivityOfferTookLogic(caller, strEmail, strPassword, strActivityId);
+        fl.doLogic();
+    }
+
     public void doIgActivityImageGetList(IgActivityImageGetListLogic.IgActivityImageGetListLogicCaller caller, String strIgActivityId) {
         Logic fl = new IgActivityImageGetListLogic(caller, strIgActivityId);
         fl.doLogic();

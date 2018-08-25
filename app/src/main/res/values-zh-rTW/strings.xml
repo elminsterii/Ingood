@@ -180,6 +180,7 @@
     <string name="deem_activity_has_been_sent">已送出評價</string>
     <string name="deem_activity_has_been_recover">已收回評價</string>
     <string name="deem_fail_in_your_own_igactivity">您無法評價自己的活動</string>
+    <string name="offer_after_attend">參加活動後，才可以使用優惠卷喔</string>
     <string name="attend_activity_success">參加成功</string>
     <string name="no_attend_activity_success">已取消參加</string>
     <string name="comment_has_been_published">留言已發佈</string>
@@ -214,6 +215,7 @@
     <string name="server_res_12_verify_code_wrong">驗證碼輸入錯誤</string>
     <string name="server_res_13_time_format_wrong">時間格式錯誤</string>
     <string name="server_res_14_save_igactivity_wrong">保存活動錯誤</string>
+    <string name="server_res_15_offer_took_max">優惠卷已經搶光光了</string>
     <string name="server_res_99_unknown_error">未知錯誤</string>
 
     <string-array name="user_age_list">

@@ -307,7 +307,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 if(m_bIsIgActivityOwner) {
                     //TODO - call QR code scanner
                 } else {
-                    //TODO - show QR code image
+                    if(m_bIsAttended) {
+                        //TODO - show QR code image
+                    } else {
+                        Toast.makeText(mActivity, getResources().getText(R.string.offer_after_attend), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -690,15 +694,10 @@ public class IgActivityDetailActivity extends BaseActivity implements
     }
 
     private void setUiOfferByIgActivity(IgActivity activity) {
-        //@@
-        activity.setMaxOffer("20");
-        activity.setOfferTook("12");
-
-        if(m_bIsIgActivityOwner) {
+        if(m_bIsIgActivityOwner)
             mBtnIgActivityOfferBottom.setText(R.string.activity_detail_offer_scan);
-        } else {
+        else
             mBtnIgActivityOfferBottom.setText(R.string.activity_detail_offer_show);
-        }
 
         if(!StringTool.checkStringNotNull(activity.getMaxOffer())
             || activity.getMaxOffer().equals("0")) {
@@ -706,7 +705,14 @@ public class IgActivityDetailActivity extends BaseActivity implements
             mTextViewIgActivityOfferTook.setVisibility(View.GONE);
             mBtnIgActivityOfferBottom.setVisibility(View.GONE);
         } else {
-            mBtnIgActivityOfferBottom.setVisibility(View.VISIBLE);
+            if(activity.getOfferTook().equals(activity.getMaxOffer()))
+                mBtnIgActivityOfferBottom.setVisibility(View.GONE);
+            else
+                mBtnIgActivityOfferBottom.setVisibility(View.VISIBLE);
+
+            mTextViewIgActivityMaxOffer.setVisibility(View.VISIBLE);
+            mTextViewIgActivityOfferTook.setVisibility(View.VISIBLE);
+
             String strMaxOffer = getResources().getString(R.string.activity_detail_offer_max_1)
                     + activity.getMaxOffer() + getResources().getString(R.string.activity_detail_offer_max_2);
             mTextViewIgActivityMaxOffer.setText(strMaxOffer);

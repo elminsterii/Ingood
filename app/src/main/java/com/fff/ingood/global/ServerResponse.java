@@ -50,6 +50,7 @@ public class ServerResponse {
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT, context.getResources().getText(R.string.server_res_12_verify_code_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT, context.getResources().getText(R.string.server_res_13_time_format_wrong).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_SAVE_IGACTIVITY_WRONG, context.getResources().getText(R.string.server_res_14_save_igactivity_wrong).toString());
+        m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_OFFER_MAX, context.getResources().getText(R.string.server_res_15_offer_took_max).toString());
         m_mapServerResponseDescriptions.put(STATUS_CODE_FAIL_UNKNOWN_ERROR_INT, context.getResources().getText(R.string.server_res_99_unknown_error).toString());
 
         //response from client
@@ -90,6 +91,7 @@ public class ServerResponse {
     private static final Integer STATUS_CODE_FAIL_VERIFY_CODE_WRONG_INT = 12;
     private static final Integer STATUS_CODE_FAIL_TIME_FORMAT_WRONG_INT = 13;
     private static final Integer STATUS_CODE_FAIL_SAVE_IGACTIVITY_WRONG = 14;
+    public static final Integer STATUS_CODE_FAIL_OFFER_MAX = 15;
     public static final Integer STATUS_CODE_FAIL_UNKNOWN_ERROR_INT = 99;
 
     //Server response tag

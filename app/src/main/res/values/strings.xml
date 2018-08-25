@@ -181,6 +181,7 @@
     <string name="deem_activity_has_been_sent">Deem has been sent</string>
     <string name="deem_activity_has_been_recover">Deem has been recovered</string>
     <string name="deem_fail_in_your_own_igactivity">You can not deem your own activity</string>
+    <string name="offer_after_attend">take the offer after attend</string>
     <string name="attend_activity_success">Attended</string>
     <string name="no_attend_activity_success">Canceled attend</string>
     <string name="comment_has_been_published">Comment has been published</string>
@@ -215,6 +216,7 @@
     <string name="server_res_12_verify_code_wrong">Fail, input verify code wrong</string>
     <string name="server_res_13_time_format_wrong">Fail, time format wrong</string>
     <string name="server_res_14_save_igactivity_wrong">Fail, save activity wrong</string>
+    <string name="server_res_15_offer_took_max">All offers had been took</string>
     <string name="server_res_99_unknown_error">Fail, unknown fail happen</string>
 
     <string-array name="user_age_list">
