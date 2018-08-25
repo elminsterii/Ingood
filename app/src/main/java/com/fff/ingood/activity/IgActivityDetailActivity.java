@@ -735,11 +735,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
             mTextViewIgActivityOfferTook.setVisibility(View.VISIBLE);
 
             String strMaxOffer = getResources().getString(R.string.activity_detail_offer_max_1)
-                    + activity.getMaxOffer() + getResources().getString(R.string.activity_detail_offer_max_2);
+                    + " " + activity.getMaxOffer() + " " + getResources().getString(R.string.activity_detail_offer_max_2);
             mTextViewIgActivityMaxOffer.setText(strMaxOffer);
 
             String strOfferTook = getResources().getString(R.string.activity_detail_offer_took_1)
-                    + activity.getOfferTook() + getResources().getString(R.string.activity_detail_offer_took_2);
+                    + " " + activity.getOfferTook() + " " + getResources().getString(R.string.activity_detail_offer_took_2);
             mTextViewIgActivityOfferTook.setText(strOfferTook);
         }
     }
