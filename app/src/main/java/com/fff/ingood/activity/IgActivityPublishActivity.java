@@ -563,7 +563,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
             String strEndDateTime = TimeHelper.makeIgActivityDateStringByUI(strEndDate + " " + strEndTime);
 
             if(TimeHelper.checkBeginTimeBeforeEndTime(strStartDateTime, strEndDateTime)) {
-                if(TimeHelper.checkBeginTimeBeforeEndTime(TimeHelper.getCurTime(), strStartDateTime))
+                if(m_bEditMode || TimeHelper.checkBeginTimeBeforeEndTime(TimeHelper.getCurTime(), strStartDateTime))
                     bRes = true;
                 else
                     Toast.makeText(this, getResources().getText(R.string.publish_igactivity_begin_cur_time_wrong), Toast.LENGTH_SHORT).show();
