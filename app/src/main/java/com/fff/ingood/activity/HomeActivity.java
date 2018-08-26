@@ -28,7 +28,6 @@ import com.fff.ingood.adapter.ActivityListAdapter;
 import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.flow.FlowManager;
-import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityLogicExecutor;
@@ -43,6 +42,7 @@ import java.util.List;
 
 import static com.fff.ingood.data.IgActivity.IGA_STATUS_CLOSED;
 import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
+import static com.fff.ingood.global.GlobalProperty.ADMIN_ACCOUNT_01;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_EMAIL;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_TAG;
 import static com.fff.ingood.global.GlobalProperty.GOOD_IGACTIVITY_THRESHOLD;
@@ -520,7 +520,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             return false;
 
         if(strTabContext.contentEquals(getResources().getText(R.string.tag_official))) {
-            igCondition.setPublisherEmail(GlobalProperty.ADMIN_ACCOUNT_01);
+            igCondition.setPublisherEmail(ADMIN_ACCOUNT_01);
             m_bIsShowExpireIgActivity = true;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_offer))) {
             igCondition.setGood(DEF_ORDER_BY_GOOD);
@@ -611,7 +611,8 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             m_lsIgActivities.addAll(lsActivities);
         } else {
             for(IgActivity activity : lsActivities) {
-                if(!activity.getStatus().equals(IGA_STATUS_CLOSED))
+                if(!activity.getStatus().equals(IGA_STATUS_CLOSED)
+                        && !activity.getPublisherEmail().equals(ADMIN_ACCOUNT_01))
                     m_lsIgActivities.add(activity);
             }
         }
