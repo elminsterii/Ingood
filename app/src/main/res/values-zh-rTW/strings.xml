@@ -203,6 +203,7 @@
     <string name="login_fail_nwk_error">登入失敗, 網路不通喔</string>
     <string name="took_offer_scan_success">掃描成功，已領取優惠卷</string>
     <string name="took_offer_scan_fail">掃描失敗，請再掃描一次</string>
+    <string name="confirm_kick_attendee">確定要取消此位參加者嗎?</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">執行成功</string>

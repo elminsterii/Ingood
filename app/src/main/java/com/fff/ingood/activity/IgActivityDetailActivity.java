@@ -401,7 +401,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     else
                         avAttend = IgActivityAttendTaskWrapper.ATTEND_VALUE.AV_ATTEND;
 
-                    attendIgActivity(avAttend);
+                    attendIgActivity(PersonManager.getInstance().getPerson(), avAttend);
                 }
             };
         }
@@ -553,6 +553,34 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 showWaitingDialog(IgActivityDetailActivity.class.getName());
                 String strAttendeesId = (String)v.getTag();
                 queryPerson(strAttendeesId, false, LOGIC_TAG_PERSON_QUERY_ATTENDEES);
+            }
+        });
+
+        imageViewIcon.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View v) {
+                if(m_bIsIgActivityOwner) {
+                    String strKickAttendees = getResources().getText(R.string.confirm_kick_attendee).toString();
+                    WarningDialog.newInstance(new WarningDialog.WarningDialogEvent() {
+                        @Override
+                        public void onPositiveClick(DialogInterface dialog) {
+                            showWaitingDialog(IgActivityDetailActivity.class.getName());
+                            m_bIsAttended = true;
+                            String strAttendeesId = (String)v.getTag();
+
+                            Person person = PersonManager.getInstance().getPerson();
+                            person.setId(strAttendeesId);
+                            attendIgActivity(person, IgActivityAttendTaskWrapper.ATTEND_VALUE.AV_CANCEL_ATTEND);
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegativeClick(DialogInterface dialog) {
+                            dialog.dismiss();
+                        }
+                    }, strKickAttendees).show(getSupportFragmentManager(), HomeActivity.class.getName());
+                }
+                return true;
             }
         });
         m_lsImageViewAttendeeIcons.add(imageViewIcon);
@@ -852,8 +880,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         m_bIsSave = bSave;
     }
 
-    private void attendIgActivity(IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
-        Person person = PersonManager.getInstance().getPerson();
+    private void attendIgActivity(final Person person, IgActivityAttendTaskWrapper.ATTEND_VALUE avAttend) {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
 
         executor.doAttendIgActivity(this, person.getId(), person.getEmail()
