@@ -173,7 +173,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         if(preSearchCondition == null) {
             preSearchCondition = new IgActivity();
-            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_official).toString());
+            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_offer).toString());
         }
     }
 
@@ -455,11 +455,6 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     }
 
     private void makeDefaultTags() {
-        TabLayout.Tab tabOfficial = mTabLayoutTagBar.newTab();
-        tabOfficial.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabOfficial.setText(R.string.tag_official);
-        mTabLayoutTagBar.addTab(tabOfficial);
-
         TabLayout.Tab tabOffer = mTabLayoutTagBar.newTab();
         tabOffer.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabOffer.setText(R.string.tag_offer);
@@ -504,6 +499,11 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         tabMySavedIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabMySavedIgActivity.setText(R.string.tag_my_save_igactivity);
         mTabLayoutTagBar.addTab(tabMySavedIgActivity);
+
+        TabLayout.Tab tabOfficial = mTabLayoutTagBar.newTab();
+        tabOfficial.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabOfficial.setText(R.string.tag_official);
+        mTabLayoutTagBar.addTab(tabOfficial);
     }
 
     private boolean isLastItemDisplaying(RecyclerView recyclerView) {
