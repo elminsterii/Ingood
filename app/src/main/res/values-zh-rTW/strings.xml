@@ -99,16 +99,18 @@
     <string name="activity_publish_tags">活動標籤</string>
 
     <!-- Default Tags -->
-    <string name="tag_official">官方</string>
-    <string name="tag_offer">優惠</string>
+    <string name="tag_all">所有活動</string>
+    <string name="tag_offer">優惠活動</string>
+    <string name="tag_recommend">推薦活動</string>
+    <string name="tag_my_igactivity">我的活動</string>
+    <string name="tag_my_attend_igactivity">我參加的活動</string>
+    <string name="tag_my_save_igactivity">我保存的活動</string>
+    <string name="tag_official">官方活動</string>
     <string name="tag_recently">近期</string>
     <string name="tag_ongoing">進行中</string>
     <string name="tag_popularity">熱門</string>
     <string name="tag_good">優質</string>
     <string name="tag_nearly">附近</string>
-    <string name="tag_my_igactivity">我的</string>
-    <string name="tag_my_attend_igactivity">我參加的</string>
-    <string name="tag_my_save_igactivity">我保存的</string>
 
     <!-- Custom tags -->
     <string name="tag_sport">運動</string>

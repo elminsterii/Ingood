@@ -100,16 +100,18 @@
     <string name="activity_publish_tags">Activity tags</string>
 
     <!-- Default tags -->
-    <string name="tag_official">Official</string>
+    <string name="tag_all">All</string>
     <string name="tag_offer">Offers</string>
+    <string name="tag_recommend">Recommends</string>
+    <string name="tag_my_igactivity">My</string>
+    <string name="tag_my_attend_igactivity">Attended</string>
+    <string name="tag_my_save_igactivity">Saved</string>
+    <string name="tag_official">Official</string>
     <string name="tag_recently">Recently</string>
     <string name="tag_ongoing">Ongoing</string>
     <string name="tag_popularity">Popularity</string>
     <string name="tag_good">Good</string>
     <string name="tag_nearly">Nearly</string>
-    <string name="tag_my_igactivity">My</string>
-    <string name="tag_my_attend_igactivity">Attended</string>
-    <string name="tag_my_save_igactivity">Saved</string>
 
     <!-- Custom tags -->
     <string name="tag_sport">Sport</string>

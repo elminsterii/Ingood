@@ -46,7 +46,6 @@ import static com.fff.ingood.global.GlobalProperty.ADMIN_ACCOUNT_01;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_EMAIL;
 import static com.fff.ingood.global.GlobalProperty.CHAR_SEARCH_TEXT_HEAD_IS_TAG;
 import static com.fff.ingood.global.GlobalProperty.GOOD_IGACTIVITY_THRESHOLD;
-import static com.fff.ingood.global.GlobalProperty.IS_SHOW_CLOSED_IGACTIVITY;
 import static com.fff.ingood.global.GlobalProperty.MAX_QUERY_QUANTITY_IGACTIVITY_ONCE;
 import static com.fff.ingood.global.GlobalProperty.POPULARITY_IGACTIVITY_THRESHOLD;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
@@ -84,6 +83,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
     private IgActivity preSearchCondition;
     private boolean m_bIsShowExpireIgActivity;
+    private boolean m_bIsShowOfficialIgActivity;
 
     private boolean m_bIsInitialize = false;
 
@@ -125,6 +125,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
             if(activity != null) {
                 preSearchCondition = activity;
                 m_bIsShowExpireIgActivity = true;
+                m_bIsShowOfficialIgActivity = false;
             }
         }
     }
@@ -173,7 +174,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
         if(preSearchCondition == null) {
             preSearchCondition = new IgActivity();
-            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_offer).toString());
+            setConditionByDefaultTab(preSearchCondition, getResources().getText(R.string.tag_all).toString());
         }
     }
 
@@ -360,6 +361,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
 
                     activityCondition.setGood(DEF_ORDER_BY_GOOD);
                     m_bIsShowExpireIgActivity = true;
+                    m_bIsShowOfficialIgActivity = false;
                     mIgActivityExecutor.doSearchIgActivitiesIds(mActivity, activityCondition);
                     preSearchCondition = activityCondition;
                 }
@@ -455,35 +457,20 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     }
 
     private void makeDefaultTags() {
+        TabLayout.Tab tabAll = mTabLayoutTagBar.newTab();
+        tabAll.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabAll.setText(R.string.tag_all);
+        mTabLayoutTagBar.addTab(tabAll);
+
         TabLayout.Tab tabOffer = mTabLayoutTagBar.newTab();
         tabOffer.setTag(DEFAULT_TAG_IN_TAG_BAR);
         tabOffer.setText(R.string.tag_offer);
         mTabLayoutTagBar.addTab(tabOffer);
 
-        TabLayout.Tab tabRecently = mTabLayoutTagBar.newTab();
-        tabRecently.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabRecently.setText(R.string.tag_recently);
-        mTabLayoutTagBar.addTab(tabRecently);
-
-        TabLayout.Tab tabOngoing = mTabLayoutTagBar.newTab();
-        tabOngoing.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabOngoing.setText(R.string.tag_ongoing);
-        mTabLayoutTagBar.addTab(tabOngoing);
-
-        TabLayout.Tab tabPopularity = mTabLayoutTagBar.newTab();
-        tabPopularity.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabPopularity.setText(R.string.tag_popularity);
-        mTabLayoutTagBar.addTab(tabPopularity);
-
-        TabLayout.Tab tabGood = mTabLayoutTagBar.newTab();
-        tabGood.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabGood.setText(R.string.tag_good);
-        mTabLayoutTagBar.addTab(tabGood);
-
-        TabLayout.Tab tabNearly = mTabLayoutTagBar.newTab();
-        tabNearly.setTag(DEFAULT_TAG_IN_TAG_BAR);
-        tabNearly.setText(R.string.tag_nearly);
-        mTabLayoutTagBar.addTab(tabNearly);
+        TabLayout.Tab tabRecommend = mTabLayoutTagBar.newTab();
+        tabRecommend.setTag(DEFAULT_TAG_IN_TAG_BAR);
+        tabRecommend.setText(R.string.tag_recommend);
+        mTabLayoutTagBar.addTab(tabRecommend);
 
         TabLayout.Tab tabMyIgActivity = mTabLayoutTagBar.newTab();
         tabMyIgActivity.setTag(DEFAULT_TAG_IN_TAG_BAR);
@@ -519,41 +506,64 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
         if(!StringTool.checkStringNotNull(strTabContext))
             return false;
 
-        if(strTabContext.contentEquals(getResources().getText(R.string.tag_official))) {
+        if(strTabContext.contentEquals(getResources().getText(R.string.tag_all))) {
+            igCondition.setGood("0");
+            m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_official))) {
             igCondition.setPublisherEmail(ADMIN_ACCOUNT_01);
-            m_bIsShowExpireIgActivity = true;
+            m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = true;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_offer))) {
             igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setMaxOffer("1");
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
+        } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_recommend))) {
+            igCondition.setGood(DEF_ORDER_BY_GOOD);
+            igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
+            m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_recently))) {
+            //ignored
             String strCurTime = TimeHelper.getCurTime();
             String strTimeAfterOneWeek = TimeHelper.getTimeByDaysBasedCurrent(7);
             igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setDateBegin(strCurTime);
             igCondition.setDateEnd(strTimeAfterOneWeek);
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_ongoing))) {
+            //ignored
             igCondition.setGood(DEF_ORDER_BY_GOOD);
             String strCurTime = TimeHelper.getCurTime();
             igCondition.setDateBegin(strCurTime);
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_popularity))) {
+            //ignored
             igCondition.setAttention(POPULARITY_IGACTIVITY_THRESHOLD);
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_good))) {
+            //ignored
             igCondition.setGood(GOOD_IGACTIVITY_THRESHOLD);
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_nearly))) {
+            //ignored
             igCondition.setGood(DEF_ORDER_BY_GOOD);
             igCondition.setLocation(PersonManager.getInstance().getPerson().getLocation());
             m_bIsShowExpireIgActivity = false;
+            m_bIsShowOfficialIgActivity = false;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_igactivity))) {
             igCondition.setPublisherEmail(PersonManager.getInstance().getPerson().getEmail());
             m_bIsShowExpireIgActivity = true;
+            m_bIsShowOfficialIgActivity = true;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_attend_igactivity))) {
             igCondition.setAttendees(PersonManager.getInstance().getPerson().getId());
             m_bIsShowExpireIgActivity = true;
+            m_bIsShowOfficialIgActivity = true;
         } else if(strTabContext.contentEquals(getResources().getText(R.string.tag_my_save_igactivity))) {
             bRefreshOutside = false;
             showWaitingDialog(HomeActivity.class.getName());
@@ -563,6 +573,7 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
                     String strSaveIgActivitiesId = person.getSaveIgActivities();
                     igCondition.setId(strSaveIgActivitiesId);
                     m_bIsShowExpireIgActivity = true;
+                    m_bIsShowOfficialIgActivity = true;
                     refresh();
                 }
             });
@@ -607,13 +618,21 @@ public class HomeActivity extends BaseActivity implements IgActivityQueryLogic.I
     public void returnIgActivities(List<IgActivity> lsActivities) {
         hideWaitingDialog();
 
-        if(IS_SHOW_CLOSED_IGACTIVITY || m_bIsShowExpireIgActivity) {
+        if(m_bIsShowExpireIgActivity && m_bIsShowOfficialIgActivity) {
             m_lsIgActivities.addAll(lsActivities);
         } else {
             for(IgActivity activity : lsActivities) {
-                if(!activity.getStatus().equals(IGA_STATUS_CLOSED)
-                        && !activity.getPublisherEmail().equals(ADMIN_ACCOUNT_01))
-                    m_lsIgActivities.add(activity);
+                if(!m_bIsShowExpireIgActivity) {
+                    if(activity.getStatus().equals(IGA_STATUS_CLOSED)) {
+                        continue;
+                    }
+                }
+                if(!m_bIsShowOfficialIgActivity) {
+                    if(activity.getPublisherEmail().equals(ADMIN_ACCOUNT_01)) {
+                        continue;
+                    }
+                }
+                m_lsIgActivities.add(activity);
             }
         }
 
