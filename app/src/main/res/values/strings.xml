@@ -207,6 +207,7 @@
     <string name="took_offer_scan_success">Success, The offer has been took</string>
     <string name="took_offer_scan_fail">Fail, Scan again please</string>
     <string name="confirm_kick_attendee">Are your sure to cancel the attendee?</string>
+    <string name="permission_denial_message">Do not worry, pictures are only used in your personal icon and your publish activity.</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">Success, request has been done</string>

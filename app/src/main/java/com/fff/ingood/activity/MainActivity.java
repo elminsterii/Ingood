@@ -1,14 +1,8 @@
 package com.fff.ingood.activity;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -39,8 +33,6 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCaller
         , PersonLogoutTaskWrapper.PersonLogoutTaskWrapperCallback {
 
-    private static final int REQUEST_CODE_PERMISSION = 101;
-
     private MainActivity mActivity;
     private CircleProgressBarDialog mWaitingDialog;
 
@@ -57,11 +49,7 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
 
         SystemUIManager.getInstance(SystemUIManager.ACTIVITY_LIST.ACT_MAIN).setSystemUI(this);
 
-        int currentAPIVersion = Build.VERSION.SDK_INT;
-        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M)
-            requestPermission();
-        else
-            startStartupAnimation();
+        startStartupAnimation();
     }
 
     @Override
@@ -131,25 +119,6 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
             mWaitingDialog.dismiss();
     }
 
-    private void requestPermission() {
-        boolean bIsDenied = false;
-        String[] arrPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE
-                , Manifest.permission.WRITE_EXTERNAL_STORAGE
-                , Manifest.permission.CAMERA};
-
-        for (String strPermission : arrPermissions) {
-            if (ContextCompat.checkSelfPermission(this, strPermission) != PackageManager.PERMISSION_GRANTED) {
-                bIsDenied = true;
-                break;
-            }
-        }
-
-        if(bIsDenied)
-            ActivityCompat.requestPermissions(this, arrPermissions, REQUEST_CODE_PERMISSION);
-        else
-            startStartupAnimation();
-    }
-
     private void showUserExitDialog() {
         if(PersonManager.getInstance().isLoginSuccess()) {
             PersonManager.getInstance().setLoginSuccess(false);
@@ -191,32 +160,6 @@ public class MainActivity extends AppCompatActivity implements Flow.FlowLogicCal
         if(clsFlow != null
                 && clsFlow != MainActivity.class)
             mActivity.startActivity(new Intent(this, clsFlow));
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_PERMISSION :
-                boolean bIsDenied = false;
-                if (grantResults.length > 0) {
-                    for(int iPermission : grantResults) {
-                        if (iPermission != PackageManager.PERMISSION_GRANTED) {
-                            bIsDenied = true;
-                            break;
-                        }
-                    }
-                    if(bIsDenied)
-                        finish();
-                    else
-                        startStartupAnimation();
-                } else {
-                    finish();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
     @Override
