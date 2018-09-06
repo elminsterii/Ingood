@@ -109,13 +109,22 @@
 
                 <TextView
                     android:id="@+id/textViewIgActivityLocation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/gap_icon_and_des_ig_activity"
                     android:layout_toEndOf="@+id/imageViewIgActivityLocation"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/text_size_ig_activity_sub_title" />
+
+                <ImageView
+                    android:id="@+id/imageViewIgActivityMap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textViewIgActivityLocation"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:src="@drawable/navigation" />
             </RelativeLayout>
 
             <RelativeLayout

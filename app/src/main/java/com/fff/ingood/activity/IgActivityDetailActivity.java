@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +109,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     private TextView mTextViewTitle;
     private TextView mTextViewDate;
     private TextView mTextViewLocation;
+    private ImageView mImageViewMap;
     private TextView mTextViewIgPublisherName;
     private FrameLayout mLayoutPublisherIcon;
     private LinearLayout mLayoutAttendeesIcons;
@@ -194,6 +197,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewTitle = findViewById(R.id.textViewIgActivityTitle);
         mTextViewDate = findViewById(R.id.textViewIgActivityDate);
         mTextViewLocation = findViewById(R.id.textViewIgActivityLocation);
+        mImageViewMap = findViewById(R.id.imageViewIgActivityMap);
         mTextViewIgPublisherName = findViewById(R.id.textViewIgActivityPublisherName);
         mLayoutPublisherIcon = findViewById(R.id.layoutIgActivityPublisherThumbnail);
         mLayoutAttendeesIcons = findViewById(R.id.layoutIgActivityAttendeesIcons);
@@ -420,13 +424,25 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE.SV_SAVE);
             }
         });
+
         mTextViewLocation.setClickable(true);
         mTextViewLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mActivity, MapsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("address",mTextViewLocation.getText().toString());
+                bundle.putString(MapsActivity.INTENT_PUT_EXTRA_KEY, mTextViewLocation.getText().toString());
+                intent.putExtras(bundle);
+                mActivity.startActivity(intent);
+            }
+        });
+
+        mImageViewMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(MapsActivity.INTENT_PUT_EXTRA_KEY, mTextViewLocation.getText().toString());
                 intent.putExtras(bundle);
                 mActivity.startActivity(intent);
             }
@@ -707,8 +723,11 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
         mTextViewTitle.setText(activity.getName());
         mTextViewDate.setText(strDate);
-        mTextViewLocation.setText(activity.getLocation());
         mTextViewDescription.setText(activity.getDescription());
+
+        SpannableString mySpannableString = new SpannableString(activity.getLocation());
+        mySpannableString.setSpan(new UnderlineSpan(), 0, mySpannableString.length(), 0);
+        mTextViewLocation.setText(mySpannableString);
 
         if(m_bIsGetTagBarWidth)
             setUiTagsByIgActivity(activity);

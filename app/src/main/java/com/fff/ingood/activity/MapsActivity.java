@@ -1,11 +1,9 @@
 package com.fff.ingood.activity;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
 
 import com.fff.ingood.R;
 import com.google.android.gms.maps.CameraUpdate;
@@ -22,54 +20,36 @@ import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    public static final String INTENT_PUT_EXTRA_KEY = "map_address";
     private MapView mMapView;
     private String mAddress;
-    private GoogleMap mGoogleMap;
-    Context context;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = (Context)getApplication();
         setContentView(R.layout.activity_maps);
-        mMapView = (MapView)findViewById(R.id.mapview);
-        mMapView.onCreate(savedInstanceState);
-        Bundle bundle =this.getIntent().getExtras();
-        mAddress = bundle.getString("address");
 
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null) {
+            mAddress = bundle.getString(INTENT_PUT_EXTRA_KEY);
 
-        try
-        {
-            initilizeMap();
-        }
-        catch (Exception e)
-        {
-        }
-
-    }
-
-    private void initilizeMap()
-    {
-        if ( mGoogleMap == null )
-        {
-            mMapView.getMapAsync(this);
+            mMapView = findViewById(R.id.mapview);
+            if (mMapView != null) {
+                mMapView.onCreate(savedInstanceState);
+                mMapView.getMapAsync(this);
+            }
         }
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         mMapView.onResume();
         super.onResume();
-
-        initilizeMap();
     }
 
     @Override
-    public void onMapReady(GoogleMap map)
-    {
-        Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+    public void onMapReady(GoogleMap map) {
+        Geocoder geoCoder = new Geocoder(getApplication(), Locale.getDefault());
         List<Address> addressLocation = null;
         try {
             addressLocation = geoCoder.getFromLocationName(mAddress, 1);
@@ -85,9 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             map.moveCamera(CameraUpdateFactory.newLatLng(location));map.addMarker(new MarkerOptions()
                     .position(location)
                     .title("Marker"));
-        }
-        else{
-
+        } else{
             LatLng location = new LatLng(25, 121);
             map.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
             map.moveCamera(CameraUpdateFactory.newLatLng(location));map.addMarker(new MarkerOptions()
@@ -96,8 +74,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         CameraUpdate zoom =CameraUpdateFactory.zoomTo(15);
         map.animateCamera(zoom);
-
-
     }
 
     @Override
@@ -106,5 +82,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMapView.onPause();
     }
 }
-
 
