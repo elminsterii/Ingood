@@ -913,8 +913,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
                 dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = true;
-            }
-            else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+            } else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
                 mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_GOOD;
                 dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = false;
@@ -926,23 +925,23 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD;
                 bIsDeemRollBack = false;
             }
-        else
-        if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
-            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
-            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-            bIsDeemRollBack = true;
-        }
-        else if(mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
-            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-            bIsDeemRollBack = false;
-        } else {
-            executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
-                    , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
+        else {
+            if (mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_BAD) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_NONE;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = true;
+            } else if (mCurDeemInfo == DeemInfoManager.DEEM_INFO.DEEM_NONE) {
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = false;
+            } else {
+                executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()
+                        , mIgActivity.getId(), IgActivityDeemTaskWrapper.DEEM_VALUE.DV_GOOD, true);
 
-            mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
-            dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
-            bIsDeemRollBack = false;
+                mCurDeemInfo = DeemInfoManager.DEEM_INFO.DEEM_BAD;
+                dvValue = IgActivityDeemTaskWrapper.DEEM_VALUE.DV_BAD;
+                bIsDeemRollBack = false;
+            }
         }
 
         executor.doDeemIgActivity(this, person.getEmail(), person.getPassword()

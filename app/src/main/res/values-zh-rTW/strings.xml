@@ -206,6 +206,7 @@
     <string name="took_offer_scan_success">掃描成功，已領取優惠卷</string>
     <string name="took_offer_scan_fail">掃描失敗，請再掃描一次</string>
     <string name="confirm_kick_attendee">確定要取消此位參加者嗎?</string>
+    <string name="permission_denial_message">請別擔心，圖片只會用於您所指定的項目，例如個人圖片或是活動圖片。</string>
 
     <!-- Server response -->
     <string name="server_res_0_success">執行成功</string>

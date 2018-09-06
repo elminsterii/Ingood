@@ -7,11 +7,13 @@ import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.text.InputFilter;
 import android.util.TypedValue;
@@ -33,6 +35,7 @@ import com.fff.ingood.data.IgActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.IgActivityImageCache;
 import com.fff.ingood.global.IgActivityImageManager;
+import com.fff.ingood.global.PermissionHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.SystemUIManager;
 import com.fff.ingood.logic.IgActivityCreateLogic;
@@ -69,6 +72,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private static final long MAX_TIMEOUT_WAITING_DIALOG_MS = 60 * 1000;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
     private static final int RESULT_CODE_CROP_IMAGE = 2;
+    private static final int REQUEST_CODE_PERMISSION = 101;
 
     private Button mBtnLeftBottom;
     private Button mBtnRightBottom;
@@ -224,7 +228,8 @@ public class IgActivityPublishActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 if(m_lsUploadImages.size() < IGACTIVITY_IMAGE_UPLOAD_UPPER_LIMIT)
-                    pickImageByGalleryOrCam();
+                    if(requestPermission())
+                        pickImageByGalleryOrCam();
                 else
                     Toast.makeText(mActivity, getResources().getText(R.string.publish_igactivity_upload_image_limitation), Toast.LENGTH_SHORT).show();
             }
@@ -472,6 +477,10 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private void deleteIgActivityImage(Person personOwner, String strIgActivityId, List<String> lsIgActivityImagesName) {
         IgActivityLogicExecutor executor = new IgActivityLogicExecutor();
         executor.doIgActivityImageDelete(this, personOwner.getEmail(), personOwner.getPassword(), strIgActivityId, lsIgActivityImagesName);
+    }
+
+    private boolean requestPermission() {
+        return PermissionHelper.requestPermission(this, REQUEST_CODE_PERMISSION);
     }
 
     private void addImageIntoLayout(Bitmap bm) {
@@ -853,5 +862,30 @@ public class IgActivityPublishActivity extends BaseActivity implements
         m_uriCapImage = null;
         m_uriPickImage = null;
         m_uriCropImage = null;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION :
+                boolean bIsDenied = false;
+                if (grantResults.length > 0) {
+                    for(int iPermission : grantResults) {
+                        if (iPermission != PackageManager.PERMISSION_GRANTED) {
+                            bIsDenied = true;
+                            break;
+                        }
+                    }
+                    if(bIsDenied)
+                        Toast.makeText(mActivity, getResources().getText(R.string.permission_denial_message), Toast.LENGTH_LONG).show();
+                    else
+                        pickImageByGalleryOrCam();
+                } else {
+                    Toast.makeText(mActivity, getResources().getText(R.string.permission_denial_message), Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
