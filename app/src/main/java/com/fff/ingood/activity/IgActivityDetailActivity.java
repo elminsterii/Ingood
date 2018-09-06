@@ -420,6 +420,17 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     saveIgActivity(PersonSaveIgActivityTaskWrapper.SAVE_ACT_VALUE.SV_SAVE);
             }
         });
+        mTextViewLocation.setClickable(true);
+        mTextViewLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, MapsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("address",mTextViewLocation.getText().toString());
+                intent.putExtras(bundle);
+                mActivity.startActivity(intent);
+            }
+        });
     }
 
     @Override
