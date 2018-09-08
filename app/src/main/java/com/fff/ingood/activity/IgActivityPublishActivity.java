@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -48,6 +49,7 @@ import com.fff.ingood.tools.FileHelper;
 import com.fff.ingood.tools.ImageHelper;
 import com.fff.ingood.tools.StringTool;
 import com.fff.ingood.tools.TimeHelper;
+import com.fff.ingood.ui.ConfirmDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -94,6 +96,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
     private EditText mEditTextIgActivityLocation;
     private EditText mEditTextIgActivityDescription;
     private EditText mEditTextIgActivityMaxOffer;
+    private ImageView mImageViewIgActivityMaxOfferHelp;
     private LinearLayout mLayoutIgActivityTags;
 
     private boolean m_bEditMode;
@@ -156,6 +159,7 @@ public class IgActivityPublishActivity extends BaseActivity implements
         mEditTextIgActivityName = findViewById(R.id.editTextIgActivityPublishName);
         mEditTextIgActivityMaxAttention = findViewById(R.id.editTextIgActivityPublishMaxAttention);
         mEditTextIgActivityMaxOffer = findViewById(R.id.editTextIgActivityPublishMaxOffer);
+        mImageViewIgActivityMaxOfferHelp = findViewById(R.id.imageViewIgActivityPublishMaxOfferHelp);
         mEditTextIgActivityLocation = findViewById(R.id.editTextIgActivityPublishLocation);
         mEditTextIgActivityDescription = findViewById(R.id.editTextIgActivityPublishDescription);
         mLayoutIgActivityTags = findViewById(R.id.layoutIgActivityPublishTags);
@@ -315,6 +319,20 @@ public class IgActivityPublishActivity extends BaseActivity implements
 
         mBtnEndTimePicker.setOnClickListener(clickListenerTimePickerEndTime);
         mTextViewEndTimeDescription.setOnClickListener(clickListenerTimePickerEndTime);
+
+        mImageViewIgActivityMaxOfferHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strOfferHelpMessage = getResources().getString(R.string.activity_publish_max_offer_help_message);
+
+                ConfirmDialog.newInstance(new ConfirmDialog.ConfirmDialogEvent() {
+                    @Override
+                    public void onPositiveClick(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                }, strOfferHelpMessage).show(getSupportFragmentManager(), IgActivityDetailActivity.class.getName());
+            }
+        });
     }
 
     @Override

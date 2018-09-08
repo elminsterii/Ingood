@@ -98,6 +98,10 @@
     <string name="activity_publish_republish">Republish</string>
     <string name="activity_publish_info">Activity information</string>
     <string name="activity_publish_tags">Activity tags</string>
+    <string name="activity_publish_max_attention_unit"> </string>
+    <string name="activity_publish_max_offer_unit"> </string>
+    <string name="activity_publish_max_offer_help_message">The special offers provide few benefit for attenders from you(publisher),\n\n
+        you can scan QR-code that attender show, consume a offer after scan success until reach max limitation.</string>
 
     <!-- Default tags -->
     <string name="tag_all">All</string>

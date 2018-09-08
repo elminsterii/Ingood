@@ -385,51 +385,116 @@
             tools:ignore="RtlSymmetry"
             android:ems="10" />
 
-        <EditText
-            android:theme="@style/IngoodEditTextStyle"
-            android:id="@+id/editTextIgActivityPublishMaxAttention"
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishMaxAttention"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextIgActivityPublishDescription"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
-            android:textSize="@dimen/text_size_registration_form_input"
-            android:textCursorDrawable="@null"
-            android:lineSpacingExtra="0.8sp"
-            android:inputType="number"
-            android:hint="@string/activity_publish_max_attention"
-            android:paddingStart="@dimen/padding_start_registration_form_input_text"
-            android:textColorHighlight="@color/colorSlaveUltraLight"
-            android:maxLength="10"
-            tools:ignore="RtlSymmetry"
-            android:ems="10" />
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish">
 
-        <EditText
-            android:theme="@style/IngoodEditTextStyle"
-            android:id="@+id/editTextIgActivityPublishMaxOffer"
+            <TextView
+                android:id="@+id/textViewIgActivityPublishMaxAttentionDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_max_attention"/>
+
+            <EditText
+                android:theme="@style/IngoodEditTextStyle"
+                android:id="@+id/editTextIgActivityPublishMaxAttention"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textViewIgActivityPublishMaxAttentionDescription"
+                android:layout_marginStart="3dp"
+                android:textSize="@dimen/text_size_registration_form_input"
+                android:textCursorDrawable="@null"
+                android:lineSpacingExtra="0.8sp"
+                android:inputType="number"
+                android:gravity="center_horizontal"
+                android:textColorHighlight="@color/colorSlaveUltraLight"
+                android:maxLength="10"
+                tools:ignore="RtlSymmetry"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishMaxAttentionUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/editTextIgActivityPublishMaxAttention"
+                android:layout_marginStart="3dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_max_attention_unit"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutIgActivityPublishMaxOffer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextIgActivityPublishMaxAttention"
+            android:layout_below="@+id/layoutIgActivityPublishMaxAttention"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
-            android:layout_marginTop="@dimen/gap_row_ig_activity_publish"
-            android:textSize="@dimen/text_size_registration_form_input"
-            android:textCursorDrawable="@null"
-            android:lineSpacingExtra="0.8sp"
-            android:inputType="number"
-            android:hint="@string/activity_publish_max_offer"
-            android:paddingStart="@dimen/padding_start_registration_form_input_text"
-            android:textColorHighlight="@color/colorSlaveUltraLight"
-            android:maxLength="10"
-            tools:ignore="RtlSymmetry"
-            android:ems="10" />
+            android:layout_marginTop="@dimen/gap_row_ig_activity_publish">
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishMaxOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_max_offer"/>
+
+            <EditText
+                android:theme="@style/IngoodEditTextStyle"
+                android:id="@+id/editTextIgActivityPublishMaxOffer"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@+id/textViewIgActivityPublishMaxOffer"
+                android:textSize="@dimen/text_size_registration_form_input"
+                android:textCursorDrawable="@null"
+                android:lineSpacingExtra="0.8sp"
+                android:inputType="number"
+                android:gravity="center_horizontal"
+                android:textColorHighlight="@color/colorSlaveUltraLight"
+                android:maxLength="10"
+                tools:ignore="RtlSymmetry"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/textViewIgActivityPublishMaxOfferUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/editTextIgActivityPublishMaxOffer"
+                android:layout_marginStart="3dp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/colorSlave"
+                android:textSize="@dimen/text_size_ig_activity_publish_sub_title"
+                android:text="@string/activity_publish_max_offer_unit"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageViewIgActivityPublishMaxOfferHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textViewIgActivityPublishMaxOfferUnit"
+                android:layout_marginStart="8dp"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_help_outline_black_24dp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layoutIgActivityPublishTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/editTextIgActivityPublishMaxOffer"
+            android:layout_below="@+id/layoutIgActivityPublishMaxOffer"
             android:layout_marginStart="@dimen/margin_start_igactivity_publish"
             android:layout_marginEnd="@dimen/margin_end_igactivity_publish"
             android:layout_marginTop="30dp">

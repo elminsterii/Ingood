@@ -89,14 +89,19 @@
     <string name="activity_publish_date_description">選擇日期</string>
     <string name="activity_publish_time_description">選擇時間</string>
     <string name="activity_publish_what_kind">何種類型的活動</string>
-    <string name="activity_publish_max_attention">參加人數上限</string>
-    <string name="activity_publish_max_offer">發行優惠卷數量</string>
+    <string name="activity_publish_max_attention">最多會有</string>
+    <string name="activity_publish_max_offer">我要發行</string>
     <string name="activity_publish_edit_update">更新</string>
     <string name="activity_publish_images_upload">上傳活動圖片</string>
     <string name="activity_publish_images_select">選擇圖片</string>
     <string name="activity_publish_republish">重新發佈</string>
     <string name="activity_publish_info">活動資訊</string>
     <string name="activity_publish_tags">活動標籤</string>
+    <string name="activity_publish_max_attention_unit">人參加</string>
+    <string name="activity_publish_max_offer_unit">張優惠卷</string>
+    <string name="activity_publish_max_offer_help_message">透過發行優惠卷功能，您(主辦者)可以掃描參加者出示的優惠卷，成功掃描一次會用掉一張優惠卷，
+        全部用完就不能再掃描，不過別擔心，用完之後您還是可以隨時修改優惠卷上限。
+        \n\nPS : 優惠卷的掃描及出示功能都是App內建好的，不需要另外準備，請放心直接使用喔。</string>
 
     <!-- Default Tags -->
     <string name="tag_all">所有活動</string>

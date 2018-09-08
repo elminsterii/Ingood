@@ -24,7 +24,7 @@ public class CircleProgressBarDialog extends DialogFragment {
     private Dialog m_dialog;
     private long m_timeout;
 
-    private static final int DEFAULT_TIMEOUT_MS = 10 * 1000;
+    private static final int DEFAULT_TIMEOUT_MS = 20 * 1000;
 
     @SuppressLint("InflateParams")
     @Override
