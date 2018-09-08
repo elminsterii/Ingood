@@ -167,6 +167,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        hideWaitingDialog();
 
         if(DoRefreshInResume) {
             showWaitingDialog(HomeActivity.class.getName());
@@ -429,6 +430,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mTextViewLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+
                 Intent intent = new Intent(mActivity, MapsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(MapsActivity.INTENT_PUT_EXTRA_KEY, mTextViewLocation.getText().toString());
@@ -440,6 +443,8 @@ public class IgActivityDetailActivity extends BaseActivity implements
         mImageViewMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showWaitingDialog(IgActivityDetailActivity.class.getName());
+
                 Intent intent = new Intent(mActivity, MapsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(MapsActivity.INTENT_PUT_EXTRA_KEY, mTextViewLocation.getText().toString());

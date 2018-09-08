@@ -81,5 +81,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onPause();
         mMapView.onPause();
     }
+    @Override
+    public void onBackPressed() {
+        IgActivityDetailActivity.DoRefreshInResume = false;
+        super.onBackPressed();
+    }
 }
 
