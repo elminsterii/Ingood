@@ -43,8 +43,8 @@ import com.fff.ingood.global.PermissionHelper;
 import com.fff.ingood.global.PersonManager;
 import com.fff.ingood.global.PreferenceManager;
 import com.fff.ingood.global.SystemUIManager;
+import com.fff.ingood.logic.PersonIconComboLogic_PersonIconAndSmallIconUpload;
 import com.fff.ingood.logic.PersonIconComboLogic_PersonMainIconDownload;
-import com.fff.ingood.logic.PersonIconUploadLogic;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonUpdateLogic;
 import com.fff.ingood.task.HttpProxy;
@@ -60,6 +60,7 @@ import static com.fff.ingood.data.IgActivity.TAG_IGACTIVITY;
 import static com.fff.ingood.data.Person.TAG_PERSON;
 import static com.fff.ingood.global.GlobalProperty.AGE_LIMITATION;
 import static com.fff.ingood.global.GlobalProperty.ARRAY_PERSON_ICON_NAMES;
+import static com.fff.ingood.global.GlobalProperty.ARRAY_PERSON_ICON_SMALL_NAMES;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_HEIGHT;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_UPLOAD_UPPER_LIMIT;
 import static com.fff.ingood.global.GlobalProperty.PERSON_ICON_WIDTH;
@@ -69,8 +70,8 @@ import static com.fff.ingood.global.ServerResponse.getServerResponseDescriptions
 
 public class PersonDataActivity extends BaseActivity implements PersonUpdateLogic.PersonUpdateLogicCaller
         , PersonManager.PersonManagerRefreshEvent
-        , PersonIconUploadLogic.PersonIconUploadLogicCaller
-        , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller {
+        , PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller
+        , PersonIconComboLogic_PersonIconAndSmallIconUpload.PersonIconAndSmallIconUploadLogicCaller {
 
     private static final int REQUEST_CODE_PERMISSION = 101;
     private static final int RESULT_CODE_PICK_IMAGE = 1;
@@ -571,9 +572,9 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         executor.doPersonMainIconDownload(this, strEmail);
     }
 
-    private void uploadPersonIcon(Bitmap bmIcon, String strIconName) {
+    private void uploadPersonIcon(Bitmap bmIcon, String strIconName, String strIconSmallName) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonIconUpload(this, mPerson.getEmail(), strIconName, bmIcon);
+        executor.doPersonIconAndSmallIconUpload(this, mPerson.getEmail(), strIconName, strIconSmallName, bmIcon);
     }
 
     private void clearImageViewerCache() {
@@ -588,17 +589,17 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
     }
 
     @Override
-    public void returnUploadPersonIconSuccess() {
+    public void returnPersonMainIcon(Bitmap bmPersonIcon) {
+        if(bmPersonIcon != null)
+            mImageViewPersonIcon.setImageBitmap(bmPersonIcon);
+    }
+
+    @Override
+    public void returnUploadIconAndSmallIconSuccess() {
         clearImageViewerCache();
         PersonManager.getInstance().setPerson(mPerson);
         PersonManager.getInstance().setPersonIcon(m_bmPersonIconUpload);
         PersonManager.getInstance().refresh(this);
-    }
-
-    @Override
-    public void returnPersonMainIcon(Bitmap bmPersonIcon) {
-        if(bmPersonIcon != null)
-            mImageViewPersonIcon.setImageBitmap(bmPersonIcon);
     }
 
     @Override
@@ -618,7 +619,7 @@ public class PersonDataActivity extends BaseActivity implements PersonUpdateLogi
         }
 
         if(m_bmPersonIconUpload != null) {
-            uploadPersonIcon(m_bmPersonIconUpload, ARRAY_PERSON_ICON_NAMES[0]);
+            uploadPersonIcon(m_bmPersonIconUpload, ARRAY_PERSON_ICON_NAMES[0], ARRAY_PERSON_ICON_SMALL_NAMES[0]);
         } else {
             PersonManager.getInstance().setPerson(mPerson);
             PersonManager.getInstance().refresh(this);

@@ -88,6 +88,17 @@ public class PersonLogicExecutor {
         fl.doLogic();
     }
 
+    public void doPersonIconAndSmallIconUpload(PersonIconComboLogic_PersonIconAndSmallIconUpload.PersonIconAndSmallIconUploadLogicCaller caller, String strEmail
+            , String strIconName, String strIconSmallName, Bitmap bmUploadIcon) {
+        Logic fl = new PersonIconComboLogic_PersonIconAndSmallIconUpload(caller, strEmail, strIconName, strIconSmallName, bmUploadIcon);
+        fl.doLogic();
+    }
+
+    public void doPersonIconUpload(PersonIconUploadLogic.PersonIconUploadLogicCaller caller, String strEmail, String strIconName, Bitmap bmUploadIcon, String strTag) {
+        Logic fl = new PersonIconUploadLogic(caller, strEmail, strIconName, bmUploadIcon, strTag);
+        fl.doLogic();
+    }
+
     public void doPersonMainIconDownload(PersonIconComboLogic_PersonMainIconDownload.PersonMainIconDownloadLogicCaller caller, String strEmail) {
         Logic fl = new PersonIconComboLogic_PersonMainIconDownload(caller, strEmail);
         fl.doLogic();
@@ -102,6 +113,14 @@ public class PersonLogicExecutor {
             , String strEmailsOrIds
             , String strTag) {
         Logic fl = new PersonIconComboLogic_MultiPersonMainIconsDownload(caller, strEmailsOrIds, strTag);
+        fl.doLogic();
+    }
+
+    public void doMultiPersonMainIconsDownload(PersonIconComboLogic_MultiPersonMainIconsDownload.MultiPersonMainIconsDownloadLogicCaller caller
+            , String strEmailsOrIds
+            , String strTag
+            , boolean bDownloadSmallIcon) {
+        Logic fl = new PersonIconComboLogic_MultiPersonMainIconsDownload(caller, strEmailsOrIds, strTag, bDownloadSmallIcon);
         fl.doLogic();
     }
 }

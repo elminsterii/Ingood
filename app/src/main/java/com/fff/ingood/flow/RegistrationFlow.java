@@ -7,7 +7,7 @@ import com.fff.ingood.activity.RegistrationFragmentActivity;
 import com.fff.ingood.data.Person;
 import com.fff.ingood.global.GlobalProperty;
 import com.fff.ingood.global.PersonManager;
-import com.fff.ingood.logic.PersonIconUploadLogic;
+import com.fff.ingood.logic.PersonIconComboLogic_PersonIconAndSmallIconUpload;
 import com.fff.ingood.logic.PersonLogicExecutor;
 import com.fff.ingood.logic.PersonLoginLogic;
 import com.fff.ingood.logic.PersonRegisterLogic;
@@ -20,7 +20,7 @@ import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 public class RegistrationFlow extends Flow implements
         PersonRegisterLogic.PersonRegisterLogicCaller
         , PersonLoginLogic.PersonLoginLogicCaller
-        , PersonIconUploadLogic.PersonIconUploadLogicCaller {
+        , PersonIconComboLogic_PersonIconAndSmallIconUpload.PersonIconAndSmallIconUploadLogicCaller {
 
     private Person mPersonNew;
     private Bitmap m_bmPersonIcon;
@@ -36,9 +36,9 @@ public class RegistrationFlow extends Flow implements
         mPersonNew = personNew;
     }
 
-    private void uploadPersonIcon(Bitmap bmIcon, String strEmail, String strIconName) {
+    private void uploadPersonIcon(Bitmap bmIcon, String strEmail, String strIconName, String strIconSmallName) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doPersonIconUpload(this, strEmail, strIconName, bmIcon);
+        executor.doPersonIconAndSmallIconUpload(this, strEmail, strIconName, strIconSmallName, bmIcon);
     }
 
     @Override
@@ -55,7 +55,8 @@ public class RegistrationFlow extends Flow implements
         executor.doPersonLogin(this, mPersonNew);
 
         if(m_bmPersonIcon != null)
-            uploadPersonIcon(m_bmPersonIcon, mPersonNew.getEmail(), GlobalProperty.ARRAY_PERSON_ICON_NAMES[0]);
+            uploadPersonIcon(m_bmPersonIcon, mPersonNew.getEmail()
+                    , GlobalProperty.ARRAY_PERSON_ICON_NAMES[0], GlobalProperty.ARRAY_PERSON_ICON_SMALL_NAMES[0]);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class RegistrationFlow extends Flow implements
     }
 
     @Override
-    public void returnUploadPersonIconSuccess() {
+    public void returnUploadIconAndSmallIconSuccess() {
         PersonManager.getInstance().setPersonIcon(m_bmPersonIcon);
     }
 

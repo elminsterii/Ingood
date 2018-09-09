@@ -553,7 +553,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
     private void downloadIcon_IgActivityAttendees(IgActivity activity) {
         PersonLogicExecutor executor = new PersonLogicExecutor();
-        executor.doMultiPersonMainIconsDownload(this, activity.getAttendees(), LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS);
+        executor.doMultiPersonMainIconsDownload(this, activity.getAttendees(), LOGIC_TAG_DOWNLOAD_ATTENDEES_ICONS, true);
     }
 
     private void downloadIcon_IgActivityCommentPublishers(List<Comment> lsComments) {
@@ -569,7 +569,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
                 strBuilder.deleteCharAt(strBuilder.length()-1);
 
             PersonLogicExecutor executor = new PersonLogicExecutor();
-            executor.doMultiPersonMainIconsDownload(this, strBuilder.toString(), LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS);
+            executor.doMultiPersonMainIconsDownload(this, strBuilder.toString(), LOGIC_TAG_DOWNLOAD_COMMENT_PUBLISHER_ICONS, true);
         }
     }
 

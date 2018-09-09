@@ -8,6 +8,7 @@ import com.fff.ingood.tools.StringTool;
 
 import java.util.List;
 
+import static com.fff.ingood.global.GlobalProperty.PREFIX_PERSON_SMALL_ICON;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_FAIL_FILE_NOT_FOUND_INT;
 import static com.fff.ingood.global.ServerResponse.STATUS_CODE_SUCCESS_INT;
 
@@ -25,11 +26,19 @@ public class PersonIconComboLogic_PersonMainIconDownload extends Logic implement
 
     private PersonMainIconDownloadLogicCaller mCaller;
     private String m_strEmailOrId;
+    private boolean m_bDownloadSmallIcon = false;
 
     PersonIconComboLogic_PersonMainIconDownload(PersonMainIconDownloadLogicCaller caller, String strEmailOrId) {
         super(caller);
         mCaller = caller;
         m_strEmailOrId = strEmailOrId;
+    }
+
+    PersonIconComboLogic_PersonMainIconDownload(PersonMainIconDownloadLogicCaller caller, String strEmailOrId, boolean bDownloadSmallIcon) {
+        super(caller);
+        mCaller = caller;
+        m_strEmailOrId = strEmailOrId;
+        m_bDownloadSmallIcon = bDownloadSmallIcon;
     }
 
     @Override
@@ -56,9 +65,29 @@ public class PersonIconComboLogic_PersonMainIconDownload extends Logic implement
     @Override
     public void onGetIconListSuccess(String strIconsName) {
         List<String> lsIconsName = StringTool.arrayStringToListString(strIconsName.split(","));
-        if(lsIconsName.size() > 0) {
-            PersonIconDownloadTaskWrapper task = new PersonIconDownloadTaskWrapper(this);
-            task.execute(lsIconsName.get(0));
+        if(m_bDownloadSmallIcon) {
+            boolean bIsSmallIconExist = false;
+            for(String strIconName : lsIconsName) {
+                if(strIconName.contains(PREFIX_PERSON_SMALL_ICON)) {
+                    PersonIconDownloadTaskWrapper task = new PersonIconDownloadTaskWrapper(this);
+                    task.execute(strIconName);
+                    bIsSmallIconExist = true;
+                    break;
+                }
+            }
+            //if small icon doesn't exist, take the normal one.
+            if(!bIsSmallIconExist) {
+                PersonIconDownloadTaskWrapper task = new PersonIconDownloadTaskWrapper(this);
+                task.execute(lsIconsName.get(0));
+            }
+        } else {
+            for(String strIconName : lsIconsName) {
+                if(!strIconName.contains(PREFIX_PERSON_SMALL_ICON)) {
+                    PersonIconDownloadTaskWrapper task = new PersonIconDownloadTaskWrapper(this);
+                    task.execute(strIconName);
+                    break;
+                }
+            }
         }
     }
 

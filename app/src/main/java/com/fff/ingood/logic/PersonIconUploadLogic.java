@@ -13,7 +13,7 @@ public class PersonIconUploadLogic extends Logic
         implements PersonIconUploadTaskWrapper.PersonIconUploadTaskWrapperCallback {
 
     public interface PersonIconUploadLogicCaller extends LogicCaller {
-        void returnUploadPersonIconSuccess();
+        void returnUploadPersonIconSuccess(String strTag);
         void returnStatus(Integer iStatusCode);
     }
 
@@ -30,6 +30,14 @@ public class PersonIconUploadLogic extends Logic
         m_bmUploadIcon = bmUploadIcon;
     }
 
+    PersonIconUploadLogic(PersonIconUploadLogicCaller caller, String strEmail, String strIconName, Bitmap bmUploadIcon, String strTag) {
+        super(caller, strTag);
+        mCaller = caller;
+        m_strEmail = strEmail;
+        m_strIconName = strIconName;
+        m_bmUploadIcon = bmUploadIcon;
+    }
+
     @Override
     protected void doLogic() {
         PersonIconUploadTaskWrapper task = new PersonIconUploadTaskWrapper(this, m_bmUploadIcon);
@@ -38,7 +46,7 @@ public class PersonIconUploadLogic extends Logic
 
     @Override
     public void onPersonIconUploadSuccess() {
-        mCaller.returnUploadPersonIconSuccess();
+        mCaller.returnUploadPersonIconSuccess(getTag());
         mCaller.returnStatus(STATUS_CODE_SUCCESS_INT);
     }
 

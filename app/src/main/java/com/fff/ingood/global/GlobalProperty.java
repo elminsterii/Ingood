@@ -23,7 +23,11 @@ public class GlobalProperty {
     public static final int PERSON_ICON_UPLOAD_UPPER_LIMIT = 1;
     public static final int PERSON_ICON_WIDTH = 512;
     public static final int PERSON_ICON_HEIGHT = 512;
+    public static final int PERSON_ICON_SMALL_WIDTH = 100;
+    public static final int PERSON_ICON_SMALL_HEIGHT = 100;
     public static final String[] ARRAY_PERSON_ICON_NAMES = {"icon00"};
+    public static final String[] ARRAY_PERSON_ICON_SMALL_NAMES = {"smallicon00"};
+    public static final String PREFIX_PERSON_SMALL_ICON = "smallicon";
 
     //Homepage
     public static final char CHAR_SEARCH_TEXT_HEAD_IS_EMAIL = '@';

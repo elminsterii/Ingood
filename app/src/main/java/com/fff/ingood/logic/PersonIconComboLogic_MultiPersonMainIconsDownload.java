@@ -22,11 +22,18 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
     private String[] m_arrEmailsOrIds;
     private Bitmap[] m_arrPersonsIcons;
 
+    private boolean m_bDownloadSmallIcon = false;
     private int m_curIndex;
 
     PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds) {
         super(caller);
         initialize(caller, strEmailsOrIds);
+    }
+
+    PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller, String strEmailsOrIds, String strTag, boolean bDownloadSmallIcon) {
+        super(caller, strTag);
+        initialize(caller, strEmailsOrIds);
+        m_bDownloadSmallIcon = bDownloadSmallIcon;
     }
 
     PersonIconComboLogic_MultiPersonMainIconsDownload(MultiPersonMainIconsDownloadLogicCaller caller
@@ -73,7 +80,7 @@ public class PersonIconComboLogic_MultiPersonMainIconsDownload extends Logic imp
                 || m_curIndex >= m_arrEmailsOrIds.length)
             return false;
 
-        PersonIconComboLogic_PersonMainIconDownload logic = new PersonIconComboLogic_PersonMainIconDownload(this, m_arrEmailsOrIds[m_curIndex]);
+        PersonIconComboLogic_PersonMainIconDownload logic = new PersonIconComboLogic_PersonMainIconDownload(this, m_arrEmailsOrIds[m_curIndex], m_bDownloadSmallIcon);
         logic.doLogic();
         m_curIndex++;
         return true;
