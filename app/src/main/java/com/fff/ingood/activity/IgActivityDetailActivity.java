@@ -1231,6 +1231,7 @@ public class IgActivityDetailActivity extends BaseActivity implements
 
             switch(m_updateUiSection) {
                 case uiSecAll :
+                    getCommentsByIgActivity(mIgActivity);
                     setUiBasicInfoByIgActivity(mIgActivity);
                     setUiDeemInfoByIgActivity(mIgActivity);
                     setUiDeemPeopleByIgActivity(mIgActivity);
@@ -1240,7 +1241,6 @@ public class IgActivityDetailActivity extends BaseActivity implements
                     setUiSaveIgActivity();
                     downloadIcon_IgActivityAttendees(mIgActivity);
                     downloadImages_IgActivityImages(mIgActivity);
-                    getCommentsByIgActivity(mIgActivity);
                     getPublisherInfo();
                     break;
 

@@ -18,6 +18,7 @@ public class IngoodService extends Service implements PersonLogoutTaskWrapper.Pe
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
 
+        PersonManager.getInstance().setLoginSuccess(false);
         PersonLogoutTaskWrapper logoutWrapper = new PersonLogoutTaskWrapper(this);
         logoutWrapper.execute(PersonManager.getInstance().getPerson());
 
